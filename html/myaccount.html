@@ -1,0 +1,986 @@
+<section>
+    <div class="homepage-hero-module" (window:resize)="onResize($event)">
+        <div class="block-image setheightmin"></div>
+        <div class="setheightmin">
+            <div class="video-annotation-layer code-container">    
+                <div class="video-annotation-1">
+                    <div class="row text-left h-100">
+                        <div class="col-md-6 offset-md-1 padsmalltop">
+                            <div class="media">
+                                <i class="hidden-md-down icon-user homepage-hero-module-icon icon-gradient d-flex mr-3"></i>
+                                <div class="media-body">
+                                    <h2 class="padleft">
+                                        <i class="hidden-lg-up icon-user icon-gradient"></i>
+                                        My Account
+                                        <span class="p-small return m-left-m30">{{fromAddress}}</span>
+                                    </h2>    
+                                    <ul class="nav nav-tabs">
+                                        <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 1 }" (click)="changeTabs(1)" href="javascript:void(0);">Balance</a></li>
+                                        <!--
+                                        <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 2 }" (click)="changeTabs(2)" href="javascript:void(0);">History</a></li>
+                                        !-->
+                                        <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 3 }" (click)="changeTabs(3)" href="javascript:void(0);">Sign Out</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="tab-white tab-content text-left">
+                                <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 1 }">
+                                    <h4>
+                                        <i (click)="showModal(2);" href="javascript:void(0);" class="icon-info hover"></i>
+                                        <strong>B</strong>alance
+                                    </h4>
+                                    <div><Br>
+                                        <table class="table table-sm table-bordered table-hover">
+                                            <thead class="thead">
+                                                <tr>
+                                                    <th>Token</th>
+                                                    <th>Block</th>
+                                                    <th>Account</th>
+                                                    <th>Book</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Ether</td>
+                                                    <td>
+                                                        <a *ngIf="accountBalance != '0'" href="javascript:void(0);" (click)="viewNumber(accountBalance);">{{wb3.utils.fromWei(accountBalance, 'ether') | number : '1.0-0'}}<span *ngIf="hasFraction(accountBalance)">.#</span></a>
+                                                        <span *ngIf="accountBalance == '0'">0</span>
+                                                        <span *ngIf="accountBalance != '0'" class="float-right">
+                                                            <i (click)="depositEther();" href="javascript:void(0);" class="icon-control-forward hover"></i>
+                                                        </span>
+                                                        <span *ngIf="Market.ether != '0'" class="float-right">
+                                                            <i (click)="withdrawEther();" href="javascript:void(0);" class="icon-control-rewind hover"></i>
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <a *ngIf="Market.ether != '0'" href="javascript:void(0);" (click)="viewNumber(Market.ether);">{{wb3.utils.fromWei(Market.ether, 'ether') | number : '1.0-0'}}<span *ngIf="hasFraction(Market.ether)">.#</span></a>
+                                                        <span *ngIf="Market.ether == '0'">0</span>
+                                                    </td>
+                                                    <td>
+                                                        <a *ngIf="bookEther != '0'" href="javascript:void(0);" (click)="viewNumber(bookEther);">{{wb3.utils.fromWei(bookEther, 'ether') | number : '1.0-0'}}<span *ngIf="hasFraction(bookEther)">.#</span></a>
+                                                        <span *ngIf="bookEther != '0'" class="float-right">
+                                                            <i (click)="cancelOffer();" href="javascript:void(0);" class="icon-close hover"></i>
+                                                        </span>
+                                                        <span *ngIf="bookEther == '0'">0</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><a [routerLink]="['/token',FreeToken.address]" href="javascript:void(0);">FreeToken</a></td>
+                                                    <td>
+                                                        <a *ngIf="FreeToken.mine.length > 18" href="javascript:void(0);" (click)="viewNumber(FreeToken.mine);">{{wb3.utils.fromWei(FreeToken.mine, 'ether') | number : '1.0-0'}}<span *ngIf="hasFraction(FreeToken.mine)">.#</span></a>
+                                                        <a *ngIf="FreeToken.mine.length <= 18 && FreeToken.mine != '0'" href="javascript:void(0);" (click)="viewNumber(FreeToken.mine);">#</a>
+                                                        <span *ngIf="FreeToken.mine == '0'">0</span>
+                                                        <span *ngIf="FreeToken.mine != '0'" class="float-right">
+                                                            <i (click)="deposit();" href="javascript:void(0);" class="icon-control-forward hover"></i>
+                                                        </span>
+                                                        <span *ngIf="Market.free != '0'" class="float-right">
+                                                            <i (click)="withdraw();" href="javascript:void(0);" class="icon-control-rewind hover"></i>
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <a *ngIf="Market.free.length > 18" href="javascript:void(0);" (click)="viewNumber(Market.free);">{{getEther(Market.free) | number : '1.0-0'}}<span *ngIf="hasFraction(Market.free)">.#</span></a>
+                                                        <a *ngIf="Market.free.length <= 18 && Market.free != '0'" href="javascript:void(0);" (click)="viewNumber(Market.free);">#</a>
+                                                        <span *ngIf="Market.free == '0'">0</span>
+                                                        <span *ngIf="Market.ether != '0'" class="float-right">
+                                                            <i (click)="buy();" href="javascript:void(0);" class="icon-plus hover"></i>
+                                                        </span>
+                                                        <span *ngIf="Market.free != '0'" class="float-right">
+                                                            <i (click)="sell();" href="javascript:void(0);" class="icon-minus hover"></i>
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <a *ngIf="bookTokenEther != '0'" href="javascript:void(0);" (click)="viewNumber(bookTokenEther);">{{getEther(bookTokenEther) | number : '1.0-0'}}<span *ngIf="hasFraction(bookTokenEther)">.#</span></a>
+                                                        <span *ngIf="bookTokenEther != '0'" class="float-right">
+                                                            <i (click)="cancelTokenOffer();" href="javascript:void(0);" class="icon-close hover"></i>
+                                                        </span>
+                                                        <span *ngIf="bookTokenEther == '0'">0</span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 2 }">
+                                    <h4>
+                                        <strong>H</strong>istory
+                                    </h4>
+                                    <div><Br>
+                                        None
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 3 }">
+                                    <h4>
+                                        <strong>S</strong>ign Out
+                                    </h4>
+                                    <div><br>
+                                        <a class="btn btn-lg btn-ft" (click)="showModal(3);" href="javascript:void(0);">
+                                            Sign Out
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-5 hidden-sm-down">
+                            <div class="imgborder">
+                                <!--<img src="img/office.jpg" class="rounded img-fluid setheightmax">!-->
+                            </div>
+                        </div>
+                    </div>
+                </div>         
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Modal NUMBER Edit on top of everything !-->
+<div *ngIf="modalNumber.show" [ngClass]="{ 'show block': modalNumber.show == true }" style="z-index:1051" class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content roboto">
+            <div class="modal-header">
+                <h5 class="modal-title">Pick amount of Ether: {{wb3.utils.fromWei(modalNumber.number, 'ether')}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModalNumber(modalNumber.orig)" href="javascript:void(0);">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div *ngIf="modalNumber.max != '0'">Maximum amount is {{wb3.utils.fromWei(modalNumber.max, 'ether')}}</div>
+                <input min="0" max="999999999999" type="number" (change)="updateModalNumber();" value="{{getEther(modalNumber.number)}}" id="modalNumberEther"> Ether<br>
+                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{getFinney(modalNumber.number) | number : '1.0-0'}}" id="modalNumberFinney"> Finney<br>
+                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{getSzabo(modalNumber.number) | number : '1.0-0'}}" id="modalNumberSzabo"> Szabo<br>
+                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{getGwei(modalNumber.number) | number : '1.0-0'}}" id="modalNumberGwei"> Gwei<br>
+                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{getMwei(modalNumber.number) | number : '1.0-0'}}" id="modalNumberMwei"> Mwei <br>
+                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{getKwei(modalNumber.number) | number : '1.0-0'}}" id="modalNumberKwei"> Kwei <br>
+                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{getWei(modalNumber.number) | number : '1.0-0'}}" id="modalNumberWei"> Wei<Br><Br>
+            </div>
+            <div class="modal-footer">
+                <ul class="nav nav-pills modal-nav text-center">
+                    <li class="nav-item w-100 next">
+                        <a class="nav-link" (click)="closeModalNumber(modalNumber.number)" href="javascript:void(0);">
+                            Close
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Price Edit on top of everything !-->
+<div *ngIf="modalPrice.show" [ngClass]="{ 'show block': modalPrice.show == true }" style="z-index:1051" class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content roboto">
+            <div class="modal-header">
+                <h5 class="modal-title">Pick amount of Ether: {{wb3.utils.fromWei(modalPrice.number, 'ether')}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModalPrice(modalPrice.orig)" href="javascript:void(0);">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div *ngIf="modalPrice.max != '0'">Maximum amount is {{wb3.utils.fromWei(modalPrice.max, 'ether')}}</div>
+                <input min="0" max="999999999999" type="number" (change)="updateModalPrice();" value="{{getEther(modalPrice.number)}}" id="modalPriceEther"> Ether<br>
+                <input min="0" max="999" type="number" (change)="updateModalPrice();" value="{{getFinney(modalPrice.number) | number : '1.0-0'}}" id="modalPriceFinney"> Finney<br>
+                <input min="0" max="999" type="number" (change)="updateModalPrice();" value="{{getSzabo(modalPrice.number) | number : '1.0-0'}}" id="modalPriceSzabo"> Szabo<br>
+                <!-- <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{getGwei(modalNumber.number) | number : '1.0-0'}}" id="modalNumberGwei"> Gwei<br>
+                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{getMwei(modalNumber.number) | number : '1.0-0'}}" id="modalNumberMwei"> Mwei <br>
+                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{getKwei(modalNumber.number) | number : '1.0-0'}}" id="modalNumberKwei"> Kwei <br>
+                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{getWei(modalNumber.number) | number : '1.0-0'}}" id="modalNumberWei"> Wei<Br><Br>
+                !-->
+            </div>
+            <div class="modal-footer">
+                <ul class="nav nav-pills modal-nav text-center">
+                    <li class="nav-item w-100 next">
+                        <a class="nav-link" (click)="closeModalPrice(modalPrice.number)" href="javascript:void(0);">
+                            Close
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal 1 Number -->
+<div *ngIf="modal == 1" [ngClass]="{ 'show block': modal == 1 }" class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content roboto">
+            <div class="modal-header">
+                <h5 class="modal-title">{{wb3.utils.fromWei(number, 'ether')}} Ether</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{getEther(number) | number : '1.0-0'}} Ether<br>
+                {{getFinney(number) | number : '1.0-0'}} Finney<br>
+                {{getSzabo(number) | number : '1.0-0'}} Szabo<br>
+                {{getGwei(number) | number : '1.0-0'}} Gwei<br>
+                {{getMwei(number) | number : '1.0-0'}} Mwei <br>
+                {{getKwei(number) | number : '1.0-0'}} Kwei <br>
+                {{getWei(number) | number : '1.0-0'}} Wei<Br><Br>
+            </div>
+            <div class="modal-footer">
+                <ul class="nav nav-pills modal-nav text-center">
+                    <li class="nav-item w-100 next">
+                        <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                            Got it
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal 3 Sign Out -->
+<div [ngClass]="{ 'show block': modal == 3 }" class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content roboto">
+            <div class="modal-header">
+                <h5 class="modal-title">Sign Out</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure?
+            </div>
+            <div class="modal-footer">
+                <ul class="nav nav-pills modal-nav text-center">
+                    <li class="nav-item w-50 prev">
+                        <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                            No
+                        </a>
+                    </li>
+                    <li class="nav-item w-50 next">
+                        <a class="nav-link" (click)="signOut()" href="javascript:void(0);">
+                            Yes
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal 2 Balance info -->
+<div [ngClass]="{ 'show block': modal == 2 }" class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content roboto">
+            <div class="modal-header">
+                <h5 class="modal-title">About Balances</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <strong>What is an block, account and book?</strong><br>
+                <ul>
+                    <li><strong>Block:</strong> This is the balance at your address on the blockchain. You can access this from other blockchain wallet.</li>
+                    <li><strong>Account:</strong> This is the balance in your account. To trade you need to deposit assets onto the token market smart contract account. You can withdraw assets at any time.</li>
+                    <li><strong>Book:</strong> This is the balance that you bid. When you make an offer, we move assets onto the book from your account. This way when a transaction occurs the assets are immediately available. You can cancel offers to move assets back into your account.</li>
+                </ul>
+                <strong>Why do some numbers have links?</strong><br>
+                Blockchain numbers are extremely large. This makes them hard to read and is often the cause of errors.
+                If a number is a small fraction we show it in a popup window with each thousands marker a new line.
+                <br><br>
+                For example, it is hard to read 10.123123123123123123 Ether. <br><br>
+                It's easier to read<br>
+                10 Ether<br>
+                123 Finney<br>
+                123 Szabo<br>
+                123 Gwei<br>
+                123 Mwei <br>
+                123 Kwei <br>
+                123 Wei<Br><Br>
+
+            </div>
+            <div class="modal-footer">
+                <ul class="nav nav-pills modal-nav text-center">
+                    <li class="nav-item w-100 next">
+                        <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                            Got it
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 4 Approve Deposit Free token-->
+<div [ngClass]="{ 'show block': modal == 4 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Deposit Free Token</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <h5>Depositing Tokens involves 2 steps.</h5>
+            First, the FreeToken Smart Contract needs permission from you to allow
+            the Market Smart Contract to transfer <a (click)="changeDeposit()" href="javascript:void(0);">{{wb3.utils.fromWei(depositAmount, 'ether')}}</a> FreeToken.<br><Br>
+            Second, the Market Smart Contract deposit the FreeToken into your Market account.
+            <Br><Br>
+            <h5>Confirm that you approve the deposit and we will execute both transactions.</h5>
+            The transaction costs you 0 TestEther <!-- ToDo; add gas and uses 0 gas !-->
+            <br>
+            The approval is estimated to use {{FreeToken.estimate | number}} gas.
+            <span *ngIf="FreeToken.estimate == maxGas">That is all the gas. Most likely an error.</span>
+        </div>
+        <div class="modal-footer">
+            <ul class="nav nav-pills modal-nav text-center">
+                <li class="nav-item w-50 prev">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Cancel
+                    </a>
+                </li>
+                <li class="nav-item w-50 next">
+                    <a class="nav-link" (click)="approveConfirm()" href="javascript:void(0);">
+                        Confirm
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 5 Approved now deposit Free Token-->
+<div [ngClass]="{ 'show block': modal == 5 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Deposit Free Token - Waiting for step 1</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <h5>Once the first step is added to the blockchain the deposit transaction will be sent to the blockchain.</h5>
+            This transaction costs you 0 TestEther <!-- ToDo; add gas and uses 0 gas !-->
+            <br>
+            <span *ngIf="Market.estimate == 0">Wait for approval transaction to see deposit gas estimate.</span>
+            <span *ngIf="Market.estimate != 0">It is estimated to use {{Market.estimate | number}} gas.</span>
+            <span *ngIf="Market.estimate == maxGas">That is all the gas. Most likely an error. Please wait for approval to complete.</span>
+            <br><Br>
+            This may take a few blocks for the approval. (Time since last block {{seconds}})
+            <div [ngClass]="{ 'alert-warning': !FreeToken.transaction, 'alert-success': FreeToken.transaction }" class="alert" role="alert">Transaction sent to blockchain
+                <br>{{FreeToken.transaction}}
+            </div>
+            <div [ngClass]="{'alert-warning': !FreeToken.receipt, 'alert-success': FreeToken.receipt }" class="alert" role="alert">Transaction added to blockchain
+                <br>Gas Used: {{FreeToken.receipt?.gasUsed | number}}
+                <span *ngIf="FreeToken.error">ERROR {{FreeToken.error}}</span>
+            </div>
+            <div [ngClass]="{'alert-warning': FreeToken.confirmed < 2, 'alert-success': FreeToken.confirmed > 1 }" class="alert" role="alert">Transaction confirmed on blockchain {{FreeToken.confirmed}} times</div>
+        </div>
+        <div class="modal-footer">
+            <ul class="nav nav-pills modal-nav text-center">
+                <li class="nav-item w-50 prev">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Close
+                    </a>
+                </li>
+                <li *ngIf="FreeToken.receipt" class="nav-item w-50 next">
+                    <a class="nav-link" (click)="depositConfirm()" href="javascript:void(0);">
+                        Confirm
+                    </a>
+                </li>
+                <li *ngIf="!FreeToken.receipt" class="nav-item w-50 next">
+                    <span>
+                        Wait
+                    </span>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>
+<!-- Modal 6 Deposit Free Token-->
+<div [ngClass]="{ 'show block': modal == 6 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Deposit Free Token Transaction</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            This may take a few blocks. (Time since last block {{seconds}})
+            <div [ngClass]="{ 'alert-warning': !Market.transaction, 'alert-success': Market.transaction }" class="alert" role="alert">Transaction sent to blockchain
+                <br>{{Market.transaction}}
+            </div>
+            <div [ngClass]="{'alert-warning': !Market.receipt, 'alert-success': Market.receipt }" class="alert" role="alert">Transaction added to blockchain
+                <br>Gas Used: {{Market.receipt?.gasUsed | number}}
+                <span *ngIf="Market.error">ERROR {{Market.error}}</span>
+            </div>
+            <div [ngClass]="{'alert-warning': Market.confirmed < 2, 'alert-success': Market.confirmed > 1 }" class="alert" role="alert">Transaction confirmed on blockchain {{Market.confirmed}} times</div>
+        </div>
+        <div class="modal-footer">
+            <ul class="nav nav-pills modal-nav text-center">
+                <li class="nav-item w-100 next">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Close
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>
+    
+<!-- Modal 7 Withdraw Free token-->
+<div [ngClass]="{ 'show block': modal == 7 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Withdraw Free Token</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <h5>Withdraw Free Token</h5>
+            Withdraw <a (click)="changeWithdraw()" href="javascript:void(0);">{{wb3.utils.fromWei(withdrawAmount, 'ether')}}</a> Free Tokens.<br><Br>
+            This transaction costs you 0 TestEther <!-- ToDo; add gas and uses 0 gas !-->
+            <br>
+            It is estimated to use {{Market.estimate | number}} gas.
+            <span *ngIf="Market.estimate == maxGas">That is all the gas. Most likely an error.</span>
+        </div>
+        <div class="modal-footer">
+            <ul class="nav nav-pills modal-nav text-center">
+                <li class="nav-item w-50 prev">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Cancel
+                    </a>
+                </li>
+                <li class="nav-item w-50 next">
+                    <a class="nav-link" (click)="approveWithdraw()" href="javascript:void(0);">
+                        Confirm
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 8 Withdraw Confirm Free Token-->
+<div [ngClass]="{ 'show block': modal == 8 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Withdraw Free Token Transaction</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            This may take a few blocks. (Time since last block {{seconds}})
+            <div [ngClass]="{ 'alert-warning': !Market.transaction, 'alert-success': Market.transaction }" class="alert" role="alert">Transaction sent to blockchain
+                <br>{{Market.transaction}}
+            </div>
+            <div [ngClass]="{'alert-warning': !Market.receipt, 'alert-success': Market.receipt }" class="alert" role="alert">Transaction added to blockchain
+                <br>Gas Used: {{Market.receipt?.gasUsed | number}}
+                <span *ngIf="Market.error">ERROR {{Market.error}}</span>
+            </div>
+            <div [ngClass]="{'alert-warning': Market.confirmed < 2, 'alert-success': Market.confirmed > 1 }" class="alert" role="alert">Transaction confirmed on blockchain {{Market.confirmed}} times</div>
+        </div>
+        <div class="modal-footer">
+            <ul class="nav nav-pills modal-nav text-center">
+                <li class="nav-item w-100 next">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Close
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>
+    
+<!-- Modal 9 Buy -->
+<div [ngClass]="{ 'show block': modal == 9 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Buy a Free Token</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div *ngIf="Market.ether == '0'">
+                You need Ether to purchase a token. Try selling a token or adding Ether to your account.
+            </div>
+            <div *ngIf="Market.ether != '0'">
+                Number of Tokens: <a (click)="changeBuyToken()" href="javascript:void(0);">{{wb3.utils.fromWei(buyToken, 'ether')}}</a><br>
+                Price in ether per Ether of tokens: <a (click)="changeBuyPrice()" href="javascript:void(0);">{{+buyPrice/1000000 | number  : '1.0-6'}}</a><br>
+                Transactional fee: 0<br>
+                Add to book fee: 0.001 (only if you add a new entry to the book because there is no immediate seller)<br>
+                <strong>Total Ether: {{wb3.utils.fromWei(addBigNumber(divideBigNumber(multiplyBigNumber(buyToken,buyPrice),"1000000"),"1000000000000000"),'ether') | number : '1.0-18'}}</strong><br>
+                <br>
+                <h5>Confirm that you approve the offer to buy tokens</h5>
+                This transaction costs you 0 TestEther <!-- ToDo; add gas and uses 0 gas !-->
+                <br>
+                It is estimated to use {{Market.estimate | number}} gas.
+                <span *ngIf="Market.estimate == maxGas">That is all the gas. Most likely an error.</span>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <ul class="nav nav-pills modal-nav text-center">
+                <li *ngIf="Market.ether == '0'" class="nav-item w-100 prev">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Close
+                    </a>
+                </li>
+                <li *ngIf="Market.ether != '0'" class="nav-item w-50 prev">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Close
+                    </a>
+                </li>
+                <li *ngIf="Market.ether != '0' && buyToken != '0' && buyPrice != '0'" class="nav-item w-50 next">
+                    <a class="nav-link" (click)="buyConfirm()" href="javascript:void(0);">
+                        Confirm
+                    </a>
+                </li>
+                <li *ngIf="Market.ether != '0' && ( buyToken == '0' || buyPrice == '0')" class="nav-item w-50 next">
+                    Need amount + price
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 10 Bought Token-->
+<div [ngClass]="{ 'show block': modal == 10 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Buy a token</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            When this transaction is recieved check your account.<br>
+            If there was a seller you will have the token in your account.<br>
+            If there was not a seller your Ether will be in the book waiting for a seller. You will also pay a 1 finney (0.001 Ether) book fee.<br>
+            You can either cancel the offer to move Ether off the book and into your account or wait until a seller sells. If you cancel the offer you get the 1 finney back.<br>
+            When a seller sells you tokens, you will get the tokens in your account and the seller will get the 1 finney.<br><Br>
+
+            This may take a few blocks. (Time since last block {{seconds}})
+            <div [ngClass]="{ 'alert-warning': !Market.transaction, 'alert-success': Market.transaction }" class="alert" role="alert">Transaction sent to blockchain
+                <br>{{Market.transaction}}
+            </div>
+            <div [ngClass]="{'alert-warning': !Market.receipt, 'alert-success': Market.receipt }" class="alert" role="alert">Transaction added to blockchain
+                <br>Gas Used: {{Market.receipt?.gasUsed | number}}<br><br>
+                <span *ngIf="Market.error">ERROR {{Market.error}}</span>
+            </div>
+            <div [ngClass]="{'alert-warning': Market.confirmed < 2, 'alert-success': Market.confirmed > 1 }" class="alert" role="alert">Transaction confirmed on blockchain {{Market.confirmed}} times</div>
+        </div>
+        <div class="modal-footer">
+            <ul class="nav nav-pills modal-nav text-center">
+                <li class="nav-item w-100 prev">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Close
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>
+
+    
+<!-- Modal 11 Sell -->
+<div [ngClass]="{ 'show block': modal == 11 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Sell a Free Token</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div *ngIf="Market.free == '0'">
+                You need a token in your account to sell a token. Try getting a free token, buying a token, or depositing a token to your account.
+            </div>
+            <div *ngIf="Market.free != '0'">
+                Number of Tokens: <a (click)="changeSellToken()" href="javascript:void(0);">{{wb3.utils.fromWei(sellToken, 'ether')}}</a><br>
+                Price in ether per Ether of tokens: <a (click)="changeSellPrice()" href="javascript:void(0);">{{+sellPrice/1000000 | number  : '1.0-6'}}</a><br>
+                Transactional fee: {{wb3.utils.fromWei(divideBigNumber(multiplyBigNumber(sellToken,sellPrice),"1000000000"), 'ether') | number: '1.0-18'}}<br>
+                Add to book fee: 0.001 (only if you add a new entry to the book because there is no immediate buyer)<br>
+                <strong>Total Ether You Get: {{wb3.utils.fromWei(subtractBigNumber(divideBigNumber(multiplyBigNumber(sellToken,sellPrice),"1000000"),addBigNumber(divideBigNumber(multiplyBigNumber(sellToken,sellPrice),"1000000000"),"1000000000000000")),'ether') | number : '1.0-18'}}</strong><br>
+                <br>
+                <h5>Confirm that you approve the offer to buy tokens</h5>
+                This transaction costs you 0 TestEther <!-- ToDo; add gas and uses 0 gas !-->
+                <br>
+                It is estimated to use {{Market.estimate | number}} gas.
+                <span *ngIf="Market.estimate == maxGas">That is all the gas. Most likely an error.</span>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <ul class="nav nav-pills modal-nav text-center">
+                <li *ngIf="Market.free == '0'" class="nav-item w-100 prev">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Close
+                    </a>
+                </li>
+                <li *ngIf="Market.free != '0'" class="nav-item w-50 prev">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Close
+                    </a>
+                </li>
+                <li *ngIf="Market.free != '0' && sellToken != '0' && sellPrice != '0'" class="nav-item w-50 next">
+                    <a class="nav-link" (click)="sellConfirm()" href="javascript:void(0);">
+                        Confirm
+                    </a>
+                </li>
+                <li *ngIf="Market.free != '0' && ( sellToken == '0' || sellPrice == '0')" class="nav-item w-50 next">
+                    Need amount + price
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 12 Sold Token-->
+<div [ngClass]="{ 'show block': modal == 12 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Sell a token</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            When this transaction is recieved check your account.<br>
+            If there was a buyer you will have Ether in your account.<br>
+            If there was not a buyer your tokens will be in the book waiting for a buyer. You will also pay a 1 finney (0.001 Ether) book fee.<br>
+            You can either cancel the offer to move Tokens off the book and into your account or wait until a buyer buys.<br>
+            When a buyer buys your tokens, you will get the Ether in your account minus the 1 finney.<br><Br>
+
+            This may take a few blocks. (Time since last block {{seconds}})
+            <div [ngClass]="{ 'alert-warning': !Market.transaction, 'alert-success': Market.transaction }" class="alert" role="alert">Transaction sent to blockchain
+                <br>{{Market.transaction}}
+            </div>
+            <div [ngClass]="{'alert-warning': !Market.receipt, 'alert-success': Market.receipt }" class="alert" role="alert">Transaction added to blockchain
+                <br>Gas Used: {{Market.receipt?.gasUsed | number}}<br><br>
+                <span *ngIf="Market.error">ERROR {{Market.error}}</span>
+            </div>
+            <div [ngClass]="{'alert-warning': Market.confirmed < 2, 'alert-success': Market.confirmed > 1 }" class="alert" role="alert">Transaction confirmed on blockchain {{Market.confirmed}} times</div>
+        </div>
+        <div class="modal-footer">
+            <ul class="nav nav-pills modal-nav text-center">
+                <li class="nav-item w-100 prev">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Close
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 13 Deposit Ether-->
+<div [ngClass]="{ 'show block': modal == 13 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Deposit Ether</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <h5>Deposit Ether Into Your Account</h5>
+            Remember that Gas comes out of your blockchain address. If you deposit ALL your Ether 
+            you won't be able to pay the gas required for transactions.
+            Make sure you always keep enough Ether on the blockchain to pay for gas to run your transactions.
+            We recommend keeping a balance of at least 0.1 Ether.
+            <Br><Br>
+            <span *ngIf="accountBalance.length > 19">
+                Amount to deposit: <a (click)="changeEtherDeposit()" href="javascript:void(0);">{{wb3.utils.fromWei(depositEtherAmount, 'ether') | number}}</a>
+            </span>
+            <h5>Confirm that you approve the deposit</h5>
+            This transaction costs you 0 TestEther <!-- ToDo; add gas and uses 0 gas !-->
+            <br>
+            It is estimated to use {{Market.estimate | number}} gas.
+            <span *ngIf="Market.estimate == maxGas">That is all the gas. Most likely an error.</span>
+        </div>
+        <div class="modal-footer">
+            <ul class="nav nav-pills modal-nav text-center">
+                <li class="nav-item w-50 prev">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Cancel
+                    </a>
+                </li>
+                <li class="nav-item w-50 next">
+                    <a class="nav-link" (click)="depositEtherConfirm()" href="javascript:void(0);">
+                        Confirm
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 14 Deposited Ether-->
+<div [ngClass]="{ 'show block': modal == 14 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Deposited Ether</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            This may take a few blocks for the approval. (Time since last block {{seconds}})
+            <div [ngClass]="{ 'alert-warning': !Market.transaction, 'alert-success': Market.transaction }" class="alert" role="alert">Transaction sent to blockchain
+                <br>{{Market.transaction}}
+            </div>
+            <div [ngClass]="{'alert-warning': !Market.receipt, 'alert-success': Market.receipt }" class="alert" role="alert">Transaction added to blockchain
+                <br>Gas Used: {{Market.receipt?.gasUsed | number}}
+                <span *ngIf="Market.error">ERROR {{Market.error}}</span>
+            </div>
+            <div [ngClass]="{'alert-warning': Market.confirmed < 2, 'alert-success': Market.confirmed > 1 }" class="alert" role="alert">Transaction confirmed on blockchain {{Market.confirmed}} times</div>
+        </div>
+        <div class="modal-footer">
+            <ul class="nav nav-pills modal-nav text-center">
+                <li class="nav-item w-100 prev">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Close
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 15 Withdraw Ether-->
+<div [ngClass]="{ 'show block': modal == 15 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Withdraw Ether</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <h5>Withdraw Ether Into Your Account</h5>
+            <Br><Br>
+            <span *ngIf="accountBalance.length > 19">
+                Amount to withdraw: <a (click)="changeEtherWithdraw()" href="javascript:void(0);">{{wb3.utils.fromWei(withdrawEtherAmount, 'ether') | number }}</a>
+            </span>
+            <h5>Confirm that you approve the withdraw</h5>
+            This transaction costs you 0 TestEther <!-- ToDo; add gas and uses 0 gas !-->
+            <br>
+            It is estimated to use {{Market.estimate | number}} gas.
+            <span *ngIf="Market.estimate == maxGas">That is all the gas. Most likely an error.</span>
+        </div>
+        <div class="modal-footer">
+            <ul class="nav nav-pills modal-nav text-center">
+                <li class="nav-item w-50 prev">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Cancel
+                    </a>
+                </li>
+                <li class="nav-item w-50 next">
+                    <a class="nav-link" (click)="withdrawEtherConfirm()" href="javascript:void(0);">
+                        Confirm
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 16 Withdrew Ether-->
+<div [ngClass]="{ 'show block': modal == 16 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Withdraw Ether</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            This may take a few blocks. (Time since last block {{seconds}})
+            <div [ngClass]="{ 'alert-warning': !Market.transaction, 'alert-success': Market.transaction }" class="alert" role="alert">Transaction sent to blockchain
+                <br>{{Market.transaction}}
+            </div>
+            <div [ngClass]="{'alert-warning': !Market.receipt, 'alert-success': Market.receipt }" class="alert" role="alert">Transaction added to blockchain
+                <br>Gas Used: {{Market.receipt?.gasUsed | number}}
+                <span *ngIf="Market.error">ERROR {{Market.error}}</span>
+            </div>
+            <div [ngClass]="{'alert-warning': Market.confirmed < 2, 'alert-success': Market.confirmed > 1 }" class="alert" role="alert">Transaction confirmed on blockchain {{Market.confirmed}} times</div>
+        </div>
+        <div class="modal-footer">
+            <ul class="nav nav-pills modal-nav text-center">
+                <li class="nav-item w-100 prev">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Close
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 17 Cancel Buy Offer-->
+<div [ngClass]="{ 'show block': modal == 17 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Cancel Buy Offer</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <h5>Cancel an offer previously made</h5>
+            Note: Your offer might be accepted prior to the cancellation.<br>
+            You can only cancel one offer at a time.<br>
+            <div *ngFor="let item of getTokensOfBook()">
+                Token: <span *ngIf="item=='0x9287bb21719d283CfdD7d644a89E8492f9845B64'">Free Token</span>
+                <span *ngIf="item!='0x9287bb21719d283CfdD7d644a89E8492f9845B64'">{{item}}</span><br>
+                <div *ngFor="let item2 of getPricesOfTokenBook(item)">
+                    --Price: {{+item2/1000000 | number}}<br>
+                    ----Count: {{wb3.utils.fromWei(this.book.get(item).get(item2).count, 'ether') | number}}<br>
+                    ----Fee: {{wb3.utils.fromWei(this.book.get(item).get(item2).fee, 'ether') | number}}<br>
+                    ----TOTAL: {{wb3.utils.fromWei(addBigNumber(divideBigNumber(multiplyBigNumber(item2,this.book.get(item).get(item2).count),"1000000"),this.book.get(item).get(item2).fee), 'ether') | number}}<br>
+                    <a class="btn btn-ft" href="javascript:void(0);" (click)="setCancelOffer(item,item2,true)">Cancel This Offer</a>
+                    <br>
+                    <Br>
+                </div>
+            </div>
+            <h5>Confirm that you approve the cancellation</h5>
+            This transaction costs you 0 TestEther <!-- ToDo; add gas and uses 0 gas !-->
+            <br>
+            It is estimated to use {{Market.estimate | number}} gas.
+            <span *ngIf="Market.estimate == maxGas">That is all the gas. Most likely an error.</span>
+        </div>
+        <div class="modal-footer">
+            <ul class="nav nav-pills modal-nav text-center">
+                <li class="nav-item w-50 prev">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Cancel
+                    </a>
+                </li>
+                <li *ngIf="Market.estimate == 0" class="nav-item w-50 next">
+                    Pick Offer To Cancel
+                </li>
+                <li *ngIf="Market.estimate != 0" class="nav-item w-50 next">
+                    <a class="nav-link" (click)="cancelOfferConfirm()" href="javascript:void(0);">
+                        Confirm
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 18 Cancel Sell Offer-->
+<div [ngClass]="{ 'show block': modal == 18 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Cancel Sell Offer</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <h5>Cancel an offer previously made</h5>
+            Note: Your offer might be accepted prior to the cancellation.<br>
+            You can only cancel one offer at a time.<br>
+            <div *ngFor="let item of getTokensSellOfBook()">
+                Token: <span *ngIf="item=='0x9287bb21719d283CfdD7d644a89E8492f9845B64'">Free Token</span>
+                <span *ngIf="item!='0x9287bb21719d283CfdD7d644a89E8492f9845B64'">{{item}}</span><br>
+                <div *ngFor="let item2 of getPricesSellOfTokenBook(item)">
+                    --Price: {{+item2/1000000 | number}}<br>
+                    ----Count: {{wb3.utils.fromWei(this.bookToken.get(item).get(item2).count, 'ether') | number}}<br>
+                    <a class="btn btn-ft" href="javascript:void(0);" (click)="setCancelOffer(item,item2,false)">Cancel This Offer</a>
+                    <br>
+                    <Br>
+                </div>
+            </div>
+            <h5>Confirm that you approve the cancellation</h5>
+            This transaction costs you 0 TestEther <!-- ToDo; add gas and uses 0 gas !-->
+            <br>
+            It is estimated to use {{Market.estimate | number}} gas.
+            <span *ngIf="Market.estimate == maxGas">That is all the gas. Most likely an error.</span>
+        </div>
+        <div class="modal-footer">
+            <ul class="nav nav-pills modal-nav text-center">
+                <li class="nav-item w-50 prev">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Cancel
+                    </a>
+                </li>
+                <li *ngIf="Market.estimate == 0" class="nav-item w-50 next">
+                    Pick Offer To Cancel
+                </li>
+                <li *ngIf="Market.estimate != 0" class="nav-item w-50 next">
+                    <a class="nav-link" (click)="cancelOfferConfirm()" href="javascript:void(0);">
+                        Confirm
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal 19 Cancelled Offer-->
+<div [ngClass]="{ 'show block': modal == 19 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Cancel Offer</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            This may take a few blocks. (Time since last block {{seconds}})
+            <div [ngClass]="{ 'alert-warning': !Market.transaction, 'alert-success': Market.transaction }" class="alert" role="alert">Transaction sent to blockchain
+                <br>{{Market.transaction}}
+            </div>
+            <div [ngClass]="{'alert-warning': !Market.receipt, 'alert-success': Market.receipt }" class="alert" role="alert">Transaction added to blockchain
+                <br>Gas Used: {{Market.receipt?.gasUsed | number}}
+                <span *ngIf="Market.error">ERROR {{Market.error}}</span>
+            </div>
+            <div [ngClass]="{'alert-warning': Market.confirmed < 2, 'alert-success': Market.confirmed > 1 }" class="alert" role="alert">Transaction confirmed on blockchain {{Market.confirmed}} times</div>
+        </div>
+        <div class="modal-footer">
+            <ul class="nav nav-pills modal-nav text-center">
+                <li class="nav-item w-100 prev">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Close
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>

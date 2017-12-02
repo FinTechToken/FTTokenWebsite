@@ -1,0 +1,8 @@
+node_modules
+npm-debug.log
+dist
+compiled
+aot
+test.html
+index.html
+js/apiConfig.js

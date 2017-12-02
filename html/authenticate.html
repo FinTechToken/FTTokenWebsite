@@ -1,0 +1,285 @@
+<section>
+    <div class="homepage-hero-module" (window:resize)="onResize($event)">
+        <div class="block-image setheightmin"></div>
+        <div class="setheightmin">
+            <div class="video-annotation-layer code-container">    
+                <div class="video-annotation-1">
+                    <div class="row text-left h-100">
+                        <div class="col-md-6 offset-md-1 padsmalltop">
+                            <div class="media">
+                                <i class="hidden-md-down icon-user homepage-hero-module-icon icon-gradient d-flex mr-3"></i>
+                                <div class="media-body">
+                                    <h2 class="padleft">
+                                        <i class="hidden-lg-up icon-user icon-gradient"></i>
+                                        My Account
+                                    </h2>    
+                                    <ul class="nav nav-tabs">
+                                        <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 1 }" (click)="changeTabs(1)" href="javascript:void(0);">Sign In</a></li>
+                                        <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 2 }" (click)="changeTabs(2)" href="javascript:void(0);">Sign Up</a></li>
+                                        <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 3 }" (click)="changeTabs(3)" href="javascript:void(0);">Advanced</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="tab-white tab-content text-left">
+                                <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 1 }">
+                                    <h4>
+                                        <strong>S</strong>ign in
+                                    </h4>
+                                    <br>
+                                    <div *ngIf="!encrypted_id">
+                                        <strong>P</strong>lease <a href="javascript:void(0);" (click)="changeTabs(2)"><strong>Sign Up</strong></a>, or <a href="javascript:void(0);" (click)="changeTabs(3)"><strong>import</strong></a> an existing account under advanced.
+                                    </div>
+                                    <div *ngIf="encrypted_id">
+                                        <strong>Account#:</strong>
+                                        <span class="p-small return" id="unlockaccount">{{encrypted_id.address}}</span>
+                                        <br>
+                                        <div class="form-group">
+                                            <span id="unlockbad" style="color:red"></span>
+                                            <label for="PWUnlock"><strong>PassPhrase:</strong></label>
+                                            <input type="password" class="form-control" id="PWUnlock" placeholder="">
+                                        </div>
+                                        <a class="btn btn-lg btn-ft" (click)="unlockAccount()" href="javascript:void(0);">
+                                            Sign In
+                                        </a>
+                                        <small><Br>(Decryption may take awhile)</small>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 2 }">
+                                    <h4>
+                                        <span style="font-size:1.5rem"><i (click)="showModal(2);" href="javascript:void(0);" class="icon-info hover" id="create1"></i></span> <strong>S</strong>ign Up
+                                    </h4>
+                                    <div><br>
+                                        <span *ngIf="encrypted_id" style="color:red">A new account will replace your existing one<br></span>
+                                        <span id="createbad" style="color:red"></span>
+                                        <form>
+                                            <div class="form-group">
+                                                <label for="PW"><strong>PassPhrase:</strong></label>
+                                                <input type="password" class="form-control" id="PW" placeholder="">
+                                            </div>
+                                        </form>
+                                        <a class="btn btn-lg btn-ft" (click)="createAccount()" href="javascript:void(0);">
+                                            Create Account
+                                        </a>
+                                        <small><Br>(Encryption may take awhile)</small>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 3 }">
+                                    <h4>
+                                        <strong>I</strong>mport an encrypted account
+                                    </h4>
+                                    <div><br>
+                                        <span *ngIf="encrypted_id" style="color:red">Importing replaces your existing account<br></span>
+                                        <span style="color:red;" id="importwarning2"></span>
+                                        <div class="form-group">
+                                            <label for="importENC"><strong>Encrypted Account:</strong></label>
+                                            <input type="text" class="form-control" id="importENC" placeholder="">
+                                        </div>
+                                        <a class="btn btn-lg btn-ft" (click)="import();" href="javascript:void(0);">
+                                            Import Account
+                                        </a>
+                                    </div>
+                                    <br><hr/><br>
+                                    <h4>
+                                        <strong>I</strong>mport and encrypt a private key
+                                    </h4>
+                                    <div><br>
+                                        <span *ngIf="encrypted_id" style="color:red">Importing replaces your existing account<br></span>
+                                        <span id="importwarning" style="color:red"></span>
+                                        <div class="form-group">
+                                            <label for="importKey"><strong>Private Key:</strong></label>
+                                            <input type="password" class="form-control" id="importKey" placeholder="0x...">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="importPW"><strong>PassPhrase to secure account:</strong></label>
+                                            <input type="password" class="form-control" id="importPW" placeholder="">
+                                        </div>
+                                        <a class="btn btn-lg btn-ft" (click)="import();" href="javascript:void(0);">
+                                            Import & encrypt
+                                        </a>
+                                    </div>
+                                    <br><hr /><Br>
+                                    <h4>
+                                        <strong>C</strong>lear Account From Browser
+                                    </h4>
+                                    <div><br>
+                                        <a class="btn btn-lg btn-ft" (click)="showModal(3);" href="javascript:void(0);">
+                                            Clear Account
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
+                        </div>
+                        <div class="col-sm-5 hidden-sm-down">
+                            <div class="imgborder">
+                                <!--<img src="img/office.jpg" class="rounded img-fluid setheightmax">!-->
+                            </div>
+                        </div>
+                    </div>
+                </div>         
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Modal 2 Create account info -->
+<div [ngClass]="{ 'show block': modal == 2 }" class="modal fade" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content roboto">
+                <div class="modal-header">
+                    <h5 class="modal-title">About Blockchain Accounts</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <strong>What information is needed to create an account?</strong><br>
+                    None. Blockchain revolutionizes privacy. You can use services without 
+                    disclosing personal information.<br>
+                    <br>
+                    <strong>How much does an account cost?</strong><br>
+                    It's free.<br>
+                    <br>
+                    <strong>What is a blockchain account?</strong><br>
+                    An account is made up of a public address and a private key. Both are two long strings of charecters.<br>
+                    <br>
+                    <ul>
+                        <li><strong>Public Address:</strong> This "address" is publicly viewed on the blockchain. If someone wants to send something to you, they use the public address.</li>
+                        <li><strong>Private Key:</strong> The key is used to encrypt/decrypt blockchain transactions. This must be kept secure because the holder of the key can use the account.</li>
+                    </ul>
+                    <br>
+                    <strong>What is a PassPhrase?</strong><br>
+                    The PassPhrase is similar to a password. It is used to 
+                    encrypt your account. You use it when you sign in.
+                    We suggest using a phrase because 4-5 random words is easier for people to remember
+                    and almost impossible to crack. 
+
+
+                </div>
+                <div class="modal-footer">
+                    <ul class="nav nav-pills modal-nav text-center">
+                        <li class="nav-item w-100 next">
+                            <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                                Got it
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+<!-- Modal 1 -->
+<div [ngClass]="{ 'show block': modal == 1 }" class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content roboto">
+            <div class="modal-header">
+                <h5 class="modal-title">You are running Web3</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                TestNet will ignore your instance of Web3. Do NOT use any real addresses on TestNet.
+                <Br><Br>
+                When on the Ethereum Network will will use your instance of Web3.
+            </div>
+            <div class="modal-footer">
+                <ul class="nav nav-pills modal-nav text-center">
+                    <li class="nav-item w-100 next">
+                        <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                            Got it
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal 3 Delete Account -->
+<div [ngClass]="{ 'show block': modal == 3 }" class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content roboto">
+            <div class="modal-header">
+                <h5 class="modal-title">Clear Account</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure?<br><Br>
+                    This clears all account information. Copy keys to a secure place prior to clearing them.
+            </div>
+            <div class="modal-footer">
+                <ul class="nav nav-pills modal-nav text-center">
+                    <li class="nav-item w-50 prev">
+                        <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                            No
+                        </a>
+                    </li>
+                    <li class="nav-item w-50 next">
+                        <a class="nav-link" (click)="deleteAccount()" href="javascript:void(0);">
+                            Yes
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal 4 Pick Account -->
+<div [ngClass]="{ 'show block': modal == 4 }" class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content roboto">
+            <div class="modal-header">
+                <h5 class="modal-title">Safely Store Your Account</h5>
+            </div>
+            <div class="modal-body">
+                <p>We encrypt your blockchain account so you can safely store it. 
+                    It can only be unlocked with your passphrase. 
+                    We recommend you copy this to a safe place and remember your passphrase.<br>
+                    <br>
+                    We store the encrypted account in your browser so that it is easy to sign in.
+                </p>
+                <br>
+                <strong>Encrypted Account</strong><Br>
+                <pre id="enc_id" style="background-color:#eee; padding:10px;"></pre>
+            </div>
+            <div class="modal-footer">
+                <ul class="nav nav-pills modal-nav text-center">
+                    <li class="nav-item w-100 next">
+                        <a class="nav-link" routerLink="/myaccount" href="javascript:void(0);">
+                            Let's go
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 5 Enter information -->
+<div [ngClass]="{ 'show block': modal == 5 }" class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content roboto">
+            <div class="modal-header">
+                <h5 class="modal-title">Enter information</h5>
+            </div>
+            <div class="modal-body">
+                <p>Either information so we can import your account.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <ul class="nav nav-pills modal-nav text-center">
+                    <li class="nav-item w-100 next">
+                        <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                            Got It
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

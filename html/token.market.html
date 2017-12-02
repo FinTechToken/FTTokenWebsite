@@ -1,0 +1,565 @@
+<section>
+    <div class="homepage-hero-module" (window:resize)="onResize($event)">
+        <!---
+        <video id="video" autoplay loop class="video hidden-sm-down " poster="img/video/stock/stock.jpg"> 
+            <source src="img/video/stock/stock.mp4" type="video/mp4" />Your browser does not support the video tag. I suggest you upgrade your browser. 
+            <source src="img/video/stock/stock.webm" type="video/webm" />Your browser does not support the video tag. I suggest you upgrade your browser.                 
+            <source src="img/video/stock/stock.ogv" type="video/ogg" />Your browser does not support the video tag. I suggest you upgrade your browser.                 
+        </video>
+        !-->
+        <div class="block-image setheightmin"></div>
+        <div class="setheightmin">
+            <div class="video-annotation-layer code-container" id="tutorial" >
+                <div class="video-annotation-1">
+                    <div class="row text-left h-100">
+                        <div class="col-md-6 offset-md-1 padsmalltop">
+                            <div class="media">
+                                <i class="hidden-md-down icon-graph homepage-hero-module-icon icon-gradient d-flex mr-3"></i>
+                                <div class="media-body">
+                                    <h2 class="padleft">   
+                                        <i class="hidden-lg-up icon-graph icon-gradient"></i>
+                                        Token Market
+                                    </h2>    
+                                    <ul class="nav nav-tabs">
+                                        <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 1 }" (click)="changeTabs(1)" href="javascript:void(0);">
+                                            <span *ngIf="!cache.getCache('key')">Tutorial</span>
+                                            <span *ngIf="cache.getCache('key')">View</span>
+                                        </a></li>
+                                        <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 3 }" (click)="changeTabs(3)" href="javascript:void(0);">About</a></li>
+                                        <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 2 }" (click)="changeTabs(2)" href="javascript:void(0);">Learn</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row tab-content tab-white">
+                                <div *ngIf="tabs == 1" class="tab-pane fade show roboto" [ngClass]="{ 'active': tabs == 1 }">
+                                    <div *ngIf="!cache.getCache('key')">
+                                        <h4><strong>G</strong>et a free token by completing the Tutorial</h4>
+                                        <br>
+                                        <button type="button" class="btn btn-lg btn-ft" (click)="showModal(2);" href="javascript:void(0);">
+                                            Start Tutorial
+                                        </button>                                        
+                                    </div>
+                                    <div *ngIf="cache.getCache('key')">
+                                        <h4><strong>T</strong>op Tokens</h4>
+                                        <br>
+                                        ** Coming Soon **
+                                    </div>
+                                </div>
+                                <div *ngIf="tabs == 2" class="tab-pane fade show roboto w-100" [ngClass]="{ 'active': tabs == 2 }">
+                                    <div *ngIf="tutorial == 1">
+                                        <h4><strong>10</strong> Things About Blockchain</h4>
+                                        <br>
+                                        <button type="button" class="btn btn-lg btn-ft" (click)="Tutorial(2);" href="javascript:void(0);">
+                                            Go to #1
+                                        </button>                                        
+                                    </div>
+                                    <div *ngIf="tutorial == 2">
+                                        <h4>1) Who protects data?</h4>
+                                        <Br>
+                                        Traditional technology has 3rd parties own, protect and manage information. (Equifax, Target)
+                                        We as society give them our data and trust them to secure it with one key that they hold.
+                                        3rd parties essentially own the data and hold the key to that data.<br>
+                                        <br>
+                                        Blockchain flips this process. It puts data onto a public blockchain 
+                                        for anyone to see. Keys to use the data is not held by a 3rd party. Instead the keys are kept by the users.
+                                        Essentially, everyone sees the data, but each individual has their own key to use only their data.
+                                        <br><Br>
+                                        The old system had a huge amount of data protected by one very important secure key held by a 3rd party.<br><Br>
+                                        The blockchain has each person hold the keys to their own data. 
+                                        <br>
+                                        <br>
+                                        <ul class="nav nav-pills tutorial text-center">
+                                            <li class="nav-item w-50 prev">
+                                                <a class="nav-link" (click)="Tutorial(1)" href="javascript:void(0);">
+                                                    Back
+                                                </a>
+                                            </li>
+                                            <li class="nav-item w-50 next">
+                                                <a class="nav-link" (click)="Tutorial(3)" href="javascript:void(0);">
+                                                    Next
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div *ngIf="tutorial == 3">
+                                        <h4>2) Passwords and Keys</h4>
+                                        <br>
+                                        <strong>A password</strong> is a user generated string of charectors that 
+                                        is easy to remember. They are often easy for a computer to guess.
+                                        <br><Br>
+                                        <strong>A key</strong> is a really long string of charectors that is difficult to
+                                        remember or enter into a website.
+                                        But, it is also ultra secure. It is what the blockchain uses.
+                                        <br><Br>
+                                        The blockchain cannot "remind or reset" a password. 
+                                        There is no 3rd party to help you. This is super important.
+                                        Protect your blockchain keys. 
+                                        If someone else has the private key- they can access your data.
+                                        If you lose/forget your key - it is lost forever.
+                                        <br><Br>
+                                        <ul class="nav nav-pills tutorial text-center">
+                                            <li class="nav-item w-50 prev">
+                                                <a class="nav-link" (click)="Tutorial(2)" href="javascript:void(0);">
+                                                    Back
+                                                </a>
+                                            </li>
+                                            <li class="nav-item w-50 next">
+                                                <a class="nav-link" (click)="Tutorial(4)" href="javascript:void(0);">
+                                                    Next
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div *ngIf="tutorial == 4">
+                                        <h4>3) Blockchain Nodes</h4>
+                                        <br>
+                                        The blockchain is made up of nodes.
+                                        Each node has a copy of the blockchain. Each node
+                                        can add transactions to the blockchain and get information from the blockchain.
+                                        For Ethereum a node is typically run on Geth (Geth stands for Go Ethereum - "go" is the programming language it is written in)
+                                        <br><Br>
+                                        A node has cryptography built into it to protect the keys of the person running the node.
+                                        This allows a user to interact with blockchain using keys without having to remember the keys.
+                                        They just need to run their node - and keep their computer safe.
+                                        <br><br>
+                                        The Ethereum Foundation created a program called "Web3" to interact with a node.
+                                        Web3 is a javascript program that makes it easy for developers to run commands on a node.
+                                        Without Web3 users would need to type low level commands into a terminal window. 
+                                        Web3 lets developers create usable apps and sites for you to enjoy.
+                                        <br><Br>
+                                        The Ethereum blockchain's browser is called "Mist".
+                                        Mist includes "Web3" which is connected to a local node running Geth.
+                                        <br><Br>
+                                        <ul class="nav nav-pills tutorial text-center">
+                                            <li class="nav-item w-50 prev">
+                                                <a class="nav-link" (click)="Tutorial(3)" href="javascript:void(0);">
+                                                    Back
+                                                </a>
+                                            </li>
+                                            <li class="nav-item w-50 next">
+                                                <a class="nav-link" (click)="Tutorial(5)" href="javascript:void(0);">
+                                                    Next
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div *ngIf="tutorial == 5">
+                                        <h4>4) FinTechToken Shared Node</h4>
+                                        <br>
+                                        If our site detects a local instance of Web3 we will use it. 
+                                        We work with Mist.
+                                        <br><Br>
+                                        However, we also created a solution to make getting on blockchain 
+                                        both easy and secure for customers who don't want to install Geth/Mist/Web3.
+                                        <Br><Br>
+                                        We feel getting users to run local nodes is a big ask.
+                                        We also feel it isn't practical over the long term.
+                                        The Ethereum blockchain is over 20gigs. This means a user
+                                        would need to keep 20gigs on their machine, and their machine
+                                        would need to process transactions which uses computing power 
+                                        and bandwidth. 
+                                        <br><Br>
+                                        We created a shared node hosted on Amazon Web Services.
+                                        The shared node does NOT manage keys and user accounts like 
+                                        a typical local node. We moved account and key management 
+                                        off the node and into our website.
+                                        The website is written in Angular and runs on the clients browser. 
+                                        <br><br>
+                                        This means the keys/encryption is not done on our server.
+                                        It stays locally with the user. 
+                                        However, the user doesn't need Geth/Mist/or Web3.
+                                        <br><Br>
+                                        <ul class="nav nav-pills tutorial text-center">
+                                            <li class="nav-item w-50 prev">
+                                                <a class="nav-link" (click)="Tutorial(4)" href="javascript:void(0);">
+                                                    Back
+                                                </a>
+                                            </li>
+                                            <li class="nav-item w-50 next">
+                                                <a class="nav-link" (click)="Tutorial(6)" href="javascript:void(0);">
+                                                    Next
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div *ngIf="tutorial == 6">
+                                        <h4>5) Authentication</h4>
+                                        <br>
+                                        We do three things to authenticate and protect users on the shared node.
+                                        <br><br>
+                                        1) We encrypt your key with a password you create. 
+                                        We call this your "encrypted id". The encrypted id stores your private key.
+                                        <br><Br>
+                                        We do this so our users can authenticate with a usable password
+                                        - yet have the security of a complex key.
+                                        <br><Br>
+                                        It is best practice to mix up 4 or 5 random words for a password.
+                                        This is easy to remember if you create a story about the words.
+                                        But super hard for a computer to crack. For example 
+                                        "Pink Ground Piano Climbing Rock" 
+                                        <br><Br>
+                                        2) Keys never touch our site and are never stored on your browser. 
+                                        <br>
+                                        We also do not send keys over the wire. Keys are used on your browser to encrypt
+                                        a message that our site forwards to the blockchain.
+                                        <br><Br>
+                                        3) We do not store encrypted ids on our site.
+                                        Your encrypted id is stored in your browsers storage
+                                        secured so only our site can use it.
+                                        <br><Br>
+                                        <ul class="nav nav-pills tutorial text-center">
+                                            <li class="nav-item w-50 prev">
+                                                <a class="nav-link" (click)="Tutorial(5)" href="javascript:void(0);">
+                                                    Back
+                                                </a>
+                                            </li>
+                                            <li class="nav-item w-50 next">
+                                                <a class="nav-link" (click)="Tutorial(7)" href="javascript:void(0);">
+                                                    Next
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div *ngIf="tutorial == 7">
+                                        <h4>6) Token Market Smart Contract</h4>
+                                        <br>
+                                        A smart contract is code. Unlike a legal contract written by 
+                                        lawyers - a smart contract is written by programmers.
+                                        <br><br>
+                                        Users of Ethereum have addresses where they hold digital assets like Ether 
+                                        and interact with the blockchain.
+                                        Smart contracts also get an address to hold digital assets and interact with the blockchain.
+                                        <br><br>
+                                        Once published - a smart contracts code cannot change.
+                                        This is enormously different than traditional programs 
+                                        where software can be patched or updated.
+                                        It's also different from traditional law where
+                                        legal contracts can be amended.
+                                        <br><br>
+                                        Legal contracts are enforced by judges and the legal system. This
+                                        enforcement may be costly, timely, and potentially corrupt process.
+                                        Smart contracts are enforced by the ethereum network. The code
+                                        will do exactly what it is programmed to do.
+                                        <br><br>
+                                        This means a smart contract may have mistakes in it. Just like
+                                        a lawyer can make costly mistakes by ommiting a critical line in a contract.
+                                        In the same way a programmer may have unintended consequences in a smart contract.
+                                        <br><br>
+                                        The Token Market is a smart contract. Assets are never held, nor can they
+                                        be touched by us, a third party, or anyone. Assets are kept on
+                                        the smart contract and we do not have custody.
+                                        <br><Br>
+                                        <ul class="nav nav-pills tutorial text-center">
+                                            <li class="nav-item w-50 prev">
+                                                <a class="nav-link" (click)="Tutorial(6)" href="javascript:void(0);">
+                                                    Back
+                                                </a>
+                                            </li>
+                                            <li class="nav-item w-50 next">
+                                                <a class="nav-link" (click)="Tutorial(8)" href="javascript:void(0);">
+                                                    Next
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div *ngIf="tutorial == 8">
+                                        <h4>7) Private blockchain</h4>
+                                        <br>
+                                        Smart contracts cannot be hacked. All Ethereum hacks have either been
+                                        due to bad code, or have been off blockchain issues with 3rd parties.
+                                        <br><br>
+                                        Our token market is beta software and we want to protect you from bad code. 
+                                        To protect users we did two things.<br><br>
+                                        1) We created a kill command. This command 
+                                        can only be issued by us - it prevents all transactions
+                                        except withdrawing digital assets from the token market.
+                                        <br><Br>
+                                        2) We created a private blockchain. 
+                                        The private chain runs exactly like the Ethereum network.
+                                        However, it is not connected to the real blockchain.
+                                        <br><br>
+                                        When you use our private chain you risk nothing.
+                                        We don't use real ether, or real digital assets.
+                                        <br><Br>
+                                        We are looking at how the test token market performs
+                                        with test users so that we can ensure code quality
+                                        prior to publishing on the real blockchain.
+                                        <br><br>
+                                        <ul class="nav nav-pills tutorial text-center">
+                                            <li class="nav-item w-50 prev">
+                                                <a class="nav-link" (click)="Tutorial(7)" href="javascript:void(0);">
+                                                    Back
+                                                </a>
+                                            </li>
+                                            <li class="nav-item w-50 next">
+                                                <a class="nav-link" (click)="Tutorial(9)" href="javascript:void(0);">
+                                                    Next
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div *ngIf="tutorial == 9">
+                                        <h4>8) Transfer</h4>
+                                        <br>
+                                        The Token Marketplace protects users by only allowing users 
+                                        to trade assets they move onto the Token Market smart contract.
+                                        This means users are guaranteed that the other party to a transaction
+                                        has the funds to complete the transaction.
+                                        It also means your assets are protected since there is no 3rd party
+                                        to lose or touch your funds.
+                                        The Smart Contract is the 3rd party.<br><br>
+                                        <strong>Deposit into the Token Market</strong><br>
+                                        You can deposit Ether or ERC20 tokens/smart contracts onto the Token Market
+                                        for free.
+                                        When transferred the address that sent the assets is your account.
+                                        Assets can only be withdrawn to the account that deposited them.
+                                        Assets on the Token Market can only be traded by the address that deposited them.
+                                        <br><br>
+                                        <strong>Withdrawal out of the Token Market</strong><Br>
+                                        At any point in time you can transfer Ether or ERC20 tokens/smart contracts
+                                        off the Token Market smart contract for free.
+                                        This means you can get your funds at any time.<br><br>
+                                        <strong>Get Ether or get out of Ether</strong><br>
+                                        Many users may be new to Ethereum and need to buy Ether.
+                                        We use another company to help our users transfer into Ether,
+                                        and transfer out of Ether. We use another company to avoid money changer regulations.<Br><Br>
+                                        Users can transfer from fiat or another blockchain into Ether.
+                                        They can also transfer from Ether to fiat or another blockchain.
+                                        <br><Br>
+                                        Fiat is traditional currency like USD, EUR, YEN, RNB.
+                                        Examples of other blockchains are BitCoin, Litecoin, and ripple.<br><br>
+                                        This is just like a money changer at the airport.
+                                        <br><br>
+                                        <ul class="nav nav-pills tutorial text-center">
+                                            <li class="nav-item w-50 prev">
+                                                <a class="nav-link" (click)="Tutorial(8)" href="javascript:void(0);">
+                                                    Back
+                                                </a>
+                                            </li>
+                                            <li class="nav-item w-50 next">
+                                                <a class="nav-link" (click)="Tutorial(10)" href="javascript:void(0);">
+                                                    Next
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div *ngIf="tutorial == 10">
+                                        <h4>9) Trade</h4>
+                                        <br>
+                                        <strong>ERC20 Smart Contracts exchanged for Ether</strong><br>
+                                        The market lets users offer to buy/sell any ERC20 smart contracts for Ether.
+                                        Everything is priced in Ether.
+                                        <br><Br>
+                                        <strong>What is an ERC20 Contract?</strong><Br>
+                                        ERC20 is a standard. The standard means a smart contract has certain functions.
+                                        The function we need is called "transfer".
+                                        The Token Market needs that function to transfer smart contracts 
+                                        between accounts.<Br>
+                                            <br>
+                                        <strong>Make an offer</strong><br>
+                                        Once you deposit Ether or ERC20 Smart contracts onto the Token Market; you can
+                                        make an offer to buy/sell ERC20 Smart contracts.
+                                        Simply state how much Ether you want to pay for a smart contract
+                                        and how many smart contracts you want to buy.
+                                        Or how much Ether you want to receive to sell a smart contract
+                                        and how many you want to sell.<br>
+                                        <br>
+                                        <strong>Settlement</strong><br>
+                                        If someone else already made an offer that meets
+                                        your offer a transaction will occur immediately.
+                                        If you are selling tokens - you will get Ether and the 
+                                        other party will get the tokens.
+                                        If you are buying tokens - you will get the Tokens
+                                        and the other party will get the Ether.
+                                        The transaction takes place at the price that already existed on the book.<br>
+                                        <br>
+                                        <strong>Offer on the book</strong><br>
+                                        If there is not an existing offer that meets your offer, your offer goes on the book.
+                                        This means it is publicly shared and if another party
+                                        makes an offer equal to or better than yours a transaction will occur
+                                        at your price. 
+                                        When an offer goes on the book the assets is removed from your account
+                                        and place on the book. This ensures assets exist for all transactions.<br>
+                                        <br>
+                                        <strong>Removing an offer</strong><br>
+                                        If you have an offer on the book you may cancel it at any time
+                                        prior to a transaction occuring. This means you 
+                                        pull the offer off the book and the assets go back into your account.<br>
+                                        <br>
+                                        <strong>View Book</strong><br>
+                                        The book is public. This means everyone can see 
+                                        what the current best offer is - what all other offers are
+                                        - what previous transactions occured - and what accounts are making offers
+                                        and transacting. A book exists for all ERC20 smart contracts.
+                                        <br><Br>
+                                        <ul class="nav nav-pills tutorial text-center">
+                                            <li class="nav-item w-50 prev">
+                                                <a class="nav-link" (click)="Tutorial(9)" href="javascript:void(0);">
+                                                    Back
+                                                </a>
+                                            </li>
+                                            <li class="nav-item w-50 next">
+                                                <a class="nav-link" (click)="Tutorial(11)" href="javascript:void(0);">
+                                                    Next
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div *ngIf="tutorial == 11">
+                                        <h4>10) Gas</h4>
+                                        <br>
+                                        Gas is used to pay the network to execute smart contract code. 
+                                        Gas is paid by the person executing a transaction.
+                                        If you want to make an offer - you pay the gas to execute the make an offer function.
+                                        <br><Br>
+                                        When you ask a smart contract to do something you choose how much you
+                                        are willing to pay for gas, and the most amount of gas you are willing to
+                                        use. The idea is people who want transactions to happen immediately can 
+                                        pay more for gas, than people who are not in a rush.
+                                        <br><Br>
+                                        Users can pick how much to bid for gas, and the max amount of gas to use.
+                                        We will tell users an estimate of the gas amount and potential tips to
+                                        lower the amount of gas used.
+                                        <br><br>
+                                        This may be too complex for some users.
+                                        As such we also will allow users to pick fast, medium, slow and let our site
+                                        make bids for gas based on recent transaction on the blockchain.
+                                        <br><Br>
+                                        There are two main problems with gas and having a book on blockchain.
+                                        <br><br>
+                                        1) If I want to buy 100 tokens - and someone else wants to sell 100 tokens
+                                        there are 2 writes to the database which costs 40k in gas. This is fine.
+                                        What if I want to buy 100 tokens - and 100 other people want to sell 1 token each.
+                                        Now there would be 200 writes to the database. This would cost 4M in gas. 
+                                        This means when making an offer the cost could vary by a factor of 100.
+                                        <br><br>
+                                        Our solution is that people place 40k in gas worth of Ether as part of their
+                                        offer if it goes on the book. If you cancel your transaction you get it back.
+                                        But, if someone hits your offer they get the Ether. This means that the
+                                        person who paid 4M in gas for 100 sellers would receive Ether worth 
+                                        about 4M in gas.
+                                        <br><Br>
+                                        2) Searching the book. Lets say people make offers at 1 cent increments.
+                                        If there is $1 in offers there will be 100 offers to search.
+                                        Each search costs about 1k in gas. 100 offers would be 100K in gas.
+                                        $100 dollar spread would be about 10,000 items which would be 10M gas
+                                        to search all of them. The max gas in a transaction is curerntly 6M.
+                                        Plus, that would be fairly expensive.
+                                        <br><br>
+                                        We created an algorithm that exponentially lowers the cost for searching
+                                        a long list. This algorithm theoretically can search 10,000 
+                                        items for under 500k in gas. One of the reasons we want users
+                                        to try our test network is to test and improve this algorithm.
+                                        <br><Br>
+                                        <ul class="nav nav-pills tutorial text-center">
+                                            <li class="nav-item w-50 prev">
+                                                <a class="nav-link" (click)="Tutorial(10)" href="javascript:void(0);">
+                                                    Back
+                                                </a>
+                                            </li>
+                                            <li class="nav-item w-50 next">
+                                                <a class="nav-link" (click)="changeTabs(3)" href="javascript:void(0);">
+                                                    About Token Market
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div *ngIf="tabs == 3" class="tab-pane fade show roboto w-100" [ngClass]="{ 'active': tabs == 3 }">
+                                    <h4><strong>A</strong>bout The Token Market</h4>
+                                    <br>
+                                    <ul class="nav nav-tabs text-center">
+                                        <li class="nav-item w-25"><a class="nav-link subnav" [ngClass]="{ 'active': subtabs == 1 }" (click)="changeSubTabs(1)" href="javascript:void(0);">
+                                            <i class="icon-badge"></i><br>
+                                            <span class="subnavs">Trust</span></a></li>
+                                        <li class="nav-item w-25"><a class="nav-link subnav" [ngClass]="{ 'active': subtabs == 2 }" (click)="changeSubTabs(2)" href="javascript:void(0);">
+                                            <i class="icon-globe"></i><br>
+                                            <span class="subnavs">Trade</span></a></li>
+                                        <li class="nav-item w-25"><a class="nav-link subnav" [ngClass]="{ 'active': subtabs == 3 }" (click)="changeSubTabs(3)" href="javascript:void(0);">
+                                            <i class="icon-book-open"></i><br>
+                                            <span class="subnavs">Open</span></a></li>
+                                        <li class="nav-item w-25"><a class="nav-link subnav" [ngClass]="{ 'active': subtabs == 4 }" (click)="changeSubTabs(4)" href="javascript:void(0);">
+                                            <i class="icon-credit-card"></i><br>
+                                            <span class="subnavs">Money</span></a></li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <p class="tab-pane fade show roboto" [ngClass]="{ 'active': subtabs == 1}">
+                                            <br>
+                                            <strong>FinTechToken removes the need for a third party</strong> - Assets are on blockchain removing risk of error/theft by exchange.
+                                            <br><Br>
+                                            <strong>FinTechToken prevents counterparty risk</strong> - Assets cannot be double pledged so bids accurately reflect demand.
+                                            <Br><Br>
+                                            <strong>FinTechToken has instant settlement</strong> - Receive purchased assets immediately. 
+                                        </p>
+                                        <p class="tab-pane fade show roboto" [ngClass]="{ 'active': subtabs == 2}">
+                                            <br>
+                                            <strong>Trade All ERC20 tokens</strong> - Over 90% of tokens & smart contracts are ERC20 compliant.
+                                            <br><br>
+                                            <strong>You can create market for any token</strong> - Immediately have frictionless liquidity.
+                                            <br><Br>
+                                            <strong>Automatic execution</strong> - No need to manually match orders. Trades happen when offers match.
+                                        </p>
+                                        <p class="tab-pane fade show roboto" [ngClass]="{ 'active': subtabs == 3}">
+                                            <br>
+                                            <strong>Transparent market</strong> - Price, volume, and offers are published on blockchain. 
+                                            <br><Br>
+                                            <strong>No asymetrical information</strong> - Market information is instantly transparent to all parties. 
+                                            <br><Br>
+                                            <strong>No "dark" pools</strong> - We solved technical challenge of listing book cheaply on blockchain.
+                                        </p>
+                                        <p class="tab-pane fade show roboto" [ngClass]="{ 'active': subtabs == 4}">
+                                            <br>
+                                            <strong>Token Seller Pays 0.1% fee</strong> - Ultra low cost. Buyer pays 0. Low gas per transaction.
+                                            <br><Br>
+                                            <strong>Make money</strong> - Fees are distributed to smart contract authors and traders.
+                                            <br><Br>
+                                            <strong>Encourage innovation</strong> - Sharing fees is our thanks for innovating and providing liquidity.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>            
+                        </div>
+                        <div class="col-sm-5 hidden-sm-down">
+                        </div>
+                    </div>
+                </div>         
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Modal 2 -->
+<div [ngClass]="{ 'show block': modal == 2 }" class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">FinTechToken Tutorial </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            This Tutorial is on a private blockchain called TestNet.
+            <br><Br>
+            TestNet lets you paper trade, experiment, and learn about our blockchain free of charge,
+            and without any risks. 
+            <br><Br>
+            Create an account and read your messages to follow the Tutorial.
+        </div>
+        <div class="modal-footer">
+            <ul class="nav nav-pills modal-nav text-center">
+                <li class="nav-item w-50 prev">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Close
+                    </a>
+                </li>
+                <li class="nav-item w-50 next">
+                    <a class="nav-link" routerLink="/authenticate" href="javascript:void(0);">
+                        Start
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>
+    
