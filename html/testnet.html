@@ -1,0 +1,184 @@
+<section>
+    <div class="homepage-hero-module" (window:resize)="onResize($event)">
+        <div class="setheightmin">
+            <div class="video-annotation-layer world-container filter">    
+                <div class="video-annotation-1">
+                    <div class="row roboto">
+                        <div class="col-md-6 padsmalltop">
+                            <div class="tab-white text-left">
+                                <h4>Welcome to TestNet</h4>
+                                <br>
+                                <h5>TestNet Blocks</h5>
+                                BlockNumber: {{blocknumber | number}} (Time since last block {{seconds}})
+                                <br><br>
+                                <h5>Your Account</h5>
+                                Account#: {{account}}<br>
+                                TestEther Balance: {{accountBalance | number }}
+                                <br><br>
+                                <h5>TestNet Miner Account</h5>
+                                Account#: {{account1}}<br>
+                                TestEther Balance: {{accountBalance1 | number }}<br>
+                                <br>
+                            </div>
+                        </div>
+                        <div class="col-md-6 padsmalltop">
+                            <div class="tab-white text-left">
+                                <div *ngIf="FreeToken.mine == 0">
+                                    <h4>Let's do something!</h4>
+                                    There is a hot startup called "FreeToken". 
+                                    Their business model is to give everyone 1 token.
+                                    Let's get in on the action. This ICO is Genius!
+                                    <br><br>
+                                </div>
+                                <div *ngIf="FreeToken.mine > 0">
+                                    <h4>What's Next?</h4>
+                                    Come back soon to sell your FreeToken for TestEther!
+                                    <br><br>
+                                </div>
+                                <h5>FreeToken</h5>
+                                Your FreeTokens: {{FreeToken.mine | number}}<br>
+                                Outstanding FreeTokens: {{FreeToken.out | number}}<br>
+                                Total FreeTokens: {{FreeToken.supply | number}}<br>
+                                FreeToken Contract Address: 0x9287bb21719d283CfdD7d644a89E8492f9845B64<br>
+                                <br><br>
+                                <button *ngIf="FreeToken.mine == 0" type="button" class="btn btn-warning" (click)="showModal(2);" href="javascript:void(0);">
+                                    Get Free Token
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>         
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Modal 3 Got Free Token-->
+<div [ngClass]="{ 'show block': modal == 3 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Free Token Transaction</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            This may take a few blocks. (Time since last block {{seconds}})
+            <div [ngClass]="{ 'alert-warning': !FreeToken.transaction, 'alert-success': FreeToken.transaction }" class="alert" role="alert">Transaction sent to blockchain
+                <br>{{FreeToken.transaction}}
+            </div>
+            <div [ngClass]="{'alert-warning': !FreeToken.receipt, 'alert-success': FreeToken.receipt }" class="alert" role="alert">Transaction recieved by blockchain
+                <!--ToDo: <br>Gas Used: {{FreeToken.receipt?.gasUsed}}!-->
+                <!-- ToDo: ERROR !-->
+            </div>
+            <div [ngClass]="{'alert-warning': FreeToken.confirmed < 2, 'alert-success': FreeToken.confirmed > 1 }" class="alert" role="alert">Transaction confirmed on blockchain {{FreeToken.confirmed}} times</div>
+        </div>
+        <div class="modal-footer">
+            <ul class="nav nav-pills modal-nav text-center">
+                <li class="nav-item w-50 prev">
+                </li>
+                <li class="nav-item w-50 next">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Close
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>
+<!-- Modal 2 Get Free Token-->
+<div [ngClass]="{ 'show block': modal == 2 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Get Free Token</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <h5>Create transaction on the blockchain</h5>
+            This transaction costs you 0 TestEther <!-- ToDo; add gas and uses 0 gas !-->
+        </div>
+        <div class="modal-footer">
+            <ul class="nav nav-pills modal-nav text-center">
+                <li class="nav-item w-50 prev">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Cancel
+                    </a>
+                </li>
+                <li class="nav-item w-50 next">
+                    <a class="nav-link" (click)="showModal(3)" href="javascript:void(0);">
+                        Confirm
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>
+<!-- Modal 1 TestNet To Do-->
+<div [ngClass]="{ 'show block': modal == 1 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">TestNet Development Tasks</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                We are in the process of building this app.
+                <br><br>
+                We are working on the following tasks and will release one item at a time.
+                <br><Br>
+                <strong>Authenticate Account - done</strong><br>
+                * Detect Web3 (ignore on TestNet - would use on RealNet)<br>
+                * Detect existing encrypted id (Prompt password if found + use if good pw)<br>
+                * If no encypted id than create account or import key (Generate key + Convert key to encrypted id)<br>
+                <strong>Display Account Info - done</strong><br>
+                * Display account balance<br>
+                <strong>Get free token because users need Ether to test - Done</strong><br>
+                * Detect if user got free token (Get free token if not)<br>
+                <strong>Sell free token for ether on market</strong><br>
+                - Detect if user sold free token (If not, Show free token book + Sell free token for Ether on market)<br>
+                <strong>Get TradingToken</strong><br>
+                - Detect if user got free TradingToken (Get 100 free trading tokens if not, users need Ether and a token to trade)<br>
+                <strong>TradingTokenBook</strong><br>
+                - Display TradingToken book. (Users have 100 TradingTokens + 10 Ether)<br>
+                <strong>Allow Trading</strong><br>
+                - Trade TradingToken between users<br>
+                <strong>Market Display</strong><br>
+                - Display past trades, and information about market and other accounts.<br>
+                <strong>Alerts</strong><br>
+                - Users get text msg/email when trade is confirmed
+                    <!-- TEXT !-->
+                    So far you<br>
+                    - Created a private key for a public account<br>
+                    - Encrypted and saved the private key with a PassPhrase<br>
+                    - Connected to the blockchain<br>
+                    - Pull information about your account from the blockchain<br>
+                    - Pull information about FreeToken smart contract from the blockchain<br>
+                    <br>
+                    You are about to<br>
+                    - Enter into your first blockchain transaction by getting a token from the FreeToken smart contract.
+            </div>
+            <div class="modal-footer">
+                <ul class="nav nav-pills modal-nav text-center">
+                    <li class="nav-item w-50 prev">
+                        <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                            Close
+                        </a>
+                    </li>
+                    <li class="nav-item w-50 next">
+                        <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                            Come back soon!
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            </div>
+        </div>
+    </div>

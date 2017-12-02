@@ -1,0 +1,130 @@
+<section>
+    <div class="homepage-hero-module" (window:resize)="onResize($event)">
+        <div class="block-image setheightmin"></div>
+        <div class="setheightmin">
+            <div class="video-annotation-layer code-container">    
+                <div class="video-annotation-1">
+                    <div class="row text-left h-100">
+                        <div class="col-md-6 offset-md-1 padsmalltop">
+                            <div class="media">
+                                    <i *ngIf="cache.getCache('encrypted_id') && !cache.getCache('key')" class="hidden-md-down icon-envelope homepage-hero-module-icon icon-gradient d-flex mr-3"></i>
+                                    <i *ngIf="!cache.getCache('encrypted_id') || cache.getCache('key')" class="hidden-md-down icon-envelope-open homepage-hero-module-icon icon-gradient d-flex mr-3"></i>
+                                <div class="media-body">
+                                    <h2 class="padleft">
+                                        <i *ngIf="cache.getCache('encrypted_id') && !cache.getCache('key')" class="hidden-lg-up icon-envelope icon-gradient"></i>
+                                        <i *ngIf="!cache.getCache('encrypted_id') || cache.getCache('key')" class="hidden-lg-up icon-envelope-open icon-gradient"></i>
+                                        Messages
+                                    </h2>    
+                                    <ul class="nav nav-tabs">
+                                        <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 1 }" (click)="changeTabs(1)" href="javascript:void(0);">Received</a></li>
+                                        <!--
+                                            <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 2 }" (click)="changeTabs(2)" href="javascript:void(0);">Sent</a></li>
+                                        !-->
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="tab-white tab-content text-left">
+                                <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 1 }">
+                                    <h4>
+                                        <strong>R</strong>eceived Transactions
+                                    </h4>
+                                    <div><br>
+                                        <span *ngIf="!cache.getCache('encrypted_id')">
+                                            <strong>Tutorial Step 1) <a routerLink="/authenticate">Create an account</a></strong> and complete the tutorial to get a free token!
+                                        </span>
+                                        <span *ngIf="cache.getCache('encrypted_id') && !cache.getCache('key')">
+                                            <strong><a routerLink="/authenticate">Sign in</a></strong> to see if you have messages
+                                        </span>
+                                        <span *ngIf="cache.getCache('key') && !gotFree">
+                                            <strong>Tutorial Step 2) </strong> Get a Free Token! <br>
+                                            Your account has nothing in it. 
+                                            Creating an account is like opening a bank account without depositing anything. 
+                                            Let's add a token to your account.
+                                            There is a company giving away 1 Free Token to every blockchain address. 
+                                            Go get your free token.
+                                            <br>
+                                            <br>
+                                            (complete) <strong>Step 1)</strong> Create an account.
+                                        </span>
+                                        <span *ngIf="cache.getCache('key') && gotFree && Market.free == '0' && Market.ether == '0'">
+                                            <strong>Tutorial Step 3) </strong> Deposit the Free Token<br>
+                                            The Free Token is on the blockchain associated with your address.
+                                            You need to deposit the FreeToken into your trading account
+                                            so that you can trade the Token for Ether. 
+                                            Deposit the token by going to your account and pressing the forward
+                                            deposit button.
+                                            <br><Br>
+                                            (complete) <strong>Step 2) </strong> Get a Free Token! <br>
+                                            <br>
+                                            (complete) <strong>Step 1)</strong> Create an account.
+                                        </span>
+                                        <span *ngIf="cache.getCache('key') && gotFree && Market.free != '0' && Market.ether == '0'">
+                                            <strong>Tutorial Step 4) </strong> Trade Free Token for Ether<br>
+                                            Sell your 1 FreeToken to get Ether in your account.<br>
+                                            - Press the minus button. <br>
+                                            - Click the 0 number hyperlink and choose 1 Ether of tokens to sell<br>
+                                            - Click the 0 price hyperlink and choose anything under 5 Ether.<br>
+                                            (There is currently a buy order on the book for 5 Ether. 
+                                            If you sell for anything less than 5 you will get the 5 Ether that is offered on the book.)
+                                            <br><Br>
+                                            (For fun you can sell for > 5 ether and your trade will go on the book. You can then cancel the 
+                                            offer to move it off the book.)
+                                            <BR>
+                                            <BR>
+                                            (complete) <strong>Step 3) </strong> Deposit the Free Token<br>
+                                            <Br>
+                                            (complete) <strong>Step 2) </strong> Get a Free Token! <br>
+                                            <br>
+                                            (complete) <strong>Step 1)</strong> Create an account.
+                                        </span>
+                                        <span *ngIf="cache.getCache('key') && gotFree && Market.ether != '0'">
+                                            <strong>Tutorial Step 5) </strong> Coming Soon<br><Br>
+                                            Get a trading token and trade with others<br>
+                                            You should have just under 5 Ether. There is now a "Trading Token"
+                                            that you can get 5 Ether of. Help us test the marketplace by placing various trades 
+                                            to buy/sell the "Trading Token"<br>
+                                            <BR>
+                                            (complete) <strong>Step 4) </strong> Sell the Free Token<br>
+                                            <BR>
+                                            (complete) <strong>Step 3) </strong> Deposit the Free Token<br>
+                                            <Br>
+                                            (complete) <strong>Step 2) </strong> Get a Free Token! <br>
+                                            <br>
+                                            (complete) <strong>Step 1)</strong> Create an account.
+                                        </span>
+
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 2 }">
+                                    <h4>
+                                        <strong>S</strong>ent Transactions
+                                    </h4>
+                                    <div><br>
+                                        <span *ngIf="!cache.getCache('encrypted_id')">
+                                            <strong><a routerLink="/authenticate">Create an account</a></strong> to view sent messages
+                                        </span>
+                                        <span *ngIf="cache.getCache('encrypted_id') && !cache.getCache('key')">
+                                            <strong><a routerLink="/authenticate">Sign in</a></strong> to see if you sent messages
+                                        </span>
+                                        <span *ngIf="cache.getCache('key')">
+                                            Transaction Sent: 0
+                                            <br><Br>
+                                            Received By Blockchain: 0
+                                            <br><Br>
+                                            Confirmed On Blockchain: 0
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-5 hidden-sm-down">
+                            <div class="imgborder">
+                                <!--<img src="img/office.jpg" class="rounded img-fluid setheightmax">!-->
+                            </div>
+                        </div>
+                    </div>
+                </div>         
+            </div>
+        </div>
+    </div>
+</section>

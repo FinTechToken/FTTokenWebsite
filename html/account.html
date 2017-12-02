@@ -1,0 +1,43 @@
+<section>
+    <div class="homepage-hero-module" (window:resize)="onResize($event)">
+        <div class="block-image setheightmin"></div>
+        <div class="setheightmin">
+            <div class="video-annotation-layer code-container">    
+                <div class="video-annotation-1">
+                    <div class="row roboto">
+                        <div class="col-md-6 offset-md-3 padsmalltop">
+                            <div class="tab-white text-left">
+                                <h5>Account</h5>
+                                <div *ngIf="encrypted_id?.address && key">
+                                    <button type="button" class="btn btn-warning" (click)="showModal(4);" href="javascript:void(0);">
+                                        Use Saved Account
+                                    </button>
+                                    <br><Br>
+                                </div>
+                                <div *ngIf="encrypted_id?.address && !key">
+                                    <button *ngIf="encrypted_id.address" type="button" class="btn btn-warning" (click)="showModal(5);" href="javascript:void(0);">
+                                        Sign in
+                                    </button>
+                                    <br><Br>
+                                </div> 
+                                <button type="button" class="btn btn-warning" (click)="showModal(2);" href="javascript:void(0);">
+                                    Create account
+                                </button>
+                                <br><Br>
+                                <button type="button" class="btn btn-warning" (click)="showModal(6);" href="javascript:void(0);">
+                                    Import account
+                                </button>
+                                <br><Br>
+                                <div *ngIf="encrypted_id?.address">
+                                    <button type="button" class="btn btn-warning" (click)="showModal(3);" href="javascript:void(0);">
+                                        Clear account
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>         
+            </div>
+        </div>
+    </div>
+</section>
