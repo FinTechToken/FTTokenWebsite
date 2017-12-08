@@ -534,24 +534,12 @@ h5{
 .logo{
     padding: 0px;
 }
-.video-image.start{
-    background: url(/img/video/girlcode/Girls-Code.jpg) 0% 0% no-repeat;
-    background-size: cover;    
-}
 .world-image{
     background: url(/img/world.jpg) 0% 0% no-repeat;
     background-size: cover;    
 }
-.code-image{
-    background: url(/img/code.jpg) 0% 0% no-repeat;
-    background-size: cover;    
-}
 .block-image{
-    background: url(/img/blocks1.jpg) 35% 0% no-repeat;
-    background-size: cover;    
-}
-.chipboard-image{
-    background: url(/img/chipboard.jpg) 0% 0% no-repeat;
+    background: url('https://www.fintechtoken.com/img/blocks1.jpg') 35% 0% no-repeat;
     background-size: cover;    
 }
 .video-container, .market-container {
