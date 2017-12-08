@@ -137,7 +137,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content roboto">
             <div class="modal-header">
-                <h5 class="modal-title">Pick amount of Ether: {{wb3.utils.fromWei(modalNumber.number, 'ether')}}</h5>
+                <h5 class="modal-title">Pick amount: {{wb3.utils.fromWei(modalNumber.number, 'ether')}} <small><br>An Ether is 1 with 18 zero's after it. We use "Ether" as an amount. It may represent an amount in tokens, or an amount of ether.</small></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModalNumber(modalNumber.orig)" href="javascript:void(0);">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -170,7 +170,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content roboto">
             <div class="modal-header">
-                <h5 class="modal-title">Pick amount of Ether: {{wb3.utils.fromWei(modalPrice.number, 'ether')}}</h5>
+                <h5 class="modal-title">Pick amount: {{wb3.utils.fromWei(modalPrice.number, 'ether')}}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModalPrice(modalPrice.orig)" href="javascript:void(0);">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -206,7 +206,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content roboto">
             <div class="modal-header">
-                <h5 class="modal-title">{{wb3.utils.fromWei(number, 'ether')}} Ether</h5>
+                <h5 class="modal-title">{{wb3.utils.fromWei(number, 'ether')}} Ether <small><br>An Ether is 1 with 18 zero's after it. We use "Ether" as an amount. It may represent an amount in tokens, or an amount of ether.</small></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
                 <span aria-hidden="true">&times;</span>
                 </button>
