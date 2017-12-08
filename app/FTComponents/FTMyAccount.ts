@@ -715,7 +715,6 @@ export class FTMyAccount {
           this.Market.transaction = '';
           this.Market.confirmed = 0;
           this.Market.error = '';
-          this.depositConfirm();
           return null;
       });
       this.Market.contract.methods.deposit('0x'+this.FreeToken.address,this.depositAmount).estimateGas({gas:500000,from:'0x'+this.fromAddress}).then( (returns) => {

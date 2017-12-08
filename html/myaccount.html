@@ -323,9 +323,9 @@
             <h5>Depositing Tokens involves 2 steps.</h5>
             First, the FreeToken Smart Contract needs permission from you to allow
             the Market Smart Contract to transfer <a (click)="changeDeposit()" href="javascript:void(0);">{{wb3.utils.fromWei(depositAmount, 'ether')}}</a> FreeToken.<br><Br>
-            Second, the Market Smart Contract deposit the FreeToken into your Market account.
+            Second, the Market Smart Contract deposits the FreeToken into your Market account.
             <Br><Br>
-            <h5>Confirm that you approve the deposit and we will execute both transactions.</h5>
+            <h5>Confirm that you approve the deposit.</h5>
             The transaction costs you 0 TestEther <!-- ToDo; add gas and uses 0 gas !-->
             <br>
             The approval is estimated to use {{FreeToken.estimate | number}} gas.
@@ -340,7 +340,7 @@
                 </li>
                 <li class="nav-item w-50 next">
                     <a class="nav-link" (click)="approveConfirm()" href="javascript:void(0);">
-                        Confirm
+                        Confirm Approval
                     </a>
                 </li>
             </ul>
@@ -355,16 +355,13 @@
         <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title">Deposit Free Token - Waiting for step 1</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
-            <span aria-hidden="true">&times;</span>
-            </button>
         </div>
         <div class="modal-body">
-            <h5>Once the first step is added to the blockchain the deposit transaction will be sent to the blockchain.</h5>
+            <h5>Once the approval is added to the blockchain you will be able to send the deposit transaction to the blockchain.</h5>
             This transaction costs you 0 TestEther <!-- ToDo; add gas and uses 0 gas !-->
             <br>
-            <span *ngIf="Market.estimate == 0">Wait for approval transaction to see deposit gas estimate.</span>
-            <span *ngIf="Market.estimate != 0">It is estimated to use {{Market.estimate | number}} gas.</span>
+            <span *ngIf="Market.estimate == 0">Wait for approval transaction to see deposit transaction gas estimate.</span>
+            <span *ngIf="Market.estimate != 0">Deposit is estimated to use {{Market.estimate | number}} gas.</span>
             <span *ngIf="Market.estimate == maxGas">That is all the gas. Most likely an error. Please wait for approval to complete.</span>
             <br><Br>
             This may take a few blocks for the approval. (Time since last block {{seconds}})
@@ -379,17 +376,12 @@
         </div>
         <div class="modal-footer">
             <ul class="nav nav-pills modal-nav text-center">
-                <li class="nav-item w-50 prev">
-                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
-                        Close
-                    </a>
-                </li>
-                <li *ngIf="FreeToken.receipt" class="nav-item w-50 next">
+                <li *ngIf="FreeToken.receipt" class="nav-item w-100 next">
                     <a class="nav-link" (click)="depositConfirm()" href="javascript:void(0);">
-                        Confirm
+                        Confirm Deposit
                     </a>
                 </li>
-                <li *ngIf="!FreeToken.receipt" class="nav-item w-50 next">
+                <li *ngIf="!FreeToken.receipt" class="nav-item w-100 next">
                     <span>
                         Wait
                     </span>
