@@ -215,7 +215,20 @@ getWei(number: string): number{
   }
   return Math.floor(this.wb3.utils.fromWei(number, 'wei'));
 }
-
+hasFraction(number: string): boolean{
+  if(number.length > 18){
+    number = number.substr(number.length-18,18);
+    let number1 = number.substr(0, 3);
+    if(+number1 != 0){
+      return true
+    }
+    number = number.substr(3,15);
+  }
+  if(+number != 0) {
+    return true;
+  }
+  return false;
+}
 
   onResize(event: any):void {
     scaleVideoContainer();
