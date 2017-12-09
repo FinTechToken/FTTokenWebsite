@@ -701,9 +701,7 @@
             Make sure you always keep enough Ether on the blockchain to pay for gas to run your transactions.
             We recommend keeping a balance of at least 0.1 Ether.
             <Br><Br>
-            <span *ngIf="accountBalance.length > 19">
-                Amount to deposit: <a (click)="changeEtherDeposit()" href="javascript:void(0);">{{wb3.utils.fromWei(depositEtherAmount, 'ether') | number}}</a>
-            </span>
+            Amount to deposit: <a (click)="changeEtherDeposit()" href="javascript:void(0);">{{wb3.utils.fromWei(depositEtherAmount, 'ether') | number}}</a>
             <h5>Confirm that you approve the deposit</h5>
             This transaction costs you 0 TestEther <!-- ToDo; add gas and uses 0 gas !-->
             <br>
@@ -775,9 +773,7 @@
         <div class="modal-body">
             <h5>Withdraw Ether Into Your Account</h5>
             <Br><Br>
-            <span *ngIf="accountBalance.length > 19">
-                Amount to withdraw: <a (click)="changeEtherWithdraw()" href="javascript:void(0);">{{wb3.utils.fromWei(withdrawEtherAmount, 'ether') | number }}</a>
-            </span>
+            Amount to withdraw: <a (click)="changeEtherWithdraw()" href="javascript:void(0);">{{wb3.utils.fromWei(withdrawEtherAmount, 'ether') | number }}</a>
             <h5>Confirm that you approve the withdraw</h5>
             This transaction costs you 0 TestEther <!-- ToDo; add gas and uses 0 gas !-->
             <br>
