@@ -35,20 +35,25 @@
                                         <br>
                                         <span *ngIf="token.totalSupply">
                                             <strong>TotalSupply:</strong> 
-                                            <a *ngIf="token.totalSupply > 0" href="javascript:void(0);" (click)="viewNumber(token.totalSupply);">{{wb3.utils.fromWei(token.totalSupply, 'ether') | number}}</a>
-                                            <span *ngIf="token.totalSupply == 0">0</span>
+                                            <a *ngIf="token.totalSupply != '0'" href="javascript:void(0);" (click)="viewNumber(token.totalSupply);">
+                                                {{getEther(token.totalSupply) | number : '1.0-0'}}<span *ngIf="hasFraction(token.totalSupply)">.#</span>
+                                            </a>
+                                            <span *ngIf="token.totalSupply == '0'">0</span>
                                             <br>
                                         </span>
                                         <span *ngIf="token.totalOutstanding">
                                             <strong>TotalOutstanding:</strong> 
-                                            <a *ngIf="token.totalOutstanding > 0" href="javascript:void(0);" (click)="viewNumber(token.totalOutstanding);">{{wb3.utils.fromWei(token.totalOutstanding, 'ether') | number }}</a>
-                                            <span *ngIf="token.totalOutstanding == 0">0</span>
+                                            <a *ngIf="token.totalOutstanding != '0'" href="javascript:void(0);" (click)="viewNumber(token.totalOutstanding);">
+                                                {{getEther(token.totalOutstanding) | number : '1.0-0' }}<span *ngIf="hasFraction(token.totalOutstanding)">.#</span>
+                                            </a>
+                                            <span *ngIf="token.totalOutstanding == '0'">0</span>
                                             <br>
                                         </span>
                                         <span>
                                             <strong>My Balance:</strong>
-                                            <a *ngIf="token.mine.length > 18" href="javascript:void(0);" (click)="viewNumber(token.mine);">{{wb3.utils.fromWei(token.mine, 'ether') | number }}</a>
-                                            <a *ngIf="token.mine.length <= 18 && token.mine != '0'" href="javascript:void(0);" (click)="viewNumber(token.mine);">#</a>
+                                            <a *ngIf="token.mine != '0'" href="javascript:void(0);" (click)="viewNumber(token.mine);">
+                                                {{getEther(token.mine) | number : '1.0-0'}}<span *ngIf="hasFraction(token.mine)">.#</span>
+                                            </a>
                                             <span *ngIf="token.mine == '0'">0</span>
                                             <!--
                                             <span *ngIf="token.totalSupply > 0"><br>{{token.mine/token.totalSupply}}</span>
