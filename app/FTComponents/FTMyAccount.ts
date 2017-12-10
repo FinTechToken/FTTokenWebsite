@@ -943,17 +943,28 @@ export class FTMyAccount {
   }
 
   changeBuyToken(): void{
-    // Todo: calculate max based on price (Also, limit fractions based on price)
-    this.openModalNumber(this.buyToken, "0");
+    let maxToken = "0";
+    if(this.buyPrice == "0") {
+      maxToken = "0";
+    } else {
+      maxToken = this.divideBigNumber(this.multiplyBigNumber(this.subtractBigNumber(this.Market.ether, "1000000000000000"),"1000000"),this.buyPrice);
+    }
+    this.openModalNumber(this.buyToken, maxToken);
     this.obs.getObserver('modalNumber').subscribe( (result) => {
       this.buyToken = result;
       this.buy();
     });
   }
   changeBuyPrice(): void{
-    // Todo: calculate max based on Token (Also, limit fractions based on tokens)
+    let maxPrice = "0";
+    if(this.buyToken == "0") {
+      maxPrice = "0";
+    } else {
+      maxPrice = this.divideBigNumber(this.multiplyBigNumber(this.subtractBigNumber(this.Market.ether, "1000000000000000"),"1000000"),this.buyToken);
+    }
+    maxPrice = this.multiplyBigNumber(maxPrice, "1000000000000")
     let buyPriceNew = this.multiplyBigNumber(this.buyPrice,"1000000000000");
-    this.openModalPrice(buyPriceNew, "0");
+    this.openModalPrice(buyPriceNew, maxPrice);
     this.obs.getObserver('modalPrice').subscribe( (result) => {
       this.buyPrice = this.divideBigNumber(result,"1000000000000");
       this.buy();
@@ -1003,9 +1014,9 @@ export class FTMyAccount {
     this.showModal(11);
   }
 
-  changeSellToken(): void{
+  changeSellToken(max): void{
     // Todo: calculate max based on price (Also, limit fractions based on price)
-    this.openModalNumber(this.sellToken, "0");
+    this.openModalNumber(this.sellToken, max);
     this.obs.getObserver('modalNumber').subscribe( (result) => {
       this.sellToken = result;
       this.sell();
