@@ -615,7 +615,7 @@
                 You need a token in your account to sell a token. Try getting a free token, buying a token, or depositing a token to your account.
             </div>
             <div *ngIf="Market.free != '0'">
-                Number of Tokens: <a (click)="changeSellToken()" href="javascript:void(0);">{{wb3.utils.fromWei(sellToken, 'ether')}}</a><br>
+                Number of Tokens: <a (click)="changeSellToken(Market.free)" href="javascript:void(0);">{{wb3.utils.fromWei(sellToken, 'ether')}}</a><br>
                 Price in ether per Ether of tokens: <a (click)="changeSellPrice()" href="javascript:void(0);">{{+sellPrice/1000000 | number  : '1.0-6'}}</a><br>
                 Transactional fee: {{wb3.utils.fromWei(divideBigNumber(multiplyBigNumber(sellToken,sellPrice),"1000000000"), 'ether') | number: '1.0-18'}}<br>
                 Add to book fee: 0.001 (only if you add a new entry to the book because there is no immediate buyer)<br>
