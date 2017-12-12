@@ -46,7 +46,7 @@
                                             <br>
                                             (complete) <strong>Step 1)</strong> Create an account.
                                         </span>
-                                        <span *ngIf="cache.getCache('key') && gotFree && Market.free == '0' && Market.ether == '0'">
+                                        <span *ngIf="cache.getCache('key') && gotFree && tutorial.state == 1">
                                             <strong>Tutorial Step 3) </strong> Deposit the Free Token<br>
                                             The Free Token is on the blockchain associated with your address.
                                             You need to deposit the FreeToken into your trading account
@@ -58,7 +58,7 @@
                                             <br>
                                             (complete) <strong>Step 1)</strong> Create an account.
                                         </span>
-                                        <span *ngIf="cache.getCache('key') && gotFree && Market.free != '0' && Market.ether == '0'">
+                                        <span *ngIf="cache.getCache('key') && gotFree && tutorial.state == 2">
                                             <strong>Tutorial Step 4) </strong> Trade Free Token for Ether<br>
                                             Sell your 1 FreeToken to get Ether in your account.<br>
                                             - Press the minus button. <br>
@@ -77,7 +77,7 @@
                                             <br>
                                             (complete) <strong>Step 1)</strong> Create an account.
                                         </span>
-                                        <span *ngIf="cache.getCache('key') && gotFree && Market.ether != '0'">
+                                        <span *ngIf="cache.getCache('key') && gotFree && tutorial.state == 3">
                                             <strong>Tutorial Step 5) </strong> Coming Soon<br><Br>
                                             Get a trading token and trade with others<br>
                                             You should have just under 5 Ether. There is now a "Trading Token"
