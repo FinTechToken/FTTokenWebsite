@@ -882,7 +882,7 @@ export class FTMyAccount {
       this.Market.subscription.removeAllListeners();
     }
     this.Market.subscription = this.wb3.eth.sendSignedTransaction('0x' + this.Market.serializedTx.toString('hex'))
-    .once('transactionHash', (hash) => { this.Market.transaction = hash; })
+    .once('transactionHash', (hash) => { this.Market.transaction = hash; this.updateTutorial(4);})
     .once('receipt', (receipt) =>{ this.Market.receipt = receipt; })
     .on('confirmation', (confNumber, receipt) => { this.Market.confirmed = confNumber; })
     .on('error', (error) => { console.log('ERROR' + error); this.Market.error = error;})
