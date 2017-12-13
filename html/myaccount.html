@@ -47,7 +47,7 @@
                                                             {{getEther(accountBalance) | number : '1.0-0'}}<span *ngIf="hasFraction(accountBalance)">.#</span>
                                                         </a>
                                                         <span *ngIf="accountBalance == '0'">0</span>
-                                                        <span *ngIf="accountBalance != '0'" class="float-right">
+                                                        <span *ngIf="accountBalance > '100000000000000000'" class="float-right">
                                                             <i (click)="depositEther();" href="javascript:void(0);" class="icon-control-forward hover"></i>
                                                         </span>
                                                         <span *ngIf="Market.ether != '0'" class="float-right">
@@ -712,6 +712,7 @@
             We recommend keeping a balance of at least 0.1 Ether.
             <Br><Br>
             Amount to deposit: <a (click)="changeEtherDeposit()" href="javascript:void(0);">{{wb3.utils.fromWei(depositEtherAmount, 'ether') | number}}</a>
+            <br>Amount remaining: {{wb3.utils.fromWei(subtractBigNumber(accountBalance, depositEtherAmount), 'ether') | number }}
             <h5>Confirm that you approve the deposit</h5>
             This transaction costs you 0 TestEther <!-- ToDo; add gas and uses 0 gas !-->
             <br>
@@ -783,7 +784,7 @@
         <div class="modal-body">
             <h5>Withdraw Ether Into Your Account</h5>
             <Br><Br>
-            Amount to withdraw: <a (click)="changeEtherWithdraw()" href="javascript:void(0);">{{wb3.utils.fromWei(withdrawEtherAmount, 'ether') | number }}</a>
+            Amount to withdraw: <a (click)="changeEtherWithdraw()" href="javascript:void(0);">{{wb3.utils.fromWei(withdrawEtherAmount, 'ether') | number }}</a><br>
             <h5>Confirm that you approve the withdraw</h5>
             This transaction costs you 0 TestEther <!-- ToDo; add gas and uses 0 gas !-->
             <br>
