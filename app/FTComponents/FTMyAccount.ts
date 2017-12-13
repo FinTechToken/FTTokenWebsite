@@ -54,13 +54,18 @@ export class FTMyAccount {
   fromAddress="0000000000000000000000000000000000000000";
   number:string;
   seconds: 0;
-  maxGas = 500000;
+  maxGas = "500000";
+  gasPrice= "0";
   bookEther = "0";
   bookTokenEther = "0";
   book = new Map();
   bookToken = new Map();
   // keyAddress, new Map() keyAmount {Count and fee}
-
+  lastOffer = {
+    token:"",
+    amount: "",
+    buysell: false
+  }
   depositAmount="0";
   withdrawAmount="0";
   depositEtherAmount="0";
@@ -74,7 +79,7 @@ export class FTMyAccount {
     supply:0,
     out:0,
     contract:{} as any,
-    estimate:0,
+    estimate:"0",
     error:'',
     address: "9287bb21719d283CfdD7d644a89E8492f9845B64",
     abi:{} as any,
@@ -91,7 +96,7 @@ export class FTMyAccount {
     free:"0",
     supply:0,
     out:0,
-    estimate:0,
+    estimate:"0",
     error:'',
     contract:{} as any,
     address: 'a0B71a29998790a84ee459132D1c87AcD4dF0E6e',
@@ -137,6 +142,10 @@ export class FTMyAccount {
         );
   }
   
+  updateGas(newGas) {
+      this.gasPrice = newGas.target.value;
+  }
+
   openModalNumber(number: string, max: string): void {
     this.modalNumber.number = number;
     this.modalNumber.orig = number;
@@ -618,8 +627,8 @@ export class FTMyAccount {
       this.wb3.eth.getTransactionCount('0x' + this.fromAddress).then( (nonce) => {
           const txData = {
               nonce:    numberToHex(+nonce+1),
-              gasPrice: '0x00',
-              gasLimit: numberToHex(500000),
+              gasPrice: numberToHex(0),
+              gasLimit: numberToHex(100000),
               to:       '0x' + this.tutorial.address,
               value:    '0x00',
               data:     ABIdata,
@@ -642,11 +651,14 @@ export class FTMyAccount {
     var privateKey = Buffer.from(rlp.stripHexPrefix(this.cache.getCache('key')), 'hex');
     var ABIdata = this.Market.contract.methods.withdrawal('0x'+this.FreeToken.address,this.withdrawAmount).encodeABI();
     var chainId = "913945103463586943";
-    this.wb3.eth.getTransactionCount('0x' + this.fromAddress).then( (nonce) => {
+    this.Market.contract.methods.withdrawal('0x'+this.FreeToken.address,this.withdrawAmount).estimateGas({gas:500000,from:'0x'+this.fromAddress}).then( (returns) => {
+      this.Market.estimate = returns;
+      this.maxGas = this.multiplyBigNumber(this.Market.estimate,"2");
+      this.wb3.eth.getTransactionCount('0x' + this.fromAddress).then( (nonce) => {
         const txData = {
             nonce:    numberToHex(nonce),
-            gasPrice: '0x00',
-            gasLimit: numberToHex(500000),
+            gasPrice: numberToHex(this.gasPrice),
+            gasLimit: numberToHex(this.maxGas),
             to:       '0x' + this.Market.address,
             value:    '0x00',
             data:     ABIdata,
@@ -660,9 +672,7 @@ export class FTMyAccount {
         this.Market.confirmed = 0;
         this.Market.error = '';
         return null;
-    });
-    this.Market.contract.methods.withdrawal('0x'+this.FreeToken.address,this.withdrawAmount).estimateGas({gas:500000,from:'0x'+this.fromAddress}).then( (returns) => {
-      this.Market.estimate = returns;
+      });
     });
     /*this.FreeToken.contract.methods.approveAndCall('0x'+this.Market.address,this.FreeToken.mine,'').estimateGas({gas:500000,from:'0x'+this.fromAddress}).then( (returns) => {
       this.Market.estimate = returns;
@@ -679,7 +689,7 @@ export class FTMyAccount {
   }
 
   approveWithdraw(): void{
-    this.Market.estimate = 0;
+    this.Market.estimate = "0";
     if(this.Market.subscription){
       this.Market.subscription.removeAllListeners();
     }
@@ -698,11 +708,14 @@ export class FTMyAccount {
     var privateKey = Buffer.from(rlp.stripHexPrefix(this.cache.getCache('key')), 'hex');
     var ABIdata = this.FreeToken.contract.methods.approve('0x'+this.Market.address,this.depositAmount).encodeABI();
     var chainId = "913945103463586943";
-    this.wb3.eth.getTransactionCount('0x' + this.fromAddress).then( (nonce) => {
+    this.FreeToken.contract.methods.approve('0x'+this.Market.address,this.depositAmount).estimateGas({gas:500000,from:'0x'+this.fromAddress}).then( (returns) => {
+      this.FreeToken.estimate = returns;
+      this.maxGas = this.multiplyBigNumber(this.FreeToken.estimate,"2");
+      this.wb3.eth.getTransactionCount('0x' + this.fromAddress).then( (nonce) => {
         const txData = {
             nonce:    numberToHex(nonce),
-            gasPrice: '0x00',
-            gasLimit: numberToHex(500000),
+            gasPrice: numberToHex(this.gasPrice),
+            gasLimit: numberToHex(this.maxGas),
             to:       '0x' + this.FreeToken.address,
             value:    '0x00',
             data:     ABIdata,
@@ -716,9 +729,7 @@ export class FTMyAccount {
         this.FreeToken.confirmed = 0;
         this.FreeToken.error = '';
         return null;
-    });
-    this.FreeToken.contract.methods.approve('0x'+this.Market.address,this.depositAmount).estimateGas({gas:500000,from:'0x'+this.fromAddress}).then( (returns) => {
-      this.FreeToken.estimate = returns;
+      });
     });
     /*this.FreeToken.contract.methods.approveAndCall('0x'+this.Market.address,this.FreeToken.mine,'').estimateGas({gas:500000,from:'0x'+this.fromAddress}).then( (returns) => {
       this.Market.estimate = returns;
@@ -735,7 +746,7 @@ export class FTMyAccount {
   }
 
   approveConfirm(): void{
-    this.Market.estimate = 0;
+    this.Market.estimate = "0";
     if(this.FreeToken.subscription){
       this.FreeToken.subscription.removeAllListeners();
     }
@@ -747,11 +758,14 @@ export class FTMyAccount {
       var privateKey = Buffer.from(rlp.stripHexPrefix(this.cache.getCache('key')), 'hex');
       var ABIdata = this.Market.contract.methods.deposit('0x'+this.FreeToken.address,this.depositAmount).encodeABI();
       var chainId = "913945103463586943";
-      this.wb3.eth.getTransactionCount('0x' + this.fromAddress).then( (nonce) => {
+      this.Market.contract.methods.deposit('0x'+this.FreeToken.address,this.depositAmount).estimateGas({gas:500000,from:'0x'+this.fromAddress}).then( (returns) => {
+        this.Market.estimate = returns;
+        this.maxGas = this.multiplyBigNumber(returns, "2");
+        this.wb3.eth.getTransactionCount('0x' + this.fromAddress).then( (nonce) => {
           const txData = {
               nonce:    numberToHex(nonce),
-              gasPrice: '0x00',
-              gasLimit: numberToHex(500000),
+              gasPrice: numberToHex(this.gasPrice),
+              gasLimit: numberToHex(this.maxGas),
               to:       '0x' + this.Market.address,
               value:    '0x00',
               data:     ABIdata,
@@ -765,9 +779,7 @@ export class FTMyAccount {
           this.Market.confirmed = 0;
           this.Market.error = '';
           return null;
-      });
-      this.Market.contract.methods.deposit('0x'+this.FreeToken.address,this.depositAmount).estimateGas({gas:500000,from:'0x'+this.fromAddress}).then( (returns) => {
-        this.Market.estimate = returns;
+        });
       });
     })
     .on('confirmation', (confNumber, receipt) => { this.FreeToken.confirmed = confNumber; 
@@ -777,7 +789,7 @@ export class FTMyAccount {
   }
 
   depositConfirm(): void{
-    this.Market.estimate = 0;
+    this.Market.estimate = "0";
     if(this.Market.subscription){
       this.Market.subscription.removeAllListeners();
     }
@@ -796,11 +808,14 @@ export class FTMyAccount {
     var privateKey = Buffer.from(rlp.stripHexPrefix(this.cache.getCache('key')), 'hex');
     var ABIdata = this.Market.contract.methods.deposit('0x' + this.zero, "0").encodeABI();
     var chainId = "913945103463586943";
-    this.wb3.eth.getTransactionCount('0x' + this.fromAddress).then( (nonce) => {
+    this.Market.contract.methods.deposit('0x' + this.zero, "0").estimateGas({from:'0x'+this.fromAddress,value:this.depositEtherAmount}).then( (returns) => {
+      this.Market.estimate = returns;
+      this.maxGas = this.multiplyBigNumber(returns, "2");
+      this.wb3.eth.getTransactionCount('0x' + this.fromAddress).then( (nonce) => {
         const txData = {
             nonce:    numberToHex(nonce),
-            gasPrice: '0x00',
-            gasLimit: numberToHex(500000),
+            gasPrice: numberToHex(this.gasPrice),
+            gasLimit: numberToHex(this.maxGas),
             to:       '0x' + this.Market.address,
             value:    numberToHex(this.depositEtherAmount),
             data:     ABIdata,
@@ -815,8 +830,6 @@ export class FTMyAccount {
         this.Market.error = '';
         return null;
     });
-    this.Market.contract.methods.deposit('0x' + this.zero, "0").estimateGas({gas:500000,from:'0x'+this.fromAddress,value:this.depositEtherAmount}).then( (returns) => {
-      this.Market.estimate = returns;
     });
     this.showModal(13);
   }
@@ -830,7 +843,7 @@ export class FTMyAccount {
   }
 
   depositEtherConfirm(): void{
-    this.Market.estimate = 0;
+    this.Market.estimate = "0";
     if(this.Market.subscription){
       this.Market.subscription.removeAllListeners();
     }
@@ -849,11 +862,14 @@ export class FTMyAccount {
     var privateKey = Buffer.from(rlp.stripHexPrefix(this.cache.getCache('key')), 'hex');
     var ABIdata = this.Market.contract.methods.withdrawal('0x' + this.zero, this.withdrawEtherAmount).encodeABI();
     var chainId = "913945103463586943";
-    this.wb3.eth.getTransactionCount('0x' + this.fromAddress).then( (nonce) => {
+    this.Market.contract.methods.withdrawal('0x' + this.zero, this.withdrawEtherAmount).estimateGas({from:'0x'+this.fromAddress}).then( (returns) => {
+      this.Market.estimate = returns;
+      this.maxGas = this.multiplyBigNumber(this.Market.estimate,"2");
+      this.wb3.eth.getTransactionCount('0x' + this.fromAddress).then( (nonce) => {
         const txData = {
             nonce:    numberToHex(nonce),
-            gasPrice: '0x00',
-            gasLimit: numberToHex(500000),
+            gasPrice: numberToHex(this.gasPrice),
+            gasLimit: numberToHex(this.maxGas),
             to:       '0x' + this.Market.address,
             value:    '0x00',
             data:     ABIdata,
@@ -868,8 +884,6 @@ export class FTMyAccount {
         this.Market.error = '';
         return null;
     });
-    this.Market.contract.methods.withdrawal('0x' + this.zero, this.withdrawEtherAmount).estimateGas({gas:500000,from:'0x'+this.fromAddress}).then( (returns) => {
-      this.Market.estimate = returns;
     });
     this.showModal(15);
   }
@@ -883,7 +897,7 @@ export class FTMyAccount {
   }
 
   withdrawEtherConfirm(): void{
-    this.Market.estimate = 0;
+    this.Market.estimate = "0";
     if(this.Market.subscription){
       this.Market.subscription.removeAllListeners();
     }
@@ -897,14 +911,20 @@ export class FTMyAccount {
 
   setCancelOffer(token: string, amount: string, buysell: boolean): void{
     // function cancelOffer( address _token, bool _buy, uint256 _amount ) public returns ( bool success_ ) {
+    this.lastOffer.token = token;
+    this.lastOffer.amount = amount;
+    this.lastOffer.buysell = buysell;
     var privateKey = Buffer.from(rlp.stripHexPrefix(this.cache.getCache('key')), 'hex');
     var ABIdata = this.Market.contract.methods.cancelOffer(token, buysell, amount).encodeABI();
     var chainId = "913945103463586943";
-    this.wb3.eth.getTransactionCount('0x' + this.fromAddress).then( (nonce) => {
+    this.Market.contract.methods.cancelOffer(token, buysell, amount).estimateGas({gas:500000,from:'0x'+this.fromAddress}).then( (returns) => {
+      this.Market.estimate = returns;
+      this.maxGas = this.multiplyBigNumber(this.Market.estimate, "2");
+      this.wb3.eth.getTransactionCount('0x' + this.fromAddress).then( (nonce) => {
         const txData = {
             nonce:    numberToHex(nonce),
-            gasPrice: '0x00',
-            gasLimit: numberToHex(500000),
+            gasPrice: numberToHex(this.gasPrice),
+            gasLimit: numberToHex(this.maxGas),
             to:       '0x' + this.Market.address,
             value:    '0x00',
             data:     ABIdata,
@@ -918,9 +938,7 @@ export class FTMyAccount {
         this.Market.confirmed = 0;
         this.Market.error = '';
         return null;
-    });
-    this.Market.contract.methods.cancelOffer(token, buysell, amount).estimateGas({gas:500000,from:'0x'+this.fromAddress}).then( (returns) => {
-      this.Market.estimate = returns;
+      });
     });
   }
 
@@ -941,7 +959,7 @@ export class FTMyAccount {
 
 
   cancelOfferConfirm(): void{
-    this.Market.estimate = 0;
+    this.Market.estimate = "0";
     if(this.Market.subscription){
       this.Market.subscription.removeAllListeners();
     }
@@ -966,11 +984,14 @@ export class FTMyAccount {
     var privateKey = Buffer.from(rlp.stripHexPrefix(this.cache.getCache('key')), 'hex');
     var ABIdata = this.Market.contract.methods.makeOffer('0x' + this.FreeToken.address, true, this.buyPrice, this.buyToken, "0x00").encodeABI();
     var chainId = "913945103463586943";
-    this.wb3.eth.getTransactionCount('0x' + this.fromAddress).then( (nonce) => {
+    this.Market.contract.methods.makeOffer('0x' + this.FreeToken.address, true, this.buyPrice, this.buyToken, "0x00").estimateGas({from:'0x'+this.fromAddress}).then( (returns) => {
+      this.Market.estimate = returns;
+      this.maxGas = this.multiplyBigNumber(returns,"2");
+      this.wb3.eth.getTransactionCount('0x' + this.fromAddress).then( (nonce) => {
         const txData = {
             nonce:    numberToHex(nonce),
-            gasPrice: '0x00',
-            gasLimit: numberToHex(500000),
+            gasPrice: numberToHex(this.gasPrice),
+            gasLimit: numberToHex(this.maxGas),
             to:       '0x' + this.Market.address,
             value:    '0x00',
             data:     ABIdata,
@@ -985,8 +1006,6 @@ export class FTMyAccount {
         this.Market.error = '';
         return null;
     });
-    this.Market.contract.methods.makeOffer('0x' + this.FreeToken.address, true, this.buyPrice, this.buyToken, "0x00").estimateGas({gas:500000,from:'0x'+this.fromAddress}).then( (returns) => {
-      this.Market.estimate = returns;
     });
     this.showModal(9);
   }
@@ -1021,7 +1040,7 @@ export class FTMyAccount {
   }
 
   buyConfirm(): void{
-    this.Market.estimate = 0;
+    this.Market.estimate = "0";
     if(this.Market.subscription){
       this.Market.subscription.removeAllListeners();
     }
@@ -1038,11 +1057,14 @@ export class FTMyAccount {
     var privateKey = Buffer.from(rlp.stripHexPrefix(this.cache.getCache('key')), 'hex');
     var ABIdata = this.Market.contract.methods.makeOffer('0x' + this.FreeToken.address, false, this.sellPrice, this.sellToken, "0x00").encodeABI();
     var chainId = "913945103463586943";
-    this.wb3.eth.getTransactionCount('0x' + this.fromAddress).then( (nonce) => {
+    this.Market.contract.methods.makeOffer('0x' + this.FreeToken.address, false, this.sellPrice, this.sellToken, "0x00").estimateGas({gas:500000,from:'0x'+this.fromAddress}).then( (returns) => {
+      this.Market.estimate = returns;
+      this.maxGas = this.multiplyBigNumber(returns,"2");
+      this.wb3.eth.getTransactionCount('0x' + this.fromAddress).then( (nonce) => {
         const txData = {
             nonce:    numberToHex(nonce),
-            gasPrice: '0x00',
-            gasLimit: numberToHex(500000),
+            gasPrice: numberToHex(this.gasPrice),
+            gasLimit: numberToHex(this.maxGas),
             to:       '0x' + this.Market.address,
             value:    '0x00',
             data:     ABIdata,
@@ -1056,9 +1078,7 @@ export class FTMyAccount {
         this.Market.confirmed = 0;
         this.Market.error = '';
         return null;
-    });
-    this.Market.contract.methods.makeOffer('0x' + this.FreeToken.address, false, this.sellPrice, this.sellToken, "0x00").estimateGas({gas:500000,from:'0x'+this.fromAddress}).then( (returns) => {
-      this.Market.estimate = returns;
+      });
     });
     this.showModal(11);
   }
@@ -1082,7 +1102,7 @@ export class FTMyAccount {
   }
 
   sellConfirm(): void{
-    this.Market.estimate = 0;
+    this.Market.estimate = "0";
     if(this.Market.subscription){
       this.Market.subscription.removeAllListeners();
     }
