@@ -44,7 +44,7 @@ export class FTMyAccount {
   subscribeBlock;
   subscribeBook;
   subscribeBookSell;
-  accountBalance:string="";
+  accountBalance:string="0";
   subscribeBNSec;
   wb3;
   tabs = 1;
@@ -328,6 +328,12 @@ export class FTMyAccount {
     return x.plus(y).toString(10);
   }
   subtractBigNumber(numberA: string, numberB: string): string {
+    if(numberA == ""){
+      numberA="0";
+    }
+    if(numberB == ""){
+      numberB="0"
+    }
     let x = new BigNumber(numberA);
     let y = new BigNumber(numberB);
     return x.minus(y).toString(10);
@@ -829,7 +835,7 @@ export class FTMyAccount {
       this.Market.subscription.removeAllListeners();
     }
     this.Market.subscription = this.wb3.eth.sendSignedTransaction('0x' + this.Market.serializedTx.toString('hex'))
-    .once('transactionHash', (hash) => { this.Market.transaction = hash; })
+    .once('transactionHash', (hash) => { this.Market.transaction = hash; this.updateTutorial(5);})
     .once('receipt', (receipt) =>{ this.Market.receipt = receipt; })
     .on('confirmation', (confNumber, receipt) => { this.Market.confirmed = confNumber; })
     .on('error', (error) => { console.log('ERROR' + error); this.Market.error = error;})
