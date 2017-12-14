@@ -336,7 +336,14 @@
             Second, the Market Smart Contract deposits the FreeToken into your Market account.
             <Br><Br>
             <h5>Confirm that you approve the deposit.</h5>
-            The transaction costs you 0 TestEther <!-- ToDo; add gas and uses 0 gas !-->
+            This transaction costs you {{wb3.utils.fromWei(multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
+            <br>
+            <select *ngIf="accountBalance != '0'" [(ngModel)]="gasPrice" (click)="deposit(true)">
+                <option value="0">Free Gas</option>
+                <option value="1000000000">Low Gas Cost (1 gwei)</option>
+                <option value="5000000000">Medium Gas Cost (5 gwei)</option>
+                <option value="21000000000">High Gas Cost (21 gwei)</option>
+            </select>
             <br>
             The approval is estimated to use {{FreeToken.estimate | number}} gas.
             <span *ngIf="FreeToken.estimate == maxGas">That is all the gas. Most likely an error.</span>
@@ -368,10 +375,17 @@
         </div>
         <div class="modal-body">
             <h5>Once the approval is added to the blockchain you will be able to send the deposit transaction to the blockchain.</h5>
-            This transaction costs you 0 TestEther <!-- ToDo; add gas and uses 0 gas !-->
+            This transaction costs you {{wb3.utils.fromWei(multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
             <br>
-            <span *ngIf="Market.estimate == 0">Wait for approval transaction to see deposit transaction gas estimate.</span>
-            <span *ngIf="Market.estimate != 0">Deposit is estimated to use {{Market.estimate | number}} gas.</span>
+            <select *ngIf="accountBalance != '0'" [(ngModel)]="gasPrice" (click)="approveConfirm()">
+                <option value="0">Free Gas</option>
+                <option value="1000000000">Low Gas Cost (1 gwei)</option>
+                <option value="5000000000">Medium Gas Cost (5 gwei)</option>
+                <option value="21000000000">High Gas Cost (21 gwei)</option>
+            </select>
+            <br>
+            <span *ngIf="Market.estimate == '0'">Wait for approval transaction to see deposit transaction gas estimate.</span>
+            <span *ngIf="Market.estimate != '0'">Deposit is estimated to use {{Market.estimate | number}} gas.</span>
             <span *ngIf="Market.estimate == maxGas">That is all the gas. Most likely an error. Please wait for approval to complete.</span>
             <br><Br>
             This may take a few blocks for the approval. (Time since last block {{seconds}})
@@ -448,7 +462,14 @@
         <div class="modal-body">
             <h5>Withdraw Free Token</h5>
             Withdraw <a (click)="changeWithdraw()" href="javascript:void(0);">{{wb3.utils.fromWei(withdrawAmount, 'ether')}}</a> Free Tokens.<br><Br>
-            This transaction costs you 0 TestEther <!-- ToDo; add gas and uses 0 gas !-->
+                This transaction costs you {{wb3.utils.fromWei(multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
+                <br>
+                <select *ngIf="accountBalance != '0'" [(ngModel)]="gasPrice" (click)="withdraw(true)">
+                    <option value="0">Free Gas</option>
+                    <option value="1000000000">Low Gas Cost (1 gwei)</option>
+                    <option value="5000000000">Medium Gas Cost (5 gwei)</option>
+                    <option value="21000000000">High Gas Cost (21 gwei)</option>
+                </select>
             <br>
             It is estimated to use {{Market.estimate | number}} gas.
             <span *ngIf="Market.estimate == maxGas">That is all the gas. Most likely an error.</span>
@@ -527,7 +548,14 @@
                 <strong>Total Ether: {{wb3.utils.fromWei(addBigNumber(divideBigNumber(multiplyBigNumber(buyToken,buyPrice),"1000000"),"1000000000000000"),'ether') | number : '1.0-18'}}</strong><br>
                 <br>
                 <h5>Confirm that you approve the offer to buy tokens</h5>
-                This transaction costs you 0 TestEther <!-- ToDo; add gas and uses 0 gas !-->
+                This transaction costs you {{wb3.utils.fromWei(multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
+                <br>
+                <select *ngIf="accountBalance != '0'" [(ngModel)]="gasPrice" (click)="buy()">
+                    <option value="0">Free Gas</option>
+                    <option value="1000000000">Low Gas Cost (1 gwei)</option>
+                    <option value="5000000000">Medium Gas Cost (5 gwei)</option>
+                    <option value="21000000000">High Gas Cost (21 gwei)</option>
+                </select>
                 <br>
                 It is estimated to use {{Market.estimate | number}} gas.
                 <span *ngIf="Market.estimate == maxGas">That is all the gas. Most likely an error.</span>
@@ -622,7 +650,14 @@
                 <strong>Total Ether You Get: {{wb3.utils.fromWei(subtractBigNumber(divideBigNumber(multiplyBigNumber(sellToken,sellPrice),"1000000"),addBigNumber(divideBigNumber(multiplyBigNumber(sellToken,sellPrice),"1000000000"),"1000000000000000")),'ether') | number : '1.0-18'}}</strong><br>
                 <br>
                 <h5>Confirm that you approve the offer to buy tokens</h5>
-                This transaction costs you 0 TestEther <!-- ToDo; add gas and uses 0 gas !-->
+                This transaction costs you {{wb3.utils.fromWei(multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
+                <br>
+                <select *ngIf="accountBalance != '0'" [(ngModel)]="gasPrice" (click)="sell()">
+                    <option value="0">Free Gas</option>
+                    <option value="1000000000">Low Gas Cost (1 gwei)</option>
+                    <option value="5000000000">Medium Gas Cost (5 gwei)</option>
+                    <option value="21000000000">High Gas Cost (21 gwei)</option>
+                </select>
                 <br>
                 It is estimated to use {{Market.estimate | number}} gas.
                 <span *ngIf="Market.estimate == maxGas">That is all the gas. Most likely an error.</span>
@@ -714,7 +749,14 @@
             Amount to deposit: <a (click)="changeEtherDeposit()" href="javascript:void(0);">{{wb3.utils.fromWei(depositEtherAmount, 'ether') | number}}</a>
             <br>Amount remaining: {{wb3.utils.fromWei(subtractBigNumber(accountBalance, depositEtherAmount), 'ether') | number }}
             <h5>Confirm that you approve the deposit</h5>
-            This transaction costs you 0 TestEther <!-- ToDo; add gas and uses 0 gas !-->
+            This transaction costs you {{wb3.utils.fromWei(multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
+            <br>
+            <select *ngIf="accountBalance != '0'" [(ngModel)]="gasPrice" (click)="depositEther(true)">
+                <option value="0">Free Gas</option>
+                <option value="1000000000">Low Gas Cost (1 gwei)</option>
+                <option value="5000000000">Medium Gas Cost (5 gwei)</option>
+                <option value="21000000000">High Gas Cost (21 gwei)</option>
+            </select>
             <br>
             It is estimated to use {{Market.estimate | number}} gas.
             <span *ngIf="Market.estimate == maxGas">That is all the gas. Most likely an error.</span>
@@ -786,7 +828,14 @@
             <Br><Br>
             Amount to withdraw: <a (click)="changeEtherWithdraw()" href="javascript:void(0);">{{wb3.utils.fromWei(withdrawEtherAmount, 'ether') | number }}</a><br>
             <h5>Confirm that you approve the withdraw</h5>
-            This transaction costs you 0 TestEther <!-- ToDo; add gas and uses 0 gas !-->
+            This transaction costs you {{wb3.utils.fromWei(multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
+            <br>
+            <select *ngIf="accountBalance != '0'" [(ngModel)]="gasPrice" (click)="withdrawEther(true)">
+                <option value="0">Free Gas</option>
+                <option value="1000000000">Low Gas Cost (1 gwei)</option>
+                <option value="5000000000">Medium Gas Cost (5 gwei)</option>
+                <option value="21000000000">High Gas Cost (21 gwei)</option>
+            </select>
             <br>
             It is estimated to use {{Market.estimate | number}} gas.
             <span *ngIf="Market.estimate == maxGas">That is all the gas. Most likely an error.</span>
@@ -871,7 +920,14 @@
                 </div>
             </div>
             <h5>Confirm that you approve the cancellation</h5>
-            This transaction costs you 0 TestEther <!-- ToDo; add gas and uses 0 gas !-->
+            This transaction costs you {{wb3.utils.fromWei(multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
+            <br>
+            <select *ngIf="accountBalance != '0'" [(ngModel)]="gasPrice" (click)="cancelOffer(lastOffer.token, lastOffer.amount, lastOffer.buysell);">
+                <option value="0">Free Gas</option>
+                <option value="1000000000">Low Gas Cost (1 gwei)</option>
+                <option value="5000000000">Medium Gas Cost (5 gwei)</option>
+                <option value="21000000000">High Gas Cost (21 gwei)</option>
+            </select>
             <br>
             It is estimated to use {{Market.estimate | number}} gas.
             <span *ngIf="Market.estimate == maxGas">That is all the gas. Most likely an error.</span>
@@ -923,7 +979,14 @@
                 </div>
             </div>
             <h5>Confirm that you approve the cancellation</h5>
-            This transaction costs you 0 TestEther <!-- ToDo; add gas and uses 0 gas !-->
+            This transaction costs you {{wb3.utils.fromWei(multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
+            <br>
+            <select *ngIf="accountBalance != '0'" [(ngModel)]="gasPrice" (click)="cancelOffer(lastOffer.token, lastOffer.amount, lastOffer.buysell);">
+                <option value="0">Free Gas</option>
+                <option value="1000000000">Low Gas Cost (1 gwei)</option>
+                <option value="5000000000">Medium Gas Cost (5 gwei)</option>
+                <option value="21000000000">High Gas Cost (21 gwei)</option>
+            </select>
             <br>
             It is estimated to use {{Market.estimate | number}} gas.
             <span *ngIf="Market.estimate == maxGas">That is all the gas. Most likely an error.</span>
