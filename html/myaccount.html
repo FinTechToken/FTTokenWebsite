@@ -939,10 +939,10 @@
                         Cancel
                     </a>
                 </li>
-                <li *ngIf="Market.estimate == 0" class="nav-item w-50 next">
+                <li *ngIf="Market.estimate == '0'" class="nav-item w-50 next">
                     Pick Offer To Cancel
                 </li>
-                <li *ngIf="Market.estimate != 0" class="nav-item w-50 next">
+                <li *ngIf="Market.estimate != '0'" class="nav-item w-50 next">
                     <a class="nav-link" (click)="cancelOfferConfirm()" href="javascript:void(0);">
                         Confirm
                     </a>
@@ -998,10 +998,10 @@
                         Cancel
                     </a>
                 </li>
-                <li *ngIf="Market.estimate == 0" class="nav-item w-50 next">
+                <li *ngIf="Market.estimate == '0'" class="nav-item w-50 next">
                     Pick Offer To Cancel
                 </li>
-                <li *ngIf="Market.estimate != 0" class="nav-item w-50 next">
+                <li *ngIf="Market.estimate != '0'" class="nav-item w-50 next">
                     <a class="nav-link" (click)="cancelOfferConfirm()" href="javascript:void(0);">
                         Confirm
                     </a>
