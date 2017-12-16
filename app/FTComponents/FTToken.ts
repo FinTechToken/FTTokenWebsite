@@ -2,6 +2,7 @@ declare var scaleVideoContainer: any;
 declare var rlp: any;
 declare var numberToHex: any;
 declare var EthJS: any;
+declare var BigNumber: any;
 
 import { Component, trigger, state, style, transition, animate, OnInit, AfterViewInit, OnDestroy, NgZone } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
@@ -36,18 +37,21 @@ export class FTToken {
   number='';
   gotFree=false;
   zero="0000000000000000000000000000000000000000";
-  maxGas=500000;
+  gasPrice= "0";
+  maxGas="500000";
   fromAddress = "0000000000000000000000000000000000000000";
   wb3;
+  //Free 9287bb21719d283CfdD7d644a89E8492f9845B64
+  //Trade 2d5e86187855CC29B40469e8a7355f3fDBf4C088
   token = {
-    name: '' as string,
+    name: "",
     mine:"",
-    totalSupply:null,
-    totalOutstanding:null,
+    totalSupply:"",
+    totalOutstanding:"",
     contract:{} as any,
-    estimate:0,
+    estimate:"0",
     error:'',
-    address: "9287bb21719d283CfdD7d644a89E8492f9845B64",
+    address: "",
     abi:{} as any,
     serializedTx:{} as any,
     transaction: '',
@@ -95,11 +99,17 @@ export class FTToken {
     var privateKey = Buffer.from(rlp.stripHexPrefix(this.cache.getCache('key')), 'hex');
     var ABIdata = this.token.contract.methods.getFreeToken().encodeABI();
     var chainId = "913945103463586943";
-    this.wb3.eth.getTransactionCount('0x' + this.fromAddress).then( (nonce) => {
+    this.token.contract.methods.gotFree('0x'+this.fromAddress).call().then( (returns) => 
+      this.gotFree = returns
+    );
+    this.token.contract.methods.getFreeToken().estimateGas({gas:500000,from:'0x'+this.fromAddress}).then( (returns) => {
+      this.token.estimate = returns;
+      this.maxGas = this.multiplyBigNumber(this.token.estimate,"2");
+      this.wb3.eth.getTransactionCount('0x' + this.fromAddress).then( (nonce) => {
         const txData = {
             nonce:    numberToHex(nonce),
-            gasPrice: '0x00',
-            gasLimit: numberToHex(500000),
+            gasPrice: numberToHex(this.gasPrice),
+            gasLimit: numberToHex(this.maxGas),
             to:       '0x' + this.token.address,
             value:    '0x00',
             data:     ABIdata,
@@ -113,12 +123,7 @@ export class FTToken {
         this.token.confirmed = 0;
         this.token.error = '';
         return null;
-    });
-    this.token.contract.methods.gotFree('0x'+this.fromAddress).call().then( (returns) => 
-      this.gotFree = returns
-    );
-    this.token.contract.methods.getFreeToken().estimateGas({gas:500000,from:'0x'+this.fromAddress}).then( (returns) => {
-      this.token.estimate = returns;
+      });
     });
     this.showModal(3);
   }
@@ -136,25 +141,48 @@ export class FTToken {
   }
 
   updateTutorial(): void {
-    var privateKey = Buffer.from(rlp.stripHexPrefix(this.cache.getCache('key')), 'hex');
-    var ABIdata = this.tutorial.contract.methods.saveUTinyInt(this.tutorial.stateKey, "1").encodeABI();
-    var chainId = "913945103463586943";
-    this.wb3.eth.getTransactionCount('0x' + this.fromAddress).then( (nonce) => {
-        const txData = {
-            nonce:    numberToHex(+nonce+1),
-            gasPrice: '0x00',
-            gasLimit: numberToHex(500000),
-            to:       '0x' + this.tutorial.address,
-            value:    '0x00',
-            data:     ABIdata,
-            chainId:  chainId.toString()
-        }
-        var tx = new EthJS.Tx(txData);
-        tx.sign(privateKey);
-        this.tutorial.serializedTx = tx.serialize();
-        this.tutorial.subscription = this.wb3.eth.sendSignedTransaction('0x' + this.tutorial.serializedTx.toString('hex'))
-          .once('receipt', (receipt) =>{})
-    });
+    if(!this.tutorial.subscription && +this.tutorial.state < 1) {
+      var privateKey = Buffer.from(rlp.stripHexPrefix(this.cache.getCache('key')), 'hex');
+      var ABIdata = this.tutorial.contract.methods.saveUTinyInt(this.tutorial.stateKey, "1").encodeABI();
+      var chainId = "913945103463586943";
+      this.wb3.eth.getTransactionCount('0x' + this.fromAddress).then( (nonce) => {
+          const txData = {
+              nonce:    numberToHex(+nonce+1),
+              gasPrice: '0x00',
+              gasLimit: numberToHex(500000),
+              to:       '0x' + this.tutorial.address,
+              value:    '0x00',
+              data:     ABIdata,
+              chainId:  chainId.toString()
+          }
+          var tx = new EthJS.Tx(txData);
+          tx.sign(privateKey);
+          this.tutorial.serializedTx = tx.serialize();
+          this.tutorial.subscription = this.wb3.eth.sendSignedTransaction('0x' + this.tutorial.serializedTx.toString('hex'))
+            .once('receipt', (receipt) =>{})
+      });
+    }
+    if(!this.tutorial.subscription && +this.tutorial.state == 5) {
+      var privateKey = Buffer.from(rlp.stripHexPrefix(this.cache.getCache('key')), 'hex');
+      var ABIdata = this.tutorial.contract.methods.saveUTinyInt(this.tutorial.stateKey, "6").encodeABI();
+      var chainId = "913945103463586943";
+      this.wb3.eth.getTransactionCount('0x' + this.fromAddress).then( (nonce) => {
+          const txData = {
+              nonce:    numberToHex(+nonce+1),
+              gasPrice: '0x00',
+              gasLimit: numberToHex(500000),
+              to:       '0x' + this.tutorial.address,
+              value:    '0x00',
+              data:     ABIdata,
+              chainId:  chainId.toString()
+          }
+          var tx = new EthJS.Tx(txData);
+          tx.sign(privateKey);
+          this.tutorial.serializedTx = tx.serialize();
+          this.tutorial.subscription = this.wb3.eth.sendSignedTransaction('0x' + this.tutorial.serializedTx.toString('hex'))
+            .once('receipt', (receipt) =>{})
+      });
+    }
   }
 
   showModal(modal: number): void {
@@ -195,7 +223,6 @@ export class FTToken {
       gasPrice: '0' // default gas price in wei
     });
     this.tutorial.stateKey = this.wb3.utils.asciiToHex('Tutorial');
-    this.getStrings();
   }    
 
 viewNumber(number: string): void {
@@ -205,7 +232,7 @@ viewNumber(number: string): void {
 
 getEther(number:string): number{
   if(number.length > 18){
-    return Math.floor(this.wb3.utils.fromWei(number,'ether'));
+    return +number.substr(0,number.length-18);
   }
   else {
     return 0;
@@ -265,6 +292,17 @@ hasFraction(number: string): boolean{
   }
   return false;
 }
+multiplyBigNumber(numberA: string, numberB: string): string {
+  if(numberA == ""){
+    numberA = "0";
+  }
+  if(numberB == ""){
+    numberB = "0";
+  }
+  let x = new BigNumber(numberA);
+  let y = new BigNumber(numberB);
+  return x.times(y).toString(10);
+}
 
   onResize(event: any):void {
     scaleVideoContainer();
@@ -272,26 +310,32 @@ hasFraction(number: string): boolean{
 
   ngAfterViewInit(): void{
     this.subscribeBlock = this.obs.getObserver('block').subscribe( (bn) => {
-      this.token.contract.methods.totalSupply().call().then( 
-        (result1) => {
-          this.token.totalSupply = result1 == 0 ? 0 : result1;
-        }
-      );
-      this.token.contract.methods.totalOutstanding().call().then( 
-        (result2) => this.token.totalOutstanding = result2 == 0 ? 0 : result2
-      );
-      this.token.contract.methods.balanceOf(this.fromAddress).call().then( 
-        (result3) => this.token.mine = result3 == 0 ? "0" : result3.toString()
-      );
-      this.tutorial.contract.methods.getUTinyInt('0x'+ this.fromAddress, this.tutorial.stateKey ).call().then( 
-        (result4) => {this.tutorial.state = result4 == 0 ? 0 : +result4;}
-      );
+      // Chain due to web3 bug https://github.com/ethereum/web3.js/issues/1069
+      // The return type is whatever the LAST concurrent return type is. 
+      // Workaround is to group calls with same type and chain them to the next group.
+      this.token.contract.methods.name().call().then( 
+        (result5) => {
+          this.token.name = result5 == 0 ? "0" : result5.toString();
+        
+        this.token.contract.methods.totalSupply().call().then( 
+          (result1) => {
+            this.token.totalSupply = result1 == 0 ? "0" : result1.toString();
+          }
+        );
+        this.token.contract.methods.totalOutstanding().call().then( 
+          (result2) => this.token.totalOutstanding = result2 == 0 ? "0" : result2.toString()
+        );
+        this.token.contract.methods.balanceOf('0x' + this.fromAddress).call().then( 
+          (result3) => this.token.mine = result3 == 0 ? "0" : result3.toString()
+        );
+        this.tutorial.contract.methods.getUTinyInt('0x'+ this.fromAddress, this.tutorial.stateKey ).call().then( 
+          (result4) => {this.tutorial.state = result4 == 0 ? 0 : +result4;}
+        );
+      }
+    );
     }); 
   }
 
-  getStrings(): void{
-    this.token.name = 'FreeToken';
-  }
   ngDoCheck(): void{
   }
   changeTabs(tab:number): void{

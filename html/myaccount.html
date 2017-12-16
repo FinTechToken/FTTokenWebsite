@@ -106,6 +106,42 @@
                                                         </span>
                                                     </td>
                                                 </tr>
+                                                <tr>
+                                                    <td><a [routerLink]="['/token',TradeToken.address]" href="javascript:void(0);">TradingToken</a></td>
+                                                    <td>
+                                                        <a *ngIf="TradeToken.mine != '0'" href="javascript:void(0);" (click)="viewNumber(TradeToken.mine);">
+                                                            {{getEther(TradeToken.mine) | number : '1.0-0'}}<span *ngIf="hasFraction(TradeToken.mine)">.#</span>
+                                                        </a>
+                                                        <span *ngIf="TradeToken.mine == '0'">0</span>
+                                                        <span *ngIf="TradeToken.mine != '0'" class="float-right">
+                                                            <i (click)="deposit();" href="javascript:void(0);" class="icon-control-forward hover"></i>
+                                                        </span>
+                                                        <span *ngIf="Market.trade != '0'" class="float-right">
+                                                            <i (click)="withdraw();" href="javascript:void(0);" class="icon-control-rewind hover"></i>
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <a *ngIf="Market.trade != '0'" href="javascript:void(0);" (click)="viewNumber(Market.trade);">
+                                                            {{getEther(Market.trade) | number : '1.0-0'}}<span *ngIf="hasFraction(Market.trade)">.#</span>
+                                                        </a>
+                                                        <span *ngIf="Market.trade == '0'">0</span>
+                                                        <span *ngIf="Market.ether != '0'" class="float-right">
+                                                            <i (click)="buy();" href="javascript:void(0);" class="icon-plus hover"></i>
+                                                        </span>
+                                                        <span *ngIf="Market.trade != '0'" class="float-right">
+                                                            <i (click)="sell();" href="javascript:void(0);" class="icon-minus hover"></i>
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <a *ngIf="bookTokenEther != '0'" href="javascript:void(0);" (click)="viewNumber(bookTokenEther);">
+                                                            {{getEther(bookTokenEther) | number : '1.0-0'}}<span *ngIf="hasFraction(bookTokenEther)">.#</span>
+                                                        </a>
+                                                        <span *ngIf="bookTokenEther == '0'">0</span>
+                                                        <span *ngIf="bookTokenEther != '0'" class="float-right">
+                                                            <i (click)="cancelTokenOffer();" href="javascript:void(0);" class="icon-close hover"></i>
+                                                        </span>
+                                                    </td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>

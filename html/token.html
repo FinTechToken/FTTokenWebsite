@@ -29,8 +29,23 @@
                                     </h4>
                                     <div>
                                         <span *ngIf="token.address == '9287bb21719d283CfdD7d644a89E8492f9845B64'">
-                                            FreeToken is a company that is offering 1 free token to every address. 
+                                            FreeToken is a fake company that is offering 1 free token to every address. 
                                             <br>
+                                            <span *ngIf="tutorial.state > 0 ">
+                                                You already received a free token!
+                                            </span>
+                                        </span>
+                                        <span *ngIf="token.address == '2d5e86187855CC29B40469e8a7355f3fDBf4C088'">
+                                            TradingToken is a fake company that is offering 5 free tokens to every address that gets to step 7 of the tutorial.
+
+                                            Trade these tokens with others for free and for fun!
+                                            <br>
+                                            <span *ngIf="tutorial.state < 5 ">
+                                                Keep working on the tutorial!
+                                            </span>
+                                            <span *ngIf="tutorial.state > 5 ">
+                                                You already received 5 free trading tokens. 
+                                            </span>
                                         </span>
                                         <br>
                                         <span *ngIf="token.totalSupply">
@@ -58,10 +73,15 @@
                                             <!--
                                             <span *ngIf="token.totalSupply > 0"><br>{{token.mine/token.totalSupply}}</span>
                                             !-->
-                                            <span *ngIf="token.totalOutstanding > 0"><br><strong>% Owned Of Outstanding</strong> {{token.mine*100/token.totalOutstanding}}%</span>
+                                            <span *ngIf="token.totalOutstanding != '0'"><br><strong>% Owned Of Outstanding</strong> {{token.mine*100/token.totalOutstanding}}%</span>
                                             <br>
                                         </span>
-                                        <span *ngIf="token.address == '9287bb21719d283CfdD7d644a89E8492f9845B64'">
+                                        <span *ngIf="token.address == '9287bb21719d283CfdD7d644a89E8492f9845B64' && tutorial.state == 0">
+                                            <br>
+                                            <a class="btn btn-lg btn-ft" href="javascript:void(0);" (click)="getFreeToken();">Get a Free Token</a>
+                                            <br>
+                                        </span>
+                                        <span *ngIf="token.address == '2d5e86187855CC29B40469e8a7355f3fDBf4C088' && tutorial.state == 5">
                                             <br>
                                             <a class="btn btn-lg btn-ft" href="javascript:void(0);" (click)="getFreeToken();">Get a Free Token</a>
                                             <br>
@@ -133,7 +153,7 @@
 </div>
 
 <!-- Modal 2 Overview -->
-<div *ngIf="modal == 2" [ngClass]="{ 'show block': modal == 2 }" class="modal fade" tabindex="-1" aria-hidden="true">
+<div  [ngClass]="{ 'show block': modal == 2 }" class="modal fade" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content roboto">
             <div class="modal-header">
@@ -182,7 +202,13 @@
         </div>
         <div class="modal-body">
             <h5>Create transaction on the blockchain to get a FreeToken</h5>
-            This transaction costs 0 TestEther <!-- ToDo; add gas and uses 0 gas !-->
+            This transaction costs {{wb3.utils.fromWei(multiplyBigNumber(token.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
+            <select *ngIf="tutorial.state >= 4" [(ngModel)]="gasPrice" (click)="getFreeToken()">
+                <option value="0">Free Gas</option>
+                <option value="1000000000">Low Gas Cost (1 gwei)</option>
+                <option value="5000000000">Medium Gas Cost (5 gwei)</option>
+                <option value="21000000000">High Gas Cost (21 gwei)</option>
+            </select>
             <br><br>
             The transaction will use {{token.estimate | number}} gas. 
             <br><br>Gas is what the blockchain network uses to process transactions.
