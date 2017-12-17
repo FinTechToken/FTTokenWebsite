@@ -78,10 +78,10 @@
                                                         </a>
                                                         <span *ngIf="FreeToken.mine == '0'">0</span>
                                                         <span *ngIf="FreeToken.mine != '0'" class="float-right">
-                                                            <i (click)="deposit();" href="javascript:void(0);" class="icon-control-forward hover"></i>
+                                                            <i (click)="setToken('free'); deposit();" href="javascript:void(0);" class="icon-control-forward hover"></i>
                                                         </span>
                                                         <span *ngIf="Market.free != '0'" class="float-right">
-                                                            <i (click)="withdraw();" href="javascript:void(0);" class="icon-control-rewind hover"></i>
+                                                            <i (click)="setToken('free'); withdraw();" href="javascript:void(0);" class="icon-control-rewind hover"></i>
                                                         </span>
                                                     </td>
                                                     <td>
@@ -90,10 +90,10 @@
                                                         </a>
                                                         <span *ngIf="Market.free == '0'">0</span>
                                                         <span *ngIf="Market.ether != '0'" class="float-right">
-                                                            <i (click)="buy();" href="javascript:void(0);" class="icon-plus hover"></i>
+                                                            <i (click)="setToken('free'); buy();" href="javascript:void(0);" class="icon-plus hover"></i>
                                                         </span>
                                                         <span *ngIf="Market.free != '0'" class="float-right">
-                                                            <i (click)="sell();" href="javascript:void(0);" class="icon-minus hover"></i>
+                                                            <i (click)="setToken('free'); sell();" href="javascript:void(0);" class="icon-minus hover"></i>
                                                         </span>
                                                     </td>
                                                     <td>
@@ -114,10 +114,10 @@
                                                         </a>
                                                         <span *ngIf="TradeToken.mine == '0'">0</span>
                                                         <span *ngIf="TradeToken.mine != '0'" class="float-right">
-                                                            <i (click)="deposit();" href="javascript:void(0);" class="icon-control-forward hover"></i>
+                                                            <i (click)="setToken('trade'); deposit();" href="javascript:void(0);" class="icon-control-forward hover"></i>
                                                         </span>
                                                         <span *ngIf="Market.trade != '0'" class="float-right">
-                                                            <i (click)="withdraw();" href="javascript:void(0);" class="icon-control-rewind hover"></i>
+                                                            <i (click)="setToken('trade'); withdraw();" href="javascript:void(0);" class="icon-control-rewind hover"></i>
                                                         </span>
                                                     </td>
                                                     <td>
@@ -126,10 +126,10 @@
                                                         </a>
                                                         <span *ngIf="Market.trade == '0'">0</span>
                                                         <span *ngIf="Market.ether != '0'" class="float-right">
-                                                            <i (click)="buy();" href="javascript:void(0);" class="icon-plus hover"></i>
+                                                            <i (click)="setToken('trade'); buy();" href="javascript:void(0);" class="icon-plus hover"></i>
                                                         </span>
                                                         <span *ngIf="Market.trade != '0'" class="float-right">
-                                                            <i (click)="sell();" href="javascript:void(0);" class="icon-minus hover"></i>
+                                                            <i (click)="setToken('trade'); sell();" href="javascript:void(0);" class="icon-minus hover"></i>
                                                         </span>
                                                     </td>
                                                     <td>
@@ -360,19 +360,19 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title">Deposit Free Token</h5>
+            <h5 class="modal-title">Deposit {{currentToken.name}}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
         <div class="modal-body">
             <h5>Depositing Tokens involves 2 steps.</h5>
-            First, the FreeToken Smart Contract needs permission from you to allow
-            the Market Smart Contract to transfer <a (click)="changeDeposit()" href="javascript:void(0);">{{wb3.utils.fromWei(depositAmount, 'ether')}}</a> FreeToken.<br><Br>
-            Second, the Market Smart Contract deposits the FreeToken into your Market account.
+            First, the {{currentToken.name}} Smart Contract needs permission from you to allow
+            the Market Smart Contract to transfer <a (click)="changeDeposit()" href="javascript:void(0);">{{wb3.utils.fromWei(depositAmount, 'ether')}}</a> {{currentToken.name}}.<br><Br>
+            Second, the Market Smart Contract deposits the {{currentToken.name}} into your Market account.
             <Br><Br>
             <h5>Confirm that you approve the deposit.</h5>
-            This transaction costs you {{wb3.utils.fromWei(multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
+            This transaction costs you {{wb3.utils.fromWei(multiplyBigNumber(currentToken.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
             <br>
             <select *ngIf="accountBalance != '0'" [(ngModel)]="gasPrice" (click)="deposit(true)">
                 <option value="0">Free Gas</option>
@@ -381,8 +381,8 @@
                 <option value="21000000000">High Gas Cost (21 gwei)</option>
             </select>
             <br>
-            The approval is estimated to use {{FreeToken.estimate | number}} gas.
-            <span *ngIf="FreeToken.estimate == maxGas">That is all the gas. Most likely an error.</span>
+            The approval is estimated to use {{currentToken.estimate | number}} gas.
+            <span *ngIf="currentToken.estimate == maxGas">That is all the gas. Most likely an error.</span>
         </div>
         <div class="modal-footer">
             <ul class="nav nav-pills modal-nav text-center">
@@ -407,7 +407,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title">Deposit Free Token - Waiting for step 1</h5>
+            <h5 class="modal-title">Deposit {{currentToken.name}} - Waiting for step 1</h5>
         </div>
         <div class="modal-body">
             <h5>Once the approval is added to the blockchain you will be able to send the deposit transaction to the blockchain.</h5>
@@ -425,23 +425,23 @@
             <span *ngIf="Market.estimate == maxGas">That is all the gas. Most likely an error. Please wait for approval to complete.</span>
             <br><Br>
             This may take a few blocks for the approval. (Time since last block {{seconds}})
-            <div [ngClass]="{ 'alert-warning': !FreeToken.transaction, 'alert-success': FreeToken.transaction }" class="alert" role="alert">Transaction sent to blockchain
-                <br>{{FreeToken.transaction}}
+            <div [ngClass]="{ 'alert-warning': !currentToken.transaction, 'alert-success': currentToken.transaction }" class="alert" role="alert">Transaction sent to blockchain
+                <br>{{currentToken.transaction}}
             </div>
-            <div [ngClass]="{'alert-warning': !FreeToken.receipt, 'alert-success': FreeToken.receipt }" class="alert" role="alert">Transaction added to blockchain
-                <br>Gas Used: {{FreeToken.receipt?.gasUsed | number}}
-                <span *ngIf="FreeToken.error">ERROR {{FreeToken.error}}</span>
+            <div [ngClass]="{'alert-warning': !currentToken.receipt, 'alert-success': currentToken.receipt }" class="alert" role="alert">Transaction added to blockchain
+                <br>Gas Used: {{currentToken.receipt?.gasUsed | number}}
+                <span *ngIf="currentToken.error">ERROR {{currentToken.error}}</span>
             </div>
-            <div [ngClass]="{'alert-warning': FreeToken.confirmed < 2, 'alert-success': FreeToken.confirmed > 1 }" class="alert" role="alert">Transaction confirmed on blockchain {{FreeToken.confirmed}} times</div>
+            <div [ngClass]="{'alert-warning': currentToken.confirmed < 2, 'alert-success': currentToken.confirmed > 1 }" class="alert" role="alert">Transaction confirmed on blockchain {{currentToken.confirmed}} times</div>
         </div>
         <div class="modal-footer">
             <ul class="nav nav-pills modal-nav text-center">
-                <li *ngIf="FreeToken.receipt" class="nav-item w-100 next">
+                <li *ngIf="currentToken.receipt" class="nav-item w-100 next">
                     <a class="nav-link" (click)="depositConfirm()" href="javascript:void(0);">
                         Confirm Deposit
                     </a>
                 </li>
-                <li *ngIf="!FreeToken.receipt" class="nav-item w-100 next">
+                <li *ngIf="!currentToken.receipt" class="nav-item w-100 next">
                     <span>
                         Wait
                     </span>
@@ -456,7 +456,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title">Deposit Free Token Transaction</h5>
+            <h5 class="modal-title">Deposit {{currentToken.name}} Transaction</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
             <span aria-hidden="true">&times;</span>
             </button>
@@ -490,14 +490,14 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title">Withdraw Free Token</h5>
+            <h5 class="modal-title">Withdraw {{currentToken.name}}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
         <div class="modal-body">
-            <h5>Withdraw Free Token</h5>
-            Withdraw <a (click)="changeWithdraw()" href="javascript:void(0);">{{wb3.utils.fromWei(withdrawAmount, 'ether')}}</a> Free Tokens.<br><Br>
+            <h5>Withdraw {{currentToken.name}}</h5>
+            Withdraw <a (click)="changeWithdraw()" href="javascript:void(0);">{{wb3.utils.fromWei(withdrawAmount, 'ether')}}</a> {{currentToken.name}}.<br><Br>
                 This transaction costs you {{wb3.utils.fromWei(multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
                 <br>
                 <select *ngIf="accountBalance != '0'" [(ngModel)]="gasPrice" (click)="withdraw(true)">
@@ -533,7 +533,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title">Withdraw Free Token Transaction</h5>
+            <h5 class="modal-title">Withdraw {{currentToken.name}} Transaction</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
             <span aria-hidden="true">&times;</span>
             </button>
@@ -567,7 +567,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title">Buy a Free Token</h5>
+            <h5 class="modal-title">Buy a {{currentToken.name}}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
             <span aria-hidden="true">&times;</span>
             </button>
@@ -669,7 +669,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title">Sell a Free Token</h5>
+            <h5 class="modal-title">Sell a {{currentToken.name}}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
             <span aria-hidden="true">&times;</span>
             </button>

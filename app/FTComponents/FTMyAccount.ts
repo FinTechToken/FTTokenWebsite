@@ -74,7 +74,9 @@ export class FTMyAccount {
   buyPrice="0";
   sellToken="0";
   sellPrice="0";
+  // Tokens should be an array instead of hard code  
   FreeToken = {
+    name: 'FreeToken',
     mine:'0',
     supply:0,
     out:0,
@@ -87,9 +89,11 @@ export class FTMyAccount {
     transaction: '',
     receipt: null as any,
     confirmed: 0,
-    subscription: null as any
+    subscription: null as any,
+    market: "0"
   }
   TradeToken = {
+    name: 'TradeToken',
     mine:'0',
     supply:0,
     out:0,
@@ -102,8 +106,10 @@ export class FTMyAccount {
     transaction: '',
     receipt: null as any,
     confirmed: 0,
-    subscription: null as any
+    subscription: null as any,
+    market: "0"
   }
+  currentToken= this.FreeToken;
   oldMarketAddres = '75c56AF6F8a60aD4c53E8E149716e1D1B2541f56';
   oldMarketAddress2 = '636c66037Be0DD8A23dcd83908b9AC9219Fe84C1';
   Market = {
@@ -156,6 +162,17 @@ export class FTMyAccount {
             }
           }
         );
+  }
+
+  setToken(token: string): void {
+    if(token == 'trade'){
+      this.currentToken = this.TradeToken;
+      this.currentToken.market = this.Market.trade;
+    } else if(token == 'free') {
+      this.currentToken = this.FreeToken;
+      this.currentToken.market = this.Market.free;
+    }
+
   }
 
   openModalNumber(number: string, max: string): void {
@@ -629,6 +646,9 @@ export class FTMyAccount {
       this.FreeToken.contract.methods.balanceOf(this.fromAddress).call().then( 
         (result) => this.FreeToken.mine = result == 0 ? '0' : result.toString()
       );
+      this.TradeToken.contract.methods.balanceOf(this.fromAddress).call().then( 
+        (result) => this.TradeToken.mine = result == 0 ? '0' : result.toString()
+      );
       this.Market.contract.methods.accountBalance(this.zero,this.fromAddress).call().then( 
         (result) => this.Market.ether = result == 0 ? '0' : result
       );
@@ -678,9 +698,9 @@ export class FTMyAccount {
       this.withdrawAmount = this.Market.free;
     }
     var privateKey = Buffer.from(rlp.stripHexPrefix(this.cache.getCache('key')), 'hex');
-    var ABIdata = this.Market.contract.methods.withdrawal('0x'+this.FreeToken.address,this.withdrawAmount).encodeABI();
+    var ABIdata = this.Market.contract.methods.withdrawal('0x'+this.currentToken.address,this.withdrawAmount).encodeABI();
     var chainId = "913945103463586943";
-    this.Market.contract.methods.withdrawal('0x'+this.FreeToken.address,this.withdrawAmount).estimateGas({gas:500000,from:'0x'+this.fromAddress}).then( (returns) => {
+    this.Market.contract.methods.withdrawal('0x'+this.currentToken.address,this.withdrawAmount).estimateGas({gas:500000,from:'0x'+this.fromAddress}).then( (returns) => {
       this.Market.estimate = returns;
       this.maxGas = this.multiplyBigNumber(this.Market.estimate,"2");
       this.wb3.eth.getTransactionCount('0x' + this.fromAddress).then( (nonce) => {
@@ -703,14 +723,11 @@ export class FTMyAccount {
         return null;
       });
     });
-    /*this.FreeToken.contract.methods.approveAndCall('0x'+this.Market.address,this.FreeToken.mine,'').estimateGas({gas:500000,from:'0x'+this.fromAddress}).then( (returns) => {
-      this.Market.estimate = returns;
-    });*/
     this.showModal(7);
   }
 
   changeWithdraw(){
-    this.openModalNumber(this.withdrawAmount, this.Market.free);
+    this.openModalNumber(this.withdrawAmount, this.currentToken.market);
     this.obs.getObserver('modalNumber').subscribe( (result) => {
       this.withdrawAmount = result;
       this.withdraw(true);
@@ -732,42 +749,44 @@ export class FTMyAccount {
 
   deposit(notupdate: boolean): void{
     if(!notupdate){
-      this.depositAmount = this.FreeToken.mine;
+      this.depositAmount = this.currentToken.mine;
     }
     var privateKey = Buffer.from(rlp.stripHexPrefix(this.cache.getCache('key')), 'hex');
-    var ABIdata = this.FreeToken.contract.methods.approve('0x'+this.Market.address,this.depositAmount).encodeABI();
+
+    var ABIdata = this.currentToken.contract.methods.approve('0x'+this.Market.address,this.depositAmount).encodeABI();
     var chainId = "913945103463586943";
-    this.FreeToken.contract.methods.approve('0x'+this.Market.address,this.depositAmount).estimateGas({gas:500000,from:'0x'+this.fromAddress}).then( (returns) => {
-      this.FreeToken.estimate = returns;
-      this.maxGas = this.multiplyBigNumber(this.FreeToken.estimate,"2");
+    this.currentToken.contract.methods.approve('0x'+this.Market.address,this.depositAmount).estimateGas({gas:500000,from:'0x'+this.fromAddress}).then( (returns) => {
+      this.currentToken.estimate = returns;
+      this.maxGas = this.multiplyBigNumber(this.currentToken.estimate,"2");
       this.wb3.eth.getTransactionCount('0x' + this.fromAddress).then( (nonce) => {
         const txData = {
             nonce:    numberToHex(nonce),
             gasPrice: numberToHex(this.gasPrice),
             gasLimit: numberToHex(this.maxGas),
-            to:       '0x' + this.FreeToken.address,
+            to:       '0x' + this.currentToken.address,
             value:    '0x00',
             data:     ABIdata,
             chainId:  chainId.toString()
         }
         var tx = new EthJS.Tx(txData);
         tx.sign(privateKey);
-        this.FreeToken.serializedTx = tx.serialize();
-        this.FreeToken.receipt = null;
-        this.FreeToken.transaction = '';
-        this.FreeToken.confirmed = 0;
-        this.FreeToken.error = '';
+        this.currentToken.serializedTx = tx.serialize();
+        this.currentToken.receipt = null;
+        this.currentToken.transaction = '';
+        this.currentToken.confirmed = 0;
+        this.currentToken.error = '';
         return null;
       });
     });
-    /*this.FreeToken.contract.methods.approveAndCall('0x'+this.Market.address,this.FreeToken.mine,'').estimateGas({gas:500000,from:'0x'+this.fromAddress}).then( (returns) => {
+    /*ToDo once we publish fixed approveandcall in the Market contract implement this so deposit can be 1 call (Check if estimate gas error and do 2 step if error)
+      this.currentToken.contract.methods.approveAndCall('0x'+this.Market.address,this.currentToken.mine,'').estimateGas({gas:500000,from:'0x'+this.fromAddress}).then( (returns) => {
       this.Market.estimate = returns;
     });*/
     this.showModal(4);
   }
 
   changeDeposit(){
-    this.openModalNumber(this.depositAmount, this.FreeToken.mine);
+    this.openModalNumber(this.depositAmount, this.currentToken.mine);
     this.obs.getObserver('modalNumber').subscribe( (result) => {
       this.depositAmount = result;
       this.deposit(true);
@@ -776,18 +795,18 @@ export class FTMyAccount {
 
   approveConfirm(): void{
     this.Market.estimate = "0";
-    if(this.FreeToken.subscription){
-      this.FreeToken.subscription.removeAllListeners();
+    if(this.currentToken.subscription){
+      this.currentToken.subscription.removeAllListeners();
     }
-    this.FreeToken.subscription = this.wb3.eth.sendSignedTransaction('0x' + this.FreeToken.serializedTx.toString('hex'))
-    .once('transactionHash', (hash) => { this.FreeToken.transaction = hash; 
+    this.currentToken.subscription = this.wb3.eth.sendSignedTransaction('0x' + this.currentToken.serializedTx.toString('hex'))
+    .once('transactionHash', (hash) => { this.currentToken.transaction = hash; 
     })
     .once('receipt', (receipt) => { 
-      this.FreeToken.receipt = receipt; 
+      this.currentToken.receipt = receipt; 
       var privateKey = Buffer.from(rlp.stripHexPrefix(this.cache.getCache('key')), 'hex');
-      var ABIdata = this.Market.contract.methods.deposit('0x'+this.FreeToken.address,this.depositAmount).encodeABI();
+      var ABIdata = this.Market.contract.methods.deposit('0x'+this.currentToken.address,this.depositAmount).encodeABI();
       var chainId = "913945103463586943";
-      this.Market.contract.methods.deposit('0x'+this.FreeToken.address,this.depositAmount).estimateGas({gas:500000,from:'0x'+this.fromAddress}).then( (returns) => {
+      this.Market.contract.methods.deposit('0x'+this.currentToken.address,this.depositAmount).estimateGas({gas:500000,from:'0x'+this.fromAddress}).then( (returns) => {
         this.Market.estimate = returns;
         this.maxGas = this.multiplyBigNumber(returns, "2");
         this.wb3.eth.getTransactionCount('0x' + this.fromAddress).then( (nonce) => {
@@ -811,9 +830,9 @@ export class FTMyAccount {
         });
       });
     })
-    .on('confirmation', (confNumber, receipt) => { this.FreeToken.confirmed = confNumber; 
+    .on('confirmation', (confNumber, receipt) => { this.currentToken.confirmed = confNumber; 
     })
-    .on('error', (error) => { console.log('ERROR' + error); this.FreeToken.error = error;})
+    .on('error', (error) => { console.log('ERROR' + error); this.currentToken.error = error;})
     this.showModal(5);
   }
 
@@ -823,7 +842,14 @@ export class FTMyAccount {
       this.Market.subscription.removeAllListeners();
     }
     this.Market.subscription = this.wb3.eth.sendSignedTransaction('0x' + this.Market.serializedTx.toString('hex'))
-    .once('transactionHash', (hash) => { this.Market.transaction = hash; this.updateTutorial(2);})
+    .once('transactionHash', (hash) => { this.Market.transaction = hash; 
+      if(this.currentToken.address == '9287bb21719d283CfdD7d644a89E8492f9845B64'){
+        this.updateTutorial(2);
+      }
+      if(this.currentToken.address == '2d5e86187855CC29B40469e8a7355f3fDBf4C088'){
+        this.updateTutorial(7);
+      }
+    })
     .once('receipt', (receipt) =>{ this.Market.receipt = receipt; })
     .on('confirmation', (confNumber, receipt) => { this.Market.confirmed = confNumber; })
     .on('error', (error) => { console.log('ERROR' + error); this.Market.error = error;})
@@ -1011,9 +1037,9 @@ export class FTMyAccount {
   buy(): void{
     // makeOffer( address _token, bool _buy, uint256 _amount, uint256 _shares, uint256 _startAmount )
     var privateKey = Buffer.from(rlp.stripHexPrefix(this.cache.getCache('key')), 'hex');
-    var ABIdata = this.Market.contract.methods.makeOffer('0x' + this.FreeToken.address, true, this.buyPrice, this.buyToken, "0x00").encodeABI();
+    var ABIdata = this.Market.contract.methods.makeOffer('0x' + this.currentToken.address, true, this.buyPrice, this.buyToken, "0x00").encodeABI();
     var chainId = "913945103463586943";
-    this.Market.contract.methods.makeOffer('0x' + this.FreeToken.address, true, this.buyPrice, this.buyToken, "0x00").estimateGas({from:'0x'+this.fromAddress}).then( (returns) => {
+    this.Market.contract.methods.makeOffer('0x' + this.currentToken.address, true, this.buyPrice, this.buyToken, "0x00").estimateGas({from:'0x'+this.fromAddress}).then( (returns) => {
       this.Market.estimate = returns;
       this.maxGas = this.multiplyBigNumber(returns,"2");
       this.wb3.eth.getTransactionCount('0x' + this.fromAddress).then( (nonce) => {
@@ -1084,9 +1110,9 @@ export class FTMyAccount {
   sell(): void{
     // makeOffer( address _token, bool _buy, uint256 _amount, uint256 _shares, uint256 _startAmount )
     var privateKey = Buffer.from(rlp.stripHexPrefix(this.cache.getCache('key')), 'hex');
-    var ABIdata = this.Market.contract.methods.makeOffer('0x' + this.FreeToken.address, false, this.sellPrice, this.sellToken, "0x00").encodeABI();
+    var ABIdata = this.Market.contract.methods.makeOffer('0x' + this.currentToken.address, false, this.sellPrice, this.sellToken, "0x00").encodeABI();
     var chainId = "913945103463586943";
-    this.Market.contract.methods.makeOffer('0x' + this.FreeToken.address, false, this.sellPrice, this.sellToken, "0x00").estimateGas({gas:500000,from:'0x'+this.fromAddress}).then( (returns) => {
+    this.Market.contract.methods.makeOffer('0x' + this.currentToken.address, false, this.sellPrice, this.sellToken, "0x00").estimateGas({gas:500000,from:'0x'+this.fromAddress}).then( (returns) => {
       this.Market.estimate = returns;
       this.maxGas = this.multiplyBigNumber(returns,"2");
       this.wb3.eth.getTransactionCount('0x' + this.fromAddress).then( (nonce) => {
@@ -1150,6 +1176,9 @@ export class FTMyAccount {
     }
     if(this.subscribeBNSec){
       this.subscribeBNSec.unsubscribe();
+    }
+    if(this.currentToken.subscription){
+      this.currentToken.subscription.removeAllListeners();
     }
     if(this.FreeToken.subscription){
       this.FreeToken.subscription.removeAllListeners();
