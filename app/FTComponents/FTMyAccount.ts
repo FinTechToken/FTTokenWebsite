@@ -57,7 +57,7 @@ export class FTMyAccount {
   maxGas = "500000";
   gasPrice= "0";
   bookEther = "0";
-  bookTokenEther = "0";
+  bookTokenEther = new Map();
   book = new Map();
   bookToken = new Map();
   // keyAddress, new Map() keyAmount {Count and fee}
@@ -361,6 +361,12 @@ export class FTMyAccount {
   }
 
   addBigNumber(numberA: string, numberB: string): string {
+    if(numberA == ""){
+      numberA="0";
+    }
+    if(numberB == ""){
+      numberB="0"
+    }
     let x = new BigNumber(numberA);
     let y = new BigNumber(numberB);
     return x.plus(y).toString(10);
@@ -539,6 +545,14 @@ export class FTMyAccount {
     return Array.from(this.bookToken.get(token).keys());
   }
 
+  getBookTokenEther(token: string) {
+    if(this.bookTokenEther.has(token)){
+      return this.bookTokenEther.get(token);
+    } else {
+      return "0";
+    }
+  }
+
 
     ngAfterViewInit(): void{
     this.wb3.eth.getBalance(this.fromAddress).then( (balance) => {
@@ -631,9 +645,17 @@ export class FTMyAccount {
           this.bookToken.get(events.returnValues.mToken).set(events.returnValues.mPrice,{count: events.returnValues.mCount, fee: "0"});
         }
         if(events.returnValues.mAddLiquidity){
-          this.bookTokenEther = this.addBigNumber(this.bookTokenEther,x);
+          if(this.bookTokenEther.has(events.returnValues.mToken)){
+            this.bookTokenEther.set(events.returnValues.mToken,this.addBigNumber(this.bookTokenEther.get(events.returnValues.mToken),x));
+          } else {
+            this.bookTokenEther.set(events.returnValues.mToken, x);
+          }
         } else {
-          this.bookTokenEther = this.subtractBigNumber(this.bookTokenEther,x);
+          if(this.bookTokenEther.has(events.returnValues.mToken)){
+            this.bookTokenEther.set(events.returnValues.mToken, this.subtractBigNumber(this.bookTokenEther.get(events.returnValues.mToken),x));
+          } else {
+            this.bookTokenEther.set(events.returnValues.mToken, this.subtractBigNumber("0",x));
+          }
         }
       }
       this.cd.markForCheck();
@@ -1006,7 +1028,8 @@ export class FTMyAccount {
   }
 
   cancelTokenOffer(): void{
-    let token = this.bookToken.keys().next().value;
+    // let token = this.bookToken.keys().next().value;
+    let token = '0x' + this.currentToken.address;
     let price = this.bookToken.get(token).keys().next().value;
     this.setCancelOffer(token, price, false);
     this.showModal(18);
@@ -1100,7 +1123,15 @@ export class FTMyAccount {
       this.Market.subscription.removeAllListeners();
     }
     this.Market.subscription = this.wb3.eth.sendSignedTransaction('0x' + this.Market.serializedTx.toString('hex'))
-    .once('transactionHash', (hash) => { this.Market.transaction = hash; })
+    .once('transactionHash', (hash) => { this.Market.transaction = hash; 
+      if(this.currentToken.address == '2d5e86187855CC29B40469e8a7355f3fDBf4C088'){
+        if(this.tutorial.state == 7){
+          this.updateTutorial(9);
+        } else if(this.tutorial.state == 8) {
+          this.updateTutorial(10);
+        }
+      }
+    })
     .once('receipt', (receipt) =>{ this.Market.receipt = receipt;})
     .on('confirmation', (confNumber, receipt) => { this.Market.confirmed = confNumber; })
     .on('error', (error) => { console.log('ERROR' + error); this.Market.error = error;})
@@ -1162,7 +1193,18 @@ export class FTMyAccount {
       this.Market.subscription.removeAllListeners();
     }
     this.Market.subscription = this.wb3.eth.sendSignedTransaction('0x' + this.Market.serializedTx.toString('hex'))
-    .once('transactionHash', (hash) => { this.Market.transaction = hash; this.updateTutorial(3);})
+    .once('transactionHash', (hash) => { this.Market.transaction = hash; 
+      if(this.currentToken.address == '9287bb21719d283CfdD7d644a89E8492f9845B64'){
+        this.updateTutorial(3);
+      }
+      if(this.currentToken.address == '2d5e86187855CC29B40469e8a7355f3fDBf4C088'){
+        if(this.tutorial.state == 7){
+          this.updateTutorial(8);
+        } else if(this.tutorial.state == 9) {
+          this.updateTutorial(10);
+        }
+      }
+      })
     .once('receipt', (receipt) =>{ this.Market.receipt = receipt;})
     .on('confirmation', (confNumber, receipt) => { this.Market.confirmed = confNumber; })
     .on('error', (error) => { console.log('ERROR' + error); this.Market.error = error;})
