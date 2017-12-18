@@ -97,12 +97,12 @@
                                                         </span>
                                                     </td>
                                                     <td>
-                                                        <a *ngIf="bookTokenEther != '0'" href="javascript:void(0);" (click)="viewNumber(bookTokenEther);">
-                                                            {{getEther(bookTokenEther) | number : '1.0-0'}}<span *ngIf="hasFraction(bookTokenEther)">.#</span>
+                                                        <a *ngIf="getBookTokenEther(FreeToken.address) != '0'" href="javascript:void(0);" (click)="viewNumber(getBookTokenEther(FreeToken.address));">
+                                                            {{getEther(getBookTokenEther(FreeToken.address)) | number : '1.0-0'}}<span *ngIf="hasFraction(getBookTokenEther(FreeToken.address))">.#</span>
                                                         </a>
-                                                        <span *ngIf="bookTokenEther == '0'">0</span>
-                                                        <span *ngIf="bookTokenEther != '0'" class="float-right">
-                                                            <i (click)="cancelTokenOffer();" href="javascript:void(0);" class="icon-close hover"></i>
+                                                        <span *ngIf="getBookTokenEther(FreeToken.address) == '0'">0</span>
+                                                        <span *ngIf="getBookTokenEther(FreeToken.address) != '0'" class="float-right">
+                                                            <i (click)="setToken('free'); cancelTokenOffer();" href="javascript:void(0);" class="icon-close hover"></i>
                                                         </span>
                                                     </td>
                                                 </tr>
@@ -133,12 +133,12 @@
                                                         </span>
                                                     </td>
                                                     <td>
-                                                        <a *ngIf="bookTokenEther != '0'" href="javascript:void(0);" (click)="viewNumber(bookTokenEther);">
-                                                            {{getEther(bookTokenEther) | number : '1.0-0'}}<span *ngIf="hasFraction(bookTokenEther)">.#</span>
+                                                        <a *ngIf="getBookTokenEther('0x' + TradeToken.address) != '0'" href="javascript:void(0);" (click)="viewNumber(getBookTokenEther('0x' + TradeToken.address));">
+                                                            {{getEther(getBookTokenEther('0x' + TradeToken.address)) | number : '1.0-0'}}<span *ngIf="hasFraction(getBookTokenEther('0x' + TradeToken.address))">.#</span>
                                                         </a>
-                                                        <span *ngIf="bookTokenEther == '0'">0</span>
-                                                        <span *ngIf="bookTokenEther != '0'" class="float-right">
-                                                            <i (click)="cancelTokenOffer();" href="javascript:void(0);" class="icon-close hover"></i>
+                                                        <span *ngIf="getBookTokenEther('0x' + TradeToken.address) == '0'">0</span>
+                                                        <span *ngIf="getBookTokenEther('0x' + TradeToken.address) != '0'" class="float-right">
+                                                            <i (click)="setToken('trade'); cancelTokenOffer();" href="javascript:void(0);" class="icon-close hover"></i>
                                                         </span>
                                                     </td>
                                                 </tr>
@@ -675,11 +675,11 @@
             </button>
         </div>
         <div class="modal-body">
-            <div *ngIf="Market.free == '0'">
+            <div *ngIf="currentToken.market == '0'">
                 You need a token in your account to sell a token. Try getting a free token, buying a token, or depositing a token to your account.
             </div>
-            <div *ngIf="Market.free != '0'">
-                Number of Tokens: <a (click)="changeSellToken(Market.free)" href="javascript:void(0);">{{wb3.utils.fromWei(sellToken, 'ether')}}</a><br>
+            <div *ngIf="currentToken.market != '0'">
+                Number of Tokens: <a (click)="changeSellToken(currentToken.market)" href="javascript:void(0);">{{wb3.utils.fromWei(sellToken, 'ether')}}</a><br>
                 Price in ether per Ether of tokens: <a (click)="changeSellPrice()" href="javascript:void(0);">{{+sellPrice/1000000 | number  : '1.0-6'}}</a><br>
                 Transactional fee: {{wb3.utils.fromWei(divideBigNumber(multiplyBigNumber(sellToken,sellPrice),"1000000000"), 'ether') | number: '1.0-18'}}<br>
                 Add to book fee: 0.001 (only if you add a new entry to the book because there is no immediate buyer)<br>
@@ -701,22 +701,22 @@
         </div>
         <div class="modal-footer">
             <ul class="nav nav-pills modal-nav text-center">
-                <li *ngIf="Market.free == '0'" class="nav-item w-100 prev">
+                <li *ngIf="currentToken.market == '0'" class="nav-item w-100 prev">
                     <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
                         Close
                     </a>
                 </li>
-                <li *ngIf="Market.free != '0'" class="nav-item w-50 prev">
+                <li *ngIf="currentToken.market != '0'" class="nav-item w-50 prev">
                     <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
                         Close
                     </a>
                 </li>
-                <li *ngIf="Market.free != '0' && sellToken != '0' && sellPrice != '0'" class="nav-item w-50 next">
+                <li *ngIf="currentToken.market != '0' && sellToken != '0' && sellPrice != '0'" class="nav-item w-50 next">
                     <a class="nav-link" (click)="sellConfirm()" href="javascript:void(0);">
                         Confirm
                     </a>
                 </li>
-                <li *ngIf="Market.free != '0' && ( sellToken == '0' || sellPrice == '0')" class="nav-item w-50 next">
+                <li *ngIf="currentToken.market != '0' && ( sellToken == '0' || sellPrice == '0')" class="nav-item w-50 next">
                     Need amount + price
                 </li>
             </ul>
@@ -944,7 +944,8 @@
             You can only cancel one offer at a time.<br>
             <div *ngFor="let item of getTokensOfBook()">
                 Token: <span *ngIf="item=='0x9287bb21719d283CfdD7d644a89E8492f9845B64'">Free Token</span>
-                <span *ngIf="item!='0x9287bb21719d283CfdD7d644a89E8492f9845B64'">{{item}}</span><br>
+                <span *ngIf="item=='0x2d5e86187855CC29B40469e8a7355f3fDBf4C088'">Trading Token</span>
+                <span *ngIf="item!='0x9287bb21719d283CfdD7d644a89E8492f9845B64' && item!='0x2d5e86187855CC29B40469e8a7355f3fDBf4C088'">{{item}}</span><br>
                 <div *ngFor="let item2 of getPricesOfTokenBook(item)">
                     --Price: {{+item2/1000000 | number}}<br>
                     ----Count: {{wb3.utils.fromWei(this.book.get(item).get(item2).count, 'ether') | number}}<br>
@@ -990,7 +991,7 @@
 </div>
 
 <!-- Modal 18 Cancel Sell Offer-->
-<div [ngClass]="{ 'show block': modal == 18 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
+<div *ngIf="modal == 18" [ngClass]="{ 'show block': modal == 18 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
         <div class="modal-header">
@@ -1003,13 +1004,14 @@
             <h5>Cancel an offer previously made</h5>
             Note: Your offer might be accepted prior to the cancellation.<br>
             You can only cancel one offer at a time.<br>
-            <div *ngFor="let item of getTokensSellOfBook()">
-                Token: <span *ngIf="item=='0x9287bb21719d283CfdD7d644a89E8492f9845B64'">Free Token</span>
-                <span *ngIf="item!='0x9287bb21719d283CfdD7d644a89E8492f9845B64'">{{item}}</span><br>
-                <div *ngFor="let item2 of getPricesSellOfTokenBook(item)">
+            <div>
+                Token: <span *ngIf="currentToken.address=='9287bb21719d283CfdD7d644a89E8492f9845B64'">Free Token</span>
+                <span *ngIf="currentToken.address=='2d5e86187855CC29B40469e8a7355f3fDBf4C088'">Trading Token</span>
+                <span *ngIf="currentToken.address!='9287bb21719d283CfdD7d644a89E8492f9845B64' && currentToken.address!='2d5e86187855CC29B40469e8a7355f3fDBf4C088'">{{'0x' + currentToken.address}}</span><br>
+                <div *ngFor="let item2 of getPricesSellOfTokenBook('0x' + currentToken.address)">
                     --Price: {{+item2/1000000 | number}}<br>
-                    ----Count: {{wb3.utils.fromWei(this.bookToken.get(item).get(item2).count, 'ether') | number}}<br>
-                    <a class="btn btn-ft" href="javascript:void(0);" (click)="setCancelOffer(item,item2,false)">Cancel This Offer</a>
+                    ----Count: {{wb3.utils.fromWei(this.bookToken.get('0x' + currentToken.address).get(item2).count, 'ether') | number}}<br>
+                    <a class="btn btn-ft" href="javascript:void(0);" (click)="setCancelOffer('0x' + currentToken.address,item2,false)">Cancel This Offer</a>
                     <br>
                     <Br>
                 </div>
@@ -1017,7 +1019,7 @@
             <h5>Confirm that you approve the cancellation</h5>
             This transaction costs you {{wb3.utils.fromWei(multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
             <br>
-            <select *ngIf="accountBalance != '0'" [(ngModel)]="gasPrice" (click)="cancelOffer(lastOffer.token, lastOffer.amount, lastOffer.buysell);">
+            <select *ngIf="accountBalance != '0'" [(ngModel)]="gasPrice" (click)="cancelTokenOffer(lastOffer.token, lastOffer.amount, lastOffer.buysell);">
                 <option value="0">Free Gas</option>
                 <option value="1000000000">Low Gas Cost (1 gwei)</option>
                 <option value="5000000000">Medium Gas Cost (5 gwei)</option>
