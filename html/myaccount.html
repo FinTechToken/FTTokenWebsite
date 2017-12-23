@@ -76,7 +76,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td><a [routerLink]="['/token',FreeToken.address]" href="javascript:void(0);">FreeToken</a></td>
+                                                    <td><a [routerLink]="['/token',FreeToken.address]" href="javascript:void(0);">FreeToken</a> <span *ngIf="FreeToken.lastPrice">({{+FreeToken.lastPrice/1000000}})</span></td>
                                                     <td>
                                                         <a *ngIf="FreeToken.mine != '0'" href="javascript:void(0);" (click)="viewNumber(FreeToken.mine);">
                                                             {{getEther(FreeToken.mine) | number : '1.0-0'}}<span *ngIf="hasFraction(FreeToken.mine)">.#</span>
@@ -118,7 +118,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td><a [routerLink]="['/token',TradeToken.address]" href="javascript:void(0);">TradingToken</a></td>
+                                                    <td><a [routerLink]="['/token',TradeToken.address]" href="javascript:void(0);">TradingToken</a> <span *ngIf="TradeToken.lastPrice">({{+TradeToken.lastPrice/1000000}})</span></td>
                                                     <td>
                                                         <a *ngIf="TradeToken.mine != '0'" href="javascript:void(0);" (click)="viewNumber(TradeToken.mine);">
                                                             {{getEther(TradeToken.mine) | number : '1.0-0'}}<span *ngIf="hasFraction(TradeToken.mine)">.#</span>
@@ -590,28 +590,70 @@
             </button>
         </div>
         <div class="modal-body">
-            <div *ngIf="Market.ether == '0'">
-                You need Ether to purchase a token. Try selling a token or adding Ether to your account.
-            </div>
-            <div *ngIf="Market.ether != '0'">
-                Number of Tokens: <a (click)="changeBuyToken()" href="javascript:void(0);">{{wb3.utils.fromWei(buyToken, 'ether')}}</a><br>
-                Price in ether per Ether of tokens: <a (click)="changeBuyPrice()" href="javascript:void(0);">{{+buyPrice/1000000 | number  : '1.0-6'}}</a><br>
-                Transactional fee: 0<br>
-                Add to book fee: 0.001 (only if you add a new entry to the book because there is no immediate seller)<br>
-                <strong>Total Ether: {{wb3.utils.fromWei(addBigNumber(divideBigNumber(multiplyBigNumber(buyToken,buyPrice),"1000000"),"1000000000000000"),'ether') | number : '1.0-18'}}</strong><br>
-                <br>
-                <h5>Confirm that you approve the offer to buy tokens</h5>
-                This transaction costs you {{wb3.utils.fromWei(multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
-                <br>
-                <select *ngIf="accountBalance != '0'" [(ngModel)]="gasPrice" (click)="buy()">
-                    <option value="0">Free Gas</option>
-                    <option value="1000000000">Low Gas Cost (1 gwei)</option>
-                    <option value="5000000000">Medium Gas Cost (5 gwei)</option>
-                    <option value="21000000000">High Gas Cost (21 gwei)</option>
-                </select>
-                <br>
-                It is estimated to use {{Market.estimate | number}} gas.
-                <span *ngIf="Market.estimate == maxGas">That is all the gas. Most likely an error.</span>
+            <ul class="nav nav-tabs">
+                <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': buyTabs == 1 }" (click)="changeBuyTabs(1)" href="javascript:void(0);">Make Offer</a></li>
+                <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': buyTabs == 2 }" (click)="changeBuyTabs(2)" href="javascript:void(0);">View Offers</a></li>
+            </ul>
+            <div class="tab-white tab-content text-left">
+                <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': buyTabs == 1 }">
+                    <div *ngIf="Market.ether == '0'">
+                        You need Ether to purchase a token. Try selling a token or adding Ether to your account.
+                    </div>
+                    <div *ngIf="Market.ether != '0'">
+                        Number of Tokens: <a (click)="changeBuyToken()" href="javascript:void(0);">{{wb3.utils.fromWei(buyToken, 'ether')}}</a><br>
+                        Price in ether per Ether of tokens: <a (click)="changeBuyPrice()" href="javascript:void(0);">{{+buyPrice/1000000 | number  : '1.0-6'}}</a><br>
+                        Transactional fee: 0<br>
+                        Add to book fee: 0.001 (only if you add a new entry to the book because there is no immediate seller)<br>
+                        <strong>Total Ether: {{wb3.utils.fromWei(addBigNumber(divideBigNumber(multiplyBigNumber(buyToken,buyPrice),"1000000"),"1000000000000000"),'ether') | number : '1.0-18'}}</strong><br>
+                        <br>
+                        <h5>Confirm that you approve the offer to buy tokens</h5>
+                        This transaction costs you {{wb3.utils.fromWei(multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
+                        <br>
+                        <select *ngIf="accountBalance != '0'" [(ngModel)]="gasPrice" (click)="buy()">
+                            <option value="0">Free Gas</option>
+                            <option value="1000000000">Low Gas Cost (1 gwei)</option>
+                            <option value="5000000000">Medium Gas Cost (5 gwei)</option>
+                            <option value="21000000000">High Gas Cost (21 gwei)</option>
+                        </select>
+                        <br>
+                        It is estimated to use {{Market.estimate | number}} gas.
+                        <span *ngIf="Market.estimate == maxGas">That is all the gas. Most likely an error.</span>
+                    </div>
+                </div>
+                <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': buyTabs == 2 }">
+                    <h4>
+                        <strong>O</strong>ffers<br>
+                    </h4>
+                    <div>
+                        <span *ngIf="currentToken.lastPrice">
+                            <strong>LastPrice:</strong>
+                            {{+currentToken.lastPrice/1000000}} Ether per token for {{getEther(currentToken.lastCount) | number : '1.0-18'}} tokens
+                            <br>
+                        </span>
+                        
+                        <br>
+                        <table class="table table-sm">
+                            <tr><th class="alert-success">Buy</th><th class="alert-danger">Sell</th></tr>
+                            <tr valign="top"><td class="alert-success">
+                                <table class="tab-white table table-sm table-bordered">
+                                    <tr><th>Price</th><th>Tokens</th></tr>
+                                    <ng-container *ngFor="let key of getSortedKeys(currentToken.buyMap, false)">
+                                        <tr *ngIf="currentToken.buyMap[key] != '0'"><td>{{+key/1000000}}</td><td>{{getEther(currentToken.buyMap[key]) | number : '1.0-6'}}</td></tr>
+                                    </ng-container>
+                                </table>
+                            </td>
+                            <td valign="top" class="alert-danger">
+                                <table class="tab-white table table-sm table-bordered">
+                                    <tr><th>Price</th><th>Tokens</th></tr>
+                                    <ng-container *ngFor="let key of getSortedKeys(currentToken.sellMap, true)">
+                                        <tr *ngIf="currentToken.sellMap[key] != '0'"><td>{{+key/1000000}}</td><td>{{getEther(currentToken.sellMap[key]) | number: '1.0-6'}}</td></tr>
+                                    </ng-container>
+                                </table>
+                            </td></tr>
+
+                        </table>
+                    </div>
+                </div>    
             </div>
         </div>
         <div class="modal-footer">
@@ -692,28 +734,70 @@
             </button>
         </div>
         <div class="modal-body">
-            <div *ngIf="currentToken.market == '0'">
-                You need a token in your account to sell a token. Try getting a free token, buying a token, or depositing a token to your account.
-            </div>
-            <div *ngIf="currentToken.market != '0'">
-                Number of Tokens: <a (click)="changeSellToken(currentToken.market)" href="javascript:void(0);">{{wb3.utils.fromWei(sellToken, 'ether')}}</a><br>
-                Price in ether per Ether of tokens: <a (click)="changeSellPrice()" href="javascript:void(0);">{{+sellPrice/1000000 | number  : '1.0-6'}}</a><br>
-                Transactional fee: {{wb3.utils.fromWei(divideBigNumber(multiplyBigNumber(sellToken,sellPrice),"1000000000"), 'ether') | number: '1.0-18'}}<br>
-                Add to book fee: 0.001 (only if you add a new entry to the book because there is no immediate buyer)<br>
-                <strong>Total Ether You Get: {{wb3.utils.fromWei(subtractBigNumber(divideBigNumber(multiplyBigNumber(sellToken,sellPrice),"1000000"),addBigNumber(divideBigNumber(multiplyBigNumber(sellToken,sellPrice),"1000000000"),"1000000000000000")),'ether') | number : '1.0-18'}}</strong><br>
-                <br>
-                <h5>Confirm that you approve the offer to buy tokens</h5>
-                This transaction costs you {{wb3.utils.fromWei(multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
-                <br>
-                <select *ngIf="accountBalance != '0'" [(ngModel)]="gasPrice" (click)="sell()">
-                    <option value="0">Free Gas</option>
-                    <option value="1000000000">Low Gas Cost (1 gwei)</option>
-                    <option value="5000000000">Medium Gas Cost (5 gwei)</option>
-                    <option value="21000000000">High Gas Cost (21 gwei)</option>
-                </select>
-                <br>
-                It is estimated to use {{Market.estimate | number}} gas.
-                <span *ngIf="Market.estimate == maxGas">That is all the gas. Most likely an error.</span>
+            <ul class="nav nav-tabs">
+                <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': sellTabs == 1 }" (click)="changeSellTabs(1)" href="javascript:void(0);">Make Offer</a></li>
+                <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': sellTabs == 2 }" (click)="changeSellTabs(2)" href="javascript:void(0);">View Offers</a></li>
+            </ul>
+            <div class="tab-white tab-content text-left">
+                <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': sellTabs == 1 }">
+                    <div *ngIf="currentToken.market == '0'">
+                        You need a token in your account to sell a token. Try getting a free token, buying a token, or depositing a token to your account.
+                    </div>
+                    <div *ngIf="currentToken.market != '0'">
+                        Number of Tokens: <a (click)="changeSellToken(currentToken.market)" href="javascript:void(0);">{{wb3.utils.fromWei(sellToken, 'ether')}}</a><br>
+                        Price in ether per Ether of tokens: <a (click)="changeSellPrice()" href="javascript:void(0);">{{+sellPrice/1000000 | number  : '1.0-6'}}</a><br>
+                        Transactional fee: {{wb3.utils.fromWei(divideBigNumber(multiplyBigNumber(sellToken,sellPrice),"1000000000"), 'ether') | number: '1.0-18'}}<br>
+                        Add to book fee: 0.001 (only if you add a new entry to the book because there is no immediate buyer)<br>
+                        <strong>Total Ether You Get: {{wb3.utils.fromWei(subtractBigNumber(divideBigNumber(multiplyBigNumber(sellToken,sellPrice),"1000000"),addBigNumber(divideBigNumber(multiplyBigNumber(sellToken,sellPrice),"1000000000"),"1000000000000000")),'ether') | number : '1.0-18'}}</strong><br>
+                        <br>
+                        <h5>Confirm that you approve the offer to buy tokens</h5>
+                        This transaction costs you {{wb3.utils.fromWei(multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
+                        <br>
+                        <select *ngIf="accountBalance != '0'" [(ngModel)]="gasPrice" (click)="sell()">
+                            <option value="0">Free Gas</option>
+                            <option value="1000000000">Low Gas Cost (1 gwei)</option>
+                            <option value="5000000000">Medium Gas Cost (5 gwei)</option>
+                            <option value="21000000000">High Gas Cost (21 gwei)</option>
+                        </select>
+                        <br>
+                        It is estimated to use {{Market.estimate | number}} gas.
+                        <span *ngIf="Market.estimate == maxGas">That is all the gas. Most likely an error.</span>
+                    </div>
+                </div>
+                <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': sellTabs == 2 }">
+                    <h4>
+                        <strong>O</strong>ffers<br>
+                    </h4>
+                    <div>
+                        <span *ngIf="currentToken.lastPrice">
+                            <strong>LastPrice:</strong>
+                            {{+currentToken.lastPrice/1000000}} Ether per token for {{getEther(currentToken.lastCount) | number : '1.0-18'}} tokens
+                            <br>
+                        </span>
+                        
+                        <br>
+                        <table class="table table-sm">
+                            <tr><th class="alert-success">Buy</th><th class="alert-danger">Sell</th></tr>
+                            <tr valign="top"><td class="alert-success">
+                                <table class="tab-white table table-sm table-bordered">
+                                    <tr><th>Price</th><th>Tokens</th></tr>
+                                    <ng-container *ngFor="let key of getSortedKeys(currentToken.buyMap, false)">
+                                        <tr *ngIf="currentToken.buyMap[key] != '0'"><td>{{+key/1000000}}</td><td>{{getEther(currentToken.buyMap[key]) | number : '1.0-6'}}</td></tr>
+                                    </ng-container>
+                                </table>
+                            </td>
+                            <td valign="top" class="alert-danger">
+                                <table class="tab-white table table-sm table-bordered">
+                                    <tr><th>Price</th><th>Tokens</th></tr>
+                                    <ng-container *ngFor="let key of getSortedKeys(currentToken.sellMap, true)">
+                                        <tr *ngIf="currentToken.sellMap[key] != '0'"><td>{{+key/1000000}}</td><td>{{getEther(currentToken.sellMap[key]) | number: '1.0-6'}}</td></tr>
+                                    </ng-container>
+                                </table>
+                            </td></tr>
+
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="modal-footer">

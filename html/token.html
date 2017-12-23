@@ -16,7 +16,7 @@
                                     </h2>    
                                     <ul class="nav nav-tabs">
                                         <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 1 }" (click)="changeTabs(1)" href="javascript:void(0);">Overview</a></li>
-                                        <!--<li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 2 }" (click)="changeTabs(2)" href="javascript:void(0);">Trade</a></li>!-->
+                                        <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 2 }" (click)="changeTabs(2)" href="javascript:void(0);">Offers</a></li>
                                         <!--<li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 3 }" (click)="changeTabs(3)" href="javascript:void(0);">Accounts</a></li> !-->                                    
                                     </ul>
                                 </div>
@@ -48,6 +48,11 @@
                                             </span>
                                         </span>
                                         <br>
+                                        <span *ngIf="token.lastPrice">
+                                            <strong>LastPrice:</strong>
+                                            {{+token.lastPrice/1000000}} Ether per token for {{getEther(token.lastCount) | number : '1.0-18'}} tokens
+                                            <br>
+                                        </span>
                                         <span *ngIf="token.totalSupply">
                                             <strong>TotalSupply:</strong> 
                                             <a *ngIf="token.totalSupply != '0'" href="javascript:void(0);" (click)="viewNumber(token.totalSupply);">
@@ -90,11 +95,36 @@
                                 </div>
                                 <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 2 }">
                                     <h4>
-                                        <strong>T</strong>rade
+                                        <strong>O</strong>ffers<br>
                                     </h4>
                                     <div>
+                                        <span *ngIf="token.lastPrice">
+                                            <strong>LastPrice:</strong>
+                                            {{+token.lastPrice/1000000}} Ether per token for {{getEther(token.lastCount) | number : '1.0-18'}} tokens
+                                            <br>
+                                        </span>
+                                        
                                         <br>
-                                        Market Orders Coming Soon
+                                        <table class="table table-sm">
+                                            <tr><th class="alert-success">Buy</th><th class="alert-danger">Sell</th></tr>
+                                            <tr valign="top"><td class="alert-success">
+                                                <table class="tab-white table table-sm table-bordered">
+                                                    <tr><th>Price</th><th>Tokens</th></tr>
+                                                    <ng-container *ngFor="let key of getSortedKeys(token.buyMap, false)">
+                                                        <tr *ngIf="token.buyMap[key] != '0'"><td>{{+key/1000000}}</td><td>{{getEther(token.buyMap[key]) | number : '1.0-6'}}</td></tr>
+                                                    </ng-container>
+                                                </table>
+                                            </td>
+                                            <td valign="top" class="alert-danger">
+                                                <table class="tab-white table table-sm table-bordered">
+                                                    <tr><th>Price</th><th>Tokens</th></tr>
+                                                    <ng-container *ngFor="let key of getSortedKeys(token.sellMap, true)">
+                                                        <tr *ngIf="token.sellMap[key] != '0'"><td>{{+key/1000000}}</td><td>{{getEther(token.sellMap[key]) | number: '1.0-6'}}</td></tr>
+                                                    </ng-container>
+                                                </table>
+                                            </td></tr>
+
+                                        </table>
                                     </div>
                                 </div>
                                 <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 3 }">

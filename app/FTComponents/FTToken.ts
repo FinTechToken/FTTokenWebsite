@@ -25,6 +25,7 @@ import { FTObserver } from '../FTFramework/FT-Observer';
 })
 
 export class FTToken {
+  objectKeys = Object.keys;
   zone: NgZone;   
   name = "FinTechToken";
   visibility="hiddenss";
@@ -44,6 +45,16 @@ export class FTToken {
   //Free 9287bb21719d283CfdD7d644a89E8492f9845B64
   //Trade 2d5e86187855CC29B40469e8a7355f3fDBf4C088
   token = {
+    buyPrice: "",
+    sellPrice: "",
+    buyCount: "",
+    sellCount: "",
+    lastPrice: "",
+    lastCount: "",
+    sellMap: {},
+    buyMap: {},
+    subscribeBook: null as any,
+    subscribeTransactions: null as any,
     name: "",
     mine:"",
     totalSupply:"",
@@ -52,6 +63,23 @@ export class FTToken {
     estimate:"0",
     error:'',
     address: "",
+    abi:{} as any,
+    serializedTx:{} as any,
+    transaction: '',
+    receipt: null as any,
+    confirmed: 0,
+    subscription: null as any
+  }
+  Market = {
+    ether:"0",
+    free:"0",
+    trade:"0",
+    supply:0,
+    out:0,
+    estimate:"0",
+    error:'',
+    contract:{} as any,
+    address: 'a0B71a29998790a84ee459132D1c87AcD4dF0E6e',
     abi:{} as any,
     serializedTx:{} as any,
     transaction: '',
@@ -93,6 +121,14 @@ export class FTToken {
             }
           }
         );
+  }
+
+  getSortedKeys(map: any, direction: boolean): any{
+    if(!direction) {
+      return this.objectKeys(map).sort((a,b) => {return this.compareBigNumber(b,a)})
+    } else {
+      return this.objectKeys(map).sort((a,b) => {return this.compareBigNumber(a,b)})
+    }
   }
 
   getFreeToken(): void {
@@ -218,6 +254,11 @@ export class FTToken {
       from: '0x' + this.fromAddress, // default from address
       gasPrice: '0' // default gas price in wei
     });
+    this.Market.abi = [{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_newTransactionFee","type":"uint8"},{"name":"_newTransactionFeeMultiple","type":"uint8"},{"name":"_newAddToBookFee","type":"uint256"}],"name":"updateFees","outputs":[{"name":"success_","type":"bool"}],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[{"name":"_token","type":"address"},{"name":"_buy","type":"bool"},{"name":"_amount","type":"uint256"},{"name":"_shares","type":"uint256"},{"name":"_startAmount","type":"uint256"}],"name":"makeOffer","outputs":[{"name":"success_","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_token","type":"address"},{"name":"_value","type":"uint256"}],"name":"deposit","outputs":[{"name":"success_","type":"bool"}],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[{"name":"_grantor","type":"address"},{"name":"_value","type":"uint256"},{"name":"_from","type":"address"}],"name":"receiveApproval","outputs":[{"name":"success_","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"bool"},{"name":"","type":"uint256"}],"name":"offersAtPrice","outputs":[{"name":"nextPrice","type":"uint256"},{"name":"currentOffersLength","type":"uint24"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"addToBookFee","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_token","type":"address"},{"name":"_value","type":"uint256"}],"name":"withdrawal","outputs":[{"name":"success_","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"freeze","outputs":[{"name":"success_","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_token","type":"address"},{"name":"_buy","type":"bool"},{"name":"_amount","type":"uint256"}],"name":"cancelOffer","outputs":[{"name":"success_","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"address"}],"name":"accountBalance","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"transactionFee","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"ownerChanged","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"author","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_newOwner","type":"address"}],"name":"changeOwner","outputs":[{"name":"success_","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"bidDecimal","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"transactionFeeMultiple","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"payable":true,"stateMutability":"payable","type":"fallback"},{"anonymous":false,"inputs":[{"indexed":true,"name":"mToken","type":"address"},{"indexed":true,"name":"mAccount","type":"address"},{"indexed":false,"name":"mValue","type":"uint256"},{"indexed":false,"name":"mNow","type":"uint256"}],"name":"MessageAccountDeposit","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"mToken","type":"address"},{"indexed":true,"name":"mAccount","type":"address"},{"indexed":false,"name":"mValue","type":"uint256"},{"indexed":false,"name":"mNow","type":"uint256"}],"name":"MessageAccountWithdrawal","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"mToken","type":"address"},{"indexed":true,"name":"mFromAccount","type":"address"},{"indexed":true,"name":"mToAccount","type":"address"},{"indexed":false,"name":"mPrice","type":"uint256"},{"indexed":false,"name":"mCount","type":"uint256"},{"indexed":false,"name":"mSellerFee","type":"uint256"},{"indexed":false,"name":"mNow","type":"uint256"}],"name":"MessageTransaction","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"mToken","type":"address"},{"indexed":true,"name":"mFromAccount","type":"address"},{"indexed":false,"name":"mCount","type":"uint256"},{"indexed":false,"name":"mSellerFee","type":"uint256"},{"indexed":false,"name":"mNow","type":"uint256"}],"name":"MessagePayTransactionFee","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"mToken","type":"address"},{"indexed":true,"name":"mBuy","type":"bool"},{"indexed":true,"name":"mAccount","type":"address"},{"indexed":false,"name":"mAddLiquidity","type":"bool"},{"indexed":false,"name":"mPrice","type":"uint256"},{"indexed":false,"name":"mCount","type":"uint256"},{"indexed":false,"name":"mFee","type":"uint256"},{"indexed":false,"name":"mNow","type":"uint256"}],"name":"MessageOffer","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"mTransFee","type":"uint8"},{"indexed":false,"name":"mTransmultiple","type":"uint8"},{"indexed":false,"name":"mBookFee","type":"uint256"},{"indexed":false,"name":"mNow","type":"uint256"}],"name":"MessageChangeFees","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"mOwner","type":"address"},{"indexed":false,"name":"mNow","type":"uint256"}],"name":"MessageOwner","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"mFreeze","type":"bool"},{"indexed":false,"name":"mNow","type":"uint256"}],"name":"MessageFreeze","type":"event"}];
+    this.Market.contract = new this.wb3.eth.Contract(this.Market.abi, '0x' + this.Market.address, {
+      from: '0x'+this.fromAddress, // default from address
+      gasPrice: '0' // default gas price in wei
+    });
     this.tutorial.contract = new this.wb3.eth.Contract(this.tutorial.abi, '0x' + this.tutorial.address, {
       from: '0x' + this.fromAddress, // default from address
       gasPrice: '0' // default gas price in wei
@@ -292,6 +333,39 @@ hasFraction(number: string): boolean{
   }
   return false;
 }
+compareBigNumber(numberA: string, numberB: string): number {
+  if(numberA == "" || !numberA){
+    numberA="0";
+  }
+  if(numberB == "" || !numberB){
+    numberB="0"
+  }
+  let x = new BigNumber(numberA);
+  let y = new BigNumber(numberB);
+  return x.comparedTo(y);
+}
+addBigNumber(numberA: string, numberB: string): string {
+  if(numberA == "" || !numberA){
+    numberA="0";
+  }
+  if(numberB == "" || !numberB){
+    numberB="0"
+  }
+  let x = new BigNumber(numberA);
+  let y = new BigNumber(numberB);
+  return x.plus(y).toString(10);
+}
+subtractBigNumber(numberA: string, numberB: string): string {
+  if(numberA == "" || !numberA){
+    numberA="0";
+  }
+  if(numberB == "" || !numberB){
+    numberB="0"
+  }
+  let x = new BigNumber(numberA);
+  let y = new BigNumber(numberB);
+  return x.minus(y).toString(10);
+}
 multiplyBigNumber(numberA: string, numberB: string): string {
   if(numberA == ""){
     numberA = "0";
@@ -309,6 +383,18 @@ multiplyBigNumber(numberA: string, numberB: string): string {
   }
 
   ngAfterViewInit(): void{
+    this.token.subscribeTransactions = this.Market.contract.events.MessageTransaction({
+      filter: {
+        mToken: '0x' + this.token.address
+      }, 
+      fromBlock: 0,
+      toBlock: 'latest'
+    })
+    .on( 'data', (events) => {
+      this.token.lastPrice = events.returnValues.mPrice;
+      this.token.lastCount = events.returnValues.mCount;
+    });
+
     this.subscribeBlock = this.obs.getObserver('block').subscribe( (bn) => {
       // Chain due to web3 bug https://github.com/ethereum/web3.js/issues/1069
       // The return type is whatever the LAST concurrent return type is. 
@@ -331,9 +417,62 @@ multiplyBigNumber(numberA: string, numberB: string): string {
         this.tutorial.contract.methods.getUTinyInt('0x'+ this.fromAddress, this.tutorial.stateKey ).call().then( 
           (result4) => {this.tutorial.state = result4 == 0 ? 0 : +result4;}
         );
+        this.Market.contract.methods.offersAtPrice('0x' + this.token.address, true, 0).call().then( 
+          (result) => { 
+            if(this.token.buyPrice != result.nextPrice) {
+              this.token.buyPrice = result.nextPrice == 0 ? '0' : result.nextPrice; 
+              this.token.buyCount = "0";
+            }
+        }
+        );
+        this.Market.contract.methods.offersAtPrice('0x' + this.token.address, false, 0).call().then( 
+          (result) => {
+            if(this.token.sellPrice != result.nextPrice) {
+              this.token.sellPrice = result.nextPrice == 0 ? '0' : result.nextPrice;
+              this.token.sellCount = "0";
+            }
+          }
+        );
       }
     );
-    }); 
+  });
+    this.token.subscribeBook = this.Market.contract.events.MessageOffer({
+      filter: {
+        mToken: '0x' + this.token.address
+      }, 
+      fromBlock: 0,
+      toBlock: 'latest'
+    })
+    .on( 'data', (events) => {
+      if(events.returnValues.mBuy){
+        if(events.returnValues.mAddLiquidity){
+          this.token.buyMap[events.returnValues.mPrice] = this.addBigNumber(this.token.buyMap[events.returnValues.mPrice], events.returnValues.mCount);
+        } else {
+          this.token.buyMap[events.returnValues.mPrice] = this.subtractBigNumber(this.token.buyMap[events.returnValues.mPrice], events.returnValues.mCount);
+        }
+        if(events.returnValues.mPrice==this.token.buyPrice){
+          if(events.returnValues.mAddLiquidity){
+            this.token.buyCount = this.addBigNumber(this.token.buyCount, events.returnValues.mCount);
+          } else {
+            this.token.buyCount = this.subtractBigNumber(this.token.buyCount, events.returnValues.mCount);
+          }
+        }
+      }
+      if(!events.returnValues.mBuy){
+        if(events.returnValues.mAddLiquidity){
+          this.token.sellMap[events.returnValues.mPrice] = this.addBigNumber(this.token.sellMap[events.returnValues.mPrice], events.returnValues.mCount);
+        } else {
+          this.token.sellMap[events.returnValues.mPrice] = this.subtractBigNumber(this.token.sellMap[events.returnValues.mPrice], events.returnValues.mCount);
+        }
+        if(events.returnValues.mPrice==this.token.sellPrice){
+          if(events.returnValues.mAddLiquidity){
+            this.token.sellCount = this.addBigNumber(this.token.sellCount, events.returnValues.mCount);
+          } else {
+            this.token.sellCount = this.subtractBigNumber(this.token.sellCount, events.returnValues.mCount);
+          }
+        }
+      }
+    });
   }
 
   ngDoCheck(): void{
@@ -355,6 +494,12 @@ multiplyBigNumber(numberA: string, numberB: string): string {
     }
     if(this.tutorial.subscription){
       this.tutorial.subscription.removeAllListeners();
+    }
+    if(this.token.subscribeBook){
+      this.token.subscribeBook.removeAllListeners();
+    }
+    if(this.token.subscribeTransactions){
+      this.token.subscribeTransactions.removeAllListeners();
     }
   }
 }
