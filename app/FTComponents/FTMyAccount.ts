@@ -24,6 +24,7 @@ import { FTObserver } from '../FTFramework/FT-Observer';
 })
 
 export class FTMyAccount {
+  objectKeys = Object.keys;
   zone: NgZone;   
   name = "FinTechToken";
   visibility="hiddenss";
@@ -48,6 +49,8 @@ export class FTMyAccount {
   subscribeBNSec;
   wb3;
   tabs = 1;
+  sellTabs = 1;
+  buyTabs = 1;
   minerAccount="442530d86b60d2c6ab8dc0fcece60082a5ad0252";
   contractDeployer="45911570C2B6e298e53e0bB132783f7305394d78";
   zero="0000000000000000000000000000000000000000";
@@ -76,6 +79,14 @@ export class FTMyAccount {
   sellPrice="0";
   // Tokens should be an array instead of hard code  
   FreeToken = {
+    buyPrice: "",
+    sellPrice: "",
+    buyCount: "",
+    sellCount: "",
+    lastPrice: "",
+    lastCount: "",
+    sellMap: {},
+    buyMap: {},
     name: 'FreeToken',
     mine:'0',
     supply:0,
@@ -93,6 +104,14 @@ export class FTMyAccount {
     market: "0"
   }
   TradeToken = {
+    buyPrice: "",
+    sellPrice: "",
+    buyCount: "",
+    sellCount: "",
+    lastPrice: "",
+    lastCount: "",
+    sellMap: {},
+    buyMap: {},
     name: 'TradeToken',
     mine:'0',
     supply:0,
@@ -113,6 +132,8 @@ export class FTMyAccount {
   oldMarketAddres = '75c56AF6F8a60aD4c53E8E149716e1D1B2541f56';
   oldMarketAddress2 = '636c66037Be0DD8A23dcd83908b9AC9219Fe84C1';
   Market = {
+    subscribeBook: null as any,
+    subscribeTransactions: null as any,
     ether:"0",
     free:"0",
     trade:"0",
@@ -361,10 +382,10 @@ export class FTMyAccount {
   }
 
   addBigNumber(numberA: string, numberB: string): string {
-    if(numberA == ""){
+    if(numberA == "" || !numberA){
       numberA="0";
     }
-    if(numberB == ""){
+    if(numberB == "" || !numberB){
       numberB="0"
     }
     let x = new BigNumber(numberA);
@@ -372,10 +393,10 @@ export class FTMyAccount {
     return x.plus(y).toString(10);
   }
   subtractBigNumber(numberA: string, numberB: string): string {
-    if(numberA == ""){
+    if(numberA == "" || !numberA){
       numberA="0";
     }
-    if(numberB == ""){
+    if(numberB == "" || !numberB){
       numberB="0"
     }
     let x = new BigNumber(numberA);
@@ -405,18 +426,23 @@ export class FTMyAccount {
     return x.times(y).toString(10);
   }
   compareBigNumber(numberA: string, numberB: string): number {
+    if(numberA == "" || !numberA){
+      numberA="0";
+    }
+    if(numberB == "" || !numberB){
+      numberB="0"
+    }
     let x = new BigNumber(numberA);
     let y = new BigNumber(numberB);
-    if(x.lessThan(y)){
-      return -1;
+    return x.comparedTo(y);
+  }
+  
+  getSortedKeys(map: any, direction: boolean): any{
+    if(!direction) {
+      return this.objectKeys(map).sort((a,b) => {return this.compareBigNumber(b,a)})
+    } else {
+      return this.objectKeys(map).sort((a,b) => {return this.compareBigNumber(a,b)})
     }
-    if(x.greaterThan(y)){
-      return 1;
-    }
-    if(x.equals(y)){
-      return 0;
-    }
-    return -2;
   }
 
   getEther(number:string): number{
@@ -525,6 +551,14 @@ export class FTMyAccount {
     this.tabs = tab;
   }
 
+  changeSellTabs(tab:number): void{
+    this.sellTabs = tab;
+  }
+
+  changeBuyTabs(tab:number): void{
+    this.buyTabs = tab;
+  }
+
   onResize(event: any):void {
     scaleVideoContainer();
   }
@@ -555,6 +589,23 @@ export class FTMyAccount {
 
 
     ngAfterViewInit(): void{
+    this.Market.subscribeTransactions = this.Market.contract.events.MessageTransaction({
+      filter: {
+        mToken: ['0x' + this.FreeToken.address, '0x' + this.TradeToken.address]
+      }, 
+      fromBlock: 0,
+      toBlock: 'latest'
+    })
+    .on( 'data', (events) => {
+      if(events.returnValues.mToken == '0x' + this.FreeToken.address){ 
+        this.FreeToken.lastPrice = events.returnValues.mPrice;
+        this.FreeToken.lastCount = events.returnValues.mCount;
+      } else if(events.returnValues.mToken == '0x' + this.TradeToken.address) {
+        this.TradeToken.lastPrice = events.returnValues.mPrice;
+        this.TradeToken.lastCount = events.returnValues.mCount;
+      }
+    });
+
     this.wb3.eth.getBalance(this.fromAddress).then( (balance) => {
       this.accountBalance = balance.toString(); 
     });
@@ -659,6 +710,73 @@ export class FTMyAccount {
         }
       }
       this.cd.markForCheck();
+    });
+    this.Market.subscribeBook = this.Market.contract.events.MessageOffer({
+      filter: {
+        mToken: ['0x' + this.FreeToken.address, '0x' + this.TradeToken.address]
+      },
+      fromBlock: 0,
+      toBlock: 'latest'
+    })
+    .on( 'data', (events) => {
+      if(events.returnValues.mBuy){
+        if(events.returnValues.mToken == '0x' + this.FreeToken.address) {
+          if(events.returnValues.mAddLiquidity){
+            this.FreeToken.buyMap[events.returnValues.mPrice] = this.addBigNumber(this.FreeToken.buyMap[events.returnValues.mPrice], events.returnValues.mCount);
+          } else {
+            this.FreeToken.buyMap[events.returnValues.mPrice] = this.subtractBigNumber(this.FreeToken.buyMap[events.returnValues.mPrice], events.returnValues.mCount);
+          }
+          if(events.returnValues.mPrice==this.FreeToken.buyPrice){
+            if(events.returnValues.mAddLiquidity){
+              this.FreeToken.buyCount = this.addBigNumber(this.FreeToken.buyCount, events.returnValues.mCount);
+            } else {
+              this.FreeToken.buyCount = this.subtractBigNumber(this.FreeToken.buyCount, events.returnValues.mCount);
+            }
+          }
+        } else if(events.returnValues.mToken == '0x' + this.TradeToken.address) {
+          if(events.returnValues.mAddLiquidity){
+            this.TradeToken.buyMap[events.returnValues.mPrice] = this.addBigNumber(this.TradeToken.buyMap[events.returnValues.mPrice], events.returnValues.mCount);
+          } else {
+            this.TradeToken.buyMap[events.returnValues.mPrice] = this.subtractBigNumber(this.TradeToken.buyMap[events.returnValues.mPrice], events.returnValues.mCount);
+          }
+          if(events.returnValues.mPrice==this.TradeToken.buyPrice){
+            if(events.returnValues.mAddLiquidity){
+              this.TradeToken.buyCount = this.addBigNumber(this.TradeToken.buyCount, events.returnValues.mCount);
+            } else {
+              this.TradeToken.buyCount = this.subtractBigNumber(this.TradeToken.buyCount, events.returnValues.mCount);
+            }
+          }
+        }
+      }
+      if(!events.returnValues.mBuy){
+        if(events.returnValues.mToken == '0x' + this.FreeToken.address) {
+          if(events.returnValues.mAddLiquidity){
+            this.FreeToken.sellMap[events.returnValues.mPrice] = this.addBigNumber(this.FreeToken.sellMap[events.returnValues.mPrice], events.returnValues.mCount);
+          } else {
+            this.FreeToken.sellMap[events.returnValues.mPrice] = this.subtractBigNumber(this.FreeToken.sellMap[events.returnValues.mPrice], events.returnValues.mCount);
+          }
+          if(events.returnValues.mPrice==this.FreeToken.sellPrice){
+            if(events.returnValues.mAddLiquidity){
+              this.FreeToken.sellCount = this.addBigNumber(this.FreeToken.sellCount, events.returnValues.mCount);
+            } else {
+              this.FreeToken.sellCount = this.subtractBigNumber(this.FreeToken.sellCount, events.returnValues.mCount);
+            }
+          }
+        }else if(events.returnValues.mToken == '0x' + this.TradeToken.address) {
+          if(events.returnValues.mAddLiquidity){
+            this.TradeToken.sellMap[events.returnValues.mPrice] = this.addBigNumber(this.TradeToken.sellMap[events.returnValues.mPrice], events.returnValues.mCount);
+          } else {
+            this.TradeToken.sellMap[events.returnValues.mPrice] = this.subtractBigNumber(this.TradeToken.sellMap[events.returnValues.mPrice], events.returnValues.mCount);
+          }
+          if(events.returnValues.mPrice==this.TradeToken.sellPrice){
+            if(events.returnValues.mAddLiquidity){
+              this.TradeToken.sellCount = this.addBigNumber(this.TradeToken.sellCount, events.returnValues.mCount);
+            } else {
+              this.TradeToken.sellCount = this.subtractBigNumber(this.TradeToken.sellCount, events.returnValues.mCount);
+            }
+          }
+        }
+      }
     });
 
     this.subscribeBlock = this.obs.getObserver('block').subscribe( (bn) => {
@@ -1236,6 +1354,12 @@ export class FTMyAccount {
     }
     if(this.tutorial.subscription){
       this.tutorial.subscription.removeAllListeners();
+    }
+    if(this.Market.subscribeBook){
+      this.Market.subscribeBook.removeAllListeners();
+    }
+    if(this.Market.subscribeTransactions){
+      this.Market.subscribeTransactions.removeAllListeners();
     }
   }
 }
