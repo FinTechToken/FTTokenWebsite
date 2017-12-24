@@ -77,6 +77,7 @@ export class FTMyAccount {
   buyPrice="0";
   sellToken="0";
   sellPrice="0";
+  myTradesMap = {};
   // Tokens should be an array instead of hard code  
   FreeToken = {
     buyPrice: "",
@@ -87,6 +88,7 @@ export class FTMyAccount {
     lastCount: "",
     sellMap: {},
     buyMap: {},
+    tradeMap: {},
     name: 'FreeToken',
     mine:'0',
     supply:0,
@@ -112,6 +114,7 @@ export class FTMyAccount {
     lastCount: "",
     sellMap: {},
     buyMap: {},
+    tradeMap: {},
     name: 'TradeToken',
     mine:'0',
     supply:0,
@@ -600,9 +603,17 @@ export class FTMyAccount {
       if(events.returnValues.mToken == '0x' + this.FreeToken.address){ 
         this.FreeToken.lastPrice = events.returnValues.mPrice;
         this.FreeToken.lastCount = events.returnValues.mCount;
+        this.FreeToken.tradeMap[events.returnValues.mNow] = { price: events.returnValues.mPrice, count: events.returnValues.mCount};
       } else if(events.returnValues.mToken == '0x' + this.TradeToken.address) {
         this.TradeToken.lastPrice = events.returnValues.mPrice;
         this.TradeToken.lastCount = events.returnValues.mCount;
+        this.TradeToken.tradeMap[events.returnValues.mNow] = { price: events.returnValues.mPrice, count: events.returnValues.mCount};
+      }
+      if(events.returnValues.mFromAccount.toUpperCase() == '0X' + this.fromAddress.toUpperCase()) {
+        this.myTradesMap[events.returnValues.mNow] = { token: events.returnValues.mToken, price: events.returnValues.mPrice, count: -events.returnValues.mCount};
+      }
+      if(events.returnValues.mToAccount.toUpperCase() == '0X' + this.fromAddress.toUpperCase()) {
+        this.myTradesMap[events.returnValues.mNow] = { token: events.returnValues.mToken, price: events.returnValues.mPrice, count: events.returnValues.mCount};
       }
     });
 

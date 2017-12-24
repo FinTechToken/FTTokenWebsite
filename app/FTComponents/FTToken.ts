@@ -53,6 +53,7 @@ export class FTToken {
     lastCount: "",
     sellMap: {},
     buyMap: {},
+    tradeMap: {},
     subscribeBook: null as any,
     subscribeTransactions: null as any,
     name: "",
@@ -393,6 +394,7 @@ multiplyBigNumber(numberA: string, numberB: string): string {
     .on( 'data', (events) => {
       this.token.lastPrice = events.returnValues.mPrice;
       this.token.lastCount = events.returnValues.mCount;
+      this.token.tradeMap[events.returnValues.mNow] = { price: events.returnValues.mPrice, count: events.returnValues.mCount};
     });
 
     this.subscribeBlock = this.obs.getObserver('block').subscribe( (bn) => {
