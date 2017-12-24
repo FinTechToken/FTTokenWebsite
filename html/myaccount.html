@@ -16,9 +16,7 @@
                                     </h2>    
                                     <ul class="nav nav-tabs">
                                         <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 1 }" (click)="changeTabs(1)" href="javascript:void(0);">Balance</a></li>
-                                        <!--
                                         <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 2 }" (click)="changeTabs(2)" href="javascript:void(0);">History</a></li>
-                                        !-->
                                         <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 3 }" (click)="changeTabs(3)" href="javascript:void(0);">Sign Out</a></li>
                                     </ul>
                                 </div>
@@ -106,12 +104,12 @@
                                                         </span>
                                                     </td>
                                                     <td>
-                                                        <a *ngIf="getBookTokenEther(FreeToken.address) != '0'" href="javascript:void(0);" (click)="viewNumber(getBookTokenEther(FreeToken.address));">
-                                                            {{getEther(getBookTokenEther(FreeToken.address)) | number : '1.0-0'}}<span *ngIf="hasFraction(getBookTokenEther(FreeToken.address))">.#</span>
+                                                        <a *ngIf="getBookTokenEther('0x' + FreeToken.address) != '0'" href="javascript:void(0);" (click)="viewNumber(getBookTokenEther('0x' + FreeToken.address));">
+                                                            {{getEther(getBookTokenEther('0x' + FreeToken.address)) | number : '1.0-0'}}<span *ngIf="hasFraction(getBookTokenEther('0x' + FreeToken.address))">.#</span>
                                                         </a>
-                                                        <span *ngIf="getBookTokenEther(FreeToken.address) == '0'">0</span>
+                                                        <span *ngIf="getBookTokenEther('0x' + FreeToken.address) == '0'">0</span>
                                                         <span *ngIf="!tutorial.subscription">
-                                                            <span *ngIf="getBookTokenEther(FreeToken.address) != '0'" class="float-right">
+                                                            <span *ngIf="getBookTokenEther('0x' + FreeToken.address) != '0'" class="float-right">
                                                                 <i (click)="setToken('free'); cancelTokenOffer();" href="javascript:void(0);" class="icon-close hover"></i>
                                                             </span>
                                                         </span>
@@ -168,7 +166,13 @@
                                         <strong>H</strong>istory
                                     </h4>
                                     <div><Br>
-                                        None
+                                        Trades<br>
+                                        <table class="table table-sm table-bordered">
+                                            <tr><th>Token</th><th>Price</th><th>Tokens</th></tr>
+                                            <ng-container *ngFor="let key of getSortedKeys(myTradesMap,false)">
+                                                <tr><td><span *ngIf="myTradesMap[key].token == '0x' + FreeToken.address">Free Token</span><span *ngIf="myTradesMap[key].token == '0x' + TradeToken.address">Trade Token</span><span *ngIf="myTradesMap[key].token != '0x' + FreeToken.address && myTradesMap[key].token != '0x' + TradeToken.address">{{myTradesMap[key].token}}</span></td><td>{{+myTradesMap[key].price/1000000}}</td><td>{{wb3.utils.fromWei(myTradesMap[key].count, 'ether') | number: '1.0-6'}}</td></tr>
+                                            </ng-container>
+                                        </table>
                                     </div>
                                 </div>
                                 <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 3 }">
@@ -593,6 +597,7 @@
             <ul class="nav nav-tabs">
                 <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': buyTabs == 1 }" (click)="changeBuyTabs(1)" href="javascript:void(0);">Make Offer</a></li>
                 <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': buyTabs == 2 }" (click)="changeBuyTabs(2)" href="javascript:void(0);">View Offers</a></li>
+                <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': buyTabs == 3 }" (click)="changeBuyTabs(3)" href="javascript:void(0);">Past Trades</a></li>
             </ul>
             <div class="tab-white tab-content text-left">
                 <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': buyTabs == 1 }">
@@ -627,7 +632,7 @@
                     <div>
                         <span *ngIf="currentToken.lastPrice">
                             <strong>LastPrice:</strong>
-                            {{+currentToken.lastPrice/1000000}} Ether per token for {{getEther(currentToken.lastCount) | number : '1.0-18'}} tokens
+                            {{+currentToken.lastPrice/1000000}} Ether per token for {{wb3.utils.fromWei(currentToken.lastCount, 'ether') | number : '1.0-18'}} tokens
                             <br>
                         </span>
                         
@@ -638,7 +643,7 @@
                                 <table class="tab-white table table-sm table-bordered">
                                     <tr><th>Price</th><th>Tokens</th></tr>
                                     <ng-container *ngFor="let key of getSortedKeys(currentToken.buyMap, false)">
-                                        <tr *ngIf="currentToken.buyMap[key] != '0'"><td>{{+key/1000000}}</td><td>{{getEther(currentToken.buyMap[key]) | number : '1.0-6'}}</td></tr>
+                                        <tr *ngIf="currentToken.buyMap[key] != '0'"><td>{{+key/1000000}}</td><td>{{wb3.utils.fromWei(currentToken.buyMap[key], 'ether') | number : '1.0-6'}}</td></tr>
                                     </ng-container>
                                 </table>
                             </td>
@@ -646,7 +651,7 @@
                                 <table class="tab-white table table-sm table-bordered">
                                     <tr><th>Price</th><th>Tokens</th></tr>
                                     <ng-container *ngFor="let key of getSortedKeys(currentToken.sellMap, true)">
-                                        <tr *ngIf="currentToken.sellMap[key] != '0'"><td>{{+key/1000000}}</td><td>{{getEther(currentToken.sellMap[key]) | number: '1.0-6'}}</td></tr>
+                                        <tr *ngIf="currentToken.sellMap[key] != '0'"><td>{{+key/1000000}}</td><td>{{wb3.utils.fromWei(currentToken.sellMap[key], 'ether') | number: '1.0-6'}}</td></tr>
                                     </ng-container>
                                 </table>
                             </td></tr>
@@ -654,6 +659,20 @@
                         </table>
                     </div>
                 </div>    
+                <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': buyTabs == 3 }">
+                    <h4>
+                        <strong>T</strong>rades
+                    </h4>
+                    <div>
+                        <br>
+                        <table class="table table-sm table-bordered">
+                            <tr><th>Price</th><th>Tokens</th></tr>
+                            <ng-container *ngFor="let key of getSortedKeys(currentToken.tradeMap,false)">
+                                <tr><td>{{+currentToken.tradeMap[key].price/1000000}}</td><td>{{wb3.utils.fromWei(currentToken.tradeMap[key].count, 'ether') | number: '1.0-6'}}</td></tr>
+                            </ng-container>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="modal-footer">
@@ -737,6 +756,7 @@
             <ul class="nav nav-tabs">
                 <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': sellTabs == 1 }" (click)="changeSellTabs(1)" href="javascript:void(0);">Make Offer</a></li>
                 <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': sellTabs == 2 }" (click)="changeSellTabs(2)" href="javascript:void(0);">View Offers</a></li>
+                <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': sellTabs == 3 }" (click)="changeSellTabs(3)" href="javascript:void(0);">Past Trade</a></li>
             </ul>
             <div class="tab-white tab-content text-left">
                 <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': sellTabs == 1 }">
@@ -771,7 +791,7 @@
                     <div>
                         <span *ngIf="currentToken.lastPrice">
                             <strong>LastPrice:</strong>
-                            {{+currentToken.lastPrice/1000000}} Ether per token for {{getEther(currentToken.lastCount) | number : '1.0-18'}} tokens
+                            {{+currentToken.lastPrice/1000000}} Ether per token for {{wb3.utils.fromWei(currentToken.lastCount, 'ether') | number : '1.0-18'}} tokens
                             <br>
                         </span>
                         
@@ -782,7 +802,7 @@
                                 <table class="tab-white table table-sm table-bordered">
                                     <tr><th>Price</th><th>Tokens</th></tr>
                                     <ng-container *ngFor="let key of getSortedKeys(currentToken.buyMap, false)">
-                                        <tr *ngIf="currentToken.buyMap[key] != '0'"><td>{{+key/1000000}}</td><td>{{getEther(currentToken.buyMap[key]) | number : '1.0-6'}}</td></tr>
+                                        <tr *ngIf="currentToken.buyMap[key] != '0'"><td>{{+key/1000000}}</td><td>{{wb3.utils.fromWei(currentToken.buyMap[key], 'ether') | number : '1.0-6'}}</td></tr>
                                     </ng-container>
                                 </table>
                             </td>
@@ -790,11 +810,25 @@
                                 <table class="tab-white table table-sm table-bordered">
                                     <tr><th>Price</th><th>Tokens</th></tr>
                                     <ng-container *ngFor="let key of getSortedKeys(currentToken.sellMap, true)">
-                                        <tr *ngIf="currentToken.sellMap[key] != '0'"><td>{{+key/1000000}}</td><td>{{getEther(currentToken.sellMap[key]) | number: '1.0-6'}}</td></tr>
+                                        <tr *ngIf="currentToken.sellMap[key] != '0'"><td>{{+key/1000000}}</td><td>{{wb3.utils.fromWei(currentToken.sellMap[key], 'ether') | number: '1.0-6'}}</td></tr>
                                     </ng-container>
                                 </table>
                             </td></tr>
 
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': sellTabs == 3 }">
+                    <h4>
+                        <strong>T</strong>rades
+                    </h4>
+                    <div>
+                        <br>
+                        <table class="table table-sm table-bordered">
+                            <tr><th>Price</th><th>Tokens</th></tr>
+                            <ng-container *ngFor="let key of getSortedKeys(currentToken.tradeMap,false)">
+                                <tr><td>{{+currentToken.tradeMap[key].price/1000000}}</td><td>{{wb3.utils.fromWei(currentToken.tradeMap[key].count, 'ether') | number: '1.0-6'}}</td></tr>
+                            </ng-container>
                         </table>
                     </div>
                 </div>
