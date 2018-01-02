@@ -27,6 +27,9 @@ import { FTAccount } from './FTComponents/FTAccount';
 import { FTMyAccount } from './FTComponents/FTMyAccount';
 import { FTAlerts } from './FTComponents/FTAlerts';
 import { FTToken } from './FTComponents/FTToken';
+import { FTTradeToken } from './FTComponents/FTTradeToken';
+import { FTInvestCrypto } from './FTComponents/FTInvestCrypto';
+import { FTAboutFTT } from './FTComponents/FTAboutFTT';
 
 @NgModule({
   imports: [ BrowserModule, FormsModule, HttpModule,
@@ -34,7 +37,7 @@ import { FTToken } from './FTComponents/FTToken';
   declarations: [
     AppComponent,
     FTHome, FTTokenMarket, FTStory, FTContact, FTMarket, FTAuthenticate, FTTestNet, FTBlockchain,
-    FTAccount, FTAlerts, FTMyAccount, FTToken
+    FTAccount, FTAlerts, FTMyAccount, FTToken, FTTradeToken, FTInvestCrypto, FTAboutFTT
   ],
   entryComponents: [ ],
   providers: [ FTHttpClient, FTSession, FTBus, FTCache, FTObserver, FTResolve],

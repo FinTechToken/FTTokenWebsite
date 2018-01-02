@@ -16,6 +16,10 @@ body {
     position: relative;
 }
 
+.margin-half {
+    margin: .5rem;
+}
+
 .badge-over {
     font-size: 50%;
     position: absolute;

@@ -1,0 +1,66 @@
+<section>
+    <div class="homepage-hero-module" (window:resize)="onResize($event)">
+        <div class="block-image setheightmin"></div>
+        <div class="setheightmin">
+            <div class="video-annotation-layer chip-container">
+                <div class="video-annotation-1">
+                    <div class="row text-left h-100">
+                        <div class="col-md-6 offset-md-1 padsmalltop">
+                            <div class="media">
+                                <i class="hidden-md-down icon-people homepage-hero-module-icon icon-gradient d-flex mr-3"></i>
+                                <div class="media-body">
+                                    <h2 class="padleft">   
+                                        <i class="hidden-lg-up icon-people icon-gradient"></i>
+                                        About FinTechToken
+                                    </h2>    
+                                    <ul class="nav nav-tabs">
+                                        <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 1 }" (click)="changeTabs(1)" href="javascript:void(0);">Mission</a></li>
+                                        <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 2 }" (click)="changeTabs(2)" href="javascript:void(0);">History</a></li>
+                                        <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 3 }" (click)="changeTabs(3)" href="javascript:void(0);">Future</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row tab-content tab-white">
+                                <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 1 }">
+                                    <h4><strong>W</strong>e improve global access to capital, education and overall prosperity by</h4>
+                                    <br>
+                                    <ol>
+                                        <li>Creating useful blockchain products/services. <br>
+                                            <Br>
+                                        </li>
+                                        <li>Making blockchain accessible and easy to use. <Br>
+                                            <br>
+                                        </li>    
+                                        <li>Working within regulatory frameworks. 
+                                        </li>
+                                    </ol>
+                                </div>
+                                <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 2 }">
+                                    <h4><strong>T</strong>eam is experienced in finance, regulation, and technology</h4>
+                                        <br>
+                                        <strong>In 2010</strong> we launched a registered investment advisory firm doing algorithmic trading.<br><br>
+                                        <strong>In 2015</strong> we created <strong><a href="https://tuitioncoin.com" target="_blank" rel="nofollow">TuitionCoin</a></strong>, a licensed consumer finance company that refinances student loans. 
+                                        Our analytics brought the average lifetime default rate down to under 2%. Our technology brought loan costs down to 1/8th what it costs a traditional bank to do student loans.<br>
+                                        <br>
+                                        <strong>In 2017</strong> we launched FinTechToken to contribute to blockchain ecosystem.
+                                </div>
+                                <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 3 }">
+                                    <h4><strong>S</strong>mart contracts drastically improve finance for everyone.</h4>
+                                    <br>
+                                    Our regulated consumer finance company, <strong><a href="https://tuitioncoin.com"  target="_blank" rel="nofollow">TuitionCoin</a></strong>, and our regulated registered investment advisory firm, eSmeb Inc, uses smart contracts we build, as proof that blockchain technology is more effective than traditional financial services.
+                                    <br>
+                                    <br>Our first blockchain code is a <strong><a routerLink="/market">token market</a></strong>, which enables trading directly on blockchain, without a 3rd party.
+                                </div>
+                            </div>            
+                        </div>
+                        <div class="col-sm-5 hidden-sm-down">
+                            <div class="imgborder">
+                                <!--<img src="img/office.jpg" class="rounded img-fluid setheightmax">!-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

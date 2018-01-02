@@ -23,6 +23,9 @@ import { FTAccount } from './FTComponents/FTAccount';
 import { FTMyAccount } from './FTComponents/FTMyAccount';
 import { FTAlerts } from './FTComponents/FTAlerts';
 import { FTToken } from './FTComponents/FTToken';
+import { FTTradeToken } from './FTComponents/FTTradeToken';
+import { FTInvestCrypto } from './FTComponents/FTInvestCrypto';
+import { FTAboutFTT } from './FTComponents/FTAboutFTT';
 
 const routes: Routes = [ {
         path: '',
@@ -32,6 +35,18 @@ const routes: Routes = [ {
     {
         path:'home',
         component: FTHome
+    },
+    {
+        path:'trade_tokens',
+        component: FTTradeToken
+    },
+    {
+        path:'invest_in_crypto_currency',
+        component: FTInvestCrypto
+    },
+    {
+        path:'about_fintech_token',
+        component: FTAboutFTT
     },
     {
         path:'blockchain',
