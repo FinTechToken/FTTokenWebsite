@@ -5,7 +5,7 @@
             <a class="nav-link" routerLink="/blockchain" routerLinkActive="active" href="javascript:void(0);">
                 <img  *ngIf="myRouter.url == '/blockchain'" src="/img/svg/FinTechToken_Block.svg" width="25px" alt="FinTechToken">
                 <img  *ngIf="myRouter.url != '/blockchain'" src="/img/svg/FinTechToken_Blockg.svg" width="25px" alt="FinTechToken">
-                <span class="hidden-xs-down">TestNet</span>
+                <span class="hidden-xs-down">FTT</span>
                 <span class="navtext">{{blocknumber > 999 ? blocknumber.toString().substr(blocknumber.toString().length-3) : blocknumber}}:{{seconds}}</span>
             </a>            
         </li>

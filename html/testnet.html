@@ -6,16 +6,16 @@
                     <div class="row roboto">
                         <div class="col-md-6 padsmalltop">
                             <div class="tab-white text-left">
-                                <h4>Welcome to TestNet</h4>
+                                <h4>Welcome to FTT</h4>
                                 <br>
-                                <h5>TestNet Blocks</h5>
+                                <h5>FTT Blocks</h5>
                                 BlockNumber: {{blocknumber | number}} (Time since last block {{seconds}})
                                 <br><br>
                                 <h5>Your Account</h5>
                                 Account#: {{account}}<br>
                                 TestEther Balance: {{accountBalance | number }}
                                 <br><br>
-                                <h5>TestNet Miner Account</h5>
+                                <h5>FTT Miner Account</h5>
                                 Account#: {{account1}}<br>
                                 TestEther Balance: {{accountBalance1 | number }}<br>
                                 <br>
@@ -119,12 +119,12 @@
         </div>
     </div>
 </div>
-<!-- Modal 1 TestNet To Do-->
+<!-- Modal 1 FTT TestNet To Do-->
 <div [ngClass]="{ 'show block': modal == 1 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">TestNet Development Tasks</h5>
+                <h5 class="modal-title">FTT Development Tasks</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -135,7 +135,7 @@
                 We are working on the following tasks and will release one item at a time.
                 <br><Br>
                 <strong>Authenticate Account - done</strong><br>
-                * Detect Web3 (ignore on TestNet - would use on RealNet)<br>
+                * Detect Web3 (ignore on FTT - would use on RealNet)<br>
                 * Detect existing encrypted id (Prompt password if found + use if good pw)<br>
                 * If no encypted id than create account or import key (Generate key + Convert key to encrypted id)<br>
                 <strong>Display Account Info - done</strong><br>

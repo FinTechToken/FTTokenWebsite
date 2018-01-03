@@ -14,7 +14,7 @@
                                         Blockchains
                                     </h2>    
                                     <ul class="nav nav-tabs">
-                                        <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 1 }" (click)="changeTabs(1)" href="javascript:void(0);">TestNet</a></li>
+                                        <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 1 }" (click)="changeTabs(1)" href="javascript:void(0);">FTT</a></li>
                                         <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 2 }" (click)="changeTabs(2)" href="javascript:void(0);">Ethereum</a></li>
                                         <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 3 }" (click)="changeTabs(3)" href="javascript:void(0);">Other</a></li>
                                     </ul>
@@ -25,15 +25,15 @@
 
                             <div class="tab-white tab-content text-left">
                                 <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 1 }">
-                                    <h4><img src="/img/svg/FinTechToken_Block.svg" width="25px" alt="TestNet">
-                                        <strong>T</strong>estNet <small>- Learn about blockchain for free</small></h4>
+                                    <h4><img src="/img/svg/FinTechToken_Block.svg" width="25px" alt="FTT">
+                                        <strong>F</strong>TT <small> - Blockchain of blockchains</small></h4>
                                     <div>
                                         <br>
-                                        TestNet is a Private Blockchain 
-                                        run by FinTechToken. TestNet works just like Ethereum
+                                        FTT is a Private Blockchain 
+                                        run by FinTechToken on Amazon Web Services (AWS). FinTechToken works just like Ethereum
                                         except it is totally free so you can try it without risking anything.<br>
                                         <br>
-                                        TestNet is on block <strong>{{!blocknumber ? 0 : blocknumber | number}}</strong>. We show the last 3 digits in the navigation bar at the top of your screen.
+                                        FTT is on block <strong>{{!blocknumber ? 0 : blocknumber | number}}</strong>. We show the last 3 digits in the navigation bar at the top of your screen.
                                         <br><Br>
                                         Transactions happen when a new block is mined. 
                                         The last block was mined 
