@@ -10,8 +10,8 @@ import { FTObserver } from '../FTFramework/FT-Observer';
 /* ToDo: Each time you change tabs scroll to top */
 @Component({
   moduleId: module.id,
-  selector: 'ft-alerts',
-  templateUrl: '../../html/alerts.html',
+  selector: 'ft-messages',
+  templateUrl: '../../html/messages.html',
   animations: [trigger('visibilityChanged',[
     state('shownss',style({opacity:0,display:'none' })),
     state('hiddenss',style({opacity:1})),
@@ -19,7 +19,7 @@ import { FTObserver } from '../FTFramework/FT-Observer';
   ])]
 })
 
-export class FTAlerts {
+export class FTMessages {
   zone: NgZone;   
   name = 'FinTechToken';
   visibility="hiddenss";

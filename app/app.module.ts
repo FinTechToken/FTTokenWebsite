@@ -25,7 +25,7 @@ import { FTTestNet } from './FTComponents/FTTestNet';
 import { FTBlockchain } from './FTComponents/FTBlockchain';
 import { FTAccount } from './FTComponents/FTAccount';
 import { FTMyAccount } from './FTComponents/FTMyAccount';
-import { FTAlerts } from './FTComponents/FTAlerts';
+import { FTMessages } from './FTComponents/FTMessages';
 import { FTToken } from './FTComponents/FTToken';
 import { FTTradeToken } from './FTComponents/FTTradeToken';
 import { FTInvestCrypto } from './FTComponents/FTInvestCrypto';
@@ -37,7 +37,7 @@ import { FTAboutFTT } from './FTComponents/FTAboutFTT';
   declarations: [
     AppComponent,
     FTHome, FTTokenMarket, FTStory, FTContact, FTMarket, FTAuthenticate, FTTestNet, FTBlockchain,
-    FTAccount, FTAlerts, FTMyAccount, FTToken, FTTradeToken, FTInvestCrypto, FTAboutFTT
+    FTAccount, FTMessages, FTMyAccount, FTToken, FTTradeToken, FTInvestCrypto, FTAboutFTT
   ],
   entryComponents: [ ],
   providers: [ FTHttpClient, FTSession, FTBus, FTCache, FTObserver, FTResolve],

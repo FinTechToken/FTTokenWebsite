@@ -22,7 +22,7 @@
             </a>
         </li>
         <li class="nav-item px-3 badge-contain">
-            <a id="alertID" class="nav-link" routerLink="/alerts" routerLinkActive="active" href="javascript:void(0);">
+            <a id="alertID" class="nav-link" routerLink="/messages" routerLinkActive="active" href="javascript:void(0);">
                 <i *ngIf="cache.getCache('encrypted_id') && !cache.getCache('key')" class="icon-envelope"></i>
                 <i *ngIf="!cache.getCache('encrypted_id') || cache.getCache('key')" class="icon-envelope-open"></i>
                 <span *ngIf="!cache.getCache('encrypted_id')" class="badge badge-pill badge-warning badge-over">1</span>

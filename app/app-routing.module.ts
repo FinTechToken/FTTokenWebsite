@@ -21,7 +21,7 @@ import { FTTestNet } from './FTComponents/FTTestNet';
 import { FTBlockchain } from './FTComponents/FTBlockchain';
 import { FTAccount } from './FTComponents/FTAccount';
 import { FTMyAccount } from './FTComponents/FTMyAccount';
-import { FTAlerts } from './FTComponents/FTAlerts';
+import { FTMessages } from './FTComponents/FTMessages';
 import { FTToken } from './FTComponents/FTToken';
 import { FTTradeToken } from './FTComponents/FTTradeToken';
 import { FTInvestCrypto } from './FTComponents/FTInvestCrypto';
@@ -73,12 +73,12 @@ const routes: Routes = [ {
         component: FTToken
     },
     {
-        path:'alerts',
-        component: FTAlerts
+        path:'messages',
+        component: FTMessages
     },
     {
-        path:'alerts/:id',
-        component: FTAlerts
+        path:'messages/:id',
+        component: FTMessages
     },
     {
         path:'market',
