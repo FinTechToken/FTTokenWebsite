@@ -4,34 +4,22 @@ import { Injectable }     from '@angular/core';
 //note: TC-Cache should NOT be an observable. It's purpose is a key that can be grabbed at fixed point in time. Use TC-Observable for observables.
 @Injectable()
 export class FTCache {
+    private cache = new Map();
+
     private name:string[]=[];
     private value:any[]=[];
     constructor () {}
 
     putCache(myName:string,myValue:any){
-        let pos =this.name.indexOf(myName);
-        if(pos>=0){
-            this.value[pos]=myValue;
-        }else{
-            this.name.push(myName);
-            this.value.push(myValue);
-        }
+        this.cache.set(myName, myValue);
     }
     getCache(myName:string){
-        let pos =this.name.indexOf(myName);
-        if(pos>=0){
-            return this.value[pos];
-        }else{
-            return null;//ToDo: should we return null?
-        }
+        return this.cache.get(myName);
+    }
+    hasCache(myName:string){
+        return this.cache.has(myName);
     }
     deleteCache(myName:string){
-        let pos=this.name.indexOf(myName);
-        if(pos>=0){
-            this.name.splice(pos);
-            this.value.splice(pos);
-        }
+        this.cache.delete(myName);
     }
-
-
 }

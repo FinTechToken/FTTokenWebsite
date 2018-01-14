@@ -30,7 +30,7 @@
     <!-- Polyfill !-->
     <script src="js/shim.min.js?ver=2.4.1"></script>
     <script src="js/zone.min.js?ver=0.8.1"></script>
-    <script src="js/localStorage.js?ver=1.01"></script>
+    <script src="js/localStorage.js?ver=1.02"></script>
     <!-- Angular !-->
     <script> window.module = 'aot';</script>
 </head>
@@ -48,35 +48,72 @@
             </ul>
         </header>
         <section>
-            <div class="homepage-hero-module" (window:resize)="onResize($event)">
-                <div class="block-image setheightmin"></div>
-                <div class="setheightmin">
-                    <div class="video-annotation-layer code-container container-fluid">
+            <div class="hhomepage-hero-module">
+                <div class="ssetheightmin">
+                    <div class="vvideo-annotation-layer ccode-container container-fluid">
                         <div class="row">
                             <div class="col-sm-6 offset-sm-1">
-                                <div class="video-annotation-1 text-left">
-                                    <h2><br>
-                                        Financial Technology We Can Use.
-                                            <br>Built on blockchain. Built by all.
-                                            <br><Br>
-                                    </h2>
-                                    <h4>
-                                        You are on a private blockchain called <a href="/blockchain"><strong>FTT</strong></a>. We welcome you to explore the blockchain for free and without risk.
-                                        <br>
-                                        <br>
+                                <div class="vvideo-annotation-1 text-left">
+                                    <h1 class="fthero">
+                                        <span>
+                                            One Blockchain Hub Connecting All Cryptos
+                                        </span>
+                                    </h1>
+                                    <h4 class="fthero3 shadow">
+                                        Trade with control on our 100% blockchain platform
                                     </h4>
-                                    <h4>
-                                        <img src="/img/svg/FinTechToken_Icon_Logo.svg" width="100px" class="homepage-hero-module-icon icon-gradient rotate">
-                                    </h4>
+                                    <div class="ftherobutton">
+                                        <a class="btn btn-ft btn-lg margin-half" routerLink="/authenticate" routerLinkActive="active">Get Started</a>
+                                    </div>
                                 </div>         
                             </div>
-                            <div class="col-sm-5">
+                            <div class="col-sm-5 top30">
+                                <img src="/img/svg/FinTechToken_Visual1-02.svg" class="top30" width="100%"/>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <h2 class="ftheronomargin">CryptoPass</h2>
+                            <h4 class="fthero3">
+                                Securely use any major blockchain with one wallet. 
+                            </h4>
+                        </div>
+                        <div class="col-sm-2 text-center">
+                        </div>
+                        <div class="col-sm-5">
+                            <h2 class="ftheronomargin">BlockChain DNA</h2>
+                            <h4 class="fthero3">
+                                Crypto currencies are tokenized on the FinTechToken (FTT) network. 
+                                This lets you trade fast with ultra low gas costs. 
+                            </h4>
+                        </div>                
+                    </div>
+                </div>
             </div>
-        </section>
+            <img src="/img/copyright/blocksbottom.jpg" width="100%"/>
+        </section>    
+        <footer class="footer fixed-bottom text-center">
+            <a href="https://github.com/FinTechToken" target="_blank" rel="nofollow">
+                <span class="hidden-xs-down">
+                    Token Sourced Code    
+                </span>
+                <span class="hidden-sm-up">
+                    Code    
+                </span>
+            </a>
+            - 
+            <a href="http://decstack.com" target="_blank" rel="nofollow">
+                <span class="hidden-xs-down">
+                    Decentralized Community
+                </span>
+                <span class="hidden-sm-up">
+                    Community
+                </span>
+            </a>
+        </footer>        
     </my-app>
     <script src="js/FTBootstrap.js?ver=FTVersion"></script>
     <!-- api routes -->
