@@ -1,13 +1,13 @@
-// from https://gist.github.com/remy/350433
+// modified from https://gist.github.com/remy/350433
 try {
-    if (!window.localStorage || !window.sessionStorage) {
+    if (!window.localStorage) {
         throw "exception";
     }
     localStorage.setItem('storage_test', 1);
     localStorage.removeItem('storage_test');
 } catch(e) {
     (function () {
-        var Storage = function (type) {
+        var Storage = function () {
             function createCookie(name, value, days) {
                 var date, expires;
                 if (days) {
@@ -38,31 +38,16 @@ try {
 
             function setData(data) {
                 data = encodeURIComponent(JSON.stringify(data));
-                if (type == 'session') {
-                    createCookie(getSessionName(), data, 365);
-                } else {
-                    createCookie('localStorage', data, 365);
-                }
+                createCookie('localStorage', data, 365);
             }
 
             function clearData() {
-                if (type == 'session') {
-                    createCookie(getSessionName(), '', 365);
-                } else {
-                    createCookie('localStorage', '', 365);
-                }
+                createCookie('localStorage', '', 365);
             }
 
             function getData() {
-                var data = type == 'session' ? readCookie(getSessionName()) : readCookie('localStorage');
+                var data = readCookie('localStorage');
                 return data ? JSON.parse(decodeURIComponent(data)) : {};
-            }
-
-            function getSessionName() {
-                if(!window.name) {
-                    window.name = new Date().getTime();
-                }
-                return 'sessionStorage' + window.name;
             }
 
             var data = getData();
@@ -99,10 +84,7 @@ try {
         };
 
         var localStorage = new Storage('local');
-        var sessionStorage = new Storage('session');
         window.localStorage = localStorage;
-        window.sessionStorage = sessionStorage;
         window.localStorage.__proto__ = localStorage;
-        window.sessionStorage.__proto__ = sessionStorage;
     })();
 }

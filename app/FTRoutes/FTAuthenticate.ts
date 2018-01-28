@@ -1,4 +1,3 @@
-declare var scaleVideoContainer: any;
 declare var sjcl: any;
 import { Component, trigger, state, style, transition, animate, OnInit, NgZone } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
@@ -8,11 +7,12 @@ import { FTBus } from '../FTFramework/FT-Bus';
 import { FTCache } from '../FTFramework/FT-Cache';
 import { FTSession } from '../FTFramework/FT-Session';
 import { FTObserver } from '../FTFramework/FT-Observer';
+import { FTStorage } from '../FTFramework/FT-Storage';
 /* ToDo: Each time you change tabs scroll to top */
 @Component({
   moduleId: module.id,
   selector: 'ft-authenticate',
-  templateUrl: '../../html/authenticate.html',
+  templateUrl: '../../html/routes/authenticate.html',
   animations: [trigger('visibilityChanged',[
     state('shownss',style({opacity:0,display:'none' })),
     state('hiddenss',style({opacity:1})),
@@ -32,38 +32,17 @@ export class FTAuthenticate {
   unlocking = false;
   newAccount;
 
-  constructor( private bus: FTBus, private obs: FTObserver, private router: Router, private route: ActivatedRoute, private session: FTSession, private cache: FTCache, private http:Http )
+  constructor( private bus: FTBus, private obs: FTObserver, private router: Router, private route: ActivatedRoute, private session: FTSession, private cache: FTCache, private http:Http, private FTlocalStorage:FTStorage )
   {   
     this.zone=new NgZone({enableLongStackTrace:false});//Zone used for old version of IPad. Doesn't update without it.
-    this.session.getSession('user_id').subscribe(
-          res => {
-            if(+res>0) {//Signed In
-              this.zone.run(()=>{
-              });    
-            }
-            else {//Signed Out
-              this.zone.run(()=>{
-              });
-            }
-          }
-        );
-        this.bus.getBus().subscribe(
-          res => {
-            if( res.sender == 'ToDo: SigninOpenModule'){
-            }
-            if( res.sender=='ToDo: SigninClose'){
-            }
-          }
-        );
   }
 
   ngOnInit(): void{ 
-      scaleVideoContainer();
       //ToDo: on realnet move this into Else of web3
-      if(this.cache.getCache('key')){
+      if(this.cache.hasCache('key')){
         this.router.navigate(['/myaccount']);
       }
-      if(this.cache.getCache('encrypted_id')){
+      if(this.cache.hasCache('encrypted_id')){
         this.encrypted_id = this.cache.getCache('encrypted_id');
         //document.getElementById('unlockaccount').innerHTML = this.encrypted_id.address;
       } else{
@@ -110,11 +89,11 @@ export class FTAuthenticate {
         return;
     }
     this.encrypted_id = this.cache.getCache('wb3').eth.accounts.encrypt(this.newAccount.privateKey, pw);
-    localStorage.setItem('encrypted_id',JSON.stringify(this.encrypted_id));
+    this.FTlocalStorage.setItem('encrypted_id',JSON.stringify(this.encrypted_id));
     this.cache.putCache('encrypted_id', this.encrypted_id);
     this.cache.putCache('key', this.newAccount.privateKey);
     var keys = sjcl.encrypt(this.encrypted_id.address, this.cache.getCache('key'));
-    window.sessionStorage.setItem('k',keys); //security issue use for testing only
+    this.session.setItem('k',keys); //security issue use for testing only
     this.newAccount = '';
     (document.getElementById('PW') as HTMLInputElement).value = null;
     this.showModal(4);
@@ -127,11 +106,11 @@ export class FTAuthenticate {
     if(pw && key){
         try{
             this.encrypted_id = this.cache.getCache('wb3').eth.accounts.encrypt(key, pw);
-            localStorage.setItem('encrypted_id',JSON.stringify(this.encrypted_id));
+            this.FTlocalStorage.setItem('encrypted_id',JSON.stringify(this.encrypted_id));
             this.cache.putCache('encrypted_id',this.encrypted_id);
             this.cache.putCache('key',key);
             var keys = sjcl.encrypt(this.encrypted_id.address, key);
-            window.sessionStorage.setItem('k',keys); //security issue use for testing only
+            this.session.setItem('k',keys); //security issue use for testing only
             this.showModal(4);
             (document.getElementById('importKey') as HTMLInputElement).value = null;
             (document.getElementById('importPW') as HTMLInputElement).value = null;
@@ -149,7 +128,7 @@ export class FTAuthenticate {
             enc = JSON.parse(enc);
             if(enc.id && enc.address && enc.crypto && enc.crypto.ciphertext && enc.crypto.cipherparams && enc.crypto.cipher && enc.crypto.kdf && enc.crypto.kdfparams && enc.crypto.mac) {
                 this.encrypted_id = enc;
-                localStorage.setItem('encrypted_id',JSON.stringify(this.encrypted_id));
+                this.FTlocalStorage.setItem('encrypted_id',JSON.stringify(this.encrypted_id));
                 this.cache.putCache('encrypted_id',this.encrypted_id);
             }
             this.tabs = 1;
@@ -174,7 +153,7 @@ export class FTAuthenticate {
         try{
             this.cache.putCache('key',this.cache.getCache('wb3').eth.accounts.decrypt(JSON.stringify(this.encrypted_id),pw).privateKey);
             var keys = sjcl.encrypt(this.encrypted_id.address, this.cache.getCache('key'));
-            window.sessionStorage.setItem('k',keys); //security issue use for testing only
+            this.session.setItem('k',keys); //security issue use for testing only
             this.unlocking = false;
             this.showModal(4);
             (document.getElementById('PWUnlock') as HTMLInputElement).value = null;
@@ -189,16 +168,14 @@ export class FTAuthenticate {
         },0);
     }
   deleteAccount(): void{
-    localStorage.removeItem('encrypted_id');
+    this.FTlocalStorage.removeItem('encrypted_id');
     this.cache.deleteCache('key');
     this.cache.deleteCache('encrypted_id');
     this.encrypted_id = null;
     this.key = null;
     this.showModal(0);
 }
-  onResize(event: any):void{
-      scaleVideoContainer();
-  }
+
   ngAfterViewInit(): void{
   } 
 

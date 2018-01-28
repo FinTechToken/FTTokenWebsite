@@ -1,4 +1,3 @@
-declare var scaleVideoContainer: any;
 declare var rlp: any;
 declare var numberToHex: any;
 declare var EthJS: any;
@@ -15,7 +14,7 @@ import { FTObserver } from '../FTFramework/FT-Observer';
 @Component({
   moduleId: module.id,
   selector: 'ft-my-account',
-  templateUrl: '../../html/myaccount.html',
+  templateUrl: '../../html/routes/myaccount.html',
   animations: [trigger('visibilityChanged',[
     state('shownss',style({opacity:0,display:'none' })),
     state('hiddenss',style({opacity:1})),
@@ -166,26 +165,6 @@ export class FTMyAccount {
   constructor( private bus: FTBus, private obs: FTObserver, private router: Router, private route: ActivatedRoute, private session: FTSession, private cache: FTCache, private http:Http, private cd: ChangeDetectorRef )
   {   
     this.zone=new NgZone({enableLongStackTrace:false});//Zone used for old version of IPad. Doesn't update without it.
-    this.session.getSession('user_id').subscribe(
-          res => {
-            if(+res>0) {//Signed In
-              this.zone.run(()=>{
-              });    
-            }
-            else {//Signed Out
-              this.zone.run(()=>{
-              });
-            }
-          }
-        );
-        this.bus.getBus().subscribe(
-          res => {
-            if( res.sender == 'ToDo: SigninOpenModule'){
-            }
-            if( res.sender=='ToDo: SigninClose'){
-            }
-          }
-        );
   }
 
   setToken(token: string): void {
@@ -524,7 +503,6 @@ export class FTMyAccount {
       this.seconds = bnsec;
     });
     this.fromAddress = this.cache.getCache('encrypted_id').address;
-    scaleVideoContainer();
     this.wb3 = this.cache.getCache('wb3');
     this.FreeToken.abi = [{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"gotFree","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"success_","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalOutstanding","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"success_","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"getFreeToken","outputs":[{"name":"success_","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"author","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"name":"success_","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"},{"name":"_extraData","type":"bytes"}],"name":"approveAndCall","outputs":[{"name":"success_","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"address"}],"name":"allowance","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"admin","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"}],"name":"unapprove","outputs":[{"name":"success_","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"payable":true,"stateMutability":"payable","type":"fallback"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"owner","type":"address"},{"indexed":true,"name":"spender","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Approval","type":"event"}];
     this.FreeToken.contract = new this.wb3.eth.Contract(this.FreeToken.abi, '0x'+this.FreeToken.address, {
@@ -560,10 +538,6 @@ export class FTMyAccount {
 
   changeBuyTabs(tab:number): void{
     this.buyTabs = tab;
-  }
-
-  onResize(event: any):void {
-    scaleVideoContainer();
   }
 
   getTokensOfBook() {
@@ -1181,7 +1155,7 @@ export class FTMyAccount {
 
   signOut(): void{
     this.cache.deleteCache('key');
-    window.sessionStorage.clear();
+    this.session.clear();
     this.router.navigate(['/authenticate']);
     this.showModal(0);
   }

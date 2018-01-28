@@ -4,7 +4,7 @@ import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import { FTCache } from '../FTFramework/FT-Cache';
 
-//This loads .js files prior to .txt files being returned in observer.
+//Note:This is not being used. Keeping as example of resolver
 
 @Injectable()
 export class FTResolve implements Resolve<any> {

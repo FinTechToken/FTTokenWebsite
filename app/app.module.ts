@@ -1,46 +1,62 @@
-//ToDo: Calculate REM to PX conversions. Figure it out on load and store it.
 import { NgModule } from '@angular/core'; 
-
-import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { BrowserModule } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent }  from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+import { FTHeader } from './ft-header';
+import { FTFooter } from './ft-footer';
 
-import { FTHttpClient } from './FTFramework/FT-HttpClient';
-import { FTSession } from './FTFramework/FT-Session';
 import { FTBus } from './FTFramework/FT-Bus';
 import { FTCache } from './FTFramework/FT-Cache';
+import { FTHttpClient } from './FTFramework/FT-HttpClient';
 import { FTObserver } from './FTFramework/FT-Observer';
 import { FTResolve } from './FTFramework/FT-Resolve';
+import { FTSession } from './FTFramework/FT-Session';
+import { FTStorage } from './FTFramework/FT-Storage';
+import { FTText } from './FTFramework/FT-Text';
 
-import { FTHome } from './FTComponents/FThome';
-import { FTTokenMarket } from './FTComponents/FTTokenMarket';
-import { FTMarket } from './FTComponents/FTMarket';
-import { FTStory } from './FTComponents/FTStory';
-import { FTContact } from './FTComponents/FTcontact';
-import { FTAuthenticate } from './FTComponents/FTAuthenticate';
-import { FTTestNet } from './FTComponents/FTTestNet';
-import { FTBlockchain } from './FTComponents/FTBlockchain';
-import { FTAccount } from './FTComponents/FTAccount';
-import { FTMyAccount } from './FTComponents/FTMyAccount';
-import { FTMessages } from './FTComponents/FTMessages';
-import { FTToken } from './FTComponents/FTToken';
-import { FTTradeToken } from './FTComponents/FTTradeToken';
-import { FTInvestCrypto } from './FTComponents/FTInvestCrypto';
-import { FTAboutFTT } from './FTComponents/FTAboutFTT';
+import { FTWeb3 } from './FTServices/ft-web3';
+
+import { FTAuthenticate } from './FTRoutes/FTAuthenticate';
+import { FTBlockchain } from './FTRoutes/FTBlockchain';
+import { FTHome } from './FTRoutes/FThome';
+import { FTMessages } from './FTRoutes/FTMessages';
+import { FTMyAccount } from './FTRoutes/FTMyAccount';
+import { FTToken } from './FTRoutes/FTToken';
 
 @NgModule({
-  imports: [ BrowserModule, FormsModule, HttpModule,
-    AppRoutingModule ],
+  imports: [ 
+    AppRoutingModule, 
+    BrowserModule, 
+    FormsModule, 
+    HttpModule, 
+  ],
   declarations: [
     AppComponent,
-    FTHome, FTTokenMarket, FTStory, FTContact, FTMarket, FTAuthenticate, FTTestNet, FTBlockchain,
-    FTAccount, FTMessages, FTMyAccount, FTToken, FTTradeToken, FTInvestCrypto, FTAboutFTT
+    FTHeader,
+    FTHome, 
+    FTAuthenticate, 
+    FTBlockchain,
+    FTFooter,
+    FTMessages, 
+    FTMyAccount, 
+    FTToken
   ],
   entryComponents: [ ],
-  providers: [ FTHttpClient, FTSession, FTBus, FTCache, FTObserver, FTResolve],
-  bootstrap:    [ AppComponent ]
+  providers: [ 
+    FTBus, 
+    FTCache, 
+    FTHttpClient, 
+    FTObserver, 
+    FTResolve,
+    FTSession,
+    FTStorage,
+    FTText,
+    FTWeb3
+  ],
+  bootstrap: [ AppComponent ]
 })
+
 export class AppModule { }
