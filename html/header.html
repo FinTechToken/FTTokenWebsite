@@ -10,7 +10,7 @@
                 <span class="hidden-xs-down">
                     {{texts['header.FTTBlockName']}}
                 </span>
-                <span class="badge badge-pill badge-success badge-under">
+                <span class="badge badge-pill badge-success badge-under2">
                     <!-- ToDo: Create service to show current block - param for format !-->
                     <!-- ToDo: Create service for seconds since last block !-->
                     {{ blocknumber > 999 ? blocknumber.toString().substr(blocknumber.toString().length-3) : blocknumber }}:{{ seconds }}
@@ -20,10 +20,10 @@
         <li class="nav-item px-3 badge-contain">
             <a *ngIf="!hasKey()" id="accountID" class="nav-link" routerLink="/authenticate" routerLinkActive="active" href="javascript:void(0);">
                 <i class="icon-user"></i>
-                <span *ngIf="!hasEncryptedID()" class="badge badge-pill badge-warning badge-under2">
+                <span *ngIf="!hasEncryptedID()" class="badge badge-pill badge-warning badge-under3">
                     {{texts['header.accountNewUser']}}
                 </span> 
-                <span *ngIf="hasEncryptedID()" class="badge badge-pill badge-warning badge-under2">
+                <span *ngIf="hasEncryptedID()" class="badge badge-pill badge-warning badge-under3">
                     {{texts['header.accountOut']}}
                 </span> 
                 <span class="hidden-sm-down">
