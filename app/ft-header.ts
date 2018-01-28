@@ -37,6 +37,14 @@ export class FTHeader {
 
   ngOnDestroy(): void {}
 
+  hasEncryptedID(): boolean {
+    return this.cache.hasCache('encrypted_id');
+  }
+
+  hasKey(): boolean {
+    return this.cache.hasCache('key');
+  }
+
   private setText(): void {
     this.texts['header.FTTBlockName'] = this.text.getText('header.FTTBlockName');
     this.texts['header.accountName'] = this.text.getText('header.accountName');
