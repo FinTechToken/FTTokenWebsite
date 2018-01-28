@@ -10,12 +10,21 @@ body {
     letter-spacing: 1px;
     color: #151b1e;
     background-color: #e4e5e6;
+    background-color: #fff;
+}
+
+.footer{
+    background-color:#151b1e;
+    color: #fff;
 }
 
 .badge-contain{
     position: relative;
 }
 
+.white{
+    color:#fff;
+}
 .margin-half {
     margin: .5rem;
 }
@@ -32,7 +41,41 @@ body {
 .table {
     background-color:#fff;
 }
-
+.top60{
+    margin-top:60px;
+}
+.top30{
+    margin-top: 30px;
+}
+.topminus50{
+    margin-top: -50px;
+}
+.fthero {
+    font-size:2rem;
+    margin-top:150px; 
+    letter-spacing: -1px;
+    font-weight:600;
+    color: #3a3a3a; 
+}
+.ftheronomargin {
+    font-size:1.8rem;
+    letter-spacing: -1px;
+    font-weight:600;
+    color: #3a3a3a; 
+}
+.fthero2{
+    margin-top:60px;
+    font-weight: 600;
+    color: #2a2a2a;
+}
+.fthero3{
+    /*color:#8e8e8e;*/
+    color: #6e6e6e;
+}
+.ftherobutton{
+    margin-top: 30px;
+    margin-bottom: 60px;
+}
 .thead {
     border-bottom: 3px solid #F2A70E;
 }
@@ -43,7 +86,15 @@ body {
     top: 50%;
     left: 0%;
     margin-top: 6px;
-    margin-left: 20px;
+    margin-left: 11px;
+}
+.badge-under2 {
+    font-size: 50%;
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    margin-top: 6px;
+    margin-left: 2px;
 }
 .badge-small{
     font-size:25%;
@@ -56,15 +107,29 @@ b, strong {
     font-weight:600;
 }
 
+.vertical-align {
+    display: flex;
+    align-items: center;
+}
+
 .btn-ft {
     border-color: #f0ad4e;
     background-color: #fff;
-    color: #738c99;
+    color: #151b1e;
+    
+    /* color: #738c99;*/
+    border-width: .25rem;
 }
 
 .btn-ft:hover, .btn-ft:focus {
     color: #151b1e;
-    background-color: #fff;
+    text-shadow: 1px 1px 6px #FFB41B;
+    background-color: #fafafa;
+    border-color: #d08d2e;
+}
+
+.grey {
+    background-color: #e9eef5;
 }
 
 .reverse{
@@ -164,13 +229,16 @@ b, strong {
     100% { transform: rotate(360deg); }
 }
 
-.shadow {
-    text-shadow: 1px 1px 4px #fff;
+.shadowm {
+    text-shadow: 1px 1px 10px #FFB41B;
     /*
     -webkit-box-shadow: 0px 6px 6px 3px #fff; /* /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
     /*-moz-box-shadow:    0px 6px 6px 3px #fff; /* /* Firefox 3.5 - 3.6 */
     /*box-shadow:         0px 6px 6px 3px #fff; /* /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
 
+  }
+  .shadow {
+    text-shadow: 1px 1px 10px #fff;
   }
 
   .imgborder{
@@ -244,8 +312,8 @@ b, strong {
 }
 
 .px-3 {
-    padding-right: .25rem !important;
-    padding-left: .25rem !important;
+    padding-right: .75rem !important;
+    padding-left: .75rem !important;
 }
 
 a {
@@ -382,8 +450,14 @@ h5{
 
 /* xs under 576 phones */
 @media (min-width: 576px) { /* sm landscape phones*/
-    .badge-under, .badge-over {
-        margin-left:25px;
+    .badge-under {
+        margin-left:16px;
+    }
+    .badge-over {
+        margin-left:17px;
+    }
+    .badge-under2 {
+        margin-left: 6px;
     }
     .navtext {
         font-size: inherit;
@@ -419,8 +493,14 @@ h5{
 }
   
 @media (min-width: 768px) { /* md tablets*/
-    .badge-under, .badge-over {
-        margin-left:30px;
+    .badge-under{
+        margin-left:17px;
+    }
+    .badge-over {
+        margin-left:19px;
+    }
+    .badge-under2 {
+        margin-left: 8px;
     }
     .row{
         margin-right:-15px;
@@ -455,6 +535,18 @@ h5{
 }
   
 @media (min-width: 992px) { /* lg desktops*/
+    .badge-under2 {
+        margin-left: 10px;
+    }
+    .badge-under {
+        margin-left: 20px;
+    }
+    .badge-over {
+        margin-left:22px;
+    }
+    .fthero { 
+        white-space:nowrap;
+    }
     .navbar {
         height: 55px;
         flex: 0 0 55px;
@@ -543,7 +635,11 @@ h5{
     background-size: cover;    
 }
 .block-image{
-    background: url('https://www.fintechtoken.com/img/blocks1.jpg') 35% 0% no-repeat;
+    background: url('/img/copyright/blocks1.jpg') 35% 0% no-repeat;
+    background-size: cover;    
+}
+.block-image-dark{
+    background: url('/img/copyright/blocks1.jpg') 35% 0% no-repeat;
     background-size: cover;    
 }
 .video-container, .market-container {

@@ -1,4 +1,13 @@
-function scaleVideoContainer(){ //ToDo: Use logic to allow cover percentages to match image
+/* ToDo: Calculate REM to PX conversions. Figure it out on load and store it. */
+window.onload = onLoad();
+
+function onLoad(){
+    window.addEventListener("resize", onResize);
+    onResize();
+}
+
+
+function onResize(){ //ToDo: Use logic to allow cover percentages to match image
     if(window.innerWidth>=769){
         var x=(window.innerHeight-1)*1;
     }else{
@@ -8,7 +17,7 @@ function scaleVideoContainer(){ //ToDo: Use logic to allow cover percentages to 
     var els = document.getElementsByClassName("setheightmin");
     for(var i = 0; i < els.length; i++)
     {
-       els[i].style.minHeight=x+'px';
+       els[i].style.minHeight=x-25+'px';
     }
     
     var els = document.getElementsByClassName("setheightmax");
@@ -20,7 +29,7 @@ function scaleVideoContainer(){ //ToDo: Use logic to allow cover percentages to 
     var els = document.getElementsByClassName("setheight");
     for(var i = 0; i < els.length; i++)
     {
-       els[i].style.height=x+'px';
+       els[i].style.height=x-25+'px';
     }
     
     var vid = document.getElementById('video');
@@ -49,7 +58,6 @@ function scaleVideoContainer(){ //ToDo: Use logic to allow cover percentages to 
         }
     }
 }
-scaleVideoContainer();
 
 function toBN(number){
     try {
