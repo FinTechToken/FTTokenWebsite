@@ -7,13 +7,13 @@
             <a class="nav-link" routerLink="/blockchain" routerLinkActive="active" href="javascript:void(0);" (mouseover)="over = true" (mouseout)="over = false" >
                 <img  *ngIf="router.url == '/blockchain'" [src]="'/img/svg/FinTechToken_Block.svg'" width="25px" alt="FinTechToken" />
                 <img  *ngIf="router.url != '/blockchain'" [src]="over ? '/img/svg/FinTechToken_Blockd.svg' : '/img/svg/FinTechToken_Blockg.svg'" width="25px" alt="FinTechToken" />
-                <span class="hidden-xs-down">
-                    {{texts['header.FTTBlockName']}}
-                </span>
                 <span class="badge badge-pill badge-success badge-under2">
                     <!-- ToDo: Create service to show current block - param for format !-->
                     <!-- ToDo: Create service for seconds since last block !-->
                     {{ blocknumber > 999 ? blocknumber.toString().substr(blocknumber.toString().length-3) : blocknumber }}:{{ seconds }}
+                </span>
+                <span class="hidden-xs-down">
+                    {{texts['header.FTTBlockName']}}
                 </span>
             </a>            
         </li>

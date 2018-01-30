@@ -6,7 +6,6 @@ import { Component, trigger, state, style, transition, animate, OnInit, AfterVie
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { FTBus } from '../FTFramework/FT-Bus';
 import { FTCache } from '../FTFramework/FT-Cache';
 import { FTSession } from '../FTFramework/FT-Session';
 import { FTObserver } from '../FTFramework/FT-Observer';
@@ -162,7 +161,7 @@ export class FTMyAccount {
     subscription: null as any
   }
    
-  constructor( private bus: FTBus, private obs: FTObserver, private router: Router, private route: ActivatedRoute, private session: FTSession, private cache: FTCache, private http:Http, private cd: ChangeDetectorRef )
+  constructor( private obs: FTObserver, private router: Router, private route: ActivatedRoute, private session: FTSession, private cache: FTCache, private http:Http, private cd: ChangeDetectorRef )
   {   
     this.zone=new NgZone({enableLongStackTrace:false});//Zone used for old version of IPad. Doesn't update without it.
   }
