@@ -4,9 +4,9 @@
     </a>
     <ul class="nav navbar-nav">
         <li *ngIf="hasEncryptedID()" class="nav-item px-3 badge-contain">
-            <a class="nav-link" routerLink="/blockchain" routerLinkActive="active" href="javascript:void(0);">
-                <img  *ngIf="router.url == '/blockchain'" src="/img/svg/FinTechToken_Block.svg" width="25px" alt="FinTechToken" />
-                <img  *ngIf="router.url != '/blockchain'" src="/img/svg/FinTechToken_Blockg.svg" width="25px" alt="FinTechToken" />
+            <a class="nav-link" routerLink="/blockchain" routerLinkActive="active" href="javascript:void(0);" (mouseover)="over = true" (mouseout)="over = false" >
+                <img  *ngIf="router.url == '/blockchain'" [src]="'/img/svg/FinTechToken_Block.svg'" width="25px" alt="FinTechToken" />
+                <img  *ngIf="router.url != '/blockchain'" [src]="over ? '/img/svg/FinTechToken_Blockd.svg' : '/img/svg/FinTechToken_Blockg.svg'" width="25px" alt="FinTechToken" />
                 <span class="hidden-xs-down">
                     {{texts['header.FTTBlockName']}}
                 </span>

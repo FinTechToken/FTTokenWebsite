@@ -18,6 +18,10 @@ body {
     color: #fff;
 }
 
+.badge{
+    font-weight: inherit;
+}
+
 .badge-contain{
     position: relative;
 }
@@ -47,12 +51,15 @@ body {
 .top30{
     margin-top: 30px;
 }
-.topminus50{
-    margin-top: -50px;
+.mbminus50{
+    margin-top: -120px;
+}
+.topsmall{
+    margin-top: 30px;
 }
 .fthero {
     font-size:2rem;
-    margin-top:150px; 
+    margin-top:100px; 
     letter-spacing: -1px;
     font-weight:600;
     color: #3a3a3a; 
@@ -126,7 +133,7 @@ b, strong {
     color: #151b1e;
     
     /* color: #738c99;*/
-    border-width: .25rem;
+    border-width: .15rem;
 }
 
 .btn-ft:hover, .btn-ft:focus {
@@ -459,6 +466,9 @@ h5{
 
 /* xs under 576 phones */
 @media (min-width: 576px) { /* sm landscape phones*/
+    .topsmall{
+        margin-top: inherit;
+    }
     .badge-under {
         top: 50%;
         margin-left:19px;
@@ -509,6 +519,9 @@ h5{
 }
   
 @media (min-width: 768px) { /* md tablets*/
+    .mbminus50{
+        margin-top: inherit;
+    }
     .px-3 {
         font-size:1.3rem !important;
     }
@@ -554,6 +567,9 @@ h5{
 }
   
 @media (min-width: 992px) { /* lg desktops*/
+    .fthero {
+        margin-top:150px; 
+    }
     .px-3 {
         font-size:1.5rem !important;
     }
