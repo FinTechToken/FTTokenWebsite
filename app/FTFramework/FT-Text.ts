@@ -50,7 +50,7 @@ export class FTText {
         // Home Explanation Image
         this.putText('en_us', 'home.explainationImageURL', '/img/svg/FinTechToken_Visual1-02.svg');
         this.putText('en_us', 'home.explainationImageHeader1', 'CryptoPass');
-        this.putText('en_us', 'home.explainationWhatWeDo1', 'Securely use any major blockchain with on wallet.');
+        this.putText('en_us', 'home.explainationWhatWeDo1', 'Securely use any major blockchain with one wallet.');
         this.putText('en_us', 'home.explainationImageHeader2', 'BlockChain DNA');
         this.putText('en_us', 'home.explainationWhatWeDo2', 'Crypto currencies are tokenized on the FinTechToken (FTT) network. This lets you trade fast with ultra low gas costs.');
         // Home Problem Solution Statements

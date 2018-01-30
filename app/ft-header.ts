@@ -15,6 +15,7 @@ export class FTHeader {
   blocknumber = 0;
   seconds = 0;
   texts=[];
+  over=false;
 
   constructor( private cache: FTCache, private obs: FTObserver, private router: Router, private text: FTText ) 
   { 
