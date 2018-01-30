@@ -8,11 +8,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { FTHeader } from './ft-header';
 import { FTFooter } from './ft-footer';
 
-import { FTBus } from './FTFramework/FT-Bus';
 import { FTCache } from './FTFramework/FT-Cache';
 import { FTHttpClient } from './FTFramework/FT-HttpClient';
 import { FTObserver } from './FTFramework/FT-Observer';
-import { FTResolve } from './FTFramework/FT-Resolve';
 import { FTSession } from './FTFramework/FT-Session';
 import { FTStorage } from './FTFramework/FT-Storage';
 import { FTText } from './FTFramework/FT-Text';
@@ -46,11 +44,9 @@ import { FTToken } from './FTRoutes/FTToken';
   ],
   entryComponents: [ ],
   providers: [ 
-    FTBus, 
     FTCache, 
     FTHttpClient, 
     FTObserver, 
-    FTResolve,
     FTSession,
     FTStorage,
     FTText,

@@ -4,9 +4,6 @@ import { NgModule, EventEmitter } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { RouterModule, Routes, Router, NavigationEnd, RoutesRecognized, ActivatedRouteSnapshot } from '@angular/router';
 
-//ToDo: Add resolver
-import { FTResolve } from './FTFramework/FT-Resolve';
-
 import { FTHome } from './FTRoutes/FThome';
 import { FTAuthenticate } from './FTRoutes/FTAuthenticate';
 import { FTBlockchain } from './FTRoutes/FTBlockchain';

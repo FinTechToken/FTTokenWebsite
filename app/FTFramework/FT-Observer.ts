@@ -7,20 +7,22 @@ export class FTObserver {
     private myObserver:BehaviorSubject<any>[]=[];
     constructor () {}
 
-    putObserver(myName:string,myValue:any){
+    putObserver(myName:string, myValue:any): void{
         if(this.myObserver[myName]===undefined){
             this.myObserver[myName]=new BehaviorSubject(myValue);
-        }else{
+        } else{
             this.myObserver[myName].next(myValue);
         }
     }
-    getObserver(myName:string):BehaviorSubject<any>{
+
+    getObserver(myName:string):BehaviorSubject<any> {
         if(this.myObserver[myName]===undefined){
             this.myObserver[myName]=new BehaviorSubject('');
         }
         return this.myObserver[myName];
     }
-    deleteObserver(myName:string){
+
+    deleteObserver(myName:string): void{
         if(this.myObserver[myName]===undefined){}
         else{
             this.myObserver[myName].unsubscribe();

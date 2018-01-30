@@ -2,7 +2,6 @@ import { Component, trigger, OnInit, NgZone } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { FTBus } from '../FTFramework/FT-Bus';
 import { FTCache } from '../FTFramework/FT-Cache';
 import { FTSession } from '../FTFramework/FT-Session';
 import { FTText } from '../FTFramework/FT-Text';
@@ -20,7 +19,7 @@ export class FTHome {
   visibility="hiddenss";
   texts = [];
    
-  constructor( private bus: FTBus, private router: Router, private route: ActivatedRoute, private session: FTSession, private cache: FTCache, private http:Http, private text: FTText  )
+  constructor( private router: Router, private route: ActivatedRoute, private session: FTSession, private cache: FTCache, private http:Http, private text: FTText  )
   { 
     this.setText();
     this.zone=new NgZone({enableLongStackTrace:false});//Zone used for old version of IPad. Doesn't update without it.

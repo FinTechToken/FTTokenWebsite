@@ -7,12 +7,12 @@ export class FTText {
 
     constructor () { this.setText(); }
     
-    setLanguage( language:string ) {
+    setLanguage( language:string ): void {
         //ToDo: have list of accepted languages. 
         this.language = language;
     }
 
-    getText( key:string ) {
+    getText( key:string ): string {
         if(this.text.has(this.language + '.' + key)) {
             return this.text.get(this.language + '.' + key);
         }
@@ -21,11 +21,11 @@ export class FTText {
         }
     }
 
-    putText ( language:string, key:string, text:string ) {
+    putText ( language:string, key:string, text:string ): void {
         this.text.set(language + '.' + key, text);
     }
 
-    private setText() {
+    private setText(): void {
         // Header
         this.putText('en_us', 'header.FTTBlockName', 'FTT');
         this.putText('en_us', 'header.accountOut', 'Sign In');
