@@ -16,6 +16,8 @@ export class FTHeader {
   seconds = 0;
   texts=[];
   over=false;
+  isSignedIn:boolean=false;
+  isPreviousUser:boolean=false;
 
   constructor( private cache: FTCache, private obs: FTObserver, private router: Router, private text: FTText ) 
   { 
@@ -32,19 +34,21 @@ export class FTHeader {
     .forEach( (localseconds) => {
       this.seconds = localseconds;
     });
+
+    this.obs.getObserver('isSignedIn')
+    .forEach( (isSI) => {
+      this.isSignedIn = isSI;
+    });
+
+    this.obs.getObserver('isPreviousUser')
+    .forEach( (isPre) => {
+      this.isPreviousUser = isPre;
+    })
   }    
 
   ngAfterViewInit(): void { } 
 
   ngOnDestroy(): void {}
-
-  hasEncryptedID(): boolean {
-    return this.cache.hasCache('encrypted_id');
-  }
-
-  hasKey(): boolean {
-    return this.cache.hasCache('key');
-  }
 
   private setText(): void {
     this.texts['header.FTTBlockName'] = this.text.getText('header.FTTBlockName');

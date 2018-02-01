@@ -5,7 +5,7 @@
         <div class="ssetheightmin">
             <div class="vvideo-annotation-layer ccode-container container-fluid">
                 <div class="row">
-                    <div class="col-md-6 offset-lg-1">
+                    <div class="col-md-5 offset-lg-1">
                         <div class="vvideo-annotation-1 text-left">
                             <h1 class="fthero">
                                 <span>
@@ -14,7 +14,7 @@
                             </h1>
                             <h4 class="fthero3 shadow">
                                 {{texts['home.Hero2']}}
-                                {{texts['home.Hero3']}}
+                               
                                 {{texts['home.Hero4']}}
                             </h4>
                             <div class="ftherobutton">
@@ -22,28 +22,38 @@
                             </div>
                         </div>         
                     </div>
-                    <div class="col-md-6 col-lg-5 mbminus50">
+                    <div class="col-md-7 col-lg-6 mbminus50">
                         <img src="{{texts['home.explainationImageURL']}}" class="top30" width="100%"/>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="container">
+        <div class="container-fluid backmustard">
+            <div class="container padtop padbottom">
+                <div class="row">
+                    <div class="col-sm-10 offset-sm-1">
+                        <h4 class="fthero3d" [innerHTML]="texts['home.Hero3']">
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container padtop">
             <div class="row">
-                <div class="col-sm-5">
-                    <h2 class="ftheronomargin">{{texts['home.explainationImageHeader1']}}</h2>
-                    <h4 class="fthero3">
-                        {{texts['home.explainationWhatWeDo1']}}
-                    </h4>
-                </div>
-                <div class="col-sm-1 text-center">
-                </div>
                 <div class="col-sm-6">
-                    <h2 class="ftheronomargin topsmall">{{texts['home.explainationImageHeader2']}}</h2>
+                    <h2 class="ftheronomargin">{{texts['home.explainationImageHeader2']}}</h2>
                     <h4 class="fthero3">
                         {{texts['home.explainationWhatWeDo2']}}
                     </h4>
                 </div>                
+                <div class="col-sm-1 text-center">
+                </div>
+                <div class="col-sm-5">
+                    <h2 class="ftheronomargin topsmall">{{texts['home.explainationImageHeader1']}}</h2>
+                    <h4 class="fthero3">
+                        {{texts['home.explainationWhatWeDo1']}}
+                    </h4>
+                </div>
             </div>
         </div>
         <!--
@@ -113,7 +123,7 @@
 
         </div>
         !-->
-        <img src="/img/copyright/blocksbottom.jpg" width="100%"/>
+        <img src="/img/copyright/blocksbottomb.jpg" width="100%"/>
     </div>
     </div>
     </div>

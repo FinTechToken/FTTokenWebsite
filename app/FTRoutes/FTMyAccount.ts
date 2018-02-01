@@ -1154,6 +1154,7 @@ export class FTMyAccount {
 
   signOut(): void{
     this.cache.deleteCache('key');
+    this.obs.putObserver('isSignedIn', false);
     this.session.clear();
     this.router.navigate(['/authenticate']);
     this.showModal(0);
