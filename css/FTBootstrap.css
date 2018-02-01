@@ -13,6 +13,10 @@ body {
     background-color: #fff;
 }
 
+.backmustard {
+    background-color:#ffb41b;
+}
+
 .footer{
     background-color:#151b1e;
     color: #fff;
@@ -78,6 +82,10 @@ body {
 .fthero3{
     /*color:#8e8e8e;*/
     color: #6e6e6e;
+}
+.fthero3d{
+    /*color:#8e8e8e;*/
+    color: #3e3e3e;
 }
 .ftherobutton{
     margin-top: 30px;
@@ -225,6 +233,9 @@ b, strong {
 }
 .modal-body{
     overflow-y: auto;
+}
+.padbottom{
+    padding-bottom:75px;
 }
 .padtop{
     padding-top:75px;
@@ -417,7 +428,8 @@ h5{
 }
 .tab-white {
     color: #050b0e;
-    background-color: rgba(237,242,249,.5);
+    /*background-color: rgba(237,242,249,.5);*/
+    background-color: rgba(256,256,256,.5);
     /*background-color: #edf2f9;*/
     border-radius: 10px;
     margin-top:0px;
@@ -670,11 +682,11 @@ h5{
     background-size: cover;    
 }
 .block-image{
-    background: url('/img/copyright/blocks1.jpg') 35% 0% no-repeat;
+    background: url('/img/copyright/blocks1a.jpg') 35% 0% no-repeat;
     background-size: cover;    
 }
 .block-image-dark{
-    background: url('/img/copyright/blocks1.jpg') 35% 0% no-repeat;
+    background: url('/img/copyright/blocks1a.jpg') 35% 0% no-repeat;
     background-size: cover;    
 }
 .video-container, .market-container {

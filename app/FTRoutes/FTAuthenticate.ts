@@ -91,6 +91,8 @@ export class FTAuthenticate {
     this.FTlocalStorage.setItem('encrypted_id',JSON.stringify(this.encrypted_id));
     this.cache.putCache('encrypted_id', this.encrypted_id);
     this.cache.putCache('key', this.newAccount.privateKey);
+    this.obs.putObserver('isSignedIn', true);
+    this.obs.putObserver('isPreviousUser', true);
     var keys = sjcl.encrypt(this.encrypted_id.address, this.cache.getCache('key'));
     this.session.setItem('k',keys); //security issue use for testing only
     this.newAccount = '';
@@ -108,6 +110,8 @@ export class FTAuthenticate {
             this.FTlocalStorage.setItem('encrypted_id',JSON.stringify(this.encrypted_id));
             this.cache.putCache('encrypted_id',this.encrypted_id);
             this.cache.putCache('key',key);
+            this.obs.putObserver('isSignedIn', true);
+            this.obs.putObserver('isPreviousUser', true);
             var keys = sjcl.encrypt(this.encrypted_id.address, key);
             this.session.setItem('k',keys); //security issue use for testing only
             this.showModal(4);
@@ -154,6 +158,7 @@ export class FTAuthenticate {
             var keys = sjcl.encrypt(this.encrypted_id.address, this.cache.getCache('key'));
             this.session.setItem('k',keys); //security issue use for testing only
             this.unlocking = false;
+            this.obs.putObserver('isSignedIn', true);
             this.showModal(4);
             (document.getElementById('PWUnlock') as HTMLInputElement).value = null;
             document.getElementById('unlockbad').innerHTML = '';
@@ -168,6 +173,8 @@ export class FTAuthenticate {
     }
   deleteAccount(): void{
     this.FTlocalStorage.removeItem('encrypted_id');
+    this.obs.putObserver('isSignedIn', false);
+    this.obs.putObserver('isPreviousUser', false);
     this.cache.deleteCache('key');
     this.cache.deleteCache('encrypted_id');
     this.encrypted_id = null;
