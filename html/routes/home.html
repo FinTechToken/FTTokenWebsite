@@ -31,8 +31,18 @@
         <div class="container-fluid backmustard">
             <div class="container padtop padbottom">
                 <div class="row">
-                    <div class="col-sm-10 offset-sm-1">
-                        <h4 class="fthero3d" [innerHTML]="texts['home.Hero3']">
+                    <div class="col-sm-6">
+                        <h2 class="ftheronomargin">{{texts['home.explainationImageHeader2']}}</h2>
+                        <h4 class="fthero3d">
+                            {{texts['home.explainationWhatWeDo2']}}
+                        </h4>
+                    </div>                
+                    <div class="col-sm-1 text-center">
+                    </div>
+                    <div class="col-sm-5">
+                        <h2 class="ftheronomargin topsmall">{{texts['home.explainationImageHeader1']}}</h2>
+                        <h4 class="fthero3d">
+                            {{texts['home.explainationWhatWeDo1']}}
                         </h4>
                     </div>
                 </div>
@@ -40,18 +50,8 @@
         </div>
         <div class="container padtop">
             <div class="row">
-                <div class="col-sm-6">
-                    <h2 class="ftheronomargin">{{texts['home.explainationImageHeader2']}}</h2>
-                    <h4 class="fthero3">
-                        {{texts['home.explainationWhatWeDo2']}}
-                    </h4>
-                </div>                
-                <div class="col-sm-1 text-center">
-                </div>
-                <div class="col-sm-5">
-                    <h2 class="ftheronomargin topsmall">{{texts['home.explainationImageHeader1']}}</h2>
-                    <h4 class="fthero3">
-                        {{texts['home.explainationWhatWeDo1']}}
+                <div class="col-sm-10 offset-sm-1">
+                    <h4 class="fthero3" [innerHTML]="texts['home.Hero3']">
                     </h4>
                 </div>
             </div>
