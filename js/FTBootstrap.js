@@ -17,19 +17,19 @@ function onResize(){ //ToDo: Use logic to allow cover percentages to match image
     var els = document.getElementsByClassName("setheightmin");
     for(var i = 0; i < els.length; i++)
     {
-       els[i].style.minHeight=x-25+'px';
+       els[i].style.minHeight=x-23+'px';
     }
     
     var els = document.getElementsByClassName("setheightmax");
     for(var i = 0; i < els.length; i++)
     {
-       els[i].style.maxHeight = x - 150 + 'px';
+       els[i].style.maxHeight = x - 148 + 'px';
     }
 
     var els = document.getElementsByClassName("setheight");
     for(var i = 0; i < els.length; i++)
     {
-       els[i].style.height=x-25+'px';
+       els[i].style.height=x-23+'px';
     }
     
     var vid = document.getElementById('video');
