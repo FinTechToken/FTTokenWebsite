@@ -1,0 +1,29 @@
+<div *ngIf="modal == 4" class="show block modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content roboto">
+            <div class="modal-header">
+                <h5 class="modal-title">Safely Store Your Account</h5>
+            </div>
+            <div class="modal-body">
+                <p>We encrypt your blockchain account so you can safely store it. 
+                    It can only be unlocked with your passphrase. 
+                    We recommend you copy this to a safe place and remember your passphrase.<br>
+                    <br>
+                    We store the encrypted account in your browser so that it is easy to sign in.
+                </p>
+                <br>
+                <strong>Encrypted Account</strong><Br>
+                <pre id="enc_id" style="background-color:#eee; padding:10px;"></pre>
+            </div>
+            <div class="modal-footer">
+                <ul class="nav nav-pills modal-nav text-center">
+                    <li class="nav-item w-100 next">
+                        <a class="nav-link" routerLink="/myaccount" (click)="close();" href="javascript:void(0);">
+                            Let's go
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

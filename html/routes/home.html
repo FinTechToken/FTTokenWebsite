@@ -8,14 +8,10 @@
                     <div class="col-md-5 offset-lg-1" style="z-index:999">
                         <div class="vvideo-annotation-1 text-left">
                             <h1 class="fthero">
-                                <span>
-                                    {{texts['home.Hero1']}}
+                                <span [innerHTML]="texts['home.Hero1']">
                                 </span>
                             </h1>
-                            <h4 class="fthero3 shadow">
-                                {{texts['home.Hero2']}}
-                               
-                                {{texts['home.Hero4']}}
+                            <h4 class="fthero3 shadow" [innerHTML]="texts['home.Hero2']">
                             </h4>
                             <div class="ftherobutton">
                                 <a class="btn btn-ft btn-lg margin-half" routerLink="/authenticate" routerLinkActive="active">{{texts['home.startButton']}}</a>

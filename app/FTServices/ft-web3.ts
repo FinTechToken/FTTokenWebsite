@@ -5,12 +5,16 @@ import { Injectable }     from '@angular/core';
 import { FTCache } from '../FTFramework/FT-Cache';
 import { FTObserver } from '../FTFramework/FT-Observer';
 
+// Originally I thought the user would switch between blockchains. Why not be on all of them at once?
+// Either this should be refactored to enable that - or this is the Ethereum instance that gets called by the global one that keeps track of everything.
+
 @Injectable()
 export class FTWeb3 {
     private nets:string[]=[];
     private currentNetSeconds = 0;
     private interval;
     private currentNetName: string;
+    private currentWeb3;
 
     constructor ( private cache: FTCache, private obs: FTObserver ) { 
         if(typeof web3 !== 'undefined'){
@@ -42,10 +46,23 @@ export class FTWeb3 {
         let newWeb3 = this.setProvider( netName );
         this.currentNetName = netName;
         /* Currently we put wb3 instance in cache so any component can use it.
-        Might be better to create functions in this service. 
+        Better to create functions in this service. 
         That way we have one place to update things like send transaction when we add BitCoin, LiteCoin, Monero, etc etc */
-        this.cache.putCache('wb3', newWeb3);
-        this.configureBlock( newWeb3 );
+        this.cache.putCache('wb3', newWeb3); //Remove this once not used anywhere in code
+        this.currentWeb3 = newWeb3;
+        this.configureBlock();
+    }
+
+    getNewAccount(): any{
+        return this.currentWeb3.eth.accounts.create();
+    }
+
+    getEncryptedId( privateKey, PW):any {
+        return this.currentWeb3.eth.accounts.encrypt(privateKey, PW);
+    }
+
+    decryptPrivateKey(encryptedId, PW): any {
+        return this.currentWeb3.eth.accounts.decrypt(encryptedId, PW).privateKey;
     }
 
     private setProvider( netName ): void {
@@ -54,12 +71,12 @@ export class FTWeb3 {
         return FTweb3;
     }
 
-    private configureBlock( newWeb3 ): void {
-        newWeb3.eth.getBlockNumber()
+    private configureBlock(): void {
+        this.currentWeb3.eth.getBlockNumber()
         .then( (bn) => {
             this.obs.putObserver('block', bn);
         });
-        newWeb3.eth.subscribe('newBlockHeaders', (error, result) => {})
+        this.currentWeb3.eth.subscribe('newBlockHeaders', (error, result) => {})
         .on("data", (blockHeader) => { 
             this.obs.putObserver('block', blockHeader.number);
             this.currentNetSeconds = 0;

@@ -7,6 +7,7 @@ import { AppComponent }  from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FTHeader } from './ft-header';
 import { FTFooter } from './ft-footer';
+import { FTModal } from './ft-modal';
 
 import { FTCache } from './FTFramework/FT-Cache';
 import { FTHttpClient } from './FTFramework/FT-HttpClient';
@@ -39,6 +40,7 @@ import { FTToken } from './FTRoutes/FTToken';
     FTBlockchain,
     FTFooter,
     FTMessages, 
+    FTModal,
     FTMyAccount, 
     FTToken
   ],
