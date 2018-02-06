@@ -1,10 +1,10 @@
-<div *ngIf="modal == 4" class="show block modal fade" tabindex="-1" aria-hidden="true">
+<div *ngIf="modal == 'authenticate.unlocked'" class="show block modal fade" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content roboto">
             <div class="modal-header">
                 <h5 class="modal-title">Safely Store Your Account</h5>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" [ngStyle]="{'height':modalHeight}">
                 <p>We encrypt your blockchain account so you can safely store it. 
                     It can only be unlocked with your passphrase. 
                     We recommend you copy this to a safe place and remember your passphrase.<br>
@@ -13,13 +13,111 @@
                 </p>
                 <br>
                 <strong>Encrypted Account</strong><Br>
-                <pre id="enc_id" style="background-color:#eee; padding:10px;"></pre>
+                <pre id="enc_id" style="background-color:#eee; padding:10px;">{{authenticate.unlocked}}</pre>
             </div>
             <div class="modal-footer">
                 <ul class="nav nav-pills modal-nav text-center">
                     <li class="nav-item w-100 next">
                         <a class="nav-link" routerLink="/myaccount" (click)="close();" href="javascript:void(0);">
                             Let's go
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="modal == 'authenticate.enterImport'" class="show block modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content roboto">
+            <div class="modal-header">
+                <h5 class="modal-title">Enter information</h5>
+            </div>
+            <div class="modal-body" [ngStyle]="{'height':modalHeight}">
+                <p>Either information so we can import your account.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <ul class="nav nav-pills modal-nav text-center">
+                    <li class="nav-item w-100 next">
+                        <a class="nav-link" (click)="close()" href="javascript:void(0);">
+                            Got It
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="modal == 'authenticate.verifyDelete'" class="show block modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content roboto">
+            <div class="modal-header">
+                <h5 class="modal-title">Clear Account</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close();" href="javascript:void(0);">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" [ngStyle]="{'height':modalHeight}">
+                Are you sure?<br><Br>
+                    This clears all account information. Copy keys to a secure place prior to clearing them.
+            </div>
+            <div class="modal-footer">
+                <ul class="nav nav-pills modal-nav text-center">
+                    <li class="nav-item w-50 prev">
+                        <a class="nav-link" (click)="close()" href="javascript:void(0);">
+                            No
+                        </a>
+                    </li>
+                    <li class="nav-item w-50 next">
+                        <a class="nav-link" (click)="deleteAccount()" href="javascript:void(0);">
+                            Yes
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="modal == 'authenticate.signupInfo'" class="show block modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content roboto">
+            <div class="modal-header">
+                <h5 class="modal-title">About Blockchain Accounts</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close();" href="javascript:void(0);">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" [ngStyle]="{'height':modalHeight}">
+                <strong>What information is needed to create an account?</strong><br>
+                None. Blockchain revolutionizes privacy. You can use services without 
+                disclosing personal information.<br>
+                <br>
+                <strong>How much does an account cost?</strong><br>
+                It's free.<br>
+                <br>
+                <strong>What is a blockchain account?</strong><br>
+                An account is made up of a public address and a private key. Both are two long strings of charecters.<br>
+                <br>
+                <ul>
+                    <li><strong>Public Address:</strong> This "address" is publicly viewed on the blockchain. If someone wants to send something to you, they use the public address.</li>
+                    <li><strong>Private Key:</strong> The key is used to encrypt/decrypt blockchain transactions. This must be kept secure because the holder of the key can use the account.</li>
+                </ul>
+                <br>
+                <strong>What is a PassPhrase?</strong><br>
+                The PassPhrase is similar to a password. It is used to 
+                encrypt your account. You use it when you sign in.
+                We suggest using a phrase because 4-5 random words is easier for people to remember
+                and almost impossible to crack. 
+            </div>
+            <div class="modal-footer">
+                <ul class="nav nav-pills modal-nav text-center">
+                    <li class="nav-item w-100 next">
+                        <a class="nav-link" (click)="close()" href="javascript:void(0);">
+                            Got it
                         </a>
                     </li>
                 </ul>
