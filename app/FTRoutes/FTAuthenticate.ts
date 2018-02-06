@@ -47,6 +47,13 @@ export class FTAuthenticate {
         this.tabs=this.AuthenticateTabs.signUp;
       }
     });
+
+    this.obs.getObserver('deleteAccount')
+    .forEach( (isDelete) => {
+        if(isDelete){
+            this.deleteAccount();
+        }
+    });
   }    
 
   createAccount(): void {
@@ -67,7 +74,7 @@ export class FTAuthenticate {
     let keys = sjcl.encrypt(this.rememberedAddress, privateKey);
     this.session.setItem('k',keys); //security issue use for testing only
     (document.getElementById('PW') as HTMLInputElement).value = null;
-    this.showModal(4);
+    this.obs.putObserver('modal', 'authenticate.unlocked');
   }
 
   import(): void{
@@ -85,7 +92,7 @@ export class FTAuthenticate {
             this.obs.putObserver('isPreviousUser', true);
             let keys = sjcl.encrypt(this.rememberedAddress, key);
             this.session.setItem('k',keys); //security issue use for testing only
-            this.showModal(4);
+            this.obs.putObserver('modal', 'authenticate.unlocked');
             (document.getElementById('importKey') as HTMLInputElement).value = null;
             (document.getElementById('importPW') as HTMLInputElement).value = null;
             document.getElementById('importwarning').innerHTML = '';
@@ -117,7 +124,7 @@ export class FTAuthenticate {
             return;
         }
     }
-    this.showModal(5);
+    this.obs.putObserver('modal', 'authenticate.enterImport');
   }
 
   unlockAccount(): void{
@@ -132,7 +139,7 @@ export class FTAuthenticate {
             var keys = sjcl.encrypt(this.rememberedAddress, key);
             this.session.setItem('k',keys); //security issue use for testing only
             this.unlocking = false;
-            this.showModal(4);
+            this.obs.putObserver('modal', 'authenticate.unlocked');
             (document.getElementById('PWUnlock') as HTMLInputElement).value = null;
             document.getElementById('unlockbad').innerHTML = '';
             this.obs.putObserver('isSignedIn', true);
@@ -153,32 +160,17 @@ export class FTAuthenticate {
         this.cache.deleteCache('key');
         this.cache.deleteCache('encrypted_id');
         this.rememberedAddress = null;
-        this.showModal(0);
-    }
-
-    showModal(modal: number): void {
-        this.obs.putObserver('modal', modal);
-        //this.modal = modal;
-        /*
-        let els = document.getElementsByClassName("modal-body");
-        let x=(window.innerHeight-1)*1-100;
-        for(let i = 0; i < els.length; i++)
-        {
-            let el:HTMLElement = els[i] as HTMLElement;
-            el.style.height=x*.75+'px';
-        }
-        try{
-            if(modal === 4) { //use account
-                document.getElementById('enc_id').innerHTML = JSON.stringify(this.cache.getCache('encrypted_id'));
-            }
-        }
-        catch(e){
-            alert("Your browser is not supported. Please try chrome");
-            //this.modal=0;
-        }
-        */
+        this.obs.putObserver('modal', '');
     }
     
+    showSignUpInfo(): void {
+        this.obs.putObserver('modal', 'authenticate.signupInfo');
+    }
+
+    showVerifyDelete(): void{
+        this.obs.putObserver('modal', 'authenticate.verifyDelete');
+    }
+
     changeTabs(tab:number): void{
         this.tabs = tab;
     }

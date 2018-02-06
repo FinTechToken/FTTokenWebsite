@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { NgStyle } from '@angular/common';
 
+import { FTCache } from './FTFramework/FT-Cache';
 import { FTObserver } from './FTFramework/FT-Observer';
 import { FTText } from './FTFramework/FT-Text';
 
@@ -11,9 +13,12 @@ import { FTText } from './FTFramework/FT-Text';
 
 export class FTModal {
   texts=[];
-  modal = 0;
+  modal='';
+  modalHeight;
 
-  constructor( private text: FTText, private obs: FTObserver ) 
+  authenticate ={unlocked:''};
+
+  constructor( private cache: FTCache, private text: FTText, private obs: FTObserver ) 
   { 
     this.setText();
   }
@@ -22,22 +27,23 @@ export class FTModal {
     this.obs.getObserver('modal')
     .forEach( (modal) => {
       this.modal = modal;
+      if(modal='authenticate.unlocked'){
+        this.authenticate.unlocked = JSON.stringify(this.cache.getCache('encrypted_id'));
+      }
       this.showModal();
     });
   } 
   
   showModal(): void {
-    let els = document.getElementsByClassName("modal-body");
-    let x=(window.innerHeight-1)*1-100;
-    for(let i = 0; i < els.length; i++)
-    {
-        let el:HTMLElement = els[i] as HTMLElement;
-        el.style.height=x*.75+'px';
-    }
+    this.modalHeight=((window.innerHeight-1)*1-100)*.8+'px';
   }
 
   close(): void {
-    this.obs.putObserver('modal',0);
+    this.obs.putObserver('modal','');
+  }
+
+  deleteAccount(): void{
+    this.obs.putObserver('deleteAccount', true);
   }
 
   private setText(): void {
