@@ -42,20 +42,20 @@ export class FTText {
         this.putText('en_us', 'footer.CodeLink', 'https://github.com/FinTechToken');
         this.putText('en_us', 'footer.CommunityLink', 'http://decstack.com/');
         // Home Hero
-        this.putText('en_us', 'home.Hero1', 'One Blockchain Hub Connecting All Cryptos');
-        this.putText('en_us', 'home.Hero2', 'Trade with control on our 100% blockchain platform'); //Trade with control on our 100% blockchain platform
+        this.putText('en_us', 'home.Hero1', 'One Blockchain Hub<br>Connecting All Cryptos');
+        this.putText('en_us', 'home.Hero2', `You will love our 100% blockchain platform.<br>
+        It gives you easy access to blockchain.<br> So you can trade in control.`); //Be in control on our 100% blockchain platform
         this.putText('en_us', 'home.Hero3', `
         Blockchain is the most disruptive technology since the Internet.<br><Br>
         But, there is so much happening that it is hard to keep track of it all.
         And getting on blockchain can be confusing and difficult to do anything useful.<br><Br>
         We made it easy so you can get on blockchain, trade, invest or create something exciting all in one place.`);
-        this.putText('en_us', 'home.Hero4', '');
         this.putText('en_us', 'home.startButton', 'Get Started');
         // Home Explanation Image
         this.putText('en_us', 'home.explainationImageURL', '/img/svg/FinTechToken_Visual1-02.svg');
         this.putText('en_us', 'home.explainationImageHeader1', 'Secured with CryptoPass');
         this.putText('en_us', 'home.explainationWhatWeDo1', 'Use any major blockchain, secured with one wallet.');
-        this.putText('en_us', 'home.explainationImageHeader2', 'We Built BlockChain DNA');
+        this.putText('en_us', 'home.explainationImageHeader2', 'BlockChain DNA');
         this.putText('en_us', 'home.explainationWhatWeDo2', 'Crypto currencies are tokenized on the FinTechToken (FTT) network. This lets you trade fast with ultra low gas costs.');
         // Home Problem Solution Statements
         this.putText('en_us', 'home.valueProblem1', 'Tired of slow congested blockchains?');

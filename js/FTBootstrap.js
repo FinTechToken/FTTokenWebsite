@@ -8,25 +8,33 @@ function onLoad(){
 
 
 function onResize(){ //ToDo: Use logic to allow cover percentages to match image
-    if(window.innerWidth>=769){
-        var x=(window.innerHeight-1)*1;
-    }else{
-        var x=(window.innerHeight-1)*1;
+    let els = document.getElementsByClassName("modal-body");
+    let x=(window.innerHeight-1)*1-100;
+    for(let i = 0; i < els.length; i++)
+    {
+        let el = els[i];
+        el.style.height=x*.75+'px';
     }
 
-    var els = document.getElementsByClassName("setheightmin");
+    if(window.innerWidth>=769){
+        x=(window.innerHeight-1)*1;
+    }else{
+        x=(window.innerHeight-1)*1;
+    }
+
+    els = document.getElementsByClassName("setheightmin");
     for(var i = 0; i < els.length; i++)
     {
        els[i].style.minHeight=x-23+'px';
     }
     
-    var els = document.getElementsByClassName("setheightmax");
+    els = document.getElementsByClassName("setheightmax");
     for(var i = 0; i < els.length; i++)
     {
        els[i].style.maxHeight = x - 148 + 'px';
     }
 
-    var els = document.getElementsByClassName("setheight");
+    els = document.getElementsByClassName("setheight");
     for(var i = 0; i < els.length; i++)
     {
        els[i].style.height=x-23+'px';

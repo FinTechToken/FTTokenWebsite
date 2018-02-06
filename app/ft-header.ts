@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { FTCache } from './FTFramework/FT-Cache';
@@ -19,7 +19,7 @@ export class FTHeader {
   isSignedIn:boolean=false;
   isPreviousUser:boolean=false;
 
-  constructor( private cache: FTCache, private obs: FTObserver, private router: Router, private text: FTText ) 
+  constructor( private obs: FTObserver, private router: Router, private text: FTText ) 
   { 
     this.setText();
   }
@@ -43,12 +43,8 @@ export class FTHeader {
     this.obs.getObserver('isPreviousUser')
     .forEach( (isPre) => {
       this.isPreviousUser = isPre;
-    })
+    });
   }    
-
-  ngAfterViewInit(): void { } 
-
-  ngOnDestroy(): void {}
 
   private setText(): void {
     this.texts['header.FTTBlockName'] = this.text.getText('header.FTTBlockName');
