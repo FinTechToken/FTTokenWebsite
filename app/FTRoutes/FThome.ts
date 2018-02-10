@@ -38,6 +38,7 @@ export class FTHome {
     this.texts['home.Hero1'] = this.text.getText('home.Hero1');
     this.texts['home.Hero2'] = this.text.getText('home.Hero2');
     this.texts['home.Hero3'] = this.text.getText('home.Hero3');
+    this.texts['home.Hero3Head'] = this.text.getText('home.Hero3Head');
     this.texts['home.Hero4'] = this.text.getText('home.Hero4');
     this.texts['home.startButton'] = this.text.getText('home.startButton');
     this.texts['home.explainationImageURL'] = this.text.getText('home.explainationImageURL');
@@ -51,5 +52,11 @@ export class FTHome {
     this.texts['home.valueSolution2'] = this.text.getText('home.valueSolution2');
     this.texts['home.valueProblem3'] = this.text.getText('home.valueProblem3');
     this.texts['home.valueSolution3'] = this.text.getText('home.valueSolution3');
+    this.texts['home.ScenarioImageURL1a'] = this.text.getText('home.ScenarioImageURL1a');
+    this.texts['home.ScenarioImageURL1b'] = this.text.getText('home.ScenarioImageURL1b');
+    this.texts['home.ScenarioImageURL2a'] = this.text.getText('home.ScenarioImageURL2a');
+    this.texts['home.ScenarioImageURL2b'] = this.text.getText('home.ScenarioImageURL2b');
+    this.texts['home.ScenarioImageURL3a'] = this.text.getText('home.ScenarioImageURL3a');
+    this.texts['home.ScenarioImageURL3b'] = this.text.getText('home.ScenarioImageURL3b');
   }
 }
