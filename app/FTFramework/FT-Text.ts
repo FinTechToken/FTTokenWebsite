@@ -53,6 +53,7 @@ export class FTText {
         And, getting on blockchain can be confusing and difficult to do anything useful.<br><Br>
         We made it easy so you can get on blockchain to transact, trade, invest or create something exciting all in one place.`);
         this.putText('en_us', 'home.startButton', 'Get Started');
+        this.putText('en_us', 'home.StickImageURL', '/img/svg/FTT-Character.svg');
         // Home Explanation Image
         this.putText('en_us', 'home.explainationImageURL', '/img/svg/FinTechToken_Visual1-04.svg');
         this.putText('en_us', 'home.explainationImageHeader1', 'Secured with CryptoPass');

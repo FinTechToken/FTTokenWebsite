@@ -14,7 +14,9 @@
                             <h4 class="fthero3 shadow" [innerHTML]="texts['home.Hero2']">
                             </h4>
                             <div class="ftherobutton">
-                                <a class="btn btn-ft btn-lg margin-half" routerLink="/authenticate" routerLinkActive="active">{{texts['home.startButton']}}</a>
+                                <a class="btn btn-ft btn-lg margin-half" routerLink="/authenticate" routerLinkActive="active">
+                                    {{texts['home.startButton']}}
+                                </a>
                             </div>
                         </div>         
                     </div>
@@ -44,10 +46,21 @@
                 </div>
             </div>
         </div>
-        <div class="container padtop padbottom">
+        <div class="container-fluid padtop padbottom">
             <div class="row">
-                <div class="col-sm-10 offset-sm-1 col-md-8 offset-md-2">
-                    <h3 [innerHTML]="texts['home.Hero3Head']">
+                <div class="col-sm-2 hidden-xs-down text-center">
+                    <img src="{{texts['home.StickImageURL']}}" width="100%" style="max-width:100px;"/>
+                </div>
+                <div class="col-sm-10 col-lg-8">
+                    <h3>
+                        <div class="d-flex flex-row">
+                            <div class="p-2"><img src="{{texts['home.StickImageURL']}}" width="25px" class="hidden-sm-up" /></div>
+                            <div class="p-2">
+                                <span>
+                                    {{texts['home.Hero3Head']}}
+                                </span>
+                            </div>
+                        </div>
                     </h3>
                     <hr>
                     <h4 class="fthero3" [innerHTML]="texts['home.Hero3']">
@@ -192,7 +205,10 @@
             <div class="row">
                 <div class="col-sm-12 text-center">
                     <div class="padtop">
-                        <a class="btn btn-ft btn-lg margin-half" routerLink="/authenticate" routerLinkActive="active">{{texts['home.startButton']}}</a>
+                        <a class="btn btn-ft btn-lg margin-half" routerLink="/authenticate" routerLinkActive="active">
+                            <img src="{{texts['home.StickImageURL']}}" width="25px"/>
+                            {{texts['home.startButton']}}
+                        </a>
                     </div>
                 </div>
             </div>
