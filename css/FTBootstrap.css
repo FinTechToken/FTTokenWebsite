@@ -13,6 +13,16 @@ body {
     background-color: #fff;
 }
 
+.mobileimage{
+    max-width:250px;
+}
+.mobileimagea{
+    max-width:250px;
+}
+.padmobile{
+    padding-top:25px;
+    padding-bottom:25px;
+}
 .headerborder {
     padding-top:50px;
     padding-bottom:25px;
@@ -424,11 +434,11 @@ a {
 .nav-link.active > i {
     color: #F2A70E;
 }
-
+/*
 .row{
     margin-right:-5px;
     margin-left:-5px;
-}
+}*/
 h5{
     letter-spacing:1.5px;
 }
@@ -484,6 +494,16 @@ h5{
 
 /* xs under 576 phones */
 @media (min-width: 576px) { /* sm landscape phones*/
+    .mobileimagea{
+        max-width:100%;
+    }
+    .mobileimage{
+        max-width:500px;
+    }
+    .padmobile{
+        padding-top:inherit;
+        padding-bottom:inherit;
+    }
     .mbminus50{
         margin-top: inherit;
     }

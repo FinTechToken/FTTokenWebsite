@@ -65,7 +65,7 @@ export class FTText {
         this.putText('en_us', 'home.valueProblem1', 'Tired of slow congested blockchains?');
         this.putText('en_us', 'home.valueSolution1', 'We deliver 1 second transactions with ultra low gas costs.');
         this.putText('en_us', 'home.valueProblem2', 'Scared of losing your keys or misplacing a wallet?');
-        this.putText('en_us', 'home.valueSolution2', 'Access all major blockchains from one wallet. Never lose keys with CryptoPass');
+        this.putText('en_us', 'home.valueSolution2', 'Access all major blockchains from one wallet. Never lose keys with our CryptoPass');
         this.putText('en_us', 'home.valueProblem3', 'Don\'t risk your digital assets by sending them to an exchange.');
         this.putText('en_us', 'home.valueSolution3', 'Stay in control by using our 100% on blockchain platform.');
         this.putText('en_us', 'home.ScenarioImageURL1a', '/img/svg/Scenario-Traffic-Lane.svg');
