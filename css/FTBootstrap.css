@@ -13,6 +13,12 @@ body {
     background-color: #fff;
 }
 
+.headerborder {
+    padding-top:50px;
+    padding-bottom:25px;
+    height:100%;
+}
+
 .backmustard {
     background-color:#ffb41b;
 }
@@ -478,6 +484,10 @@ h5{
 
 /* xs under 576 phones */
 @media (min-width: 576px) { /* sm landscape phones*/
+    .mbminus50{
+        margin-top: inherit;
+    }
+
     .topsmall{
         margin-top: inherit;
     }
@@ -531,9 +541,12 @@ h5{
 }
   
 @media (min-width: 768px) { /* md tablets*/
-    .mbminus50{
-        margin-top: inherit;
+    .headerborder {
+        padding-top:75px;
+        padding-bottom:50px;
+        max-height:500px;
     }
+    
     .px-3 {
         font-size:1.3rem !important;
     }
