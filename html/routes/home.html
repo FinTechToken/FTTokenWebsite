@@ -18,8 +18,8 @@
                             </div>
                         </div>         
                     </div>
-                    <div class="col-sm-5 col-md-6 mbminus50">
-                        <img src="{{texts['home.explainationImageURL']}}" class="headerborder" width="100%"/>
+                    <div class="col-sm-5 col-md-6 mbminus50 text-center">
+                        <img src="{{texts['home.explainationImageURL']}}" class="headerborder mobileimagea" width="100%"/>
                     </div>
                 </div>
             </div>
@@ -49,68 +49,151 @@
                 <div class="col-sm-10 offset-sm-1 col-md-8 offset-md-2">
                     <h3 [innerHTML]="texts['home.Hero3Head']">
                     </h3>
+                    <hr>
                     <h4 class="fthero3" [innerHTML]="texts['home.Hero3']">
                     </h4>
                 </div>
             </div>
         </div>
-        <div class="container-fluid">
+        <!--
+        <div class="container-fluid hidden-sm-down">
+
             <div class="row">
-                <div class="col-sm-3 d-flex align-items-center text-center backmustard">
+                <div class="col-sm-3 d-flex align-items-center justify-content-center text-center backmustard">
                     <h3>
                         {{texts['home.valueProblem1']}}
                     </h3>
                 </div>
-                <div class="col-sm-3 d-flex align-items-center">
-                    <img src="{{texts['home.ScenarioImageURL1a']}}" width="100%"/>
+                <div class="col-sm-3 d-flex align-items-center justify-content-center">
+                    <img src="{{texts['home.ScenarioImageURL1a']}}" width="100%" class="mobileimage"/>
                 </div>
-                <div class="col-sm-3 d-flex align-items-center text-center backmustard">
+                <div class="col-sm-3 d-flex align-items-center justify-content-center text-center backmustard">
                     <h3>
                         {{texts['home.valueSolution1']}}
                     </h3>
                 </div>
-                <div class="col-sm-3 d-flex align-items-center">
-                    <img src="{{texts['home.ScenarioImageURL1b']}}" width="100%"/>
+                <div class="col-sm-3 d-flex align-items-center justify-content-center">
+                    <img src="{{texts['home.ScenarioImageURL1b']}}" width="100%" class="mobileimage"/>
                 </div>
             </div>
-        </div>
-        <div class="container-fluid">
+        
             <div class="row">
-                <div class="col-sm-3 d-flex align-items-center">
-                    <img src="{{texts['home.ScenarioImageURL2a']}}" width="100%"/>
+                <div class="col-sm-3 d-flex align-items-center justify-content-center">
+                    <img src="{{texts['home.ScenarioImageURL2a']}}" width="100%" class="mobileimage"/>
                 </div>
-                <div class="col-sm-3 d-flex align-items-center text-center backmustard">
+                <div class="col-sm-3 d-flex align-items-center justify-content-center text-center backmustard">
                     <h3>
                         {{texts['home.valueProblem2']}}
                     </h3>
                 </div>
-                <div class="col-sm-3 d-flex align-items-center">
-                    <img src="{{texts['home.ScenarioImageURL2b']}}" width="100%"/>
+                <div class="col-sm-3 d-flex align-items-center justify-content-center">
+                    <img src="{{texts['home.ScenarioImageURL2b']}}" width="100%" class="mobileimage"/>
                 </div>
-                <div class="col-sm-3 d-flex align-items-center text-center  backmustard">
+                <div class="col-sm-3 d-flex align-items-center text-center justify-content-center backmustard">
                     <h3>
                         {{texts['home.valueSolution2']}}
                     </h3>
                 </div>
             </div>
-        </div>
-        <div class="container-fluid">
+        
             <div class="row">
-                <div class="col-sm-3 d-flex align-items-center text-center backmustard">
+                <div class="col-sm-3 d-flex align-items-center justify-content-center text-center backmustard  padmobile">
                     <h3>
                         {{texts['home.valueProblem3']}}
                     </h3>
                 </div>
-                <div class="col-sm-3 d-flex align-items-center">
-                    <img src="{{texts['home.ScenarioImageURL3a']}}" width="100%"/>
+                <div class="col-sm-3 d-flex align-items-center justify-content-center">
+                    <img src="{{texts['home.ScenarioImageURL3a']}}" width="100%" class="mobileimage"/>
                 </div>
-                <div class="col-sm-3 d-flex align-items-center text-center backmustard">
+                <div class="col-sm-3 d-flex align-items-center justify-content-center text-center backmustard  padmobile">
                     <h3>
                         {{texts['home.valueSolution3']}}
                     </h3>
                 </div>
-                <div class="col-sm-3 d-flex align-items-center">
-                    <img src="{{texts['home.ScenarioImageURL3b']}}" width="100%"/>
+                <div class="col-sm-3 d-flex align-items-center justify-content-center">
+                    <img src="{{texts['home.ScenarioImageURL3b']}}" width="100%" class="mobileimage"/>
+                </div>
+            </div>
+        </div>
+        !-->
+        <div class="container-fluid backmustard">
+            <div class="row">
+                <div class="col-sm-6 d-flex align-items-center justify-content-center text-center padmobile">
+                    <h3>
+                        {{texts['home.valueProblem1']}}
+                    </h3>
+                </div>
+                <div class="col-sm-6 d-flex align-items-center justify-content-center">
+                    <img src="{{texts['home.ScenarioImageURL1a']}}" width="100%" class="mobileimage"/>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid ">
+            <div class="row">
+                <div class="col-sm-6 d-flex align-items-center justify-content-center text-center  padmobile">
+                    <h3>
+                        {{texts['home.valueSolution1']}}
+                    </h3>
+                </div>
+                <div class="col-sm-6 d-flex align-items-center justify-content-center">
+                    <img src="{{texts['home.ScenarioImageURL1b']}}" width="100%" class="mobileimage"/>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid backmustard ">
+            <div class="row">
+                <div class="col-sm-6 d-flex align-items-center justify-content-center text-center   padmobile">
+                    <h3>
+                        {{texts['home.valueProblem2']}}
+                    </h3>
+                </div>
+                <div class="col-sm-6 d-flex align-items-center justify-content-center">
+                    <img src="{{texts['home.ScenarioImageURL2a']}}" width="100%" class="mobileimage"/>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6 d-flex align-items-center text-center justify-content-center   padmobile">
+                    <h3>
+                        {{texts['home.valueSolution2']}}
+                    </h3>
+                </div>
+                <div class="col-sm-6 d-flex align-items-center justify-content-center">
+                    <img src="{{texts['home.ScenarioImageURL2b']}}" width="100%" class="mobileimage"/>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid backmustard">
+            <div class="row">
+                <div class="col-sm-6 d-flex align-items-center justify-content-center text-center  padmobile">
+                    <h3>
+                        {{texts['home.valueProblem3']}}
+                    </h3>
+                </div>
+                <div class="col-sm-6 d-flex align-items-center justify-content-center">
+                    <img src="{{texts['home.ScenarioImageURL3a']}}" width="100%" class="mobileimage"/>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid ">
+            <div class="row">
+                <div class="col-sm-6 d-flex align-items-center justify-content-center text-center  padmobile">
+                    <h3>
+                        {{texts['home.valueSolution3']}}
+                    </h3>
+                </div>
+                <div class="col-sm-6 d-flex align-items-center justify-content-center">
+                    <img src="{{texts['home.ScenarioImageURL3b']}}" width="100%" class="mobileimage"/>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <div class="padtop">
+                        <a class="btn btn-ft btn-lg margin-half" routerLink="/authenticate" routerLinkActive="active">{{texts['home.startButton']}}</a>
+                    </div>
                 </div>
             </div>
         </div>
