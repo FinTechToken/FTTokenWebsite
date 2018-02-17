@@ -44,8 +44,8 @@ export class FTText {
         // Home Hero
         this.putText('en_us', 'home.Hero1', 'One Blockchain Hub<br>Connecting All Crypto');
         this.putText('en_us', 'home.Hero2', `
-        Love our 100% blockchain platform.<br>
-        Get easy access to blockchain.<br> 
+        A blockchain platform to love.<br>
+        Easy access to all blockchains.<br>
         So you can stay in control.`); //Be in control on our 100% blockchain platform
         this.putText('en_us', 'home.Hero3Head','Blockchain is the most disruptive technology since the Internet');
         this.putText('en_us', 'home.Hero3', `
@@ -67,7 +67,7 @@ export class FTText {
         this.putText('en_us', 'home.valueSolution1', 'We deliver 1 second transactions with ultra low gas costs.');
         this.putText('en_us', 'home.valueProblem2', 'Scared of losing your keys or misplacing a wallet?');
         this.putText('en_us', 'home.valueSolution2', 'Access all major blockchains from one wallet. Never lose keys with our CryptoPass');
-        this.putText('en_us', 'home.valueProblem3', 'Don\'t risk your digital assets by sending them to an exchange.');
+        this.putText('en_us', 'home.valueProblem3', 'Don\'t risk your digital assets by sending them to a 3rd party exchange.');
         this.putText('en_us', 'home.valueSolution3', 'Stay in control by using our 100% on blockchain platform.');
         this.putText('en_us', 'home.ScenarioImageURL1a', '/img/svg/Scenario-Traffic-Lane.svg');
         this.putText('en_us', 'home.ScenarioImageURL1b', '/img/svg/Scenario-Traffic-Fast-Lane.svg');
