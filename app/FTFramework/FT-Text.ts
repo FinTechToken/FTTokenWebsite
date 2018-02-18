@@ -44,9 +44,9 @@ export class FTText {
         // Home Hero
         this.putText('en_us', 'home.Hero1', 'One Blockchain Hub<br>Connecting All Crypto');
         this.putText('en_us', 'home.Hero2', `
-        A blockchain platform to love.<br>
-        Easy access to all blockchains.<br>
-        So you can stay in control.`); //Be in control on our 100% blockchain platform
+        Get easy access to all blockchains.<br>
+        So you can stay in control.<br>
+        On our 100% blockchain platform.`); //Be in control on our 100% blockchain platform
         this.putText('en_us', 'home.Hero3Head','Blockchain is the most disruptive technology since the Internet');
         this.putText('en_us', 'home.Hero3', `
         But, there is so much happening that it is hard to keep track of it all.<br><br>
