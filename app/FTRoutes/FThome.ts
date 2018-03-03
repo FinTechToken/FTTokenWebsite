@@ -44,8 +44,10 @@ export class FTHome {
     this.texts['home.StickImageURL'] = this.text.getText('home.StickImageURL');
     this.texts['home.explainationImageURL'] = this.text.getText('home.explainationImageURL');
     this.texts['home.explainationImageHeader1'] = this.text.getText('home.explainationImageHeader1');
+    this.texts['home.explainationImageHeader1URL'] = this.text.getText('home.explainationImageHeader1URL');
     this.texts['home.explainationWhatWeDo1'] = this.text.getText('home.explainationWhatWeDo1');
     this.texts['home.explainationImageHeader2'] = this.text.getText('home.explainationImageHeader2');
+    this.texts['home.explainationImageHeader2URL'] = this.text.getText('home.explainationImageHeader2URL');
     this.texts['home.explainationWhatWeDo2'] = this.text.getText('home.explainationWhatWeDo2');
     this.texts['home.valueProblem1'] = this.text.getText('home.valueProblem1');
     this.texts['home.valueSolution1'] = this.text.getText('home.valueSolution1');

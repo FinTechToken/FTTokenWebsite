@@ -7,6 +7,7 @@ import { RouterModule, Routes, Router, NavigationEnd, RoutesRecognized, Activate
 import { FTHome } from './FTRoutes/FThome';
 import { FTAuthenticate } from './FTRoutes/FTAuthenticate';
 import { FTBlockchain } from './FTRoutes/FTBlockchain';
+import { FTCryptoPass } from './FTRoutes/FTCryptoPass';
 import { FTMyAccount } from './FTRoutes/FTMyAccount';
 import { FTMessages } from './FTRoutes/FTMessages';
 import { FTToken } from './FTRoutes/FTToken';
@@ -18,13 +19,18 @@ const routes: Routes = [ {
     },
     {
         path:'home',
-        data: {title: 'FinTechToken - a blockchain marketplace'},
+        data: {title: 'FinTechToken - access all blockchains'},
         component: FTHome
     },
     {
         path:'authenticate',
         data: {title: 'Authenticate to get on the blockchain'},
         component: FTAuthenticate
+    },
+    {
+        path:'crypto_pass',
+        data: {title: 'Crypto pass is one wallet to get on any blockchain'},
+        component: FTCryptoPass
     },
     {
         path:'blockchain',

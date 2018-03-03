@@ -32,6 +32,8 @@ export class FTText {
         this.putText('en_us', 'header.accountNewUser', 'Start');
         this.putText('en_us', 'header.accountIn', 'In');
         this.putText('en_us', 'header.accountName', 'My Account');
+        this.putText('en_us', 'header.accountNameNew', 'Get Started');
+        this.putText('en_us', 'header.accountNameOut', 'Sign In');
         this.putText('en_us', 'header.messagesName', 'Messages');
         // Footer
         this.putText('en_us', 'footer.Code', 'Token Sourced Code');
@@ -47,28 +49,34 @@ export class FTText {
         Get easy access to all blockchains.<br>
         So you can stay in control.<br>
         On our 100% blockchain platform.`); //Be in control on our 100% blockchain platform
+        // Home main text
         this.putText('en_us', 'home.Hero3Head','Blockchain is the most disruptive technology since the Internet');
         this.putText('en_us', 'home.Hero3', `
         But, there is so much happening that it is hard to keep track of it all.<br><br>
         And, getting on blockchain can be confusing and difficult to do anything useful.<br><Br>
         We made it easy so you can get on blockchain to transact, trade, invest or create something exciting all in one place.`);
         this.putText('en_us', 'home.startButton', 'Get Started');
+        // Home main text image
         this.putText('en_us', 'home.StickImageURL', '/img/svg/FTT-Character.svg');
-        // Home Explanation Image
-        this.putText('en_us', 'home.explainationImageURL', '/img/svg/FinTechToken_Visual1-04.svg');
+        // Home Explanations
         this.putText('en_us', 'home.explainationImageHeader1', 'Secured with CryptoPass');
         this.putText('en_us', 'home.explainationWhatWeDo1', 'Use any major blockchain, secured with one wallet.');
         this.putText('en_us', 'home.explainationImageHeader2', 'BlockChain DNA');
         this.putText('en_us', 'home.explainationWhatWeDo2', `
         Crypto currencies are tokenized on the FinTechToken (FTT) network. 
         This lets you transact and trade fast with ultra low gas costs.`);
+        // Home Explanation images
+        this.putText('en_us', 'home.explainationImageURL', '/img/svg/FinTechToken_Visual1-04.svg');
+        this.putText('en_us', 'home.explainationImageHeader1URL', '/img/svg/Icon_Key.svg');
+        this.putText('en_us', 'home.explainationImageHeader2URL', '/img/svg/Icon_DNA.svg');
         // Home Problem Solution Statements
-        this.putText('en_us', 'home.valueProblem1', 'Tired of slow congested blockchains?');
-        this.putText('en_us', 'home.valueSolution1', 'We deliver 1 second transactions with ultra low gas costs.');
-        this.putText('en_us', 'home.valueProblem2', 'Scared of losing your keys or misplacing a wallet?');
-        this.putText('en_us', 'home.valueSolution2', 'Access all major blockchains from one wallet. Never lose keys with our CryptoPass');
-        this.putText('en_us', 'home.valueProblem3', 'Don\'t risk your digital assets by sending them to a 3rd party exchange.');
+        this.putText('en_us', 'home.valueProblem1', 'Slow and congested');
+        this.putText('en_us', 'home.valueSolution1', '1 second transactions with ultra low gas costs');
+        this.putText('en_us', 'home.valueProblem2', 'Lost keys and a wallet for each blockchain');
+        this.putText('en_us', 'home.valueSolution2', 'Access all major blockchains from one wallet. Never lose keys with CryptoPass');
+        this.putText('en_us', 'home.valueProblem3', '3rd party scams and hacks.');
         this.putText('en_us', 'home.valueSolution3', 'Stay in control by using our 100% on blockchain platform.');
+        // Home Problem Solution Statement Images
         this.putText('en_us', 'home.ScenarioImageURL1a', '/img/svg/Scenario-Traffic-Lane.svg');
         this.putText('en_us', 'home.ScenarioImageURL1b', '/img/svg/Scenario-Traffic-Fast-Lane.svg');
         this.putText('en_us', 'home.ScenarioImageURL2a', '/img/svg/Scenario-Keys.svg');

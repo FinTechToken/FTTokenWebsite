@@ -49,6 +49,8 @@ export class FTHeader {
   private setText(): void {
     this.texts['header.FTTBlockName'] = this.text.getText('header.FTTBlockName');
     this.texts['header.accountName'] = this.text.getText('header.accountName');
+    this.texts['header.accountNameOut'] = this.text.getText('header.accountNameOut');
+    this.texts['header.accountNameNew'] = this.text.getText('header.accountNameNew');
     this.texts['header.messagesName'] = this.text.getText('header.messagesName');
     this.texts['header.accountOut'] = this.text.getText('header.accountOut');
     this.texts['header.accountNewUser'] = this.text.getText('header.accountNewUser');
