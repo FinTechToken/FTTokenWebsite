@@ -3,7 +3,7 @@
 # Install awscli "sudo apt install awscli"
 # Configure "aws configure"
 
-FTVersion="$(git log upstream/master --pretty=%h --max-count=1)"
+FTVersion="$(git log FinTechToken/master --pretty=%h --max-count=1)"
 cp indexAOT.html index.html
 sed -i "s/FTVersion/$FTVersion/g" index.html
 
