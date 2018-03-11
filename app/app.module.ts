@@ -20,6 +20,7 @@ import { FTWeb3 } from './FTServices/ft-web3';
 
 import { FTAuthenticate } from './FTRoutes/FTAuthenticate';
 import { FTBlockchain } from './FTRoutes/FTBlockchain';
+import { FTCryptoPass } from './FTRoutes/FTCryptoPass';
 import { FTHome } from './FTRoutes/FThome';
 import { FTMessages } from './FTRoutes/FTMessages';
 import { FTMyAccount } from './FTRoutes/FTMyAccount';
@@ -38,6 +39,7 @@ import { FTToken } from './FTRoutes/FTToken';
     FTHome, 
     FTAuthenticate, 
     FTBlockchain,
+    FTCryptoPass,
     FTFooter,
     FTMessages, 
     FTModal,

@@ -3,7 +3,7 @@
         <img src="/img/svg/FinTechToken_Main_LogoW.svg" alt="FinTechToken" class="logo" />
     </a>
     <ul class="nav navbar-nav">
-        <li *ngIf="isPreviousUser" class="nav-item px-3 badge-contain">
+        <li *ngIf="isSignedIn" class="nav-item px-3 badge-contain">
             <a class="nav-link" routerLink="/blockchain" routerLinkActive="active" href="javascript:void(0);" (mouseover)="over = true;" (mouseout)="over = false;" (click)="over = false;" >
                 <img  *ngIf="router.url == '/blockchain'" [src]="'/img/svg/FinTechToken_Block.svg'" width="25px" alt="FinTechToken" />
                 <img  *ngIf="router.url != '/blockchain'" [src]="over ? '/img/svg/FinTechToken_Blockd.svg' : '/img/svg/FinTechToken_Blockg.svg'" width="25px" alt="FinTechToken" />
@@ -18,16 +18,19 @@
             </a>            
         </li>
         <li class="nav-item px-3 badge-contain">
-            <a *ngIf="!isSignedIn" id="accountID" class="nav-link" routerLink="/authenticate" routerLinkActive="active" href="javascript:void(0);">
+            <a *ngIf="!isSignedIn" id="accountID" class="nav-link" routerLink="/crypto_pass" routerLinkActive="active" href="javascript:void(0);">
                 <i class="icon-user"></i>
-                <span *ngIf="!isPreviousUser" class="badge badge-pill badge-warning badge-under3">
+                <span *ngIf="!isPreviousUser" class="hidden-sm-up badge badge-pill badge-warning badge-under3">
                     {{texts['header.accountNewUser']}}
+                </span>
+                <span *ngIf="!isPreviousUser" class="hidden-xs-down">
+                    {{texts['header.accountNameNew']}}
                 </span> 
-                <span *ngIf="isPreviousUser" class="badge badge-pill badge-warning badge-under3">
+                <span *ngIf="isPreviousUser" class="hidden-sm-up badge badge-pill badge-warning badge-under3">
                     {{texts['header.accountOut']}}
                 </span> 
-                <span class="hidden-sm-down">
-                    {{texts['header.accountName']}}
+                <span *ngIf="isPreviousUser" class="hidden-xs-down">
+                    {{texts['header.accountNameOut']}}
                 </span>
             </a>
             <a *ngIf="isSignedIn" id="accountID" class="nav-link" routerLink="/myaccount" routerLinkActive="active" href="javascript:void(0);">
@@ -40,7 +43,7 @@
                 </span>
             </a>
         </li>
-        <li *ngIf="isSignedIn" class="nav-item px-3 badge-contain"> 
+        <li *ngIf="isSignedIn && false" class="nav-item px-3 badge-contain"> 
             <a id="alertID" class="nav-link" routerLink="/messages" routerLinkActive="active" href="javascript:void(0);">
                 <!-- ToDo create service for messages !-->
                 <i *ngIf="isPreviousUser && !isSignedIn" class="icon-envelope"></i>
