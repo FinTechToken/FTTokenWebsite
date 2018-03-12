@@ -20,7 +20,7 @@ export class FTCryptoPass {
   isPreviousUser:boolean=false;
   texts = [];
   rememberedAddress;
-  unlocking = false;
+  processing = false;
   pwGroupStatus = '';
   AuthenticateTabs = {
         getStarted:0,
@@ -51,47 +51,57 @@ export class FTCryptoPass {
   }    
 
   createAccount(): void {
-    document.getElementById('createbad').innerHTML = '<br>';
-    this.pwGroupStatus = '';
-    if(this.unlocking){return;}
-    this.unlocking = true;
-    document.getElementById('launch').innerHTML = 'Encrypting - Wait';
-    setTimeout(()=> {
-        let privateKey = this.web3.getNewAccount().privateKey;
+    if( !this.processing ) {
+        this.processing = true;
+        this.createAccountSetFieldsOnSubmit();
         let pw = (document.getElementById('PW') as HTMLInputElement).value;
         let pwc = (document.getElementById('PWc') as HTMLInputElement).value;
         if(!pw) {
-            document.getElementById('createbad').innerHTML = 'Enter 3 to 5 random words to create a passphrase';
-            this.unlocking = false;
-            document.getElementById('launch').innerHTML = 'Launch CryptoPass';
-            this.pwGroupStatus='has-danger';
-            return;
+            this.createAccountSetError('Enter 3 to 5 random words to create a passphrase');
+        } else if(pw != pwc){
+            this.createAccountSetError('Pass phrase needs to match');
+        } else {
+            setTimeout(()=> {
+                this.createAccountNow(pw);
+            },50);
         }
-        if(pw != pwc){
-            document.getElementById('createbad').innerHTML = 'Pass phrase needs to match';
-            (document.getElementById('PW') as HTMLInputElement).value = '';
-            (document.getElementById('PWc') as HTMLInputElement).value = '';
-            this.unlocking = false;
-            document.getElementById('launch').innerHTML = 'Launch CryptoPass';
-            this.pwGroupStatus='has-danger';
-            return;
-        }
-        this.pwGroupStatus='has-success';
-        let encrypted_id = this.web3.getEncryptedId(privateKey, pw);
-        this.rememberedAddress = encrypted_id.address;
-        //this.FTlocalStorage.setItem('encrypted_id', JSON.stringify(encrypted_id));
-        this.cache.putCache('encrypted_id', encrypted_id);
-        this.cache.putCache('key', privateKey);
-        this.obs.putObserver('isSignedIn', true);
-        this.obs.putObserver('isPreviousUser', true);
-        let keys = sjcl.encrypt(this.rememberedAddress, privateKey);
-        this.session.setItem('k',keys); //security issue use for testing only
-        (document.getElementById('PW') as HTMLInputElement).value = null;
-        this.obs.putObserver('modal', 'authenticate.unlocked');
-        this.unlocking = false;
-        document.getElementById('launch').innerHTML = 'Launch CryptoPass';
-        return;
-    },50);
+    }
+  }
+
+  private createAccountSetFieldsOnSubmit() {
+    this.pwGroupStatus = '';
+    document.getElementById('createbad').innerHTML = '<br>';
+    document.getElementById('launch').innerHTML = 'Encrypting - Wait';
+  }
+
+  private createAccountSetError(msg:string) {
+    this.pwGroupStatus='has-danger';
+    document.getElementById('createbad').innerHTML = msg;
+    this.createAccountResetFeilds();
+    this.processing = false;
+  }
+
+  private createAccountNow(pw:string){
+    this.pwGroupStatus='has-success';
+    let privateKey = this.web3.getNewAccount().privateKey;
+    let encrypted_id = this.web3.getEncryptedId(privateKey, pw);
+    this.rememberedAddress = encrypted_id.address;
+    this.FTlocalStorage.setItem('encrypted_id', JSON.stringify(encrypted_id));
+    this.cache.putCache('encrypted_id', encrypted_id);
+    this.cache.putCache('key', privateKey);
+    this.obs.putObserver('isSignedIn', true);
+    this.obs.putObserver('isPreviousUser', true);
+    let keys = sjcl.encrypt(this.rememberedAddress, privateKey);
+    this.session.setItem('k',keys); //security issue use for testing only
+    this.createAccountResetFeilds();
+    this.obs.putObserver('modal', 'authenticate.unlocked');
+    this.processing = false;
+  }
+
+  private createAccountResetFeilds() {
+    (document.getElementById('PW') as HTMLInputElement).value = null;
+    (document.getElementById('PWc') as HTMLInputElement).value = null;
+    document.getElementById('launch').innerHTML = 'Launch CryptoPass';
   }
 
   import(): void{
@@ -145,8 +155,8 @@ export class FTCryptoPass {
   }
 
   unlockAccount(): void{
-    if(this.unlocking){return;}
-    this.unlocking = true;
+    if(this.processing){return;}
+    this.processing = true;
     setTimeout(()=> {
         document.getElementById('unlockbad').innerHTML = '';
         let pw = (document.getElementById('PWUnlock') as HTMLInputElement).value;
@@ -156,7 +166,7 @@ export class FTCryptoPass {
                 this.cache.putCache('key',key);
                 var keys = sjcl.encrypt(this.rememberedAddress, key);
                 this.session.setItem('k',keys); //security issue use for testing only
-                this.unlocking = false;
+                this.processing = false;
                 this.obs.putObserver('modal', 'authenticate.unlocked');
                 (document.getElementById('PWUnlock') as HTMLInputElement).value = null;
                 document.getElementById('unlockbad').innerHTML = '';
@@ -165,7 +175,7 @@ export class FTCryptoPass {
             catch(e){
                 document.getElementById('unlockbad').innerHTML = 'Wrong Password<br>';
                 (document.getElementById('PWUnlock') as HTMLInputElement).value = '';
-                this.unlocking = false;
+                this.processing = false;
                 return;
             } 
         },50);  
