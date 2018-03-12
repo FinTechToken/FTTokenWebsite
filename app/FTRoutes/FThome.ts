@@ -1,4 +1,4 @@
-import { Component, trigger, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -16,7 +16,6 @@ import { FTText } from '../FTFramework/FT-Text';
 export class FTHome {
   zone: NgZone;   
   name = 'FinTechToken';
-  visibility="hiddenss";
   texts = [];
    
   constructor( private router: Router, private route: ActivatedRoute, private session: FTSession, private cache: FTCache, private http:Http, private text: FTText  )
