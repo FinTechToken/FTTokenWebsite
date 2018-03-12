@@ -1,6 +1,7 @@
 declare var sjcl: any;
 
-import { AfterViewInit, Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, NgZone, OnDestroy, OnInit, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { FTCache } from './FTFramework/FT-Cache';
 import { FTStorage } from './FTFramework/FT-Storage';
@@ -19,7 +20,7 @@ export class AppComponent {
   zone: NgZone;   
   name = 'FTTokenWebsite';
 
-  constructor( private cache: FTCache, private FTweb3: FTWeb3, private FTlocalStorage:FTStorage, private session:FTSession, private observer:FTObserver ) 
+  constructor( private cache: FTCache, private FTweb3: FTWeb3, private FTlocalStorage:FTStorage, private session:FTSession, private observer:FTObserver, private router: Router ) 
   {   
     // Zone used for old version of IPad. Doesn't update without it.
     this.zone = new NgZone( { enableLongStackTrace : false } );
@@ -28,6 +29,13 @@ export class AppComponent {
   ngOnInit(): void {
     this.FTweb3.initializeWeb3();
     
+    this.observer.getObserver('deleteAccount')
+    .forEach( (isDelete) => {
+        if(isDelete){
+            this.deleteAccount();
+        }
+    });
+
     if(this.FTlocalStorage.hasItem('encrypted_id')){
       this.cache.putCache('encrypted_id', JSON.parse(this.FTlocalStorage.getItem('encrypted_id')));
       this.observer.putObserver('isPreviousUser', true);
@@ -41,10 +49,29 @@ export class AppComponent {
 
   ngAfterViewInit(): void{} 
   
+  @HostListener('window:beforeunload', ['$event'])
+  beforeunloadHandler(event) {
+      this.onDestroyApp();
+  }
+
   ngOnDestroy(): void{ 
+    this.onDestroyApp();
+  }
+
+  onDestroyApp(){
     this.cache.deleteCache('key'); 
     this.observer.deleteObserver('isSignedIn');
     this.observer.deleteObserver('isPreviousUser');
+  }
+
+  deleteAccount(): void{
+    this.FTlocalStorage.removeItem('encrypted_id');
+    this.observer.putObserver('isSignedIn', false);
+    this.observer.putObserver('isPreviousUser', false);
+    this.cache.deleteCache('key');
+    this.cache.deleteCache('encrypted_id');
+    this.observer.putObserver('modal', '');
+    this.router.navigate(['/home']);
   }
 
 }

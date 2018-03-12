@@ -8,7 +8,7 @@ import { FTObserver } from '../FTFramework/FT-Observer';
 import { FTStorage } from '../FTFramework/FT-Storage';
 import { FTWeb3 } from '../FTServices/ft-web3';
 import { FTText } from '../FTFramework/FT-Text';
-/* ToDo: Each time you change tabs scroll to top */
+
 @Component({
   moduleId: module.id,
   selector: 'ft-cryptopass',
@@ -18,67 +18,80 @@ import { FTText } from '../FTFramework/FT-Text';
 export class FTCryptoPass {
   zone: NgZone;   
   isPreviousUser:boolean=false;
-
   texts = [];
+  rememberedAddress;
+  unlocking = false;
+  pwGroupStatus = '';
   AuthenticateTabs = {
         getStarted:0,
         signIn:1,
         signUp:2,
         advanced:3
     }
-
-  rememberedAddress;
-  tabs = this.AuthenticateTabs.signIn;
-  unlocking = false;
+  tabs = this.AuthenticateTabs.getStarted;
 
   constructor( private obs: FTObserver, private router: Router, private session: FTSession, private cache: FTCache, private FTlocalStorage:FTStorage, private web3:FTWeb3,  private text: FTText )
   {   
     this.setText();
-    this.zone=new NgZone({enableLongStackTrace:false});//Zone used for old version of IPad. Doesn't update without it.
+    this.zone = new NgZone({enableLongStackTrace:false});//Zone used for old version of IPad. Doesn't update without it.
   }
 
-  ngOnInit(): void{ 
-    if(this.obs.getObserver('isSignedIn').getValue()){
+  ngOnInit(): void { 
+    if(this.obs.getObserver('isSignedIn').getValue()) {
         this.router.navigate(['/myaccount']);
     }
 
-    this.obs.getObserver('isPreviousUser')
-    .forEach( (isPre) => {
-      this.isPreviousUser = isPre;
-      if(isPre){
+    this.isPreviousUser = this.obs.getObserver('isPreviousUser').getValue();
+    if(this.isPreviousUser){
         this.rememberedAddress = this.cache.getCache('encrypted_id').address;
-      } else {
+        this.tabs=this.AuthenticateTabs.signIn;
+    } else {
         this.tabs=this.AuthenticateTabs.getStarted;
-      }
-    });
-
-    this.obs.getObserver('deleteAccount')
-    .forEach( (isDelete) => {
-        if(isDelete){
-            this.deleteAccount();
-        }
-    });
+    }
   }    
 
   createAccount(): void {
-    document.getElementById('createbad').innerHTML = '';
-    let privateKey = this.web3.getNewAccount().privateKey;
-    let pw = (document.getElementById('PW') as HTMLInputElement).value;
-    if(!pw) {
-        document.getElementById('createbad').innerHTML = 'Enter 3 to 5 random words to create a passphrase'
+    document.getElementById('createbad').innerHTML = '<br>';
+    this.pwGroupStatus = '';
+    if(this.unlocking){return;}
+    this.unlocking = true;
+    document.getElementById('launch').innerHTML = 'Encrypting - Wait';
+    setTimeout(()=> {
+        let privateKey = this.web3.getNewAccount().privateKey;
+        let pw = (document.getElementById('PW') as HTMLInputElement).value;
+        let pwc = (document.getElementById('PWc') as HTMLInputElement).value;
+        if(!pw) {
+            document.getElementById('createbad').innerHTML = 'Enter 3 to 5 random words to create a passphrase';
+            this.unlocking = false;
+            document.getElementById('launch').innerHTML = 'Launch CryptoPass';
+            this.pwGroupStatus='has-danger';
+            return;
+        }
+        if(pw != pwc){
+            document.getElementById('createbad').innerHTML = 'Pass phrase needs to match';
+            (document.getElementById('PW') as HTMLInputElement).value = '';
+            (document.getElementById('PWc') as HTMLInputElement).value = '';
+            this.unlocking = false;
+            document.getElementById('launch').innerHTML = 'Launch CryptoPass';
+            this.pwGroupStatus='has-danger';
+            return;
+        }
+        this.pwGroupStatus='has-success';
+        let encrypted_id = this.web3.getEncryptedId(privateKey, pw);
+        this.rememberedAddress = encrypted_id.address;
+        //this.FTlocalStorage.setItem('encrypted_id', JSON.stringify(encrypted_id));
+        this.cache.putCache('encrypted_id', encrypted_id);
+        this.cache.putCache('key', privateKey);
+        this.obs.putObserver('isSignedIn', true);
+        this.obs.putObserver('isPreviousUser', true);
+        let keys = sjcl.encrypt(this.rememberedAddress, privateKey);
+        this.session.setItem('k',keys); //security issue use for testing only
+        (document.getElementById('PW') as HTMLInputElement).value = null;
+        this.obs.putObserver('modal', 'authenticate.unlocked');
+        this.unlocking = false;
+        document.getElementById('launch').innerHTML = 'Launch CryptoPass';
         return;
-    }
-    let encrypted_id = this.web3.getEncryptedId(privateKey, pw);
-    this.rememberedAddress = encrypted_id.address;
-    this.FTlocalStorage.setItem('encrypted_id', JSON.stringify(encrypted_id));
-    this.cache.putCache('encrypted_id', encrypted_id);
-    this.cache.putCache('key', privateKey);
-    this.obs.putObserver('isSignedIn', true);
-    this.obs.putObserver('isPreviousUser', true);
-    let keys = sjcl.encrypt(this.rememberedAddress, privateKey);
-    this.session.setItem('k',keys); //security issue use for testing only
-    (document.getElementById('PW') as HTMLInputElement).value = null;
-    this.obs.putObserver('modal', 'authenticate.unlocked');
+    },50);
   }
 
   import(): void{
@@ -117,7 +130,7 @@ export class FTCryptoPass {
                 this.cache.putCache('encrypted_id',enc);
                 this.obs.putObserver('isPreviousUser', true);
             }
-            this.tabs = 1;
+            this.tabs = this.AuthenticateTabs.signIn;
             (document.getElementById('importENC') as HTMLInputElement).value = null;
             document.getElementById('importwarning2').innerHTML = '';
             return;
@@ -134,37 +147,28 @@ export class FTCryptoPass {
   unlockAccount(): void{
     if(this.unlocking){return;}
     this.unlocking = true;
-    document.getElementById('unlockbad').innerHTML = '';
-    let pw = (document.getElementById('PWUnlock') as HTMLInputElement).value;
-    
-        try{
-            let key = this.web3.decryptPrivateKey(JSON.stringify(this.cache.getCache('encrypted_id')),pw);
-            this.cache.putCache('key',key);
-            var keys = sjcl.encrypt(this.rememberedAddress, key);
-            this.session.setItem('k',keys); //security issue use for testing only
-            this.unlocking = false;
-            this.obs.putObserver('modal', 'authenticate.unlocked');
-            (document.getElementById('PWUnlock') as HTMLInputElement).value = null;
-            document.getElementById('unlockbad').innerHTML = '';
-            this.obs.putObserver('isSignedIn', true);
-        }
-        catch(e){
-            document.getElementById('unlockbad').innerHTML = 'Wrong Password<br>';
-            (document.getElementById('PWUnlock') as HTMLInputElement).value = '';
-            this.unlocking = false;
-            return;
-        }   
-    
-    }
-
-    deleteAccount(): void{
-        this.FTlocalStorage.removeItem('encrypted_id');
-        this.obs.putObserver('isSignedIn', false);
-        this.obs.putObserver('isPreviousUser', false);
-        this.cache.deleteCache('key');
-        this.cache.deleteCache('encrypted_id');
-        this.rememberedAddress = null;
-        this.obs.putObserver('modal', '');
+    setTimeout(()=> {
+        document.getElementById('unlockbad').innerHTML = '';
+        let pw = (document.getElementById('PWUnlock') as HTMLInputElement).value;
+        
+            try{
+                let key = this.web3.decryptPrivateKey(JSON.stringify(this.cache.getCache('encrypted_id')),pw);
+                this.cache.putCache('key',key);
+                var keys = sjcl.encrypt(this.rememberedAddress, key);
+                this.session.setItem('k',keys); //security issue use for testing only
+                this.unlocking = false;
+                this.obs.putObserver('modal', 'authenticate.unlocked');
+                (document.getElementById('PWUnlock') as HTMLInputElement).value = null;
+                document.getElementById('unlockbad').innerHTML = '';
+                this.obs.putObserver('isSignedIn', true);
+            }
+            catch(e){
+                document.getElementById('unlockbad').innerHTML = 'Wrong Password<br>';
+                (document.getElementById('PWUnlock') as HTMLInputElement).value = '';
+                this.unlocking = false;
+                return;
+            } 
+        },50);  
     }
     
     showSignUpInfo(): void {
@@ -180,6 +184,7 @@ export class FTCryptoPass {
     }
 
     private setText() {
+        // this.texts['home.Hero1'] = this.text.getText('home.Hero1'); // example
     }
 
 }

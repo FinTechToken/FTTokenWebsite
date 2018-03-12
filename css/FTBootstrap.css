@@ -800,7 +800,7 @@ video[poster]{
     color: #151b1e;
     border: 1px solid rgba(242, 167, 14, 1);
 }
-button {
+button, .btn {
     cursor:pointer;
 }
 
