@@ -54,7 +54,7 @@ export class FTText {
         this.putText('en_us', 'home.Hero3', `
         But, there is so much happening that it is hard to keep track of it all.<br><br>
         And, getting on blockchain can be confusing and difficult to do anything useful.<br><Br>
-        We made it easy so you can get on blockchain to transact, trade, invest or create something exciting all in one place.`);
+        We made it easy so you can get on blockchain to transact, trade, or create something exciting all in one place.`);
         this.putText('en_us', 'home.startButton', 'Get Started');
         // Home main text image
         this.putText('en_us', 'home.StickImageURL', '/img/svg/FTT-Character.svg');
