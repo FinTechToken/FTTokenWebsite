@@ -1,14 +1,8 @@
-declare var sjcl: any;
-
 import { AfterViewInit, Component, NgZone, OnDestroy, OnInit, HostListener } from '@angular/core';
-import { Router } from '@angular/router';
 
-import { FTCache } from './FTFramework/FT-Cache';
-import { FTStorage } from './FTFramework/FT-Storage';
-import { FTObserver } from './FTFramework/FT-Observer';
-import { FTSession } from './FTFramework/FT-Session';
 import { FTText } from './FTFramework/FT-Text';
-import { FTWeb3 } from './FTServices/ft-web3';
+import { FTWeb3Service } from './FTServices/ft-web3';
+import { FTCryptoPassService } from './FTServices/ft-cryptoPass';
 
 @Component({
   moduleId: module.id,
@@ -20,7 +14,7 @@ export class AppComponent {
   zone: NgZone;   
   name = 'FTTokenWebsite';
 
-  constructor( private cache: FTCache, private FTweb3: FTWeb3, private FTlocalStorage:FTStorage, private session:FTSession, private observer:FTObserver, private router: Router ) 
+  constructor( private FTweb3: FTWeb3Service, private FTCryptoPass: FTCryptoPassService ) 
   {   
     // Zone used for old version of IPad. Doesn't update without it.
     this.zone = new NgZone( { enableLongStackTrace : false } );
@@ -28,23 +22,7 @@ export class AppComponent {
   
   ngOnInit(): void {
     this.FTweb3.initializeWeb3();
-    
-    this.observer.getObserver('deleteAccount')
-    .forEach( (isDelete) => {
-        if(isDelete){
-            this.deleteAccount();
-        }
-    });
-
-    if(this.FTlocalStorage.hasItem('encrypted_id')){
-      this.cache.putCache('encrypted_id', JSON.parse(this.FTlocalStorage.getItem('encrypted_id')));
-      this.observer.putObserver('isPreviousUser', true);
-      //ToDo: remove
-      if(this.session.hasItem('k')) {
-        this.cache.putCache('key', sjcl.decrypt(this.cache.getCache('encrypted_id').address, this.session.getItem('k')));
-        this.observer.putObserver('isSignedIn', true);
-      }
-    }
+    this.FTCryptoPass.initializeCryptoPass();
   }    
 
   ngAfterViewInit(): void{} 
@@ -58,20 +36,7 @@ export class AppComponent {
     this.onDestroyApp();
   }
 
-  onDestroyApp(){
-    this.cache.deleteCache('key'); 
-    this.observer.deleteObserver('isSignedIn');
-    this.observer.deleteObserver('isPreviousUser');
+  private onDestroyApp(): void {
+    this.FTCryptoPass.destroyCryptoPass();
   }
-
-  deleteAccount(): void{
-    this.FTlocalStorage.removeItem('encrypted_id');
-    this.observer.putObserver('isSignedIn', false);
-    this.observer.putObserver('isPreviousUser', false);
-    this.cache.deleteCache('key');
-    this.cache.deleteCache('encrypted_id');
-    this.observer.putObserver('modal', '');
-    this.router.navigate(['/home']);
-  }
-
 }

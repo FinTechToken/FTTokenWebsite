@@ -16,7 +16,8 @@ import { FTSession } from './FTFramework/FT-Session';
 import { FTStorage } from './FTFramework/FT-Storage';
 import { FTText } from './FTFramework/FT-Text';
 
-import { FTWeb3 } from './FTServices/ft-web3';
+import { FTWeb3Service } from './FTServices/ft-web3';
+import { FTCryptoPassService } from './FTServices/ft-cryptoPass';
 
 import { FTAuthenticate } from './FTRoutes/FTAuthenticate';
 import { FTBlockchain } from './FTRoutes/FTBlockchain';
@@ -54,7 +55,8 @@ import { FTToken } from './FTRoutes/FTToken';
     FTSession,
     FTStorage,
     FTText,
-    FTWeb3
+    FTWeb3Service,
+    FTCryptoPassService
   ],
   bootstrap: [ AppComponent ]
 })

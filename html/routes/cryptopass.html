@@ -11,14 +11,35 @@
                                 <div class="media-body">
                                     <h2 class="padleft">
                                         <i class="hidden-lg-up icon-user icon-gradient"></i>
-                                        Get Started
+                                        <span *ngIf="isPreviousUser">Sign In</span>
+                                        <span *ngIf="!isPreviousUser">Get Started</span>
                                     </h2>  
                                     <ul class="nav nav-tabs">
-                                        <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == AuthenticateTabs.getStarted }" (click)="changeTabs(AuthenticateTabs.getStarted)" href="javascript:void(0);">Start</a></li>
-                                        <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == AuthenticateTabs.signIn }" (click)="changeTabs(AuthenticateTabs.signIn)" href="javascript:void(0);">Returning User</a></li>
-                                        <li class="nav-item"><a class="nav-link text-uppercase" (click)="showSignUpInfo();" href="javascript:void(0);">Learn More</a></li>
-                                        <!--<li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 2 }" (click)="changeTabs(2)" href="javascript:void(0);">Sign Up</a></li>!-->
-                                        <!--<li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 3 }" (click)="changeTabs(3)" href="javascript:void(0);">Get Started</a></li>!-->
+                                        <li *ngIf="!isPreviousUser" class="nav-item">
+                                            <a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == AuthenticateTabs.getStarted }" (click)="changeTabs(AuthenticateTabs.getStarted)" href="javascript:void(0);">
+                                                Start
+                                            </a>
+                                        </li>
+                                        <li *ngIf="isPreviousUser" class="nav-item">
+                                            <a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == AuthenticateTabs.signIn }" (click)="changeTabs(AuthenticateTabs.signIn)" href="javascript:void(0);">
+                                                Sign In
+                                            </a>
+                                        </li>
+                                        <li *ngIf="!isPreviousUser" class="nav-item">
+                                            <a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == AuthenticateTabs.import }" (click)="changeTabs(AuthenticateTabs.import)" href="javascript:void(0);">
+                                                Returning User
+                                            </a>
+                                        </li>
+                                        <li *ngIf="isPreviousUser" class="nav-item">
+                                            <a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == AuthenticateTabs.clear }" (click)="changeTabs(AuthenticateTabs.clear)" href="javascript:void(0);">
+                                                Clear
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-uppercase" (click)="showSignUpInfo();" href="javascript:void(0);">
+                                                Learn More
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -27,14 +48,12 @@
                                     <br>
                                     <div *ngIf="!isPreviousUser">
                                         <h3><a (click)="showSignUpInfo();" href="javascript:void(0);" ><span style="font-size:1.5rem"><i class="icon-info hover" id="create1"></i></span></a>
-                                            Get Your Free CryptoPass</h3>
-                                        <br>
+                                            Secure Your Free CryptoPass</h3>
+                                        <hr><br>
                                         <div>
-                                            <span *ngIf="isPreviousUser" style="color:red">A new account will replace your existing one<br></span>
                                             <form (submit)="createAccount();">
                                                 <div class="form-group" [ngClass]="pwGroupStatus" id ="PWgroup">
                                                     <label for="PW">
-                                                        <!--<span style="font-size:1.5rem"><i (click)="showSignUpInfo();" href="javascript:void(0);" class="icon-info hover" id="create1"></i></span>!-->
                                                         Pick a secret pass phrase to lock your CryptoPass:
                                                     </label>
                                                     <input type="password" [ngClass]="pwGroupStatus == 'has-danger' ? 'form-control-warning' : pwGroupStatus == 'has-success' ? 'form-control-success' : ''" class="form-control" id="PW" placeholder="Enter 3-7 random words">
@@ -45,106 +64,75 @@
                                                 <small><Br>(Encryption may take awhile)</small>
                                             </form>
                                         </div>
-                                    </div>
-                                    <div *ngIf="isPreviousUser">
-                                        <strong>Account#:</strong>
-                                        <span class="p-small return" id="unlockaccount">{{rememberedAddress}}</span>
                                         <br>
-                                        <div class="form-group">
-                                            <span id="unlockbad" style="color:red"></span>
-                                            <label for="PWUnlock"><strong>PassPhrase:</strong></label>
-                                            <input type="password" class="form-control" id="PWUnlock" placeholder="">
-                                        </div>
-                                        <a class="btn btn-lg btn-ft" (click)="unlockAccount()" href="javascript:void(0);">
-                                            Sign In
-                                        </a>
-                                        <small><Br>(Decryption may take awhile)</small>
+                                        <hr>
                                     </div>
                                 </div>
 
                                 <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == AuthenticateTabs.signIn }">
-                                    <h4>
-                                        <strong>S</strong>ign in
-                                    </h4>
                                     <br>
-                                    <div *ngIf="!isPreviousUser">
-                                        <strong>P</strong>lease <a href="javascript:void(0);" (click)="changeTabs(2)"><strong>Sign Up</strong></a>, or <a href="javascript:void(0);" (click)="changeTabs(3)"><strong>import</strong></a> an existing account under advanced.
-                                    </div>
-                                    <div *ngIf="isPreviousUser">
-                                        <strong>Account#:</strong>
-                                        <span class="p-small return" id="unlockaccount">{{rememberedAddress}}</span>
-                                        <br>
-                                        <div class="form-group">
-                                            <span id="unlockbad" style="color:red"></span>
-                                            <label for="PWUnlock"><strong>PassPhrase:</strong></label>
-                                            <input type="password" class="form-control" id="PWUnlock" placeholder="">
-                                        </div>
-                                        <a class="btn btn-lg btn-ft" (click)="unlockAccount()" href="javascript:void(0);">
-                                            Sign In
-                                        </a>
-                                        <small><Br>(Decryption may take awhile)</small>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 2 }">
-                                    <h4>
-                                        <span style="font-size:1.5rem"><i (click)="showSignUpInfo();" href="javascript:void(0);" class="icon-info hover" id="create1"></i></span> <strong>S</strong>ign Up
-                                    </h4>
-                                    <div><br>
-                                        <span *ngIf="isPreviousUser" style="color:red">A new account will replace your existing one<br></span>
-                                        <span id="createbad" style="color:red"></span>
-                                        <form>
-                                            <div class="form-group">
-                                                <label for="PW"><strong>PassPhrase:</strong></label>
-                                                <input type="password" class="form-control" id="PW" placeholder="">
+                                    <h3><a (click)="showSignUpInfo();" href="javascript:void(0);" ><span style="font-size:1.5rem"><i class="icon-info hover" id="create1"></i></span></a>
+                                        Sign in
+                                    </h3>
+                                    Account#:<br>
+                                    <span class="p-small return" id="unlockaccount">{{rememberedAddress}}</span>
+                                    <hr>
+                                    <div>
+                                        <form (submit)="unlockAccount();">    
+                                            <div class="form-group" [ngClass]="pwUnlockGroupStatus" id="PWUnlockgroup">
+                                                <label for="PWUnlock">
+                                                    Enter pass phrase to unlock your CryptoPass:
+                                                </label>
+                                                <input type="password" [ngClass]="pwUnlockGroupStatus == 'has-danger' ? 'form-control-warning' : pwUnlockGroupStatus == 'has-success' ? 'form-control-success' : ''" class="form-control" id="PWUnlock" placeholder="Usually 3-7 random words">
+                                                <div class="form-control-feedback" id="unlockbad"><br></div>
                                             </div>
+                                            <input type="submit" value="Unlock CryptoPass" class="btn btn-lg btn-ft" id="unlockButton">
+                                            <small><Br>(Decryption may take awhile)</small>
                                         </form>
-                                        <a class="btn btn-lg btn-ft" (click)="createAccount()" href="javascript:void(0);">
-                                            Create Account
-                                        </a>
-                                        <small><Br>(Encryption may take awhile)</small>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 3 }">
-                                    <h4>
-                                        <strong>I</strong>mport an encrypted account
-                                    </h4>
-                                    <div><br>
-                                        <span *ngIf="isPreviousUser" style="color:red">Importing replaces your existing account<br></span>
+
+                                <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == AuthenticateTabs.import }">
+                                    <Br>
+                                    <h3>Import Your CryptoPass</h3>
+                                    <br>
+                                    <div *ngIf="importCryptoList == ImportList.list">
+                                        <hr>
+                                        <a href="javascript:void(0);" (click)="importCryptoList=ImportList.import">Enter CryptoPass</a>
+                                        <hr>
+                                        <a href="javascript:alert('coming soon');">Verify by text</a>
+                                        <hr>
+                                        <a href="javascript:alert('coming soon');">Verify by email</a>
+                                        <hr>
+                                        <br>
+                                    </div>
+                                    <div *ngIf="importCryptoList == ImportList.import">
+                                        <a href="javascript:void(0);" (click)="importCryptoList=ImportList.list">Go Back</a>
+                                        <h3>Enter CryptoPass: </h3>
+                                        <hr>
                                         <span style="color:red;" id="importwarning2"></span>
                                         <div class="form-group">
-                                            <label for="importENC"><strong>Encrypted Account:</strong></label>
-                                            <input type="text" class="form-control" id="importENC" placeholder="">
+                                            <label for="importENC">Enter CryptoPass:</label>
+                                            <input type="text" class="form-control" id="importENC" placeholder='Code that starts with: { "address" :'>
                                         </div>
                                         <a class="btn btn-lg btn-ft" (click)="import();" href="javascript:void(0);">
-                                            Import Account
+                                            Import CryptoPass
                                         </a>
                                     </div>
-                                    <br><hr/><br>
-                                    <h4>
-                                        <strong>I</strong>mport and encrypt a private key
-                                    </h4>
-                                    <div><br>
-                                        <span *ngIf="isPreviousUser" style="color:red">Importing replaces your existing account<br></span>
-                                        <span id="importwarning" style="color:red"></span>
-                                        <div class="form-group">
-                                            <label for="importKey"><strong>Private Key:</strong></label>
-                                            <input type="password" class="form-control" id="importKey" placeholder="0x...">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="importPW"><strong>PassPhrase to secure account:</strong></label>
-                                            <input type="password" class="form-control" id="importPW" placeholder="">
-                                        </div>
-                                        <a class="btn btn-lg btn-ft" (click)="import();" href="javascript:void(0);">
-                                            Import & encrypt
-                                        </a>
-                                    </div>
-                                    <br><hr /><Br>
-                                    <h4>
-                                        <strong>C</strong>lear Account From Browser
-                                    </h4>
-                                    <div><br>
+                                </div>
+
+
+                                <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == AuthenticateTabs.clear }">
+                                    <br>
+                                    <h3>
+                                        Clear CryptoPass
+                                    </h3>
+                                    <br>
+                                    <div>
+                                        Remove CryptoPass from this device to import a different CryptoPass, or create a new CryptoPass.
+                                        <hr>
                                         <a class="btn btn-lg btn-ft" (click)="showVerifyDelete();" href="javascript:void(0);">
-                                            Clear Account
+                                            Clear CryptoPass
                                         </a>
                                     </div>
                                 </div>

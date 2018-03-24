@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { FTCache } from '../FTFramework/FT-Cache';
 import { FTSession } from '../FTFramework/FT-Session';
+import { FTObserver } from '../FTFramework/FT-Observer';
 import { FTText } from '../FTFramework/FT-Text';
 
 
@@ -17,14 +18,18 @@ export class FTHome {
   zone: NgZone;   
   name = 'FinTechToken';
   texts = [];
+  isPreviousUser = false;
    
-  constructor( private router: Router, private route: ActivatedRoute, private session: FTSession, private cache: FTCache, private http:Http, private text: FTText  )
+  constructor( private observer: FTObserver, private router: Router, private route: ActivatedRoute, private session: FTSession, private cache: FTCache, private http:Http, private text: FTText  )
   { 
     this.setText();
     this.zone=new NgZone({enableLongStackTrace:false});//Zone used for old version of IPad. Doesn't update without it.
   }
   
   ngOnInit(): void{ 
+    this.observer.getObserver('isPreviousUser').forEach( isPrev => {
+      this.isPreviousUser = isPrev;
+    });
   }    
 
   ngAfterViewInit(): void{
@@ -40,6 +45,7 @@ export class FTHome {
     this.texts['home.Hero3Head'] = this.text.getText('home.Hero3Head');
     this.texts['home.Hero4'] = this.text.getText('home.Hero4');
     this.texts['home.startButton'] = this.text.getText('home.startButton');
+    this.texts['home.startButtonUser'] = this.text.getText('home.startButtonUser');
     this.texts['home.StickImageURL'] = this.text.getText('home.StickImageURL');
     this.texts['home.explainationImageURL'] = this.text.getText('home.explainationImageURL');
     this.texts['home.explainationImageHeader1'] = this.text.getText('home.explainationImageHeader1');

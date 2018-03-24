@@ -9,7 +9,7 @@ import { FTObserver } from '../FTFramework/FT-Observer';
 // Either this should be refactored to enable that - or this is the Ethereum instance that gets called by the global one that keeps track of everything.
 
 @Injectable()
-export class FTWeb3 {
+export class FTWeb3Service {
     private nets:string[]=[];
     private currentNetSeconds = 0;
     private interval;
