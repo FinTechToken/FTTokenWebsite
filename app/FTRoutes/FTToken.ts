@@ -213,7 +213,7 @@ export class FTToken {
 
   ngOnInit(): void{ 
     if(!this.cache.getCache('key')){
-      this.router.navigate(['/authenticate']);
+      this.router.navigate(['/crypto_pass']);
     }
 
     this.subscribeParam = this.route.params.subscribe(params => {

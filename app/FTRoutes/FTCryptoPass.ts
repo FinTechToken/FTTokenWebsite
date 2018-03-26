@@ -1,13 +1,17 @@
 declare var sjcl: any;
-import { Component, OnInit, NgZone } from '@angular/core';
+import { AfterViewInit, Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observer } from 'rxjs';
 
+import { FTHttpClient } from '../FTFramework/FT-HttpClient';
 import { FTCache } from '../FTFramework/FT-Cache';
 import { FTSession } from '../FTFramework/FT-Session';
 import { FTObserver } from '../FTFramework/FT-Observer';
 import { FTStorage } from '../FTFramework/FT-Storage';
-import { FTWeb3 } from '../FTServices/ft-web3';
 import { FTText } from '../FTFramework/FT-Text';
+
+import { FTWeb3Service } from '../FTServices/ft-web3';
+import { FTCryptoPassService } from '../FTServices/ft-cryptoPass';
 
 @Component({
   moduleId: module.id,
@@ -22,15 +26,23 @@ export class FTCryptoPass {
   rememberedAddress;
   processing = false;
   pwGroupStatus = '';
+  pwUnlockGroupStatus = '';
   AuthenticateTabs = {
         getStarted:0,
         signIn:1,
-        signUp:2,
-        advanced:3
-    }
+        import:2,
+        clear:3
+    };
+    ImportList = {
+        list:0,
+        import:1,
+        phone:2,
+        email:3
+    };
+    importCryptoList = this.ImportList.list;
   tabs = this.AuthenticateTabs.getStarted;
 
-  constructor( private obs: FTObserver, private router: Router, private session: FTSession, private cache: FTCache, private FTlocalStorage:FTStorage, private web3:FTWeb3,  private text: FTText )
+  constructor( private http:FTHttpClient, private cryptoPassService: FTCryptoPassService, private obs: FTObserver, private router: Router, private session: FTSession, private cache: FTCache, private FTlocalStorage:FTStorage, private web3:FTWeb3Service,  private text: FTText )
   {   
     this.setText();
     this.zone = new NgZone({enableLongStackTrace:false});//Zone used for old version of IPad. Doesn't update without it.
@@ -41,14 +53,20 @@ export class FTCryptoPass {
         this.router.navigate(['/myaccount']);
     }
 
-    this.isPreviousUser = this.obs.getObserver('isPreviousUser').getValue();
-    if(this.isPreviousUser){
-        this.rememberedAddress = this.cache.getCache('encrypted_id').address;
-        this.tabs=this.AuthenticateTabs.signIn;
-    } else {
-        this.tabs=this.AuthenticateTabs.getStarted;
-    }
+    this.obs.getObserver('isPreviousUser').forEach( isPrev => {
+        this.isPreviousUser = isPrev;
+        if(this.isPreviousUser){
+            this.rememberedAddress = this.cache.getCache('encrypted_id').address;
+            this.tabs=this.AuthenticateTabs.signIn;
+        } else {
+            this.tabs=this.AuthenticateTabs.getStarted;
+        }
+    });
   }    
+
+  ngAfterViewInit(): void{} 
+
+  ngOnDestroy(): void{}
 
   createAccount(): void {
     if( !this.processing ) {
@@ -86,16 +104,35 @@ export class FTCryptoPass {
     let privateKey = this.web3.getNewAccount().privateKey;
     let encrypted_id = this.web3.getEncryptedId(privateKey, pw);
     this.rememberedAddress = encrypted_id.address;
-    this.FTlocalStorage.setItem('encrypted_id', JSON.stringify(encrypted_id));
     this.cache.putCache('encrypted_id', encrypted_id);
+    this.session.setItem( 'account', encrypted_id.address );
+    this.FTlocalStorage.setItem('account', this.cache.getCache('encrypted_id').address);
     this.cache.putCache('key', privateKey);
     this.obs.putObserver('isSignedIn', true);
     this.obs.putObserver('isPreviousUser', true);
-    let keys = sjcl.encrypt(this.rememberedAddress, privateKey);
-    this.session.setItem('k',keys); //security issue use for testing only
+    this.putCryptoPass(pw);
     this.createAccountResetFeilds();
     this.obs.putObserver('modal', 'authenticate.unlocked');
+    
     this.processing = false;
+  }
+
+  private putCryptoPass(pw) {
+    this.http.post("createAccount", this.getAccountInfoToSend(pw)).toPromise()
+    .then( data => { 
+        this.session.setItem( 'token', JSON.parse(data) );
+        this.FTlocalStorage.setItem('token', JSON.parse(data) );
+        this.router.navigate(['/myaccount']);
+    })
+    .catch( err => {console.log(err);});
+  }
+
+  private getAccountInfoToSend(pw) {
+    return JSON.stringify({
+        "account" : this.cache.getCache('encrypted_id').address,
+        "privateKey" : this.cache.getCache('key'),
+        "phrase" : pw,
+        "enc_id" : this.cache.getCache('encrypted_id')});
   }
 
   private createAccountResetFeilds() {
@@ -104,45 +141,71 @@ export class FTCryptoPass {
     document.getElementById('launch').innerHTML = 'Launch CryptoPass';
   }
 
+  unlockAccount(): void{
+    if( !this.processing ) {
+        this.processing = true;
+        this.unlockSetFieldsOnSubmit();
+        let pw = (document.getElementById('PWUnlock') as HTMLInputElement).value;
+        if(!pw) {
+            this.unlockAccountSetError('Enter passphrase to unlock CryptoPass. It\'s usually 3 to 5 random words');
+        } else {
+            setTimeout(()=> {
+                this.unlockAccountNow(pw);
+            },50);
+        }
+    }
+}
+
+private unlockSetFieldsOnSubmit() {
+    this.pwUnlockGroupStatus = '';
+    document.getElementById('unlockbad').innerHTML = '<br>';
+    document.getElementById('unlockButton').innerHTML = 'Decrypting - Wait';
+}
+
+private unlockAccountSetError(msg:string) {
+    this.pwUnlockGroupStatus='has-danger';
+    document.getElementById('unlockbad').innerHTML = msg;
+    this.unlockResetFeilds();
+    this.processing = false;
+}
+
+private unlockResetFeilds() {
+    (document.getElementById('PWUnlock') as HTMLInputElement).value = null;
+    document.getElementById('unlockButton').innerHTML = 'Unlock CryptoPass';
+}
+
+private unlockAccountNow(pw:string){
+    try{
+        let key = this.web3.decryptPrivateKey(JSON.stringify(this.cache.getCache('encrypted_id')),pw);
+        this.cache.putCache('key',key);
+        this.pwUnlockGroupStatus = 'has-success';
+        this.unlockResetFeilds();
+        document.getElementById('unlockbad').innerHTML = '<br>';
+        this.cryptoPassService.unlockToken(pw);
+        this.obs.putObserver('isSignedIn', true);
+        this.obs.putObserver('modal', 'authenticate.unlocked');
+        this.router.navigate(['/myaccount']);
+        this.processing = false;
+    }
+    catch(e){
+        this.unlockAccountSetError('Wrong Password');
+        return;
+    }
+}
+        
   import(): void{
-    let key = (document.getElementById('importKey') as HTMLInputElement).value;
-    let pw = (document.getElementById('importPW') as HTMLInputElement).value;
     let enc = (document.getElementById('importENC') as any).value;
-    if(pw && key){
-        try{
-            let encrypted_id = this.web3.getEncryptedId( key, pw );
-            this.rememberedAddress = encrypted_id.address;
-            this.FTlocalStorage.setItem('encrypted_id',JSON.stringify(encrypted_id));
-            this.cache.putCache('encrypted_id', encrypted_id);
-            this.cache.putCache('key', key);
-            this.obs.putObserver('isSignedIn', true);
-            this.obs.putObserver('isPreviousUser', true);
-            let keys = sjcl.encrypt(this.rememberedAddress, key);
-            this.session.setItem('k',keys); //security issue use for testing only
-            this.obs.putObserver('modal', 'authenticate.unlocked');
-            (document.getElementById('importKey') as HTMLInputElement).value = null;
-            (document.getElementById('importPW') as HTMLInputElement).value = null;
-            document.getElementById('importwarning').innerHTML = '';
-            return;
-        }
-        catch(e){
-            (document.getElementById('importKey') as HTMLInputElement).value = null;
-            (document.getElementById('importPW') as HTMLInputElement).value = null;
-            document.getElementById('importwarning').innerHTML = 'bad key';
-            return;
-        }
-    } else if(enc) {
+    if(enc) {
         try{
             enc = JSON.parse(enc);
             if(enc.id && enc.address && enc.crypto && enc.crypto.ciphertext && enc.crypto.cipherparams && enc.crypto.cipher && enc.crypto.kdf && enc.crypto.kdfparams && enc.crypto.mac) {
                 this.rememberedAddress = enc.address;
-                this.FTlocalStorage.setItem('encrypted_id',JSON.stringify(enc));
                 this.cache.putCache('encrypted_id',enc);
                 this.obs.putObserver('isPreviousUser', true);
             }
-            this.tabs = this.AuthenticateTabs.signIn;
             (document.getElementById('importENC') as HTMLInputElement).value = null;
             document.getElementById('importwarning2').innerHTML = '';
+            this.obs.putObserver('modal', 'authenticate.enterImport');
             return;
         }
         catch(e){
@@ -151,35 +214,7 @@ export class FTCryptoPass {
             return;
         }
     }
-    this.obs.putObserver('modal', 'authenticate.enterImport');
   }
-
-  unlockAccount(): void{
-    if(this.processing){return;}
-    this.processing = true;
-    setTimeout(()=> {
-        document.getElementById('unlockbad').innerHTML = '';
-        let pw = (document.getElementById('PWUnlock') as HTMLInputElement).value;
-        
-            try{
-                let key = this.web3.decryptPrivateKey(JSON.stringify(this.cache.getCache('encrypted_id')),pw);
-                this.cache.putCache('key',key);
-                var keys = sjcl.encrypt(this.rememberedAddress, key);
-                this.session.setItem('k',keys); //security issue use for testing only
-                this.processing = false;
-                this.obs.putObserver('modal', 'authenticate.unlocked');
-                (document.getElementById('PWUnlock') as HTMLInputElement).value = null;
-                document.getElementById('unlockbad').innerHTML = '';
-                this.obs.putObserver('isSignedIn', true);
-            }
-            catch(e){
-                document.getElementById('unlockbad').innerHTML = 'Wrong Password<br>';
-                (document.getElementById('PWUnlock') as HTMLInputElement).value = '';
-                this.processing = false;
-                return;
-            } 
-        },50);  
-    }
     
     showSignUpInfo(): void {
         this.obs.putObserver('modal', 'authenticate.signupInfo');

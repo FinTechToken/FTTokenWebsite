@@ -493,7 +493,7 @@ export class FTMyAccount {
   ngOnInit(): void{
     // debugger 
     if(!this.cache.getCache('key')){
-      this.router.navigate(['/authenticate']);
+      this.router.navigate(['/crypto_pass']);
     }
     this.subscribeParam = this.route.params.subscribe(params => {
       //params = the block that is passed in route
@@ -1153,10 +1153,8 @@ export class FTMyAccount {
 
 
   signOut(): void{
-    this.cache.deleteCache('key');
     this.obs.putObserver('isSignedIn', false);
-    this.session.clear();
-    this.router.navigate(['/authenticate']);
+    this.router.navigate(['/crypto_pass']);
     this.showModal(0);
   }
 

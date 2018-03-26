@@ -6,7 +6,7 @@ import { FTCache } from '../FTFramework/FT-Cache';
 import { FTSession } from '../FTFramework/FT-Session';
 import { FTObserver } from '../FTFramework/FT-Observer';
 import { FTStorage } from '../FTFramework/FT-Storage';
-import { FTWeb3 } from '../FTServices/ft-web3';
+import { FTWeb3Service } from '../FTServices/ft-web3';
 /* ToDo: Each time you change tabs scroll to top */
 @Component({
   moduleId: module.id,
@@ -28,7 +28,7 @@ export class FTAuthenticate {
   tabs = this.AuthenticateTabs.signIn;
   unlocking = false;
 
-  constructor( private obs: FTObserver, private router: Router, private session: FTSession, private cache: FTCache, private FTlocalStorage:FTStorage, private web3:FTWeb3 )
+  constructor( private obs: FTObserver, private router: Router, private session: FTSession, private cache: FTCache, private FTlocalStorage:FTStorage, private web3:FTWeb3Service )
   {   
     this.zone=new NgZone({enableLongStackTrace:false});//Zone used for old version of IPad. Doesn't update without it.
   }

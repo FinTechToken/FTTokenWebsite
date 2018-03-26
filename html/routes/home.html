@@ -15,7 +15,8 @@
                             </h4>
                             <div class="ftherobutton">
                                 <a class="btn btn-ft btn-lg margin-half" routerLink="/crypto_pass" routerLinkActive="active">
-                                    {{texts['home.startButton']}}
+                                    <span *ngIf="!isPreviousUser">{{texts['home.startButton']}}</span>
+                                    <span *ngIf="isPreviousUser">{{texts['home.startButtonUser']}}</span>
                                 </a>
                             </div>
                         </div>         
@@ -221,7 +222,8 @@
                     <div class="padtop">
                         <a class="btn btn-ft btn-lg margin-half" routerLink="/crypto_pass" routerLinkActive="active">
                             <img src="{{texts['home.StickImageURL']}}" width="25px"/>
-                            {{texts['home.startButton']}}
+                            <span *ngIf="!isPreviousUser">{{texts['home.startButton']}}</span>
+                            <span *ngIf="isPreviousUser">{{texts['home.startButtonUser']}}</span>
                         </a>
                         <br><Br><br>
                     </div>
