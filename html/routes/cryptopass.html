@@ -27,7 +27,7 @@
                                         </li>
                                         <li *ngIf="!isPreviousUser" class="nav-item">
                                             <a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == AuthenticateTabs.import }" (click)="changeTabs(AuthenticateTabs.import)" href="javascript:void(0);">
-                                                Returning User
+                                                Return
                                             </a>
                                         </li>
                                         <li *ngIf="isPreviousUser" class="nav-item">
@@ -48,19 +48,19 @@
                                     <br>
                                     <div *ngIf="!isPreviousUser">
                                         <h3><a (click)="showSignUpInfo();" href="javascript:void(0);" ><span style="font-size:1.5rem"><i class="icon-info hover" id="create1"></i></span></a>
-                                            Secure Your Free CryptoPass</h3>
+                                            Get A Free CryptoPass</h3>
                                         <hr><br>
                                         <div>
                                             <form (submit)="createAccount();">
                                                 <div class="form-group" [ngClass]="pwGroupStatus" id ="PWgroup">
                                                     <label for="PW">
-                                                        Pick a secret pass phrase to lock your CryptoPass:
+                                                        Pick a secret pass phrase to secure your new CryptoPass:
                                                     </label>
                                                     <input type="password" [ngClass]="pwGroupStatus == 'has-danger' ? 'form-control-warning' : pwGroupStatus == 'has-success' ? 'form-control-success' : ''" class="form-control" id="PW" placeholder="Enter 3-7 random words">
                                                     <div class="form-control-feedback" id="createbad"><br></div>
                                                     <input type="password" [ngClass]="pwGroupStatus == 'has-danger' ? 'form-control-warning' : pwGroupStatus == 'has-success' ? 'form-control-success' : ''" class="form-control" id="PWc" placeholder="Reenter your pass phrase">
                                                 </div>
-                                                <input type="submit" value="Launch CryptoPass" class="btn btn-lg btn-ft" id="launch">
+                                                <input type="submit" value="Create CryptoPass" class="btn btn-lg btn-ft" id="launch">
                                                 <small><Br>(Encryption may take awhile)</small>
                                             </form>
                                         </div>
@@ -81,7 +81,7 @@
                                         <form (submit)="unlockAccount();">    
                                             <div class="form-group" [ngClass]="pwUnlockGroupStatus" id="PWUnlockgroup">
                                                 <label for="PWUnlock">
-                                                    Enter pass phrase to unlock your CryptoPass:
+                                                    Enter pass phrase to use CryptoPass:
                                                 </label>
                                                 <input type="password" [ngClass]="pwUnlockGroupStatus == 'has-danger' ? 'form-control-warning' : pwUnlockGroupStatus == 'has-success' ? 'form-control-success' : ''" class="form-control" id="PWUnlock" placeholder="Usually 3-7 random words">
                                                 <div class="form-control-feedback" id="unlockbad"><br></div>
@@ -94,11 +94,10 @@
 
                                 <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == AuthenticateTabs.import }">
                                     <Br>
-                                    <h3>Import Your CryptoPass</h3>
-                                    <br>
+                                    <h3>Returning User</h3>
                                     <div *ngIf="importCryptoList == ImportList.list">
                                         <hr>
-                                        <a href="javascript:void(0);" (click)="importCryptoList=ImportList.import">Enter CryptoPass</a>
+                                        <a href="javascript:void(0);" (click)="importCryptoList=ImportList.import">Paste Saved CryptoPass</a>
                                         <hr>
                                         <a href="javascript:alert('coming soon');">Verify by text</a>
                                         <hr>
@@ -108,7 +107,7 @@
                                     </div>
                                     <div *ngIf="importCryptoList == ImportList.import">
                                         <a href="javascript:void(0);" (click)="importCryptoList=ImportList.list">Go Back</a>
-                                        <h3>Enter CryptoPass: </h3>
+                                        <h3>Enter Saved CryptoPass: </h3>
                                         <hr>
                                         <span style="color:red;" id="importwarning2"></span>
                                         <div class="form-group">
@@ -129,7 +128,7 @@
                                     </h3>
                                     <br>
                                     <div>
-                                        Remove CryptoPass from this device to import a different CryptoPass, or create a new CryptoPass.
+                                        Remove CryptoPass from this device to use a different CryptoPass, or create a new CryptoPass.
                                         <hr>
                                         <a class="btn btn-lg btn-ft" (click)="showVerifyDelete();" href="javascript:void(0);">
                                             Clear CryptoPass
