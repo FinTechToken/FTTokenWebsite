@@ -138,7 +138,7 @@ export class FTCryptoPass {
   private createAccountResetFeilds() {
     (document.getElementById('PW') as HTMLInputElement).value = null;
     (document.getElementById('PWc') as HTMLInputElement).value = null;
-    document.getElementById('launch').innerHTML = 'Launch CryptoPass';
+    document.getElementById('launch').innerHTML = 'Create CryptoPass';
   }
 
   unlockAccount(): void{
