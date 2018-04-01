@@ -111,11 +111,11 @@ export class FTCryptoPassService {
     }
 
     private deleteAccount(): void{
-        this.FTlocalStorage.removeItem('account');
-        this.FTlocalStorage.removeItem('token');
         if(this.session.hasItem('token') && this.session.hasItem('account')) {
             this.expireTheToken(this.session.getItem('token'), this.session.getItem('account'));
         }
+        this.FTlocalStorage.removeItem('account');
+        this.FTlocalStorage.removeItem('token');
         this.observer.putObserver('isSignedIn', false);
         this.observer.putObserver('isPreviousUser', false);
         this.cache.deleteCache('key');
