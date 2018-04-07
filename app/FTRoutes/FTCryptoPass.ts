@@ -113,7 +113,6 @@ export class FTCryptoPass {
     this.putCryptoPass(pw);
     this.createAccountResetFeilds();
     this.obs.putObserver('modal', 'authenticate.unlocked');
-    
     this.processing = false;
   }
 
@@ -183,7 +182,6 @@ private unlockAccountNow(pw:string){
         document.getElementById('unlockbad').innerHTML = '<br>';
         this.cryptoPassService.unlockToken(pw);
         this.obs.putObserver('isSignedIn', true);
-        this.obs.putObserver('modal', 'authenticate.unlocked');
         this.router.navigate(['/myaccount']);
         this.processing = false;
     }
