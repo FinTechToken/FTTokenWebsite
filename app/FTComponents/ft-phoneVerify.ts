@@ -16,6 +16,7 @@ import { FTHttpClient } from '../FTFramework/FT-HttpClient';
 
 export class FTPhoneVerify {
   texts=[];
+  modalHeight;
   verify_steps = {
     sendCode: 0,
     verifyCode: 1,
@@ -33,7 +34,7 @@ export class FTPhoneVerify {
   }
   
   ngOnInit(): void {
-    
+    this.modalHeight=((window.innerHeight-1)*1-100)*.8+'px';
   } 
   
   close(): void {
@@ -44,7 +45,6 @@ export class FTPhoneVerify {
     if(step == this.verify_steps.verifyCode) {
       if(this.tel1 && this.tel2 && this.tel3)
         this.callPhone(this.tel1 + this.tel2 + this.tel3); 
-        this.verify_step = step;
     } else if(step == this.verify_steps.verified) {
       this.verifyPhone(this.tel1 + this.tel2 + this.tel3, this.code);
     }
@@ -54,6 +54,8 @@ export class FTPhoneVerify {
     this.http.post("verifyPhone", this.callPhoneInfoToSend(number)).toPromise()
     .then( data => { 
         data = JSON.parse(data);
+        if(data =='Sent_Code')
+          this.verify_step = this.verify_steps.verifyCode;
     })
     .catch( err => {console.log(err);});
 }
