@@ -24,7 +24,7 @@ export class FTCryptoPassService {
                 }
             }
         );
-        
+
         this.observer.getObserver('isSignedIn')
             .forEach( (isIn) => {
                 if(isIn) {
@@ -104,11 +104,29 @@ export class FTCryptoPassService {
                 if(data.token) {
                     this.session.setItem( 'token', data.token );
                     this.FTlocalStorage.setItem('token', data.token);
+                    this.checkPhone(data.token);
                 }
             })
             .catch( err => {console.log(err);});
         }
     }
+
+        private checkPhone(mytoken):void {
+            this.http.post("verifyPhone", this.getCheckPhoneInfoToSend(mytoken)).toPromise()
+            .then( data => { 
+                data = JSON.parse(data);
+                if(data == false) 
+                    this.observer.putObserver('modal', 'authenticate.unlocked');
+            })
+            .catch( err => {console.log(err);});
+        }
+
+            private getCheckPhoneInfoToSend(mytoken):string {
+                return JSON.stringify({
+                    "account" : this.session.getItem('account'),
+                    "token" : mytoken
+                });
+            }
 
     private deleteAccount(): void{
         if(this.session.hasItem('token') && this.session.hasItem('account')) {

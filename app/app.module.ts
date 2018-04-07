@@ -19,13 +19,14 @@ import { FTText } from './FTFramework/FT-Text';
 import { FTWeb3Service } from './FTServices/ft-web3';
 import { FTCryptoPassService } from './FTServices/ft-cryptoPass';
 
-import { FTAuthenticate } from './FTRoutes/FTAuthenticate';
 import { FTBlockchain } from './FTRoutes/FTBlockchain';
 import { FTCryptoPass } from './FTRoutes/FTCryptoPass';
 import { FTHome } from './FTRoutes/FThome';
 import { FTMessages } from './FTRoutes/FTMessages';
 import { FTMyAccount } from './FTRoutes/FTMyAccount';
 import { FTToken } from './FTRoutes/FTToken';
+
+import { FTPhoneVerify } from './FTComponents/ft-phoneVerify';
 
 @NgModule({
   imports: [ 
@@ -38,14 +39,14 @@ import { FTToken } from './FTRoutes/FTToken';
     AppComponent,
     FTHeader,
     FTHome, 
-    FTAuthenticate, 
     FTBlockchain,
     FTCryptoPass,
     FTFooter,
     FTMessages, 
     FTModal,
     FTMyAccount, 
-    FTToken
+    FTToken,
+    FTPhoneVerify
   ],
   entryComponents: [ ],
   providers: [ 

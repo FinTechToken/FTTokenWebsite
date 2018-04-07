@@ -19,6 +19,7 @@ export class FTHome {
   name = 'FinTechToken';
   texts = [];
   isPreviousUser = false;
+  isSignedIn = false;
    
   constructor( private observer: FTObserver, private router: Router, private route: ActivatedRoute, private session: FTSession, private cache: FTCache, private http:Http, private text: FTText  )
   { 
@@ -26,7 +27,11 @@ export class FTHome {
     this.zone=new NgZone({enableLongStackTrace:false});//Zone used for old version of IPad. Doesn't update without it.
   }
   
-  ngOnInit(): void{ 
+  ngOnInit(): void{
+    this.observer.getObserver('isSignedIn').forEach( isSign => {
+      this.isSignedIn = isSign;
+    });
+
     this.observer.getObserver('isPreviousUser').forEach( isPrev => {
       this.isPreviousUser = isPrev;
     });
@@ -46,6 +51,7 @@ export class FTHome {
     this.texts['home.Hero4'] = this.text.getText('home.Hero4');
     this.texts['home.startButton'] = this.text.getText('home.startButton');
     this.texts['home.startButtonUser'] = this.text.getText('home.startButtonUser');
+    this.texts['home.startButtonAccount'] = this.text.getText('home.startButtonAccount');
     this.texts['home.StickImageURL'] = this.text.getText('home.StickImageURL');
     this.texts['home.explainationImageURL'] = this.text.getText('home.explainationImageURL');
     this.texts['home.explainationImageHeader1'] = this.text.getText('home.explainationImageHeader1');

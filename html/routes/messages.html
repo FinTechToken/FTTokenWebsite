@@ -30,10 +30,10 @@
                                     </h4>
                                     <div><br>
                                         <span *ngIf="!cache.getCache('encrypted_id')">
-                                            <strong>Tutorial Step 1) <a routerLink="/authenticate">Create an account</a></strong> and complete the tutorial to get a free token!
+                                            <strong>Tutorial Step 1) <a routerLink="/crypto_pass">Create an account</a></strong> and complete the tutorial to get a free token!
                                         </span>
                                         <span *ngIf="cache.getCache('encrypted_id') && !cache.getCache('key')">
-                                            <strong><a routerLink="/authenticate">Sign in</a></strong> to see if you have messages
+                                            <strong><a routerLink="/crypto_pass">Sign in</a></strong> to see if you have messages
                                         </span>
                                         <span *ngIf="cache.getCache('key') && !gotFree">
                                             <strong>Tutorial Step 2) </strong> Get a Free Token! <br>
@@ -191,10 +191,10 @@
                                     </h4>
                                     <div><br>
                                         <span *ngIf="!cache.getCache('encrypted_id')">
-                                            <strong><a routerLink="/authenticate">Create an account</a></strong> to view sent messages
+                                            <strong><a routerLink="/crypto_pass">Create an account</a></strong> to view sent messages
                                         </span>
                                         <span *ngIf="cache.getCache('encrypted_id') && !cache.getCache('key')">
-                                            <strong><a routerLink="/authenticate">Sign in</a></strong> to see if you sent messages
+                                            <strong><a routerLink="/crypto_pass">Sign in</a></strong> to see if you sent messages
                                         </span>
                                         <span *ngIf="cache.getCache('key')">
                                             Transaction Sent: 0
