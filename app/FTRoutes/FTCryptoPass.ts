@@ -222,6 +222,10 @@ private unlockAccountNow(pw:string){
         this.obs.putObserver('modal', 'authenticate.verifyDelete');
     }
 
+    SMSPhone(): void{
+        this.obs.putObserver('modal', 'authenticate.SMS');
+    }
+
     changeTabs(tab:number): void{
         this.tabs = tab;
     }

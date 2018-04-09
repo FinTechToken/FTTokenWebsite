@@ -66,7 +66,7 @@ export class FTCryptoPassService {
         .catch( err => {console.log(err);});
     }
 
-    private sendToken(token, account) {
+    sendToken(token, account) {
         this.http.put("refreshAccount", JSON.stringify({
             "account" : account,
             "token" : token

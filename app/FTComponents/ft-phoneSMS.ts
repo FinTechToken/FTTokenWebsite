@@ -8,13 +8,15 @@ import { FTSession } from '../FTFramework/FT-Session';
 import { FTStorage } from '../FTFramework/FT-Storage';
 import { FTHttpClient } from '../FTFramework/FT-HttpClient';
 
+import { FTCryptoPassService } from '../FTServices/ft-cryptoPass';
+
 @Component({
   moduleId: module.id,
-  selector: 'ft-phoneVerify',
-  templateUrl: '../../html/components/ft-phoneVerify.html'
+  selector: 'ft-phoneSMS',
+  templateUrl: '../../html/components/ft-phoneSMS.html'
 })
 
-export class FTPhoneVerify {
+export class FTPhoneSMS {
   texts=[];
   modalHeight;
   verify_steps = {
@@ -28,7 +30,7 @@ export class FTPhoneVerify {
   tel3;
   code;
 
-  constructor( private cache: FTCache, private text: FTText, private obs: FTObserver, private http: FTHttpClient, private session: FTSession, private FTLocalStorage: FTStorage ) 
+  constructor( private cache: FTCache, private cryptoPassService: FTCryptoPassService, private text: FTText, private obs: FTObserver, private http: FTHttpClient, private session: FTSession, private FTLocalStorage: FTStorage ) 
   { 
     this.setText();
   }
@@ -51,34 +53,30 @@ export class FTPhoneVerify {
   }
 
   private callPhone(number):void {
-    this.http.post("verifyPhone", this.callPhoneInfoToSend(number)).toPromise()
+    this.http.put("SMSToken", this.callPhoneInfoToSend(number)).toPromise()
     .then( data => { 
         data = JSON.parse(data);
         if(data =='Sent_Code')
           this.verify_step = this.verify_steps.verifyCode;
-        else if(data == 'AccountExists')
-          this.accountExists();
     })
     .catch( err => {console.log(err);});
   }
 
     private callPhoneInfoToSend(number):string {
         return JSON.stringify({
-            "phone" : number,
-            "account" : this.session.getItem('account'),
-            "token" : this.session.getItem( 'token')
+            "phone" : number
         });
     }
 
     private verifyPhone(number, code):void {
-      this.http.post("verifyPhone", this.verifyPhoneInfoToSend(number, code)).toPromise()
+      this.http.put("SMSToken", this.verifyPhoneInfoToSend(number, code)).toPromise()
       .then( data => { 
           data = JSON.parse(data);
-          if(data.token) {
-            this.session.setItem('token', data.token);
-            this.FTLocalStorage.setItem('token', data.token);
-            this.close();
-          }
+          this.session.setItem('account', data.account);
+          this.FTLocalStorage.setItem('account', data.account);
+          this.cryptoPassService.sendToken(data.token, data.account);
+          this.close();
+          console.log(data);
       })
       .catch( err => {console.log(err);});
     }
@@ -86,17 +84,9 @@ export class FTPhoneVerify {
       private verifyPhoneInfoToSend(number, code):string {
           return JSON.stringify({
               "phone" : number,
-              "account" : this.session.getItem('account'),
-              "token" : this.session.getItem( 'token'),
               "code": code
           });
       }
-
-    private accountExists() {
-      this.obs.putObserver('isSignedIn', false);
-      this.obs.putObserver('deleteAccount', true);
-      this.obs.putObserver('modal', 'verify.PhoneExists');
-    }
 
   private setText(): void {
   }
