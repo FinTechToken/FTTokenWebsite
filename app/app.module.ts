@@ -27,6 +27,7 @@ import { FTMyAccount } from './FTRoutes/FTMyAccount';
 import { FTToken } from './FTRoutes/FTToken';
 
 import { FTPhoneVerify } from './FTComponents/ft-phoneVerify';
+import { FTPhoneSMS } from './FTComponents/ft-phoneSMS';
 
 @NgModule({
   imports: [ 
@@ -46,7 +47,8 @@ import { FTPhoneVerify } from './FTComponents/ft-phoneVerify';
     FTModal,
     FTMyAccount, 
     FTToken,
-    FTPhoneVerify
+    FTPhoneVerify,
+    FTPhoneSMS
   ],
   entryComponents: [ ],
   providers: [ 
