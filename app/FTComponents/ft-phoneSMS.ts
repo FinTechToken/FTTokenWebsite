@@ -72,11 +72,12 @@ export class FTPhoneSMS {
       this.http.put("SMSToken", this.verifyPhoneInfoToSend(number, code)).toPromise()
       .then( data => { 
           data = JSON.parse(data);
-          this.session.setItem('account', data.account);
-          this.FTLocalStorage.setItem('account', data.account);
-          this.cryptoPassService.sendToken(data.token, data.account);
-          this.close();
-          console.log(data);
+          if(data.account && data.token) {
+            this.session.setItem('account', data.account);
+            this.FTLocalStorage.setItem('account', data.account);
+            this.cryptoPassService.sendToken(data.token, data.account);
+            this.close();
+          }
       })
       .catch( err => {console.log(err);});
     }
