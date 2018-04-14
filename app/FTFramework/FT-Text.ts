@@ -63,7 +63,7 @@ export class FTText {
         // Home Explanations
         this.putText('en_us', 'home.explainationImageHeader1', 'Secured with CryptoPass');
         this.putText('en_us', 'home.explainationWhatWeDo1', 'Use any major blockchain, secured with one wallet.');
-        this.putText('en_us', 'home.explainationImageHeader2', 'BlockChain DNA');
+        this.putText('en_us', 'home.explainationImageHeader2', 'We Built BlockChain DNA');
         this.putText('en_us', 'home.explainationWhatWeDo2', `
         Crypto currencies are tokenized on the FinTechToken (FTT) network. 
         This lets you transact and trade fast with ultra low gas costs.`);
@@ -72,12 +72,12 @@ export class FTText {
         this.putText('en_us', 'home.explainationImageHeader1URL', '/img/svg/Icon_Key.svg');
         this.putText('en_us', 'home.explainationImageHeader2URL', '/img/svg/Icon_DNA.svg');
         // Home Problem Solution Statements
-        this.putText('en_us', 'home.valueProblem1', 'Slow and congested');
-        this.putText('en_us', 'home.valueSolution1', '1 second transactions with ultra low gas costs');
-        this.putText('en_us', 'home.valueProblem2', 'Lost keys and a wallet for each blockchain');
-        this.putText('en_us', 'home.valueSolution2', 'Access all major blockchains from one wallet. Never lose keys with CryptoPass');
-        this.putText('en_us', 'home.valueProblem3', '3rd party scams and hacks.');
-        this.putText('en_us', 'home.valueSolution3', 'Stay in control by using our 100% on blockchain platform.');
+        this.putText('en_us', 'home.valueProblem1', 'Other blockchains are slow and congested');
+        this.putText('en_us', 'home.valueSolution1', 'Ours has 1 second transactions with ultra low gas costs');
+        this.putText('en_us', 'home.valueProblem2', 'Most crypto wallets and keys are hard to manage');
+        this.putText('en_us', 'home.valueSolution2', 'Our wallet lets you access all major blockchains. Never lose keys with CryptoPass');
+        this.putText('en_us', 'home.valueProblem3', 'There have been many 3rd party scams and hacks.');
+        this.putText('en_us', 'home.valueSolution3', 'Our 100% on blockchain platform keeps you secure and in control.');
         // Home Problem Solution Statement Images
         this.putText('en_us', 'home.ScenarioImageURL1a', '/img/svg/Scenario-Traffic-Lane.svg');
         this.putText('en_us', 'home.ScenarioImageURL1b', '/img/svg/Scenario-Traffic-Fast-Lane.svg');

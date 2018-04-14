@@ -2,74 +2,77 @@
     <div class="homepage-hero-module">
             <div class="setheightmin">
                     <div class="video-annotation-layer code-container"> 
-        <div class="ssetheightmin">
-            <div class="vvideo-annotation-layer ccode-container container-fluid">
-                <div class="row">
-                    <div class="col-sm-7 col-md-5 offset-md-1 col-lg-4 offset-lg-2" style="z-index:999">
-                        <div class="vvideo-annotation-1 text-left">
-                            <h1 class="fthero">
-                                <span [innerHTML]="texts['home.Hero1']">
-                                </span>
-                            </h1>
-                            <h4 class="fthero3 shadow" [innerHTML]="texts['home.Hero2']">
-                            </h4>
-                            <div class="ftherobutton">
-                                <a class="btn btn-ft btn-lg margin-half" routerLink="/crypto_pass" routerLinkActive="active">
-                                    <span *ngIf="!isPreviousUser">{{texts['home.startButton']}}</span>
-                                    <span *ngIf="isPreviousUser && !isSignedIn">{{texts['home.startButtonUser']}}</span>
-                                    <span *ngIf="isPreviousUser && isSignedIn">{{texts['home.startButtonAccount']}}</span>
-                                </a>
-                            </div>
-                        </div>         
-                    </div>
-                    <div class="col-sm-5 col-md-6 mbminus50 text-center">
-                        <img src="{{texts['home.explainationImageURL']}}" class="headerborder mobileimagea" width="100%"/>
-                    </div>
+                            <img src="/img/svg/FTT_Desktop.svg" class="hidden-md-down" style="margin-top:55px" width="100%"/>
+                            <img src="/img/svg/FTT_Desktop.svg" class="hidden-lg-up hidden-sm-down" style="margin-top:50px" width="100%"/>
+                            <img src="/img/svg/FTT_Tablet.svg" class="hidden-md-up hidden-xs-down" style="margin-top:45px" width="100%"/>
+                            <img src="/img/svg/FTT_Tablet.svg" class="hidden-sm-up" style="margin-top:40px" width="100%"/>
+                            
+                            
+        <div class="container-fluid padsmallbottom padsmalltop">
+            <div class="row">
+                <div class="col-sm-10 offset-sm-1 text-center">
+                    <a class="btn btn-ft btn-lg margin-half" routerLink="/crypto_pass" routerLinkActive="active">
+                        <span *ngIf="!isPreviousUser">{{texts['home.startButton']}}</span>
+                        <span *ngIf="isPreviousUser && !isSignedIn">{{texts['home.startButtonUser']}}</span>
+                        <span *ngIf="isPreviousUser && isSignedIn">{{texts['home.startButtonAccount']}}</span>
+                    </a>
                 </div>
             </div>
         </div>
+        
         <div class="container-fluid backmustard">
             <div class="container padtop padbottom">
                 <div class="row">
                     <div class="col-sm-6">
                         <h2 class="ftheronomargin">
-                            <div class="d-flex flex-row">
-                                <div class="p-2"><img src="{{texts['home.explainationImageHeader2URL']}}" width="25px" /></div>
-                                <div class="p-2">
-                                    <span>
-                                        {{texts['home.explainationImageHeader2']}}
-                                    </span>
-                                </div>
-                            </div>
+                            <span>
+                                {{texts['home.explainationImageHeader2']}}
+                            </span>
                         </h2>
                         <hr />
-                        <h4 class="fthero3d">
-                            <br>
-                            {{texts['home.explainationWhatWeDo2']}}
+                        <h4 class="fthero3d" style="background-color: #fff;
+                        padding: 1rem;
+                        margin: 0px;
+                            margin-top: 0px;
+                        margin-top: -1rem;">
+                        <div class="d-flex flex-row">
+                            <div class="p-2"><img src="{{texts['home.explainationImageHeader2URL']}}" width="25px" /></div>
+                            <div class="p-2">
+                                <span>
+                                        {{texts['home.explainationWhatWeDo2']}}
+                                </span>
+                            </div>
+                        </div>    
                         </h4>
                     </div>                
                     <div class="col-sm-1 text-center">
                     </div>
                     <div class="col-sm-5">
                         <h2 class="ftheronomargin topsmall">
+                            <span>
+                                {{texts['home.explainationImageHeader1']}}
+                            </span>
+                        </h2>
+                        <hr />
+                        <h4 class="fthero3d"  style="background-color: #fff;
+                        padding: 1rem;
+                        margin: 0px;
+                            margin-top: 0px;
+                        margin-top: -1rem;">
                             <div class="d-flex flex-row">
                                 <div class="p-2"><img src="{{texts['home.explainationImageHeader1URL']}}" width="50px" /></div>
                                 <div class="p-2">
                                     <span>
-                                        {{texts['home.explainationImageHeader1']}}
+                                        {{texts['home.explainationWhatWeDo1']}}
                                     </span>
                                 </div>
                             </div>
-                        </h2>
-                        <hr />
-                        <h4 class="fthero3d">
-                            <br>
-                            {{texts['home.explainationWhatWeDo1']}}
                         </h4>
                     </div>
                 </div>
             </div>
         </div>
+        
         <div class="container-fluid padtop padbottom">
             <div class="container">
                 <div class="row">
@@ -95,8 +98,17 @@
             </div>
         </div>        
 
+        <div class="container-fluid padsmallbottom padsmalltop backmustard">
+            <div class="row">
+                <div class="col-sm-10 offset-sm-1 text-center">
+                    <h3>Why You Should Use Us</h3>
+                </div>
+            </div>
+        </div>
+
         <div class="container-fluid">
             <div class="row">
+                <!--
                 <div class="d-flex w-100 backmustard" >
                     <div class="w-50 text-center" style="padding:2rem; border-right:1px solid #fff;">
                         <h3>Most Blockchains</h3>
@@ -105,8 +117,9 @@
                         <h3>FinTechToken</h3>
                     </div>
                 </div>
+                !-->
                 <div class="hidden-sm-up">
-                    <div class="d-flex w-100" style="border-bottom: 1px solid #f2a70e">
+                    <div class="d-flex w-100" style="border-top: 1px solid #f2a70e; border-bottom: 1px solid #f2a70e">
                         <div class="w-50" style="padding:1rem; border-right: 1px solid #F2A70E;">
                             <img src="{{texts['home.ScenarioImageURL1a']}}" width="100%" class="mobileimage"/>
                             <br><br>
@@ -159,7 +172,7 @@
         </div>
 
         <div class="container-fluid hidden-xs-down">
-            <div class="row" style="border-bottom:#f2a70e 1px solid">
+            <div class="row" style="border-top: 1px solid #f2a70e; border-bottom:#f2a70e 1px solid">
                 <div class="col-sm-3 d-flex align-items-center justify-content-center">
                     <h3>
                         {{texts['home.valueProblem1']}}
@@ -220,7 +233,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12 text-center">
-                    <div class="padtop">
+                    <div class="padsmalltop">
                         <a class="btn btn-ft btn-lg margin-half" routerLink="/crypto_pass" routerLinkActive="active">
                             <img src="{{texts['home.StickImageURL']}}" width="25px"/>
                             <span *ngIf="!isPreviousUser">{{texts['home.startButton']}}</span>
@@ -239,3 +252,35 @@
     </div>
     </div>
 </section>
+
+ <!---
+        <div class="ssetheightmin">
+            <div class="vvideo-annotation-layer ccode-container container-fluid">
+                <div class="row">
+                    <div class="col-sm-7 col-md-5 offset-md-1 col-lg-4 offset-lg-2" style="z-index:999">
+                        <div class="vvideo-annotation-1 text-left">
+                            <!--- 
+                            <h1 class="fthero">
+                                <span [innerHTML]="texts['home.Hero1']">
+                                </span>
+                            </h1>
+
+                            <h4 class="fthero3 shadow" [innerHTML]="texts['home.Hero2']">
+                            </h4>
+                            !--
+                            <div class="ftherobutton">
+                                <a class="btn btn-ft btn-lg margin-half" routerLink="/crypto_pass" routerLinkActive="active">
+                                    <span *ngIf="!isPreviousUser">{{texts['home.startButton']}}</span>
+                                    <span *ngIf="isPreviousUser && !isSignedIn">{{texts['home.startButtonUser']}}</span>
+                                    <span *ngIf="isPreviousUser && isSignedIn">{{texts['home.startButtonAccount']}}</span>
+                                </a>
+                            </div>
+                        </div>         
+                    </div>
+                    <div class="col-sm-5 col-md-6 mbminus50 text-center">
+                        <img src="{{texts['home.explainationImageURL']}}" class="headerborder mobileimagea" width="100%"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        !-->
