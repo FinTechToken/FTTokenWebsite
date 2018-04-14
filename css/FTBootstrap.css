@@ -259,6 +259,9 @@ b, strong {
 .padsmalltop{
     padding-top:25px;
 }
+.padsmallbottom{
+    padding-bottom:25px;
+}
 .undopadtop{
     padding-bottom:-75px;
 }
