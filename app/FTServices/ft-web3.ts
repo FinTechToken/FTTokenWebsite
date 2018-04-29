@@ -21,6 +21,7 @@ export class FTWeb3Service {
             this.nets['existing'] = web3.currentProvider;
         }
         this.nets['testnet'] = 'wss://testmarket.fintechtoken.com';
+        this.nets['local'] = 'http://localhost:8545';
 
         this.interval  = setInterval( () => {
             this.currentNetSeconds += 1;
@@ -68,6 +69,7 @@ export class FTWeb3Service {
     private setProvider( netName ): void {
         let FTweb3 = new Web3();
         FTweb3.setProvider(new FTweb3.providers.WebsocketProvider(this.nets[netName]));
+        //FTweb3.setProvider(new FTweb3.providers.HttpProvider(this.nets[netName]));
         return FTweb3;
     }
 

@@ -85,9 +85,6 @@ body {
     color: #3a3a3a; 
 }
 .ftheronomargin {
-    font-size:1.8rem;
-    letter-spacing: -1px;
-    font-weight:600;
     color: #3a3a3a; 
 }
 .fthero2{
@@ -162,7 +159,6 @@ b, strong {
 
 .btn-ft:hover, .btn-ft:focus {
     color: #151b1e;
-    text-shadow: 1px 1px 6px #FFB41B;
     background-color: #fafafa;
     border-color: #d08d2e;
 }

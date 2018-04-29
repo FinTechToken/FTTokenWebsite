@@ -12,6 +12,7 @@
             <div class="row">
                 <div class="col-sm-10 offset-sm-1 text-center">
                     <a class="btn btn-ft btn-lg margin-half" routerLink="/crypto_pass" routerLinkActive="active">
+                        <img src="{{texts['home.StickImageURL']}}" width="25px"/>
                         <span *ngIf="!isPreviousUser">{{texts['home.startButton']}}</span>
                         <span *ngIf="isPreviousUser && !isSignedIn">{{texts['home.startButtonUser']}}</span>
                         <span *ngIf="isPreviousUser && isSignedIn">{{texts['home.startButtonAccount']}}</span>
@@ -24,13 +25,13 @@
             <div class="container padtop padbottom">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h2 class="ftheronomargin">
+                        <h3 class="ftheronomargin">
                             <span>
                                 {{texts['home.explainationImageHeader2']}}
                             </span>
-                        </h2>
+                        </h3>
                         <hr />
-                        <h4 class="fthero3d" style="background-color: #fff;
+                        <h4 class="fthero3" style="background-color: #fff;
                         padding: 1rem;
                         margin: 0px;
                             margin-top: 0px;
@@ -48,13 +49,13 @@
                     <div class="col-sm-1 text-center">
                     </div>
                     <div class="col-sm-5">
-                        <h2 class="ftheronomargin topsmall">
+                        <h3 class="ftheronomargin topsmall">
                             <span>
                                 {{texts['home.explainationImageHeader1']}}
                             </span>
-                        </h2>
+                        </h3>
                         <hr />
-                        <h4 class="fthero3d"  style="background-color: #fff;
+                        <h4 class="fthero3"  style="background-color: #fff;
                         padding: 1rem;
                         margin: 0px;
                             margin-top: 0px;
@@ -101,7 +102,7 @@
         <div class="container-fluid padsmallbottom padsmalltop backmustard">
             <div class="row">
                 <div class="col-sm-10 offset-sm-1 text-center">
-                    <h3>Why You Should Use Us</h3>
+                    <h3>Why Use FinTechToken</h3>
                 </div>
             </div>
         </div>
@@ -123,48 +124,48 @@
                         <div class="w-50" style="padding:1rem; border-right: 1px solid #F2A70E;">
                             <img src="{{texts['home.ScenarioImageURL1a']}}" width="100%" class="mobileimage"/>
                             <br><br>
-                            <h3>
+                            <h4 class="fthero3">
                                 {{texts['home.valueProblem1']}}
-                            </h3>
+                            </h4>
                         </div>
                         <div class="w-50" style="padding:1rem; border-left: 1px solid #F2A70E;">
                             <img src="{{texts['home.ScenarioImageURL1b']}}" width="100%" class="mobileimage"/>
                             <br><br>
-                            <h3>
+                            <h4 class="fthero3">
                                 {{texts['home.valueSolution1']}}
-                            </h3>
+                            </h4>
                         </div>
                     </div>
                     <div class="d-flex w-100" style="border-bottom: 1px solid #f2a70e; border-top: 1px solid #f2a70e">
                         <div class="w-50" style="padding:1rem; border-right: 1px solid #F2A70E;">
                             <img src="{{texts['home.ScenarioImageURL2a']}}" width="100%" class="mobileimage"/>
                             <br><br>
-                            <h3>
+                            <h4 class="fthero3">
                                 {{texts['home.valueProblem2']}}
-                            </h3>
+                            </h4>
                         </div>
                         <div class="w-50" style="padding:1rem; border-left: 1px solid #F2A70E;">
                             <img src="{{texts['home.ScenarioImageURL2b']}}" width="100%" class="mobileimage"/>
                             <br><br>
-                            <h3>
+                            <h4 class="fthero3">
                                 {{texts['home.valueSolution2']}}
-                            </h3>
+                            </h4>
                         </div>
                     </div>
                     <div class="d-flex w-100" style="border-bottom: 2px solid #f2a70e; border-top: 1px solid #f2a70e">
                         <div class="w-50" style="padding:1rem; border-right: 1px solid #F2A70E;">
                             <img src="{{texts['home.ScenarioImageURL3a']}}" width="100%" class="mobileimage"/>
                             <br><br>
-                            <h3>
+                            <h4 class="fthero3">
                                 {{texts['home.valueProblem3']}}
-                            </h3>
+                            </h4>
                         </div>
                         <div class="w-50" style="padding:1rem; border-left: 1px solid #F2A70E;">
                             <img src="{{texts['home.ScenarioImageURL3b']}}" width="100%" class="mobileimage"/>
                             <br><br>
-                            <h3>
+                            <h4 class="fthero3">
                                 {{texts['home.valueSolution3']}}
-                            </h3>
+                            </h4>
                         </div>
                     </div>
                 </div>
@@ -174,7 +175,7 @@
         <div class="container-fluid hidden-xs-down">
             <div class="row" style="border-top: 1px solid #f2a70e; border-bottom:#f2a70e 1px solid">
                 <div class="col-sm-3 d-flex align-items-center justify-content-center">
-                    <h3>
+                    <h3 class="fthero3">
                         {{texts['home.valueProblem1']}}
                     </h3>
                 </div>
@@ -182,7 +183,7 @@
                     <img src="{{texts['home.ScenarioImageURL1a']}}" width="100%" class="mobileimage"/>
                 </div>
                 <div class="col-sm-3 d-flex align-items-center justify-content-center" style="border-left:#F2A70E 1px solid">
-                    <h3>
+                    <h3 class="fthero3">
                         {{texts['home.valueSolution1']}}
                     </h3>
                 </div>
@@ -196,7 +197,7 @@
                     <img src="{{texts['home.ScenarioImageURL2a']}}" width="100%" class="mobileimage"/>
                 </div>
                 <div class="col-sm-3 d-flex align-items-center justify-content-center" style="border-right:#F2A70E 1px solid">
-                    <h3>
+                    <h3 class="fthero3">
                         {{texts['home.valueProblem2']}}
                     </h3>
                 </div>
@@ -204,7 +205,7 @@
                     <img src="{{texts['home.ScenarioImageURL2b']}}" width="100%" class="mobileimage"/>
                 </div>
                 <div class="col-sm-3 d-flex align-items-center justify-content-center">
-                    <h3>
+                    <h3 class="fthero3">
                         {{texts['home.valueSolution2']}}
                     </h3>
                 </div>
@@ -212,7 +213,7 @@
         
             <div class="row" style="border-top:#F2A70E 1px solid; border-bottom:#f2a70e 2px solid; ">
                 <div class="col-sm-3 d-flex align-items-center justify-content-center  padmobile">
-                    <h3>
+                    <h3 class="fthero3">
                         {{texts['home.valueProblem3']}}
                     </h3>
                 </div>
@@ -220,7 +221,7 @@
                     <img src="{{texts['home.ScenarioImageURL3a']}}" width="100%" class="mobileimage"/>
                 </div>
                 <div class="col-sm-3 d-flex align-items-center justify-content-center  padmobile" style="border-left:#F2A70E 1px solid">
-                    <h3>
+                    <h3 class="fthero3">
                         {{texts['home.valueSolution3']}}
                     </h3>
                 </div>
