@@ -415,7 +415,7 @@ a {
 
 .padtabs {
     padding-left: 0px;
-    padding-right: 25px;
+    /*padding-right: 25px;*/
 }
 
 .nav-link:hover > i, .nav-link:focus >i, .nav-link.active > i {

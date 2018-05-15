@@ -1,6 +1,11 @@
 declare var Web3: any;
 declare var web3: any;
 
+declare var rlp: any;
+declare var numberToHex: any;
+declare var EthJS: any;
+declare var BigNumber: any;
+
 import { Injectable }     from '@angular/core';
 import { FTCache } from '../FTFramework/FT-Cache';
 import { FTObserver } from '../FTFramework/FT-Observer';
@@ -15,6 +20,10 @@ export class FTWeb3Service {
     private interval;
     private currentNetName: string;
     private currentWeb3;
+
+    private zeroAddress="0000000000000000000000000000000000000000";
+    private gasPrice=0;
+    private chainId = "913945103463586943";
 
     constructor ( private cache: FTCache, private obs: FTObserver ) { 
         if(typeof web3 !== 'undefined'){
@@ -64,6 +73,87 @@ export class FTWeb3Service {
 
     decryptPrivateKey(encryptedId, PW): any {
         return this.currentWeb3.eth.accounts.decrypt(encryptedId, PW).privateKey;
+    }
+
+    multiplyBigNumber(numberA: string, numberB: string): string {
+        if(numberA == ""){
+          numberA = "0";
+        }
+        if(numberB == ""){
+          numberB = "0";
+        }
+        let x = new BigNumber(numberA);
+        let y = new BigNumber(numberB);
+        return x.times(y).toString(10);
+      }
+
+    signTrans(gasEst, toAddress, sendValue, encodedABI): any {
+        let fromAddress = this.cache.getCache('encrypted_id').address;
+        let privateKey = Buffer.from(rlp.stripHexPrefix(this.cache.getCache('key')), 'hex');
+        let maxGas = this.multiplyBigNumber(gasEst,"2");
+        return this.currentWeb3.eth.getTransactionCount('0x' + fromAddress)
+        .then( (nonce) => {
+            let txData;
+            if(toAddress){
+                txData = {
+                    nonce:    numberToHex(nonce),
+                    gasPrice: numberToHex(this.gasPrice),
+                    gasLimit: numberToHex(maxGas),
+                    to:       '0x' + toAddress,
+                    value:    numberToHex(sendValue),
+                    data:     encodedABI,
+                    chainId:  this.chainId.toString()
+                }
+            }
+            else{
+                txData = {
+                    nonce:    numberToHex(nonce),
+                    gasPrice: numberToHex(this.gasPrice),
+                    gasLimit: numberToHex(maxGas),
+                    value:    numberToHex(sendValue),
+                    data:     encodedABI,
+                    chainId:  this.chainId.toString()
+                }
+            }
+            var tx = new EthJS.Tx(txData);
+            tx.sign(privateKey);
+            return tx.serialize();
+        })
+        .catch(console.log);
+    }
+
+    compile(sourceCode): any{
+        return this.currentWeb3.eth.compile.solidity(sourceCode);
+    }
+
+    publishContract(compiledCode, gasEst){
+        return this.signTrans(gasEst, null, 0, compiledCode)
+        .then(signedTran=>
+            this.currentWeb3.eth.sendSignedTransaction('0x' + signedTran.toString('hex'))
+                /* .once('transactionHash', (hash) => { console.log('hash:' + hash) })
+                .once('receipt', (receipt) =>{ console.log('receipt:' + JSON.stringify(receipt) + ' contractAddr:' + receipt.contractAddress) })
+                .on('confirmation', (confNumber, receipt) => { console.log('confNumber: '+ confNumber); })
+                .on('error', (error) => { console.log('ERROR' + error);}) */
+                .then(newContractInstance=>{
+                    return newContractInstance.contractAddress;})
+                .catch(console.log) // instance with the new contract address
+        )
+        .catch(console.log);
+    }
+    
+    estimateGasPublish(compiledCode, compiledABI): any{
+        return this.deploy(compiledCode, compiledABI)
+        .estimateGas();
+    }
+
+    PublishABI(compiledCode, compiledABI): any{
+        return this.deploy(compiledCode, compiledABI)
+        .encodeABI();
+    }
+
+    private deploy(compiledCode, compiledABI): any{
+        let myContract = new this.currentWeb3.eth.Contract(compiledABI);
+        return myContract.deploy({data: compiledCode});
     }
 
     private setProvider( netName ): void {

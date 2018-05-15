@@ -8,6 +8,7 @@ import { FTHome } from './FTRoutes/FThome';
 import { FTBlockchain } from './FTRoutes/FTBlockchain';
 import { FTCryptoPass } from './FTRoutes/FTCryptoPass';
 import { FTMyAccount } from './FTRoutes/FTMyAccount';
+import { FTMyAccountOld } from './FTRoutes/FTMyAccountOld';
 import { FTMessages } from './FTRoutes/FTMessages';
 import { FTToken } from './FTRoutes/FTToken';
 
@@ -58,6 +59,11 @@ const routes: Routes = [ {
         path:'myaccount',
         data: {title: 'My FinTechToken account'},
         component: FTMyAccount
+    },
+    {
+        path:'myaccountold',
+        data: {title: 'My FinTechToken Old Account'},
+        component: FTMyAccountOld
     }
 ];
 

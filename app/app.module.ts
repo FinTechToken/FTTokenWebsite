@@ -28,6 +28,10 @@ import { FTToken } from './FTRoutes/FTToken';
 
 import { FTPhoneVerify } from './FTComponents/ft-phoneVerify';
 import { FTPhoneSMS } from './FTComponents/ft-phoneSMS';
+import { FTAccountExit } from './FTComponents/ft-account-exit';
+import { FTAccountCreate } from './FTComponents/ft-account-create';
+
+import { FTMyAccountOld } from './FTRoutes/FTMyAccountOld';
 
 @NgModule({
   imports: [ 
@@ -46,9 +50,12 @@ import { FTPhoneSMS } from './FTComponents/ft-phoneSMS';
     FTMessages, 
     FTModal,
     FTMyAccount, 
+    FTMyAccountOld,
     FTToken,
     FTPhoneVerify,
-    FTPhoneSMS
+    FTPhoneSMS,
+    FTAccountExit,
+    FTAccountCreate
   ],
   entryComponents: [ ],
   providers: [ 
