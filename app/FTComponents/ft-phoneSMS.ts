@@ -29,6 +29,7 @@ export class FTPhoneSMS {
   tel2;
   tel3;
   code;
+  pwUnlockGroupStatus;
 
   constructor( private cache: FTCache, private cryptoPassService: FTCryptoPassService, private text: FTText, private obs: FTObserver, private http: FTHttpClient, private session: FTSession, private FTLocalStorage: FTStorage ) 
   { 
@@ -73,10 +74,13 @@ export class FTPhoneSMS {
       .then( data => { 
           data = JSON.parse(data);
           if(data.account && data.token) {
+            this.pwUnlockGroupStatus = 'has-success';
             this.session.setItem('account', data.account);
             this.FTLocalStorage.setItem('account', data.account);
             this.cryptoPassService.sendToken(data.token, data.account);
             this.close();
+          } else {
+            this.pwUnlockGroupStatus = 'has-danger';
           }
       })
       .catch( err => {console.log(err);});

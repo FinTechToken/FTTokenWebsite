@@ -1,0 +1,94 @@
+<div class="modal-header">
+    <h5 class="modal-title">Sell a {{ftTokenWatch.TokenWatch[tokenIndex].name}}</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close();" href="javascript:void(0);">
+    <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body"  [ngStyle]="{'height':modalHeight}">
+    <ul class="nav nav-tabs">
+        <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': sellTabs == 1 }" (click)="changeSellTabs(1)" href="javascript:void(0);">Make Offer</a></li>
+        <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': sellTabs == 2 }" (click)="changeSellTabs(2)" href="javascript:void(0);">View Offers</a></li>
+        <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': sellTabs == 3 }" (click)="changeSellTabs(3)" href="javascript:void(0);">Past Trades</a></li>
+    </ul>
+    <div class="tab-white tab-content text-left">
+        <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': sellTabs == 1 }">
+            <div *ngIf="ftTokenWatch.TokenWatch[tokenIndex].mineTrade == '0'">
+                You need tokens to sell. Try buying a token or moving tokens to your trading account.
+            </div>
+            <div *ngIf="ftTokenWatch.TokenWatch[tokenIndex].mineTrade != '0'">
+                Number of Tokens: <a (click)="changeSellToken()" href="javascript:void(0);">{{ftweb3.fromWei(sellToken, 'ether')}}</a><br>
+                Price in FTT per token: <a (click)="changeSellPrice()" href="javascript:void(0);">{{ftweb3.fromWei(sellPrice, 'ether')}}</a><br>
+                Total FTT: {{ftweb3.fromWei(ftNum.divideBigNumber(ftNum.multiplyBigNumber(sellToken,ftNum.divideBigNumber(sellPrice,"1000000000000")),"1000000"),'ether') | number : '1.0-18'}}
+                <br><br>
+                - Transactional fee: {{ftweb3.fromWei(
+                    ftNum.divideBigNumber(
+                        ftNum.multiplyBigNumber(
+                            sellToken,
+                            ftNum.divideBigNumber(
+                                sellPrice,
+                                "1000000000000"
+                            )
+                        ),
+                        "1000000000"
+                    ), 'ether') | number: '1.0-18'}}<br>
+                - Add to book fee: 0.001<br>
+                <strong>Total FTT You Get: {{ftweb3.fromWei(
+                    ftNum.subtractBigNumber(
+                        ftNum.divideBigNumber(
+                            ftNum.multiplyBigNumber(
+                                sellToken,
+                                ftNum.divideBigNumber(
+                                    sellPrice,
+                                    "1000000000000"
+                                )
+                            ),
+                            "1000000"
+                        ),
+                        ftNum.addBigNumber(
+                            ftNum.divideBigNumber(
+                                ftNum.multiplyBigNumber(
+                                    sellToken,
+                                    ftNum.divideBigNumber(
+                                        sellPrice,
+                                        "1000000000000"
+                                    )       
+                                ),
+                                "1000000000"
+                            ),
+                            "1000000000000000"
+                        )
+                    ),'ether') | number : '1.0-18'}}
+                </strong>
+            </div>
+        </div>
+        <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': sellTabs == 2 }">
+            <ft-tradeTokenBook [tokenIndex]="tokenIndex"></ft-tradeTokenBook>
+        </div>    
+        <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': sellTabs == 3 }">
+            <ft-tradeTokenTrades [tokenIndex]="tokenIndex"></ft-tradeTokenTrades>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <ul class="nav nav-pills modal-nav text-center">
+        <li *ngIf="ftTokenWatch.TokenWatch[tokenIndex].mineTrade == '0'" class="nav-item w-100 prev">
+            <a class="nav-link" (click)="close()" href="javascript:void(0);">
+                Close
+            </a>
+        </li>
+        <li *ngIf="ftTokenWatch.TokenWatch[tokenIndex].mineTrade != '0'" class="nav-item w-50 prev">
+            <a class="nav-link" (click)="close()" href="javascript:void(0);">
+                Close
+            </a>
+        </li>
+        <li *ngIf="ftTokenWatch.TokenWatch[tokenIndex].mineTrade != '0' && sellToken != '0' && sellPrice != '0'" class="nav-item w-50 next">
+            <a class="nav-link" (click)="sellOfferConfirm()" href="javascript:void(0);">
+                Confirm Sell Offer
+                <small><br>Gas Est: {{ftMarket.Market.estimate | number}}</small>
+            </a>
+        </li>
+        <li *ngIf="ftTokenWatch.TokenWatch[tokenIndex].mineTrade != '0' && ( sellToken == '0' || sellPrice == '0')" class="nav-item w-50 next">
+            Need amount + price
+        </li>
+    </ul>
+</div>

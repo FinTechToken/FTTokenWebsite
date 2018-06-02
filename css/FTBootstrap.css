@@ -415,7 +415,7 @@ a {
 
 .padtabs {
     padding-left: 0px;
-    padding-right: 25px;
+    /*padding-right: 25px;*/
 }
 
 .nav-link:hover > i, .nav-link:focus >i, .nav-link.active > i {
@@ -425,6 +425,10 @@ a {
 .nav-link:hover, .nav-link:focus, .nav-link.active {
     color: #334c59;
     border-bottom: 2px solid #F2A70E;
+}
+
+.nav-link:hover:not(.active) {
+    background-color:#f0f0f0;
 }
 
 .nav-link:hover > i, .nav-link:focus > i {

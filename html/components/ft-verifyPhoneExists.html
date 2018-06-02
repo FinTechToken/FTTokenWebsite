@@ -1,0 +1,20 @@
+<div class="modal-header">
+    <h5 class="modal-title">Account Exists With Phone</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close();" href="javascript:void(0);">
+    <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body" [ngStyle]="{'height':modalHeight}">
+    An account already exists with that phone. <br><Br>
+    Recover account by clicking:<br>
+    Get Started -> Return -> Recover by text
+</div>
+<div class="modal-footer">
+    <ul class="nav nav-pills modal-nav text-center">
+        <li class="nav-item w-100 prev">
+            <a class="nav-link" (click)="close()" href="javascript:void(0);">
+                Okay
+            </a>
+        </li>
+    </ul>
+</div>

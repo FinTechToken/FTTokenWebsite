@@ -104,11 +104,13 @@ export class FTCryptoPassService {
                 if(data.token) {
                     this.session.setItem( 'token', data.token );
                     this.FTlocalStorage.setItem('token', data.token);
+                    this.observer.putObserver('isSignedIn', true);
                     this.checkPhone(data.token);
                 }
             })
             .catch( err => {console.log(err);});
-        }
+        } else
+            this.observer.putObserver('isSignedIn', true);
     }
 
         private checkPhone(mytoken):void {

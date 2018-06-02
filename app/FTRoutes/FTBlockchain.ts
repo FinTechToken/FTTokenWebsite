@@ -22,10 +22,8 @@ export class FTBlockchain {
   name = 'FinTechToken';
   visibility="hiddenss";
   blocknumber=0;
-  seconds=0;
   subscribeParam;
   subscribeBN;
-  subscribeBNSec;
   tabs=1;
    
   constructor( private obs: FTObserver, private router: Router, private route: ActivatedRoute, private session: FTSession, private cache: FTCache, private http:Http )
@@ -50,10 +48,6 @@ export class FTBlockchain {
     .subscribe( (bn) => {
       this.blocknumber = bn;
     });
-    this.subscribeBNSec = this.obs.getObserver('blockSeconds')
-    .subscribe( (bnsec) => {
-      this.seconds = bnsec;
-    });
   }
 
   changeTabs(tab:number): void{
@@ -69,6 +63,5 @@ export class FTBlockchain {
   ngOnDestroy(){
     this.subscribeParam.unsubscribe();
     this.subscribeBN.unsubscribe();
-    this.subscribeBNSec.unsubscribe();
   }
 }

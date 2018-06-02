@@ -1,0 +1,1190 @@
+<section>
+    <div class="homepage-hero-module">
+        <div class="block-image setheightmin"></div>
+        <div class="setheightmin">
+            <div class="video-annotation-layer code-container">    
+                <div class="video-annotation-1">
+                    <div class="row text-left h-100">
+                        <div class="col-md-6 offset-md-1 padsmalltop">
+                            <div class="media">
+                                <i class="hidden-md-down icon-user homepage-hero-module-icon icon-gradient d-flex mr-3"></i>
+                                <div class="media-body">
+                                    <h2 class="padleft">
+                                        <i class="hidden-lg-up icon-user icon-gradient"></i>
+                                        My Account
+                                        <span class="p-small return m-left-m30">{{fromAddress}}</span>
+                                    </h2>    
+                                    <ul class="nav nav-tabs">
+                                        <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 1 }" (click)="changeTabs(1)" href="javascript:void(0);">Balance</a></li>
+                                        <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 2 }" (click)="changeTabs(2)" href="javascript:void(0);">History</a></li>
+                                        <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 3 }" (click)="changeTabs(3)" href="javascript:void(0);">Sign Out</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="tab-white tab-content text-left">
+                                <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 1 }">
+                                    <h4>
+                                        <i (click)="showModal(2);" href="javascript:void(0);" class="icon-info hover"></i>
+                                        <strong>B</strong>alance
+                                    </h4>
+                                    <div><Br>
+                                        <span *ngIf="tutorial.subscription">Processing a transaction. Please wait. . .</span>
+                                        <table class="table table-sm table-bordered table-hover">
+                                            <thead class="thead">
+                                                <tr>
+                                                    <th>Token</th>
+                                                    <th>Block</th>
+                                                    <th>Account</th>
+                                                    <th>Book</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Ether</td>
+                                                    <td>
+                                                        <a *ngIf="accountBalance != '0'" href="javascript:void(0);" (click)="viewNumber(accountBalance);">
+                                                            {{ftNum.getEther(accountBalance) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(accountBalance)">.#</span>
+                                                        </a>
+                                                        <span *ngIf="accountBalance == '0'">0</span>
+                                                        <span *ngIf="!tutorial.subscription">
+                                                            <span *ngIf="accountBalance > '100000000000000000'" class="float-right">
+                                                                <i (click)="depositEther();" href="javascript:void(0);" class="icon-control-forward hover"></i>
+                                                            </span>
+                                                            <span *ngIf="Market.ether != '0'" class="float-right">
+                                                                <i (click)="withdrawEther();" href="javascript:void(0);" class="icon-control-rewind hover"></i>
+                                                            </span>
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <a *ngIf="Market.ether != '0'" href="javascript:void(0);" (click)="viewNumber(Market.ether);">
+                                                            {{ftNum.getEther(Market.ether) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(Market.ether)">.#</span>
+                                                        </a>
+                                                        <span *ngIf="Market.ether == '0'">0</span>
+                                                    </td>
+                                                    <td>
+                                                        <a *ngIf="bookEther != '0'" href="javascript:void(0);" (click)="viewNumber(bookEther);">
+                                                            {{ftNum.getEther(bookEther) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(bookEther)">.#</span>
+                                                        </a>
+                                                        <span *ngIf="bookEther == '0'">0</span>
+                                                        <span *ngIf="!tutorial.subscription">
+                                                            <span *ngIf="bookEther != '0'" class="float-right">
+                                                                <i (click)="cancelOffer();" href="javascript:void(0);" class="icon-close hover"></i>
+                                                            </span>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><a [routerLink]="['/token',FreeToken.address]" href="javascript:void(0);">FreeToken</a> <span *ngIf="FreeToken.lastPrice">({{+FreeToken.lastPrice/1000000}})</span></td>
+                                                    <td>
+                                                        <a *ngIf="FreeToken.mine != '0'" href="javascript:void(0);" (click)="viewNumber(FreeToken.mine);">
+                                                            {{ftNum.getEther(FreeToken.mine) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(FreeToken.mine)">.#</span>
+                                                        </a>
+                                                        <span *ngIf="FreeToken.mine == '0'">0</span>
+                                                        <span *ngIf="!tutorial.subscription">
+                                                            <span *ngIf="FreeToken.mine != '0'" class="float-right">
+                                                                <i (click)="setToken('free'); deposit();" href="javascript:void(0);" class="icon-control-forward hover"></i>
+                                                            </span>
+                                                            <span *ngIf="Market.free != '0'" class="float-right">
+                                                                <i (click)="setToken('free'); withdraw();" href="javascript:void(0);" class="icon-control-rewind hover"></i>
+                                                            </span>
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <a *ngIf="Market.free != '0'" href="javascript:void(0);" (click)="viewNumber(Market.free);">
+                                                            {{ftNum.getEther(Market.free) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(Market.free)">.#</span>
+                                                        </a>
+                                                        <span *ngIf="Market.free == '0'">0</span>
+                                                        <span *ngIf="!tutorial.subscription">
+                                                            <span *ngIf="Market.ether != '0'" class="float-right">
+                                                                <i (click)="setToken('free'); buy();" href="javascript:void(0);" class="icon-plus hover"></i>
+                                                            </span>
+                                                            <span *ngIf="Market.free != '0'" class="float-right">
+                                                                <i (click)="setToken('free'); sell();" href="javascript:void(0);" class="icon-minus hover"></i>
+                                                            </span>
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <a *ngIf="getBookTokenEther('0x' + FreeToken.address) != '0'" href="javascript:void(0);" (click)="viewNumber(getBookTokenEther('0x' + FreeToken.address));">
+                                                            {{ftNum.getEther(getBookTokenEther('0x' + FreeToken.address)) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(getBookTokenEther('0x' + FreeToken.address))">.#</span>
+                                                        </a>
+                                                        <span *ngIf="getBookTokenEther('0x' + FreeToken.address) == '0'">0</span>
+                                                        <span *ngIf="!tutorial.subscription">
+                                                            <span *ngIf="getBookTokenEther('0x' + FreeToken.address) != '0'" class="float-right">
+                                                                <i (click)="setToken('free'); cancelTokenOffer();" href="javascript:void(0);" class="icon-close hover"></i>
+                                                            </span>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><a [routerLink]="['/token',TradeToken.address]" href="javascript:void(0);">TradingToken</a> <span *ngIf="TradeToken.lastPrice">({{+TradeToken.lastPrice/1000000}})</span></td>
+                                                    <td>
+                                                        <a *ngIf="TradeToken.mine != '0'" href="javascript:void(0);" (click)="viewNumber(TradeToken.mine);">
+                                                            {{ftNum.getEther(TradeToken.mine) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(TradeToken.mine)">.#</span>
+                                                        </a>
+                                                        <span *ngIf="TradeToken.mine == '0'">0</span>
+                                                        <span *ngIf="!tutorial.subscription">
+                                                            <span *ngIf="TradeToken.mine != '0'" class="float-right">
+                                                                <i (click)="setToken('trade'); deposit();" href="javascript:void(0);" class="icon-control-forward hover"></i>
+                                                            </span>
+                                                            <span *ngIf="Market.trade != '0'" class="float-right">
+                                                                <i (click)="setToken('trade'); withdraw();" href="javascript:void(0);" class="icon-control-rewind hover"></i>
+                                                            </span>
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <a *ngIf="Market.trade != '0'" href="javascript:void(0);" (click)="viewNumber(Market.trade);">
+                                                            {{ftNum.getEther(Market.trade) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(Market.trade)">.#</span>
+                                                        </a>
+                                                        <span *ngIf="Market.trade == '0'">0</span>
+                                                        <span *ngIf="!tutorial.subscription">
+                                                            <span *ngIf="Market.ether != '0'" class="float-right">
+                                                                <i (click)="setToken('trade'); buy();" href="javascript:void(0);" class="icon-plus hover"></i>
+                                                            </span>
+                                                            <span *ngIf="Market.trade != '0'" class="float-right">
+                                                                <i (click)="setToken('trade'); sell();" href="javascript:void(0);" class="icon-minus hover"></i>
+                                                            </span>
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <a *ngIf="getBookTokenEther('0x' + TradeToken.address) != '0'" href="javascript:void(0);" (click)="viewNumber(getBookTokenEther('0x' + TradeToken.address));">
+                                                            {{ftNum.getEther(getBookTokenEther('0x' + TradeToken.address)) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(getBookTokenEther('0x' + TradeToken.address))">.#</span>
+                                                        </a>
+                                                        <span *ngIf="getBookTokenEther('0x' + TradeToken.address) == '0'">0</span>
+                                                        <span *ngIf="!tutorial.subscription">
+                                                            <span *ngIf="getBookTokenEther('0x' + TradeToken.address) != '0'" class="float-right">
+                                                                <i (click)="setToken('trade'); cancelTokenOffer();" href="javascript:void(0);" class="icon-close hover"></i>
+                                                            </span>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 2 }">
+                                    <h4>
+                                        <strong>H</strong>istory
+                                    </h4>
+                                    <div><Br>
+                                        Trades<br>
+                                        <table class="table table-sm table-bordered">
+                                            <tr><th>Token</th><th>Price</th><th>Tokens</th></tr>
+                                            <ng-container *ngFor="let key of getSortedKeys(myTradesMap,false)">
+                                                <tr><td><span *ngIf="myTradesMap[key].token == '0x' + FreeToken.address">Free Token</span><span *ngIf="myTradesMap[key].token == '0x' + TradeToken.address">Trade Token</span><span *ngIf="myTradesMap[key].token != '0x' + FreeToken.address && myTradesMap[key].token != '0x' + TradeToken.address">{{myTradesMap[key].token}}</span></td><td>{{+myTradesMap[key].price/1000000}}</td><td>{{ftweb3.fromWei(myTradesMap[key].count, 'ether') | number: '1.0-6'}}</td></tr>
+                                            </ng-container>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 3 }">
+                                    <h4>
+                                        <strong>S</strong>ign Out
+                                    </h4>
+                                    <div><br>
+                                        <a class="btn btn-lg btn-ft" (click)="signOut();" href="javascript:void(0);">
+                                            Sign Out
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-5 hidden-sm-down">
+                            <div class="imgborder">
+                                <!--<img src="img/office.jpg" class="rounded img-fluid setheightmax">!-->
+                            </div>
+                        </div>
+                    </div>
+                </div>         
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Modal NUMBER Edit on top of everything !-->
+<div *ngIf="modalNumber.show" [ngClass]="{ 'show block': modalNumber.show == true }" style="z-index:1051" class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content roboto">
+            <div class="modal-header">
+                <h5 class="modal-title">Pick amount: {{ftweb3.fromWei(modalNumber.number, 'ether')}} <small><br>An Ether is 1 with 18 zero's after it. We use "Ether" as an amount. It may represent an amount in tokens, or an amount of ether.</small></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModalNumber(modalNumber.orig)" href="javascript:void(0);">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div *ngIf="modalNumber.max != '0'">Maximum amount is {{ftweb3.fromWei(modalNumber.max, 'ether')}}</div>
+                <input min="0" max="999999999999" type="number" (change)="updateModalNumber();" value="{{ftNum.getEther(modalNumber.number)}}" id="modalNumberEther"> Ether<br>
+                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{ftNum.getFinney(modalNumber.number) | number : '1.0-0'}}" id="modalNumberFinney"> Finney<br>
+                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{ftNum.getSzabo(modalNumber.number) | number : '1.0-0'}}" id="modalNumberSzabo"> Szabo<br>
+                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{ftNum.getGwei(modalNumber.number) | number : '1.0-0'}}" id="modalNumberGwei"> Gwei<br>
+                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{ftNum.getMwei(modalNumber.number) | number : '1.0-0'}}" id="modalNumberMwei"> Mwei <br>
+                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{ftNum.getKwei(modalNumber.number) | number : '1.0-0'}}" id="modalNumberKwei"> Kwei <br>
+                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{ftNum.getWei(modalNumber.number) | number : '1.0-0'}}" id="modalNumberWei"> Wei<Br><Br>
+            </div>
+            <div class="modal-footer">
+                <ul class="nav nav-pills modal-nav text-center">
+                    <li class="nav-item w-100 next">
+                        <a class="nav-link" (click)="closeModalNumber(modalNumber.number)" href="javascript:void(0);">
+                            Close
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Price Edit on top of everything !-->
+<div *ngIf="modalPrice.show" [ngClass]="{ 'show block': modalPrice.show == true }" style="z-index:1051" class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content roboto">
+            <div class="modal-header">
+                <h5 class="modal-title">Pick amount: {{ftweb3.fromWei(modalPrice.number, 'ether')}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModalPrice(modalPrice.orig)" href="javascript:void(0);">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div *ngIf="modalPrice.max != '0'">Maximum amount is {{ftweb3.fromWei(modalPrice.max, 'ether')}}</div>
+                <input min="0" max="999999999999" type="number" (change)="updateModalPrice();" value="{{ftNum.getEther(modalPrice.number)}}" id="modalPriceEther"> Ether<br>
+                <input min="0" max="999" type="number" (change)="updateModalPrice();" value="{{ftNum.getFinney(modalPrice.number) | number : '1.0-0'}}" id="modalPriceFinney"> Finney<br>
+                <input min="0" max="999" type="number" (change)="updateModalPrice();" value="{{ftNum.getSzabo(modalPrice.number) | number : '1.0-0'}}" id="modalPriceSzabo"> Szabo<br>
+                <!-- <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{getGwei(modalNumber.number) | number : '1.0-0'}}" id="modalNumberGwei"> Gwei<br>
+                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{getMwei(modalNumber.number) | number : '1.0-0'}}" id="modalNumberMwei"> Mwei <br>
+                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{getKwei(modalNumber.number) | number : '1.0-0'}}" id="modalNumberKwei"> Kwei <br>
+                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{getWei(modalNumber.number) | number : '1.0-0'}}" id="modalNumberWei"> Wei<Br><Br>
+                !-->
+            </div>
+            <div class="modal-footer">
+                <ul class="nav nav-pills modal-nav text-center">
+                    <li class="nav-item w-100 next">
+                        <a class="nav-link" (click)="closeModalPrice(modalPrice.number)" href="javascript:void(0);">
+                            Close
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal 1 Number -->
+<div *ngIf="modal == 1" [ngClass]="{ 'show block': modal == 1 }" class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content roboto">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ftweb3.fromWei(number, 'ether')}} Ether <small><br>An Ether is 1 with 18 zero's after it. We use "Ether" as an amount. It may represent an amount in tokens, or an amount of ether.</small></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{ftNum.getEther(number) | number : '1.0-0'}} Ether<br>
+                {{ftNum.getFinney(number) | number : '1.0-0'}} Finney<br>
+                {{ftNum.getSzabo(number) | number : '1.0-0'}} Szabo<br>
+                {{ftNum.getGwei(number) | number : '1.0-0'}} Gwei<br>
+                {{ftNum.getMwei(number) | number : '1.0-0'}} Mwei <br>
+                {{ftNum.getKwei(number) | number : '1.0-0'}} Kwei <br>
+                {{ftNum.getWei(number) | number : '1.0-0'}} Wei<Br><Br>
+            </div>
+            <div class="modal-footer">
+                <ul class="nav nav-pills modal-nav text-center">
+                    <li class="nav-item w-100 next">
+                        <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                            Got it
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 2 Balance info -->
+<div [ngClass]="{ 'show block': modal == 2 }" class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content roboto">
+            <div class="modal-header">
+                <h5 class="modal-title">About Balances</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <strong>What is an block, account and book?</strong><br>
+                <ul>
+                    <li><strong>Block:</strong> This is the balance at your address on the blockchain. You can access this from other blockchain wallet.</li>
+                    <li><strong>Account:</strong> This is the balance in your account. To trade you need to deposit assets onto the token market smart contract account. You can withdraw assets at any time.</li>
+                    <li><strong>Book:</strong> This is the balance that you bid. When you make an offer, we move assets onto the book from your account. This way when a transaction occurs the assets are immediately available. You can cancel offers to move assets back into your account.</li>
+                </ul>
+                <strong>Why do some numbers have links?</strong><br>
+                Blockchain numbers are extremely large. This makes them hard to read and is often the cause of errors.
+                If a number is a small fraction we show it in a popup window with each thousands marker a new line.
+                <br><br>
+                For example, it is hard to read 10.123123123123123123 Ether. <br><br>
+                It's easier to read<br>
+                10 Ether<br>
+                123 Finney<br>
+                123 Szabo<br>
+                123 Gwei<br>
+                123 Mwei <br>
+                123 Kwei <br>
+                123 Wei<Br><Br>
+
+            </div>
+            <div class="modal-footer">
+                <ul class="nav nav-pills modal-nav text-center">
+                    <li class="nav-item w-100 next">
+                        <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                            Got it
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 4 Approve Deposit Free token-->
+<div [ngClass]="{ 'show block': modal == 4 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Deposit {{currentToken.name}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <h5>Depositing Tokens involves 2 steps.</h5>
+            First, the {{currentToken.name}} Smart Contract needs permission from you to allow
+            the Market Smart Contract to transfer <a (click)="changeDeposit()" href="javascript:void(0);">{{ftweb3.fromWei(depositAmount,'ether')}}</a> {{currentToken.name}}.<br><Br>
+            Second, the Market Smart Contract deposits the {{currentToken.name}} into your Market account.
+            <Br><Br>
+            <h5>Confirm that you approve the deposit.</h5>
+            This transaction costs you {{ftweb3.fromWei(ftNum.multiplyBigNumber(currentToken.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
+            <br>
+            <select *ngIf="accountBalance != '0'" [(ngModel)]="gasPrice" (click)="deposit(true)">
+                <option value="0">Free Gas</option>
+                <option value="1000000000">Low Gas Cost (1 gwei)</option>
+                <option value="5000000000">Medium Gas Cost (5 gwei)</option>
+                <option value="21000000000">High Gas Cost (21 gwei)</option>
+            </select>
+            <br>
+            The approval is estimated to use {{currentToken.estimate | number}} gas.
+            <span *ngIf="currentToken.estimate == maxGas">That is all the gas. Most likely an error.</span>
+        </div>
+        <div class="modal-footer">
+            <ul class="nav nav-pills modal-nav text-center">
+                <li class="nav-item w-50 prev">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Cancel
+                    </a>
+                </li>
+                <li class="nav-item w-50 next">
+                    <a class="nav-link" (click)="approveConfirm()" href="javascript:void(0);">
+                        Confirm Approval
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 5 Approved now deposit Free Token-->
+<div [ngClass]="{ 'show block': modal == 5 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Deposit {{currentToken.name}} - Waiting for step 1</h5>
+        </div>
+        <div class="modal-body">
+            <h5>Once the approval is added to the blockchain you will be able to send the deposit transaction to the blockchain.</h5>
+            This transaction costs you {{ftweb3.fromWei(ftNum.multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
+            <br>
+            <select *ngIf="accountBalance != '0'" [(ngModel)]="gasPrice" (click)="approveConfirm()">
+                <option value="0">Free Gas</option>
+                <option value="1000000000">Low Gas Cost (1 gwei)</option>
+                <option value="5000000000">Medium Gas Cost (5 gwei)</option>
+                <option value="21000000000">High Gas Cost (21 gwei)</option>
+            </select>
+            <br>
+            <span *ngIf="Market.estimate == '0'">Wait for approval transaction to see deposit transaction gas estimate.</span>
+            <span *ngIf="Market.estimate != '0'">Deposit is estimated to use {{Market.estimate | number}} gas.</span>
+            <span *ngIf="Market.estimate == maxGas">That is all the gas. Most likely an error. Please wait for approval to complete.</span>
+            <br><Br>
+            This may take a few blocks for the approval. (Time since last block {{seconds}})
+            <div [ngClass]="{ 'alert-warning': !currentToken.transaction, 'alert-success': currentToken.transaction }" class="alert" role="alert">Transaction sent to blockchain
+                <br>{{currentToken.transaction}}
+            </div>
+            <div [ngClass]="{'alert-warning': !currentToken.receipt, 'alert-success': currentToken.receipt }" class="alert" role="alert">Transaction added to blockchain
+                <br>Gas Used: {{currentToken.receipt?.gasUsed | number}}
+                <span *ngIf="currentToken.error">ERROR {{currentToken.error}}</span>
+            </div>
+            <div [ngClass]="{'alert-warning': currentToken.confirmed < 2, 'alert-success': currentToken.confirmed > 1 }" class="alert" role="alert">Transaction confirmed on blockchain {{currentToken.confirmed}} times</div>
+        </div>
+        <div class="modal-footer">
+            <ul class="nav nav-pills modal-nav text-center">
+                <li *ngIf="currentToken.receipt" class="nav-item w-100 next">
+                    <a class="nav-link" (click)="depositConfirm()" href="javascript:void(0);">
+                        Confirm Deposit
+                    </a>
+                </li>
+                <li *ngIf="!currentToken.receipt" class="nav-item w-100 next">
+                    <span>
+                        Wait
+                    </span>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>
+<!-- Modal 6 Deposit Free Token-->
+<div [ngClass]="{ 'show block': modal == 6 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Deposit {{currentToken.name}} Transaction</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            This may take a few blocks. (Time since last block {{seconds}})
+            <div [ngClass]="{ 'alert-warning': !Market.transaction, 'alert-success': Market.transaction }" class="alert" role="alert">Transaction sent to blockchain
+                <br>{{Market.transaction}}
+            </div>
+            <div [ngClass]="{'alert-warning': !Market.receipt, 'alert-success': Market.receipt }" class="alert" role="alert">Transaction added to blockchain
+                <br>Gas Used: {{Market.receipt?.gasUsed | number}}
+                <span *ngIf="Market.error">ERROR {{Market.error}}</span>
+            </div>
+            <div [ngClass]="{'alert-warning': Market.confirmed < 2, 'alert-success': Market.confirmed > 1 }" class="alert" role="alert">Transaction confirmed on blockchain {{Market.confirmed}} times</div>
+        </div>
+        <div class="modal-footer">
+            <ul class="nav nav-pills modal-nav text-center">
+                <li class="nav-item w-100 next">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Close
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>
+    
+<!-- Modal 7 Withdraw Free token-->
+<div [ngClass]="{ 'show block': modal == 7 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Withdraw {{currentToken.name}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <h5>Withdraw {{currentToken.name}}</h5>
+            Withdraw <a (click)="changeWithdraw()" href="javascript:void(0);">{{ftweb3.fromWei(withdrawAmount,'ether')}}</a> {{currentToken.name}}.<br><Br>
+                This transaction costs you {{ftweb3.fromWei(ftNum.multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
+                <br>
+                <select *ngIf="accountBalance != '0'" [(ngModel)]="gasPrice" (click)="withdraw(true)">
+                    <option value="0">Free Gas</option>
+                    <option value="1000000000">Low Gas Cost (1 gwei)</option>
+                    <option value="5000000000">Medium Gas Cost (5 gwei)</option>
+                    <option value="21000000000">High Gas Cost (21 gwei)</option>
+                </select>
+            <br>
+            It is estimated to use {{Market.estimate | number}} gas.
+            <span *ngIf="Market.estimate == maxGas">That is all the gas. Most likely an error.</span>
+        </div>
+        <div class="modal-footer">
+            <ul class="nav nav-pills modal-nav text-center">
+                <li class="nav-item w-50 prev">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Cancel
+                    </a>
+                </li>
+                <li class="nav-item w-50 next">
+                    <a class="nav-link" (click)="approveWithdraw()" href="javascript:void(0);">
+                        Confirm
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 8 Withdraw Confirm Free Token-->
+<div [ngClass]="{ 'show block': modal == 8 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Withdraw {{currentToken.name}} Transaction</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            This may take a few blocks. (Time since last block {{seconds}})
+            <div [ngClass]="{ 'alert-warning': !Market.transaction, 'alert-success': Market.transaction }" class="alert" role="alert">Transaction sent to blockchain
+                <br>{{Market.transaction}}
+            </div>
+            <div [ngClass]="{'alert-warning': !Market.receipt, 'alert-success': Market.receipt }" class="alert" role="alert">Transaction added to blockchain
+                <br>Gas Used: {{Market.receipt?.gasUsed | number}}
+                <span *ngIf="Market.error">ERROR {{Market.error}}</span>
+            </div>
+            <div [ngClass]="{'alert-warning': Market.confirmed < 2, 'alert-success': Market.confirmed > 1 }" class="alert" role="alert">Transaction confirmed on blockchain {{Market.confirmed}} times</div>
+        </div>
+        <div class="modal-footer">
+            <ul class="nav nav-pills modal-nav text-center">
+                <li class="nav-item w-100 next">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Close
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>
+    
+<!-- Modal 9 Buy -->
+<div [ngClass]="{ 'show block': modal == 9 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Buy a {{currentToken.name}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <ul class="nav nav-tabs">
+                <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': buyTabs == 1 }" (click)="changeBuyTabs(1)" href="javascript:void(0);">Make Offer</a></li>
+                <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': buyTabs == 2 }" (click)="changeBuyTabs(2)" href="javascript:void(0);">View Offers</a></li>
+                <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': buyTabs == 3 }" (click)="changeBuyTabs(3)" href="javascript:void(0);">Past Trades</a></li>
+            </ul>
+            <div class="tab-white tab-content text-left">
+                <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': buyTabs == 1 }">
+                    <div *ngIf="Market.ether == '0'">
+                        You need Ether to purchase a token. Try selling a token or adding Ether to your account.
+                    </div>
+                    <div *ngIf="Market.ether != '0'">
+                        Number of Tokens: <a (click)="changeBuyToken()" href="javascript:void(0);">{{ftweb3.fromWei(buyToken, 'ether')}}</a><br>
+                        Price in ether per Ether of tokens: <a (click)="changeBuyPrice()" href="javascript:void(0);">{{+buyPrice/1000000 | number  : '1.0-6'}}</a><br>
+                        Transactional fee: 0<br>
+                        Add to book fee: 0.001 (only if you add a new entry to the book because there is no immediate seller)<br>
+                        <strong>Total Ether: {{ftweb3.fromWei(ftNum.addBigNumber(ftNum.divideBigNumber(ftNum.multiplyBigNumber(buyToken,buyPrice),"1000000"),"1000000000000000"),'ether') | number : '1.0-18'}}</strong><br>
+                        <br>
+                        <h5>Confirm that you approve the offer to buy tokens</h5>
+                        This transaction costs you {{ftweb3.fromWei(ftNum.multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
+                        <br>
+                        <select *ngIf="accountBalance != '0'" [(ngModel)]="gasPrice" (click)="buy()">
+                            <option value="0">Free Gas</option>
+                            <option value="1000000000">Low Gas Cost (1 gwei)</option>
+                            <option value="5000000000">Medium Gas Cost (5 gwei)</option>
+                            <option value="21000000000">High Gas Cost (21 gwei)</option>
+                        </select>
+                        <br>
+                        It is estimated to use {{Market.estimate | number}} gas.
+                        <span *ngIf="Market.estimate == maxGas">That is all the gas. Most likely an error.</span>
+                    </div>
+                </div>
+                <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': buyTabs == 2 }">
+                    <h4>
+                        <strong>O</strong>ffers<br>
+                    </h4>
+                    <div>
+                        <span *ngIf="currentToken.lastPrice">
+                            <strong>LastPrice:</strong>
+                            {{+currentToken.lastPrice/1000000}} Ether per token for {{ftweb3.fromWei(currentToken.lastCount, 'ether') | number : '1.0-18'}} tokens
+                            <br>
+                        </span>
+                        
+                        <br>
+                        <table class="table table-sm">
+                            <tr><th class="alert-success">Buy</th><th class="alert-danger">Sell</th></tr>
+                            <tr valign="top"><td class="alert-success">
+                                <table class="tab-white table table-sm table-bordered">
+                                    <tr><th>Price</th><th>Tokens</th></tr>
+                                    <ng-container *ngFor="let key of getSortedKeys(currentToken.buyMap, false)">
+                                        <tr *ngIf="currentToken.buyMap[key] != '0'"><td>{{+key/1000000}}</td><td>{{ftweb3.fromWei(currentToken.buyMap[key], 'ether') | number : '1.0-6'}}</td></tr>
+                                    </ng-container>
+                                </table>
+                            </td>
+                            <td valign="top" class="alert-danger">
+                                <table class="tab-white table table-sm table-bordered">
+                                    <tr><th>Price</th><th>Tokens</th></tr>
+                                    <ng-container *ngFor="let key of getSortedKeys(currentToken.sellMap, true)">
+                                        <tr *ngIf="currentToken.sellMap[key] != '0'"><td>{{+key/1000000}}</td><td>{{ftweb3.fromWei(currentToken.sellMap[key], 'ether') | number: '1.0-6'}}</td></tr>
+                                    </ng-container>
+                                </table>
+                            </td></tr>
+
+                        </table>
+                    </div>
+                </div>    
+                <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': buyTabs == 3 }">
+                    <h4>
+                        <strong>T</strong>rades
+                    </h4>
+                    <div>
+                        <br>
+                        <table class="table table-sm table-bordered">
+                            <tr><th>Price</th><th>Tokens</th></tr>
+                            <ng-container *ngFor="let key of getSortedKeys(currentToken.tradeMap,false)">
+                                <tr><td>{{+currentToken.tradeMap[key].price/1000000}}</td><td>{{ftweb3.fromWei(currentToken.tradeMap[key].count, 'ether') | number: '1.0-6'}}</td></tr>
+                            </ng-container>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <ul class="nav nav-pills modal-nav text-center">
+                <li *ngIf="Market.ether == '0'" class="nav-item w-100 prev">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Close
+                    </a>
+                </li>
+                <li *ngIf="Market.ether != '0'" class="nav-item w-50 prev">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Close
+                    </a>
+                </li>
+                <li *ngIf="Market.ether != '0' && buyToken != '0' && buyPrice != '0'" class="nav-item w-50 next">
+                    <a class="nav-link" (click)="buyConfirm()" href="javascript:void(0);">
+                        Confirm
+                    </a>
+                </li>
+                <li *ngIf="Market.ether != '0' && ( buyToken == '0' || buyPrice == '0')" class="nav-item w-50 next">
+                    Need amount + price
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 10 Bought Token-->
+<div [ngClass]="{ 'show block': modal == 10 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Buy a token</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            When this transaction is recieved check your account.<br>
+            If there was a seller you will have the token in your account.<br>
+            If there was not a seller your Ether will be in the book waiting for a seller. You will also pay a 1 finney (0.001 Ether) book fee.<br>
+            You can either cancel the offer to move Ether off the book and into your account or wait until a seller sells. If you cancel the offer you get the 1 finney back.<br>
+            When a seller sells you tokens, you will get the tokens in your account and the seller will get the 1 finney.<br><Br>
+
+            This may take a few blocks. (Time since last block {{seconds}})
+            <div [ngClass]="{ 'alert-warning': !Market.transaction, 'alert-success': Market.transaction }" class="alert" role="alert">Transaction sent to blockchain
+                <br>{{Market.transaction}}
+            </div>
+            <div [ngClass]="{'alert-warning': !Market.receipt, 'alert-success': Market.receipt }" class="alert" role="alert">Transaction added to blockchain
+                <br>Gas Used: {{Market.receipt?.gasUsed | number}}<br><br>
+                <span *ngIf="Market.error">ERROR {{Market.error}}</span>
+            </div>
+            <div [ngClass]="{'alert-warning': Market.confirmed < 2, 'alert-success': Market.confirmed > 1 }" class="alert" role="alert">Transaction confirmed on blockchain {{Market.confirmed}} times</div>
+        </div>
+        <div class="modal-footer">
+            <ul class="nav nav-pills modal-nav text-center">
+                <li class="nav-item w-100 prev">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Close
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>
+
+    
+<!-- Modal 11 Sell -->
+<div [ngClass]="{ 'show block': modal == 11 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Sell a {{currentToken.name}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <ul class="nav nav-tabs">
+                <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': sellTabs == 1 }" (click)="changeSellTabs(1)" href="javascript:void(0);">Make Offer</a></li>
+                <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': sellTabs == 2 }" (click)="changeSellTabs(2)" href="javascript:void(0);">View Offers</a></li>
+                <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': sellTabs == 3 }" (click)="changeSellTabs(3)" href="javascript:void(0);">Past Trade</a></li>
+            </ul>
+            <div class="tab-white tab-content text-left">
+                <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': sellTabs == 1 }">
+                    <div *ngIf="currentToken.market == '0'">
+                        You need a token in your account to sell a token. Try getting a free token, buying a token, or depositing a token to your account.
+                    </div>
+                    <div *ngIf="currentToken.market != '0'">
+                        Number of Tokens: <a (click)="changeSellToken(currentToken.market)" href="javascript:void(0);">{{ftweb3.fromWei(sellToken, 'ether')}}</a><br>
+                        Price in ether per Ether of tokens: <a (click)="changeSellPrice()" href="javascript:void(0);">{{+sellPrice/1000000 | number  : '1.0-6'}}</a><br>
+                        Transactional fee: {{ftweb3.fromWei(ftNum.divideBigNumber(ftNum.multiplyBigNumber(sellToken,sellPrice),"1000000000"), 'ether') | number: '1.0-18'}}<br>
+                        Add to book fee: 0.001 (only if you add a new entry to the book because there is no immediate buyer)<br>
+                        <strong>Total Ether You Get: {{ftweb3.fromWei(ftNum.subtractBigNumber(ftNum.divideBigNumber(ftNum.multiplyBigNumber(sellToken,sellPrice),"1000000"),ftNum.addBigNumber(ftNum.divideBigNumber(ftNum.multiplyBigNumber(sellToken,sellPrice),"1000000000"),"1000000000000000")),'ether') | number : '1.0-18'}}</strong><br>
+                        <br>
+                        <h5>Confirm that you approve the offer to buy tokens</h5>
+                        This transaction costs you {{ftweb3.fromWei(ftNum.multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
+                        <br>
+                        <select *ngIf="accountBalance != '0'" [(ngModel)]="gasPrice" (click)="sell()">
+                            <option value="0">Free Gas</option>
+                            <option value="1000000000">Low Gas Cost (1 gwei)</option>
+                            <option value="5000000000">Medium Gas Cost (5 gwei)</option>
+                            <option value="21000000000">High Gas Cost (21 gwei)</option>
+                        </select>
+                        <br>
+                        It is estimated to use {{Market.estimate | number}} gas.
+                        <span *ngIf="Market.estimate == maxGas">That is all the gas. Most likely an error.</span>
+                    </div>
+                </div>
+                <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': sellTabs == 2 }">
+                    <h4>
+                        <strong>O</strong>ffers<br>
+                    </h4>
+                    <div>
+                        <span *ngIf="currentToken.lastPrice">
+                            <strong>LastPrice:</strong>
+                            {{+currentToken.lastPrice/1000000}} Ether per token for {{ftweb3.fromWei(currentToken.lastCount, 'ether') | number : '1.0-18'}} tokens
+                            <br>
+                        </span>
+                        
+                        <br>
+                        <table class="table table-sm">
+                            <tr><th class="alert-success">Buy</th><th class="alert-danger">Sell</th></tr>
+                            <tr valign="top"><td class="alert-success">
+                                <table class="tab-white table table-sm table-bordered">
+                                    <tr><th>Price</th><th>Tokens</th></tr>
+                                    <ng-container *ngFor="let key of getSortedKeys(currentToken.buyMap, false)">
+                                        <tr *ngIf="currentToken.buyMap[key] != '0'"><td>{{+key/1000000}}</td><td>{{ftweb3.fromWei(currentToken.buyMap[key], 'ether') | number : '1.0-6'}}</td></tr>
+                                    </ng-container>
+                                </table>
+                            </td>
+                            <td valign="top" class="alert-danger">
+                                <table class="tab-white table table-sm table-bordered">
+                                    <tr><th>Price</th><th>Tokens</th></tr>
+                                    <ng-container *ngFor="let key of getSortedKeys(currentToken.sellMap, true)">
+                                        <tr *ngIf="currentToken.sellMap[key] != '0'"><td>{{+key/1000000}}</td><td>{{ftweb3.fromWei(currentToken.sellMap[key], 'ether') | number: '1.0-6'}}</td></tr>
+                                    </ng-container>
+                                </table>
+                            </td></tr>
+
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': sellTabs == 3 }">
+                    <h4>
+                        <strong>T</strong>rades
+                    </h4>
+                    <div>
+                        <br>
+                        <table class="table table-sm table-bordered">
+                            <tr><th>Price</th><th>Tokens</th></tr>
+                            <ng-container *ngFor="let key of getSortedKeys(currentToken.tradeMap,false)">
+                                <tr><td>{{+currentToken.tradeMap[key].price/1000000}}</td><td>{{ftweb3.fromWei(currentToken.tradeMap[key].count, 'ether') | number: '1.0-6'}}</td></tr>
+                            </ng-container>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <ul class="nav nav-pills modal-nav text-center">
+                <li *ngIf="currentToken.market == '0'" class="nav-item w-100 prev">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Close
+                    </a>
+                </li>
+                <li *ngIf="currentToken.market != '0'" class="nav-item w-50 prev">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Close
+                    </a>
+                </li>
+                <li *ngIf="currentToken.market != '0' && sellToken != '0' && sellPrice != '0'" class="nav-item w-50 next">
+                    <a class="nav-link" (click)="sellConfirm()" href="javascript:void(0);">
+                        Confirm
+                    </a>
+                </li>
+                <li *ngIf="currentToken.market != '0' && ( sellToken == '0' || sellPrice == '0')" class="nav-item w-50 next">
+                    Need amount + price
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 12 Sold Token-->
+<div [ngClass]="{ 'show block': modal == 12 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Sell a token</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            When this transaction is recieved check your account.<br>
+            If there was a buyer you will have Ether in your account.<br>
+            If there was not a buyer your tokens will be in the book waiting for a buyer. You will also pay a 1 finney (0.001 Ether) book fee.<br>
+            You can either cancel the offer to move Tokens off the book and into your account or wait until a buyer buys.<br>
+            When a buyer buys your tokens, you will get the Ether in your account minus the 1 finney.<br><Br>
+
+            This may take a few blocks. (Time since last block {{seconds}})
+            <div [ngClass]="{ 'alert-warning': !Market.transaction, 'alert-success': Market.transaction }" class="alert" role="alert">Transaction sent to blockchain
+                <br>{{Market.transaction}}
+            </div>
+            <div [ngClass]="{'alert-warning': !Market.receipt, 'alert-success': Market.receipt }" class="alert" role="alert">Transaction added to blockchain
+                <br>Gas Used: {{Market.receipt?.gasUsed | number}}<br><br>
+                <span *ngIf="Market.error">ERROR {{Market.error}}</span>
+            </div>
+            <div [ngClass]="{'alert-warning': Market.confirmed < 2, 'alert-success': Market.confirmed > 1 }" class="alert" role="alert">Transaction confirmed on blockchain {{Market.confirmed}} times</div>
+        </div>
+        <div class="modal-footer">
+            <ul class="nav nav-pills modal-nav text-center">
+                <li class="nav-item w-100 prev">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Close
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 13 Deposit Ether-->
+<div [ngClass]="{ 'show block': modal == 13 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Deposit Ether</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <h5>Deposit Ether Into Your Account</h5>
+            Remember that Gas comes out of your blockchain address. If you deposit ALL your Ether 
+            you won't be able to pay the gas required for transactions.
+            Make sure you always keep enough Ether on the blockchain to pay for gas to run your transactions.
+            We recommend keeping a balance of at least 0.1 Ether.
+            <Br><Br>
+            Amount to deposit: <a (click)="changeEtherDeposit()" href="javascript:void(0);">{{ftweb3.fromWei(depositEtherAmount, 'ether') | number}}</a>
+            <br>Amount remaining: {{ftweb3.fromWei(ftNum.subtractBigNumber(accountBalance, depositEtherAmount), 'ether') | number }}
+            <h5>Confirm that you approve the deposit</h5>
+            This transaction costs you {{ftweb3.fromWei(ftNum.multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
+            <br>
+            <select *ngIf="accountBalance != '0'" [(ngModel)]="gasPrice" (click)="depositEther(true)">
+                <option value="0">Free Gas</option>
+                <option value="1000000000">Low Gas Cost (1 gwei)</option>
+                <option value="5000000000">Medium Gas Cost (5 gwei)</option>
+                <option value="21000000000">High Gas Cost (21 gwei)</option>
+            </select>
+            <br>
+            It is estimated to use {{Market.estimate | number}} gas.
+            <span *ngIf="Market.estimate == maxGas">That is all the gas. Most likely an error.</span>
+        </div>
+        <div class="modal-footer">
+            <ul class="nav nav-pills modal-nav text-center">
+                <li class="nav-item w-50 prev">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Cancel
+                    </a>
+                </li>
+                <li class="nav-item w-50 next">
+                    <a class="nav-link" (click)="depositEtherConfirm()" href="javascript:void(0);">
+                        Confirm
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 14 Deposited Ether-->
+<div [ngClass]="{ 'show block': modal == 14 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Deposited Ether</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            This may take a few blocks for the approval. (Time since last block {{seconds}})
+            <div [ngClass]="{ 'alert-warning': !Market.transaction, 'alert-success': Market.transaction }" class="alert" role="alert">Transaction sent to blockchain
+                <br>{{Market.transaction}}
+            </div>
+            <div [ngClass]="{'alert-warning': !Market.receipt, 'alert-success': Market.receipt }" class="alert" role="alert">Transaction added to blockchain
+                <br>Gas Used: {{Market.receipt?.gasUsed | number}}
+                <span *ngIf="Market.error">ERROR {{Market.error}}</span>
+            </div>
+            <div [ngClass]="{'alert-warning': Market.confirmed < 2, 'alert-success': Market.confirmed > 1 }" class="alert" role="alert">Transaction confirmed on blockchain {{Market.confirmed}} times</div>
+        </div>
+        <div class="modal-footer">
+            <ul class="nav nav-pills modal-nav text-center">
+                <li class="nav-item w-100 prev">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Close
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 15 Withdraw Ether-->
+<div [ngClass]="{ 'show block': modal == 15 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Withdraw Ether</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <h5>Withdraw Ether Into Your Account</h5>
+            <Br><Br>
+            Amount to withdraw: <a (click)="changeEtherWithdraw()" href="javascript:void(0);">{{ftweb3.fromWei(withdrawEtherAmount, 'ether') | number : '1.0-9' }}</a><br>
+            <h5>Confirm that you approve the withdraw</h5>
+            This transaction costs you {{ftweb3.fromWei(ftNum.multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
+            <br>
+            <select *ngIf="accountBalance != '0'" [(ngModel)]="gasPrice" (click)="withdrawEther(true)">
+                <option value="0">Free Gas</option>
+                <option value="1000000000">Low Gas Cost (1 gwei)</option>
+                <option value="5000000000">Medium Gas Cost (5 gwei)</option>
+                <option value="21000000000">High Gas Cost (21 gwei)</option>
+            </select>
+            <br>
+            It is estimated to use {{Market.estimate | number}} gas.
+            <span *ngIf="Market.estimate == maxGas">That is all the gas. Most likely an error.</span>
+        </div>
+        <div class="modal-footer">
+            <ul class="nav nav-pills modal-nav text-center">
+                <li class="nav-item w-50 prev">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Cancel
+                    </a>
+                </li>
+                <li class="nav-item w-50 next">
+                    <a class="nav-link" (click)="withdrawEtherConfirm()" href="javascript:void(0);">
+                        Confirm
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 16 Withdrew Ether-->
+<div [ngClass]="{ 'show block': modal == 16 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Withdraw Ether</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            This may take a few blocks. (Time since last block {{seconds}})
+            <div [ngClass]="{ 'alert-warning': !Market.transaction, 'alert-success': Market.transaction }" class="alert" role="alert">Transaction sent to blockchain
+                <br>{{Market.transaction}}
+            </div>
+            <div [ngClass]="{'alert-warning': !Market.receipt, 'alert-success': Market.receipt }" class="alert" role="alert">Transaction added to blockchain
+                <br>Gas Used: {{Market.receipt?.gasUsed | number}}
+                <span *ngIf="Market.error">ERROR {{Market.error}}</span>
+            </div>
+            <div [ngClass]="{'alert-warning': Market.confirmed < 2, 'alert-success': Market.confirmed > 1 }" class="alert" role="alert">Transaction confirmed on blockchain {{Market.confirmed}} times</div>
+        </div>
+        <div class="modal-footer">
+            <ul class="nav nav-pills modal-nav text-center">
+                <li class="nav-item w-100 prev">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Close
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 17 Cancel Buy Offer-->
+<div [ngClass]="{ 'show block': modal == 17 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Cancel Buy Offer</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <h5>Cancel an offer previously made</h5>
+            Note: Your offer might be accepted prior to the cancellation.<br>
+            You can only cancel one offer at a time.<br>
+            <div *ngFor="let item of getTokensOfBook()">
+                Token: <span *ngIf="item=='0x9287bb21719d283CfdD7d644a89E8492f9845B64'">Free Token</span>
+                <span *ngIf="item=='0x2d5e86187855CC29B40469e8a7355f3fDBf4C088'">Trading Token</span>
+                <span *ngIf="item!='0x9287bb21719d283CfdD7d644a89E8492f9845B64' && item!='0x2d5e86187855CC29B40469e8a7355f3fDBf4C088'">{{item}}</span><br>
+                <div *ngFor="let item2 of getPricesOfTokenBook(item)">
+                    --Price: {{+item2/1000000 | number}}<br>
+                    ----Count: {{ftweb3.fromWei(this.book.get(item).get(item2).count, 'ether') | number}}<br>
+                    ----Fee: {{ftweb3.fromWei(this.book.get(item).get(item2).fee, 'ether') | number}}<br>
+                    ----TOTAL: {{ftweb3.fromWei(ftNum.addBigNumber(ftNum.divideBigNumber(ftNum.multiplyBigNumber(item2,this.book.get(item).get(item2).count),"1000000"),this.book.get(item).get(item2).fee), 'ether') | number}}<br>
+                    <a class="btn btn-ft" href="javascript:void(0);" (click)="setCancelOffer(item,item2,true)">Cancel This Offer</a>
+                    <br>
+                    <Br>
+                </div>
+            </div>
+            <h5>Confirm that you approve the cancellation</h5>
+            This transaction costs you {{ftweb3.fromWei(ftNum.multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
+            <br>
+            <select *ngIf="accountBalance != '0'" [(ngModel)]="gasPrice" (click)="cancelOffer(lastOffer.token, lastOffer.amount, lastOffer.buysell);">
+                <option value="0">Free Gas</option>
+                <option value="1000000000">Low Gas Cost (1 gwei)</option>
+                <option value="5000000000">Medium Gas Cost (5 gwei)</option>
+                <option value="21000000000">High Gas Cost (21 gwei)</option>
+            </select>
+            <br>
+            It is estimated to use {{Market.estimate | number}} gas.
+            <span *ngIf="Market.estimate == maxGas">That is all the gas. Most likely an error.</span>
+        </div>
+        <div class="modal-footer">
+            <ul class="nav nav-pills modal-nav text-center">
+                <li class="nav-item w-50 prev">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Cancel
+                    </a>
+                </li>
+                <li *ngIf="Market.estimate == '0'" class="nav-item w-50 next">
+                    Pick Offer To Cancel
+                </li>
+                <li *ngIf="Market.estimate != '0'" class="nav-item w-50 next">
+                    <a class="nav-link" (click)="cancelOfferConfirm()" href="javascript:void(0);">
+                        Confirm
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 18 Cancel Sell Offer-->
+<div *ngIf="modal == 18" [ngClass]="{ 'show block': modal == 18 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Cancel Sell Offer</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <h5>Cancel an offer previously made</h5>
+            Note: Your offer might be accepted prior to the cancellation.<br>
+            You can only cancel one offer at a time.<br>
+            <div>
+                Token: <span *ngIf="currentToken.address=='9287bb21719d283CfdD7d644a89E8492f9845B64'">Free Token</span>
+                <span *ngIf="currentToken.address=='2d5e86187855CC29B40469e8a7355f3fDBf4C088'">Trading Token</span>
+                <span *ngIf="currentToken.address!='9287bb21719d283CfdD7d644a89E8492f9845B64' && currentToken.address!='2d5e86187855CC29B40469e8a7355f3fDBf4C088'">{{'0x' + currentToken.address}}</span><br>
+                <div *ngFor="let item2 of getPricesSellOfTokenBook('0x' + currentToken.address)">
+                    --Price: {{+item2/1000000 | number}}<br>
+                    ----Count: {{ftweb3.fromWei(this.bookToken.get('0x' + currentToken.address).get(item2).count, 'ether') | number}}<br>
+                    <a class="btn btn-ft" href="javascript:void(0);" (click)="setCancelOffer('0x' + currentToken.address,item2,false)">Cancel This Offer</a>
+                    <br>
+                    <Br>
+                </div>
+            </div>
+            <h5>Confirm that you approve the cancellation</h5>
+            This transaction costs you {{ftweb3.fromWei(ftNum.multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
+            <br>
+            <select *ngIf="accountBalance != '0'" [(ngModel)]="gasPrice" (click)="cancelTokenOffer(lastOffer.token, lastOffer.amount, lastOffer.buysell);">
+                <option value="0">Free Gas</option>
+                <option value="1000000000">Low Gas Cost (1 gwei)</option>
+                <option value="5000000000">Medium Gas Cost (5 gwei)</option>
+                <option value="21000000000">High Gas Cost (21 gwei)</option>
+            </select>
+            <br>
+            It is estimated to use {{Market.estimate | number}} gas.
+            <span *ngIf="Market.estimate == maxGas">That is all the gas. Most likely an error.</span>
+        </div>
+        <div class="modal-footer">
+            <ul class="nav nav-pills modal-nav text-center">
+                <li class="nav-item w-50 prev">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Cancel
+                    </a>
+                </li>
+                <li *ngIf="Market.estimate == '0'" class="nav-item w-50 next">
+                    Pick Offer To Cancel
+                </li>
+                <li *ngIf="Market.estimate != '0'" class="nav-item w-50 next">
+                    <a class="nav-link" (click)="cancelOfferConfirm()" href="javascript:void(0);">
+                        Confirm
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal 19 Cancelled Offer-->
+<div [ngClass]="{ 'show block': modal == 19 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Cancel Offer</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            This may take a few blocks. (Time since last block {{seconds}})
+            <div [ngClass]="{ 'alert-warning': !Market.transaction, 'alert-success': Market.transaction }" class="alert" role="alert">Transaction sent to blockchain
+                <br>{{Market.transaction}}
+            </div>
+            <div [ngClass]="{'alert-warning': !Market.receipt, 'alert-success': Market.receipt }" class="alert" role="alert">Transaction added to blockchain
+                <br>Gas Used: {{Market.receipt?.gasUsed | number}}
+                <span *ngIf="Market.error">ERROR {{Market.error}}</span>
+            </div>
+            <div [ngClass]="{'alert-warning': Market.confirmed < 2, 'alert-success': Market.confirmed > 1 }" class="alert" role="alert">Transaction confirmed on blockchain {{Market.confirmed}} times</div>
+        </div>
+        <div class="modal-footer">
+            <ul class="nav nav-pills modal-nav text-center">
+                <li class="nav-item w-100 prev">
+                    <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
+                        Close
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>

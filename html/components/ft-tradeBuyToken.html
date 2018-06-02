@@ -1,0 +1,58 @@
+<div class="modal-header">
+    <h5 class="modal-title">Buy a {{ftTokenWatch.TokenWatch[tokenIndex].name}}</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close();" href="javascript:void(0);">
+    <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body"  [ngStyle]="{'height':modalHeight}">
+    <ul class="nav nav-tabs">
+        <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': buyTabs == 1 }" (click)="changeBuyTabs(1)" href="javascript:void(0);">Make Offer</a></li>
+        <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': buyTabs == 2 }" (click)="changeBuyTabs(2)" href="javascript:void(0);">View Offers</a></li>
+        <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': buyTabs == 3 }" (click)="changeBuyTabs(3)" href="javascript:void(0);">Past Trades</a></li>
+    </ul>
+    <div class="tab-white tab-content text-left">
+        <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': buyTabs == 1 }">
+            <div *ngIf="ftMarket.getAccountBalance() == '0'">
+                You need Ether to purchase a token. Try selling a token or adding Ether to your account.
+            </div>
+            <div *ngIf="ftMarket.getAccountBalance() != '0'">
+                Number of Tokens: <a (click)="changeBuyToken()" href="javascript:void(0);">{{ftweb3.fromWei(buyToken, 'ether')}}</a><br>
+                Price in FTT per token: <a (click)="changeBuyPrice()" href="javascript:void(0);">{{ftweb3.fromWei(buyPrice, 'ether')}}</a><br>
+                Total FTT: {{ftweb3.fromWei(ftNum.divideBigNumber(ftNum.multiplyBigNumber(buyToken,ftNum.divideBigNumber(buyPrice,"1000000000000")),"1000000"),'ether') | number : '1.0-18'}}
+                <br><br>
+                Transactional fee: 0<br>
+                Add to book fee: 0.001<br>
+                <strong>Total FTT: {{ftweb3.fromWei(ftNum.addBigNumber(ftNum.divideBigNumber(ftNum.multiplyBigNumber(buyToken,ftNum.divideBigNumber(buyPrice,"1000000000000")),"1000000"),"1000000000000000"),'ether') | number : '1.0-18'}}</strong><br>
+            </div>
+        </div>
+        <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': buyTabs == 2 }">
+            <ft-tradeTokenBook [tokenIndex]="tokenIndex"></ft-tradeTokenBook>
+        </div>    
+        <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': buyTabs == 3 }">
+            <ft-tradeTokenTrades [tokenIndex]="tokenIndex"></ft-tradeTokenTrades>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <ul class="nav nav-pills modal-nav text-center">
+        <li *ngIf="ftMarket.getAccountBalance() == '0'" class="nav-item w-100 prev">
+            <a class="nav-link" (click)="close()" href="javascript:void(0);">
+                Close
+            </a>
+        </li>
+        <li *ngIf="ftMarket.getAccountBalance() != '0'" class="nav-item w-50 prev">
+            <a class="nav-link" (click)="close()" href="javascript:void(0);">
+                Close
+            </a>
+        </li>
+        <li *ngIf="ftMarket.getAccountBalance() != '0' && buyToken != '0' && buyPrice != '0'" class="nav-item w-50 next">
+            <a class="nav-link" (click)="buyOfferConfirm()" href="javascript:void(0);">
+                Confirm Buy Offer
+                <small><br>Gas Est: {{ftMarket.Market.estimate | number}}</small>
+            </a>
+        </li>
+        <li *ngIf="ftMarket.getAccountBalance() != '0' && ( buyToken == '0' || buyPrice == '0')" class="nav-item w-50 next">
+            Need amount + price
+        </li>
+    </ul>
+</div>

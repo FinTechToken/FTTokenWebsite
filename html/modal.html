@@ -1,250 +1,110 @@
-<div *ngIf="modal == 'authenticate.unlocked'" class="show block modal fade" tabindex="-1" aria-hidden="true">
+<div *ngIf="modal != '' && modal !='showNumber' && modal !='pickNumber'" class="show block modal fade" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content roboto">
-            <ft-phoneVerify></ft-phoneVerify>
+            <ft-phoneVerify *ngIf="modal == 'authenticate.unlocked'"></ft-phoneVerify>
+            <ft-phoneSMS *ngIf="modal == 'authenticate.SMS'"></ft-phoneSMS>
+            <ft-enterImport *ngIf="modal == 'authenticate.enterImport'"></ft-enterImport>
+            <ft-verifyDelete *ngIf="modal == 'authenticate.verifyDelete'"></ft-verifyDelete>
+            <ft-verifyPhoneExists *ngIf="modal == 'verify.PhoneExists'"></ft-verifyPhoneExists>
+            <ft-signUpInfo *ngIf="modal == 'authenticate.signupInfo'"></ft-signUpInfo>
+            <ft-depositEtherToTrade *ngIf="modal=='account-trade.depositEther'"></ft-depositEtherToTrade>
+            <ft-withdrawEtherFromTrade *ngIf="modal=='account-trade.withdrawEther'"></ft-withdrawEtherFromTrade>
+            <ft-depositTokenToTrade *ngIf="modal=='account-trade.depositToken'"></ft-depositTokenToTrade>
+            <ft-withdrawTokenFromTrade *ngIf="modal=='account-trade.withdrawToken'"></ft-withdrawTokenFromTrade>
+            <ft-tradeBuyToken *ngIf="modal=='account-trade.buyToken'"></ft-tradeBuyToken>
+            <ft-tradeSellToken *ngIf="modal=='account-trade.sellToken'"></ft-tradeSellToken>
         </div>
     </div>
 </div>
 
-<div *ngIf="modal == 'authenticate.SMS'" class="show block modal fade" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content roboto">
-            <ft-phoneSMS></ft-phoneSMS>
-        </div>
-    </div>
-</div>
-
-<div *ngIf="modal == 'authenticate.enterImport'" class="show block modal fade" tabindex="-1" aria-hidden="true">
+<div *ngIf="modal == 'showNumber'" class="show block modal fade" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content roboto">
             <div class="modal-header">
-                <h5 class="modal-title">Import Account: Advanced Information</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close();" href="javascript:void(0);">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" [ngStyle]="{'height':modalHeight}">
-                <p>
-                    Importing CryptoPass let's you interface directly with blockchain without any information going to our servers.
-                    This is the most secure. But, it means a few things.
-                    <br><Br>- We cannot recover your information. We don't store it, so we can't recover it.
-                    <br> - We cannot send you your account via email or phone. We don't store it, so we can't help you.
-                    <br> - You'll need to enter your CryptoPass each time you visit the site. We don't store it so you need to enter it every time.
-                </p>
-            </div>
-            <div class="modal-footer">
-                <ul class="nav nav-pills modal-nav text-center">
-                    <li class="nav-item w-100 next">
-                        <a class="nav-link" (click)="close()" href="javascript:void(0);">
-                            Got It
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div *ngIf="modal == 'verify.PhoneExists'" class="show block modal fade" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content roboto">
-            <div class="modal-header">
-                <h5 class="modal-title">Account Exists With Phone</h5>
+                <h5 class="modal-title">{{ftweb3.fromWei(number, 'ether')}} Ether <small><br>An Ether is 1 with 18 zero's after it. We use "Ether" as an amount. It may represent an amount in tokens, or an amount of ether.</small></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close();" href="javascript:void(0);">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body" [ngStyle]="{'height':modalHeight}">
-                An account already exists with that phone. <br><Br>
-                Recover account by clicking:<br>
-                Get Started -> Return -> Recover by text
-            </div>
-            <div class="modal-footer">
-                <ul class="nav nav-pills modal-nav text-center">
-                    <li class="nav-item w-100 prev">
-                        <a class="nav-link" (click)="close()" href="javascript:void(0);">
-                            Okay
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div *ngIf="modal == 'authenticate.verifyDelete'" class="show block modal fade" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content roboto">
-            <div class="modal-header">
-                <h5 class="modal-title">Clear Account</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close();" href="javascript:void(0);">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" [ngStyle]="{'height':modalHeight}">
-                Are you sure?<br><Br>
-                    This clears all account information. Copy keys to a secure place prior to clearing them.
-            </div>
-            <div class="modal-footer">
-                <ul class="nav nav-pills modal-nav text-center">
-                    <li class="nav-item w-50 prev">
-                        <a class="nav-link" (click)="close()" href="javascript:void(0);">
-                            No
-                        </a>
-                    </li>
-                    <li class="nav-item w-50 next">
-                        <a class="nav-link" (click)="deleteAccount()" href="javascript:void(0);">
-                            Yes
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div *ngIf="modal == 'authenticate.signupInfo'" class="show block modal fade" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content roboto">
-            <div class="modal-header">
-                <h3 class="modal-title">
-                    <div class="d-flex flex-row">
-                        <div class="p-2"><img src="/img/svg/Icon_Key.svg" width="50px" /></div>
-                        <div class="p-2">
-                            <span>
-                                FinTechToken is secured with CryptoPass
-                            </span>
-                        </div>
-                    </div>
-                </h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close();" href="javascript:void(0);">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" [ngStyle]="{'height':modalHeight}">
-                <br>
-                <h3>
-                    What is CryptoPass?
-                </h3>
-                <p>
-                    <span>
-                        CryptoPass provides access to all major blockchains & tokens in one place.
-                        <br><Br>
-                    </span>
-                </p>
-                <hr>
-                <br>
-                <h3>
-                    How does CryptoPass work?
-                </h3>
-                <p>
-                    <span>
-                        CryptoPass is built on the same cryptography as the Ethereum network. 
-                        <br><br>
-                        Your account/keys are stored in one smart contract. 
-                        With that smart contract you can send transactions to any major blockchain.
-                        <br><Br>
-                    </span>
-                </p>
-                <hr>
-                <br>
-                <h3>
-                    Is CryptoPass secure?
-                </h3>
-                <p>
-                    <span>
-                        Yes. All transactions are encrypted clientside with your account/key pair.
-                        Because encryption happens on the client, your secure data never travels unencrypted over the internet. 
-                        Your secure data is always encrypted when stored.
-                        <br><Br>
-                    </span>
-                </p>        
-                <hr>
-                <br>
-                <h3>
-                    What is the FinTechToken network?
-                </h3>
-                <p>
-                    <span>
-                        The FinTechToken network tokenizes all major blockchains.
-                        You can use the network to transact with major cryptocurrencies with 0 fees at 1 second blocks.
-                        <br><Br>
-                        You can also create your own smart contracts using any major cryptocurrencies.
-                        <br><Br>
-                    </span>
-                </p>        
-                <hr>
-                <br>
-                <h3>
-                    Is FinTechToken verifiable?
-                </h3>
-                <p>
-                    <span>
-                        Yes. We publish all blocks from the FinTechToken network on S3 every minute so anyone can verify transactions.
-                        <br><Br>
-                        Our code is Token Sourced and available for anyone to read.
-                        <br><Br>
-                    </span>
-                </p>        
-                <hr>
-                <br>
-                <h3>
-                    What is a pass phrase?
-                </h3>
-                <p>
-                    <span>
-                        A pass phrase is a group of random words.
-                        The pass phrase unlocks your CryptoPass. Keep it secret and secure.
-                        If someone knows or guesses your pass phrase they can use your CryptoPass.
-                        <br><Br>
-                    </span>
-                </p>
-                <hr>
-                <br>
-                <h3>
-                    What if I forget my passphrase?
-                </h3>
-                <p>
-                    <span>
-                        If a passphrase is lost, it is lost forever.
-                        The most secure thing is to protect your own passphrase.
-                        <br><Br>
-                        We offer an optional service to store your passphrase in our digital vault. 
-                        This way the pass phrase can be recovered.
-                        We also allow you to name a beneficiary. 
-                        <br><Br>
-                    </span>
-                </p>    
-                <hr>
-                <br>
-<!--
-                <strong>What information is needed to create an account?</strong><br>
-                None. Blockchain revolutionizes privacy. You can use services without 
-                disclosing personal information.<br>
-                <br>
-                <strong>How much does an account cost?</strong><br>
-                It's free.<br>
-                <br>
-                <strong>What is a blockchain account?</strong><br>
-                An account is made up of a public address and a private key. Both are two long strings of charecters.<br>
-                <br>
-                <ul>
-                    <li><strong>Public Address:</strong> This "address" is publicly viewed on the blockchain. If someone wants to send something to you, they use the public address.</li>
-                    <li><strong>Private Key:</strong> The key is used to encrypt/decrypt blockchain transactions. This must be kept secure because the holder of the key can use the account.</li>
-                </ul>
-                <br>
-                <strong>What is a PassPhrase?</strong><br>
-                The PassPhrase is similar to a password. It is used to 
-                encrypt your account. You use it when you sign in.
-                We suggest using a phrase because 4-5 random words is easier for people to remember
-                and almost impossible to crack. 
-!-->
+            <div class="modal-body"  [ngStyle]="{'height':modalHeight}">
+                {{ftNum.getEther(number) | number : '1.0-0'}} Ether<br>
+                {{ftNum.getFinney(number) | number : '1.0-0'}} Finney<br>
+                {{ftNum.getSzabo(number) | number : '1.0-0'}} Szabo<br>
+                {{ftNum.getGwei(number) | number : '1.0-0'}} Gwei<br>
+                {{ftNum.getMwei(number) | number : '1.0-0'}} Mwei <br>
+                {{ftNum.getKwei(number) | number : '1.0-0'}} Kwei <br>
+                {{ftNum.getWei(number) | number : '1.0-0'}} Wei<Br><Br>
             </div>
             <div class="modal-footer">
                 <ul class="nav nav-pills modal-nav text-center">
                     <li class="nav-item w-100 next">
                         <a class="nav-link" (click)="close()" href="javascript:void(0);">
                             Got it
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="modal=='pickNumber'" class="show block modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content roboto">
+            <div class="modal-header">
+                <h5 class="modal-title">Pick amount: {{ftweb3.fromWei(number, 'ether')}} <small><br>An Ether is 1 with 18 zero's after it. We use "Ether" as an amount. It may represent an amount in tokens, or an amount of ether.</small></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()" href="javascript:void(0);">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body"  [ngStyle]="{'height':modalHeight}">
+                <div *ngIf="maxNumber != '0'">Maximum amount is {{ftweb3.fromWei(maxNumber, 'ether')}}</div>
+                <input min="0" max="999999999999" type="number" (change)="updateModalNumber();" value="{{ftNum.getEther(number)}}" id="modalNumberEther"> Ether<br>
+                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{ftNum.getFinney(number) | number : '1.0-0'}}" id="modalNumberFinney"> Finney<br>
+                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{ftNum.getSzabo(number) | number : '1.0-0'}}" id="modalNumberSzabo"> Szabo<br>
+                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{ftNum.getGwei(number) | number : '1.0-0'}}" id="modalNumberGwei"> Gwei<br>
+                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{ftNum.getMwei(number) | number : '1.0-0'}}" id="modalNumberMwei"> Mwei <br>
+                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{ftNum.getKwei(number) | number : '1.0-0'}}" id="modalNumberKwei"> Kwei <br>
+                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{ftNum.getWei(number) | number : '1.0-0'}}" id="modalNumberWei"> Wei<Br><Br>
+            </div>
+            <div class="modal-footer">
+                <ul class="nav nav-pills modal-nav text-center">
+                    <li class="nav-item w-100 next">
+                        <a class="nav-link" (click)="close()" href="javascript:void(0);">
+                            Close
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="modal=='pickNumberSmall'" class="show block modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content roboto">
+            <div class="modal-header">
+                <h5 class="modal-title">Pick amount: {{ftweb3.fromWei(number, 'ether')}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()" href="javascript:void(0);">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" [ngStyle]="{'height':modalHeight}">
+                <div *ngIf="maxNumber != '0'">Maximum amount is {{ftweb3.fromWei(maxNumber, 'ether') | number : '1.0-6'}}</div>
+                <input min="0" max="999999999999" type="number" (change)="updateModalPrice();" value="{{ftNum.getEther(number)}}" id="modalPriceEther"> Ether<br>
+                <input min="0" max="999" type="number" (change)="updateModalPrice();" value="{{ftNum.getFinney(number) | number : '1.0-0'}}" id="modalPriceFinney"> Finney<br>
+                <input min="0" max="999" type="number" (change)="updateModalPrice();" value="{{ftNum.getSzabo(number) | number : '1.0-0'}}" id="modalPriceSzabo"> Szabo<br>
+                <!-- <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{getGwei(modalNumber.number) | number : '1.0-0'}}" id="modalNumberGwei"> Gwei<br>
+                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{getMwei(modalNumber.number) | number : '1.0-0'}}" id="modalNumberMwei"> Mwei <br>
+                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{getKwei(modalNumber.number) | number : '1.0-0'}}" id="modalNumberKwei"> Kwei <br>
+                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{getWei(modalNumber.number) | number : '1.0-0'}}" id="modalNumberWei"> Wei<Br><Br>
+                !-->
+            </div>
+            <div class="modal-footer">
+                <ul class="nav nav-pills modal-nav text-center">
+                    <li class="nav-item w-100 next">
+                        <a class="nav-link" (click)="close()" href="javascript:void(0);">
+                            Close
                         </a>
                     </li>
                 </ul>
