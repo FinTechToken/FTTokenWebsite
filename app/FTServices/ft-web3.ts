@@ -9,6 +9,7 @@ declare var BigNumber: any;
 import { Injectable }     from '@angular/core';
 import { FTCache } from '../FTFramework/FT-Cache';
 import { FTObserver } from '../FTFramework/FT-Observer';
+import { FTBigNumberService } from './ft-bigNumber';
 
 // Originally I thought the user would switch between blockchains. Why not be on all of them at once?
 // Either this should be refactored to enable that - or this is the Ethereum instance that gets called by the global one that keeps track of everything.
@@ -16,8 +17,6 @@ import { FTObserver } from '../FTFramework/FT-Observer';
 @Injectable()
 export class FTWeb3Service {
     private nets:string[]=[];
-    private currentNetSeconds = 0;
-    private interval;
     private currentNetName: string;
     private currentWeb3;
 
@@ -25,17 +24,12 @@ export class FTWeb3Service {
     private gasPrice=0;
     private chainId = "913945103463586943";
 
-    constructor ( private cache: FTCache, private obs: FTObserver ) { 
+    constructor ( private cache: FTCache, private obs: FTObserver, private bigNum: FTBigNumberService ) { 
         if(typeof web3 !== 'undefined'){
             this.nets['existing'] = web3.currentProvider;
         }
         this.nets['testnet'] = 'wss://testmarket.fintechtoken.com';
         this.nets['local'] = 'http://localhost:8545';
-
-        this.interval  = setInterval( () => {
-            this.currentNetSeconds += 1;
-            this.obs.putObserver('blockSeconds', this.currentNetSeconds);
-        }, 1000); 
     }
     
     initializeWeb3(): void{
@@ -58,7 +52,7 @@ export class FTWeb3Service {
         /* Currently we put wb3 instance in cache so any component can use it.
         Better to create functions in this service. 
         That way we have one place to update things like send transaction when we add BitCoin, LiteCoin, Monero, etc etc */
-        this.cache.putCache('wb3', newWeb3); //Remove this once not used anywhere in code
+         this.cache.putCache('wb3', newWeb3); //Remove this once not used anywhere in code
         this.currentWeb3 = newWeb3;
         this.configureBlock();
     }
@@ -75,22 +69,36 @@ export class FTWeb3Service {
         return this.currentWeb3.eth.accounts.decrypt(encryptedId, PW).privateKey;
     }
 
-    multiplyBigNumber(numberA: string, numberB: string): string {
-        if(numberA == ""){
-          numberA = "0";
-        }
-        if(numberB == ""){
-          numberB = "0";
-        }
-        let x = new BigNumber(numberA);
-        let y = new BigNumber(numberB);
-        return x.times(y).toString(10);
-      }
+    getBalance(fromAddress): any {
+        return this.currentWeb3.eth.getBalance(fromAddress)
+        .then( (balance) => {
+            return balance.toString(); 
+        })
+        .catch(console.log);
+    }
+
+    getMyBalance(): any {
+        return this.getBalance(this.cache.getCache('encrypted_id').address);
+    }
+
+    createContractInterface(contractABI, contractAddress): any {
+        return new this.currentWeb3.eth.Contract(contractABI, contractAddress, {
+            gasPrice: '0' // default gas price in wei
+          });
+    }
+
+    asciiToHex(myString): any {
+        return this.currentWeb3.utils.asciiToHex(myString);
+    }
+
+    fromWei(amount, convertTo): any {
+        return this.currentWeb3.utils.fromWei(amount, convertTo);
+    }
 
     signTrans(gasEst, toAddress, sendValue, encodedABI): any {
         let fromAddress = this.cache.getCache('encrypted_id').address;
         let privateKey = Buffer.from(rlp.stripHexPrefix(this.cache.getCache('key')), 'hex');
-        let maxGas = this.multiplyBigNumber(gasEst,"2");
+        let maxGas = this.bigNum.multiplyBigNumber(gasEst,"2");
         return this.currentWeb3.eth.getTransactionCount('0x' + fromAddress)
         .then( (nonce) => {
             let txData;
@@ -117,8 +125,20 @@ export class FTWeb3Service {
             }
             var tx = new EthJS.Tx(txData);
             tx.sign(privateKey);
-            return tx.serialize();
+            return '0x' + tx.serialize().toString('hex');
         })
+        .catch(console.log);
+    }
+
+    sendSignedTrans(signedTrans): any {
+        return this.currentWeb3.eth.sendSignedTransaction(signedTrans);
+    }
+
+    signAndSendTrans(gasEst, toAddress, sendValue, encodedABI): any {
+        return this.signTrans(gasEst, toAddress, sendValue, encodedABI)
+        .then(signedTran=>
+            {return this.sendSignedTrans(signedTran);}
+        )
         .catch(console.log);
     }
 
@@ -126,21 +146,6 @@ export class FTWeb3Service {
         return this.currentWeb3.eth.compile.solidity(sourceCode);
     }
 
-    publishContract(compiledCode, gasEst){
-        return this.signTrans(gasEst, null, 0, compiledCode)
-        .then(signedTran=>
-            this.currentWeb3.eth.sendSignedTransaction('0x' + signedTran.toString('hex'))
-                /* .once('transactionHash', (hash) => { console.log('hash:' + hash) })
-                .once('receipt', (receipt) =>{ console.log('receipt:' + JSON.stringify(receipt) + ' contractAddr:' + receipt.contractAddress) })
-                .on('confirmation', (confNumber, receipt) => { console.log('confNumber: '+ confNumber); })
-                .on('error', (error) => { console.log('ERROR' + error);}) */
-                .then(newContractInstance=>{
-                    return newContractInstance.contractAddress;})
-                .catch(console.log) // instance with the new contract address
-        )
-        .catch(console.log);
-    }
-    
     estimateGasPublish(compiledCode, compiledABI): any{
         return this.deploy(compiledCode, compiledABI)
         .estimateGas();
@@ -171,8 +176,6 @@ export class FTWeb3Service {
         this.currentWeb3.eth.subscribe('newBlockHeaders', (error, result) => {})
         .on("data", (blockHeader) => { 
             this.obs.putObserver('block', blockHeader.number);
-            this.currentNetSeconds = 0;
-            this.obs.putObserver('blockSeconds', 0);
         });
     }
 

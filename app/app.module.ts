@@ -17,7 +17,11 @@ import { FTStorage } from './FTFramework/FT-Storage';
 import { FTText } from './FTFramework/FT-Text';
 
 import { FTWeb3Service } from './FTServices/ft-web3';
+import { FTBigNumberService } from './FTServices/ft-bigNumber';
 import { FTCryptoPassService } from './FTServices/ft-cryptoPass';
+import { FTWalletService } from './FTServices/ft-wallet';
+import { FTMarketService } from './FTServices/ft-market';
+import { FTTokenWatchService } from './FTServices/ft-tokenWatch';
 
 import { FTBlockchain } from './FTRoutes/FTBlockchain';
 import { FTCryptoPass } from './FTRoutes/FTCryptoPass';
@@ -30,6 +34,20 @@ import { FTPhoneVerify } from './FTComponents/ft-phoneVerify';
 import { FTPhoneSMS } from './FTComponents/ft-phoneSMS';
 import { FTAccountExit } from './FTComponents/ft-account-exit';
 import { FTAccountCreate } from './FTComponents/ft-account-create';
+import { FTAccountWallet } from './FTComponents/ft-account-wallet';
+import { FTAccountTrade } from './FTComponents/ft-account-trade';
+import { FTEnterImport } from './FTComponents/ft-enterImport';
+import { FTVerifyDelete } from './FTComponents/ft-verifyDelete';
+import { FTVerifyPhoneExists } from './FTComponents/ft-verifyPhoneExists';
+import { FTSignUpInfo } from './FTComponents/ft-signUpInfo';
+import { FTDepositEtherToTrade } from './FTComponents/ft-depositEtherToTrade';
+import { FTWithdrawEtherFromTrade } from './FTComponents/ft-withdrawEtherFromTrade';
+import { FTDepositTokenToTrade } from './FTComponents/ft-depositTokenToTrade';
+import { FTWithdrawTokenFromTrade } from './FTComponents/ft-withdrawTokenFromTrade';
+import { FTTradeBuyToken } from './FTComponents/ft-tradeBuyToken';
+import { FTTradeSellToken } from './FTComponents/ft-tradeSellToken';
+import { FTTradeTokenBook } from './FTComponents/ft-tradeTokenBook';
+import { FTTradeTokenTrades } from './FTComponents/ft-tradeTokenTrades';
 
 import { FTMyAccountOld } from './FTRoutes/FTMyAccountOld';
 
@@ -55,7 +73,21 @@ import { FTMyAccountOld } from './FTRoutes/FTMyAccountOld';
     FTPhoneVerify,
     FTPhoneSMS,
     FTAccountExit,
-    FTAccountCreate
+    FTAccountCreate,
+    FTAccountWallet,
+    FTAccountTrade,
+    FTEnterImport,
+    FTVerifyDelete,
+    FTVerifyPhoneExists,
+    FTSignUpInfo,
+    FTDepositEtherToTrade,
+    FTWithdrawEtherFromTrade,
+    FTDepositTokenToTrade,
+    FTWithdrawTokenFromTrade,
+    FTTradeBuyToken,
+    FTTradeSellToken,
+    FTTradeTokenBook,
+    FTTradeTokenTrades
   ],
   entryComponents: [ ],
   providers: [ 
@@ -66,7 +98,11 @@ import { FTMyAccountOld } from './FTRoutes/FTMyAccountOld';
     FTStorage,
     FTText,
     FTWeb3Service,
-    FTCryptoPassService
+    FTBigNumberService,
+    FTCryptoPassService,
+    FTWalletService,
+    FTMarketService,
+    FTTokenWatchService
   ],
   bootstrap: [ AppComponent ]
 })

@@ -9,6 +9,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FTCache } from '../FTFramework/FT-Cache';
 import { FTSession } from '../FTFramework/FT-Session';
 import { FTObserver } from '../FTFramework/FT-Observer';
+
+import { FTBigNumberService } from '../FTServices/ft-bigNumber';
+import { FTWeb3Service } from '../FTServices/ft-web3';
 /* ToDo: Each time you change tabs scroll to top */
 @Component({
   moduleId: module.id,
@@ -44,8 +47,6 @@ export class FTMyAccountOld {
   subscribeBook;
   subscribeBookSell;
   accountBalance:string="0";
-  subscribeBNSec;
-  wb3;
   tabs = 1;
   sellTabs = 1;
   buyTabs = 1;
@@ -54,7 +55,6 @@ export class FTMyAccountOld {
   zero="0000000000000000000000000000000000000000";
   fromAddress="0000000000000000000000000000000000000000";
   number:string;
-  seconds: 0;
   maxGas = "500000";
   gasPrice= "0";
   bookEther = "0";
@@ -67,6 +67,7 @@ export class FTMyAccountOld {
     amount: "",
     buysell: false
   }
+  wb3;
   depositAmount="0";
   withdrawAmount="0";
   depositEtherAmount="0";
@@ -161,7 +162,7 @@ export class FTMyAccountOld {
     subscription: null as any
   }
    
-  constructor( private obs: FTObserver, private router: Router, private route: ActivatedRoute, private session: FTSession, private cache: FTCache, private http:Http, private cd: ChangeDetectorRef )
+  constructor( private ftweb3: FTWeb3Service, private ftNum: FTBigNumberService, private obs: FTObserver, private router: Router, private route: ActivatedRoute, private session: FTSession, private cache: FTCache, private http:Http, private cd: ChangeDetectorRef )
   {   
     this.zone=new NgZone({enableLongStackTrace:false});//Zone used for old version of IPad. Doesn't update without it.
   }
@@ -192,84 +193,84 @@ export class FTMyAccountOld {
     let newNum = (document.getElementById('modalNumberEther') as HTMLFormElement).value;
     if( +newNum >= 0 && /^[0-9]+$/.test(newNum) ) {} // Make sure it's a number
     else {
-      (document.getElementById('modalNumberEther') as HTMLFormElement).value = this.getEther(this.modalNumber.number);
+      (document.getElementById('modalNumberEther') as HTMLFormElement).value = this.ftNum.getEther(this.modalNumber.number);
       return;
     }
     let oldNumber = this.modalNumber.number;
-    if( +newNum != this.getEther(this.modalNumber.number)) {
-      this.modalNumber.number = this.subtractBigNumber(this.modalNumber.number, this.multiplyBigNumber(this.getEther(this.modalNumber.number).toString(),"1000000000000000000"));
-      this.modalNumber.number = this.addBigNumber(this.modalNumber.number, this.multiplyBigNumber(newNum, "1000000000000000000"));
+    if( +newNum != this.ftNum.getEther(this.modalNumber.number)) {
+      this.modalNumber.number = this.ftNum.subtractBigNumber(this.modalNumber.number, this.ftNum.multiplyBigNumber(this.ftNum.getEther(this.modalNumber.number).toString(),"1000000000000000000"));
+      this.modalNumber.number = this.ftNum.addBigNumber(this.modalNumber.number, this.ftNum.multiplyBigNumber(newNum, "1000000000000000000"));
     }
     newNum = (document.getElementById('modalNumberFinney') as HTMLFormElement).value;
     if( +newNum >= 0 && +newNum < 1000  && /^[0-9]+$/.test(newNum) ) {} // Make sure it's a number
     else {
-      (document.getElementById('modalNumberFinney') as HTMLFormElement).value = this.getFinney(this.modalNumber.number);
+      (document.getElementById('modalNumberFinney') as HTMLFormElement).value = this.ftNum.getFinney(this.modalNumber.number);
       return;
     }
-    if( +newNum != this.getFinney(this.modalNumber.number)) {
-      this.modalNumber.number = this.subtractBigNumber(this.modalNumber.number, this.multiplyBigNumber(this.getFinney(this.modalNumber.number).toString(),"1000000000000000"));
-      this.modalNumber.number = this.addBigNumber(this.modalNumber.number, this.multiplyBigNumber(newNum, "1000000000000000"));
+    if( +newNum != this.ftNum.getFinney(this.modalNumber.number)) {
+      this.modalNumber.number = this.ftNum.subtractBigNumber(this.modalNumber.number, this.ftNum.multiplyBigNumber(this.ftNum.getFinney(this.modalNumber.number).toString(),"1000000000000000"));
+      this.modalNumber.number = this.ftNum.addBigNumber(this.modalNumber.number, this.ftNum.multiplyBigNumber(newNum, "1000000000000000"));
     }
     newNum = (document.getElementById('modalNumberSzabo') as HTMLFormElement).value;
     if( +newNum >= 0 && +newNum < 1000 && /^[0-9]+$/.test(newNum) ) {} // Make sure it's a number
     else {
-      (document.getElementById('modalNumberSzabo') as HTMLFormElement).value = this.getSzabo(this.modalNumber.number);
+      (document.getElementById('modalNumberSzabo') as HTMLFormElement).value = this.ftNum.getSzabo(this.modalNumber.number);
       return;
     }
-    if( +newNum != this.getSzabo(this.modalNumber.number)) {
-      this.modalNumber.number = this.subtractBigNumber(this.modalNumber.number, this.multiplyBigNumber(this.getSzabo(this.modalNumber.number).toString(),"1000000000000"));
-      this.modalNumber.number = this.addBigNumber(this.modalNumber.number, this.multiplyBigNumber(newNum, "1000000000000"));
+    if( +newNum != this.ftNum.getSzabo(this.modalNumber.number)) {
+      this.modalNumber.number = this.ftNum.subtractBigNumber(this.modalNumber.number, this.ftNum.multiplyBigNumber(this.ftNum.getSzabo(this.modalNumber.number).toString(),"1000000000000"));
+      this.modalNumber.number = this.ftNum.addBigNumber(this.modalNumber.number, this.ftNum.multiplyBigNumber(newNum, "1000000000000"));
     }
     newNum = (document.getElementById('modalNumberGwei') as HTMLFormElement).value;
     if( +newNum >= 0 && +newNum < 1000 && /^[0-9]+$/.test(newNum)) {} // Make sure it's a number
     else {
-      (document.getElementById('modalNumberGwei') as HTMLFormElement).value = this.getGwei(this.modalNumber.number);
+      (document.getElementById('modalNumberGwei') as HTMLFormElement).value = this.ftNum.getGwei(this.modalNumber.number);
       return;
     }
-    if( +newNum != this.getGwei(this.modalNumber.number)) {
-      this.modalNumber.number = this.subtractBigNumber(this.modalNumber.number, this.multiplyBigNumber(this.getGwei(this.modalNumber.number).toString(),"1000000000"));
-      this.modalNumber.number = this.addBigNumber(this.modalNumber.number, this.multiplyBigNumber(newNum, "1000000000"));
+    if( +newNum != this.ftNum.getGwei(this.modalNumber.number)) {
+      this.modalNumber.number = this.ftNum.subtractBigNumber(this.modalNumber.number, this.ftNum.multiplyBigNumber(this.ftNum.getGwei(this.modalNumber.number).toString(),"1000000000"));
+      this.modalNumber.number = this.ftNum.addBigNumber(this.modalNumber.number, this.ftNum.multiplyBigNumber(newNum, "1000000000"));
     }
     newNum = (document.getElementById('modalNumberMwei') as HTMLFormElement).value;
     if( +newNum >= 0 && +newNum < 1000 && /^[0-9]+$/.test(newNum)) {} // Make sure it's a number
     else {
-      (document.getElementById('modalNumberMwei') as HTMLFormElement).value = this.getMwei(this.modalNumber.number);
+      (document.getElementById('modalNumberMwei') as HTMLFormElement).value = this.ftNum.getMwei(this.modalNumber.number);
       return;
     }
-    if( +newNum != this.getMwei(this.modalNumber.number)) {
-      this.modalNumber.number = this.subtractBigNumber(this.modalNumber.number, this.multiplyBigNumber(this.getMwei(this.modalNumber.number).toString(),"1000000"));
-      this.modalNumber.number = this.addBigNumber(this.modalNumber.number, this.multiplyBigNumber(newNum, "1000000"));
+    if( +newNum != this.ftNum.getMwei(this.modalNumber.number)) {
+      this.modalNumber.number = this.ftNum.subtractBigNumber(this.modalNumber.number, this.ftNum.multiplyBigNumber(this.ftNum.getMwei(this.modalNumber.number).toString(),"1000000"));
+      this.modalNumber.number = this.ftNum.addBigNumber(this.modalNumber.number, this.ftNum.multiplyBigNumber(newNum, "1000000"));
     }
     newNum = (document.getElementById('modalNumberKwei') as HTMLFormElement).value;
     if( +newNum >= 0 && +newNum < 1000 && /^[0-9]+$/.test(newNum)) {} // Make sure it's a number
     else {
-      (document.getElementById('modalNumberKwei') as HTMLFormElement).value = this.getKwei(this.modalNumber.number);
+      (document.getElementById('modalNumberKwei') as HTMLFormElement).value = this.ftNum.getKwei(this.modalNumber.number);
       return;
     }
-    if( +newNum != this.getKwei(this.modalNumber.number)) {
-      this.modalNumber.number = this.subtractBigNumber(this.modalNumber.number, this.multiplyBigNumber(this.getKwei(this.modalNumber.number).toString(),"1000"));
-      this.modalNumber.number = this.addBigNumber(this.modalNumber.number, this.multiplyBigNumber(newNum, "1000"));
+    if( +newNum != this.ftNum.getKwei(this.modalNumber.number)) {
+      this.modalNumber.number = this.ftNum.subtractBigNumber(this.modalNumber.number, this.ftNum.multiplyBigNumber(this.ftNum.getKwei(this.modalNumber.number).toString(),"1000"));
+      this.modalNumber.number = this.ftNum.addBigNumber(this.modalNumber.number, this.ftNum.multiplyBigNumber(newNum, "1000"));
     }
     newNum = (document.getElementById('modalNumberWei') as HTMLFormElement).value;
     if( +newNum >= 0 && +newNum < 1000 && /^[0-9]+$/.test(newNum)) {} // Make sure it's a number
     else {
-      (document.getElementById('modalNumberWei') as HTMLFormElement).value = this.getWei(this.modalNumber.number);
+      (document.getElementById('modalNumberWei') as HTMLFormElement).value = this.ftNum.getWei(this.modalNumber.number);
       return;
     }
-    if( +newNum != this.getWei(this.modalNumber.number)) {
-      this.modalNumber.number = this.subtractBigNumber(this.modalNumber.number, this.getWei(this.modalNumber.number).toString());
-      this.modalNumber.number = this.addBigNumber(this.modalNumber.number, newNum);
+    if( +newNum != this.ftNum.getWei(this.modalNumber.number)) {
+      this.modalNumber.number = this.ftNum.subtractBigNumber(this.modalNumber.number, this.ftNum.getWei(this.modalNumber.number).toString());
+      this.modalNumber.number = this.ftNum.addBigNumber(this.modalNumber.number, newNum);
     }
     if(this.modalNumber.max != "0") {
-      if(this.compareBigNumber(this.modalNumber.number, this.modalNumber.max)==1){
+      if(this.ftNum.compareBigNumber(this.modalNumber.number, this.modalNumber.max)==1){
         this.modalNumber.number = oldNumber;
-        (document.getElementById('modalNumberEther') as HTMLFormElement).value = this.getEther(this.modalNumber.number);
-        (document.getElementById('modalNumberFinney') as HTMLFormElement).value = this.getFinney(this.modalNumber.number);
-        (document.getElementById('modalNumberSzabo') as HTMLFormElement).value = this.getSzabo(this.modalNumber.number);
-        (document.getElementById('modalNumberGwei') as HTMLFormElement).value = this.getGwei(this.modalNumber.number);
-        (document.getElementById('modalNumberMwei') as HTMLFormElement).value = this.getMwei(this.modalNumber.number);
-        (document.getElementById('modalNumberKwei') as HTMLFormElement).value = this.getKwei(this.modalNumber.number);
-        (document.getElementById('modalNumberWei') as HTMLFormElement).value = this.getWei(this.modalNumber.number);
+        (document.getElementById('modalNumberEther') as HTMLFormElement).value = this.ftNum.getEther(this.modalNumber.number);
+        (document.getElementById('modalNumberFinney') as HTMLFormElement).value = this.ftNum.getFinney(this.modalNumber.number);
+        (document.getElementById('modalNumberSzabo') as HTMLFormElement).value = this.ftNum.getSzabo(this.modalNumber.number);
+        (document.getElementById('modalNumberGwei') as HTMLFormElement).value = this.ftNum.getGwei(this.modalNumber.number);
+        (document.getElementById('modalNumberMwei') as HTMLFormElement).value = this.ftNum.getMwei(this.modalNumber.number);
+        (document.getElementById('modalNumberKwei') as HTMLFormElement).value = this.ftNum.getKwei(this.modalNumber.number);
+        (document.getElementById('modalNumberWei') as HTMLFormElement).value = this.ftNum.getWei(this.modalNumber.number);
       }
     }
   }
@@ -298,40 +299,40 @@ export class FTMyAccountOld {
     let newNum = (document.getElementById('modalPriceEther') as HTMLFormElement).value;
     if( +newNum >= 0 && /^[0-9]+$/.test(newNum) ) {} // Make sure it's a number
     else {
-      (document.getElementById('modalPriceEther') as HTMLFormElement).value = this.getEther(this.modalPrice.number);
+      (document.getElementById('modalPriceEther') as HTMLFormElement).value = this.ftNum.getEther(this.modalPrice.number);
       return;
     }
     let oldNumber = this.modalPrice.number;
-    if( +newNum != this.getEther(this.modalPrice.number)) {
-      this.modalPrice.number = this.subtractBigNumber(this.modalPrice.number, this.multiplyBigNumber(this.getEther(this.modalPrice.number).toString(),"1000000000000000000"));
-      this.modalPrice.number = this.addBigNumber(this.modalPrice.number, this.multiplyBigNumber(newNum, "1000000000000000000"));
+    if( +newNum != this.ftNum.getEther(this.modalPrice.number)) {
+      this.modalPrice.number = this.ftNum.subtractBigNumber(this.modalPrice.number, this.ftNum.multiplyBigNumber(this.ftNum.getEther(this.modalPrice.number).toString(),"1000000000000000000"));
+      this.modalPrice.number = this.ftNum.addBigNumber(this.modalPrice.number, this.ftNum.multiplyBigNumber(newNum, "1000000000000000000"));
     }
     newNum = (document.getElementById('modalPriceFinney') as HTMLFormElement).value;
     if( +newNum >= 0 && +newNum < 1000  && /^[0-9]+$/.test(newNum) ) {} // Make sure it's a number
     else {
-      (document.getElementById('modalPriceFinney') as HTMLFormElement).value = this.getFinney(this.modalPrice.number);
+      (document.getElementById('modalPriceFinney') as HTMLFormElement).value = this.ftNum.getFinney(this.modalPrice.number);
       return;
     }
-    if( +newNum != this.getFinney(this.modalPrice.number)) {
-      this.modalPrice.number = this.subtractBigNumber(this.modalPrice.number, this.multiplyBigNumber(this.getFinney(this.modalPrice.number).toString(),"1000000000000000"));
-      this.modalPrice.number = this.addBigNumber(this.modalPrice.number, this.multiplyBigNumber(newNum, "1000000000000000"));
+    if( +newNum != this.ftNum.getFinney(this.modalPrice.number)) {
+      this.modalPrice.number = this.ftNum.subtractBigNumber(this.modalPrice.number, this.ftNum.multiplyBigNumber(this.ftNum.getFinney(this.modalPrice.number).toString(),"1000000000000000"));
+      this.modalPrice.number = this.ftNum.addBigNumber(this.modalPrice.number, this.ftNum.multiplyBigNumber(newNum, "1000000000000000"));
     }
     newNum = (document.getElementById('modalPriceSzabo') as HTMLFormElement).value;
     if( +newNum >= 0 && +newNum < 1000 && /^[0-9]+$/.test(newNum) ) {} // Make sure it's a number
     else {
-      (document.getElementById('modalPriceSzabo') as HTMLFormElement).value = this.getSzabo(this.modalPrice.number);
+      (document.getElementById('modalPriceSzabo') as HTMLFormElement).value = this.ftNum.getSzabo(this.modalPrice.number);
       return;
     }
-    if( +newNum != this.getSzabo(this.modalPrice.number)) {
-      this.modalPrice.number = this.subtractBigNumber(this.modalPrice.number, this.multiplyBigNumber(this.getSzabo(this.modalPrice.number).toString(),"1000000000000"));
-      this.modalPrice.number = this.addBigNumber(this.modalPrice.number, this.multiplyBigNumber(newNum, "1000000000000"));
+    if( +newNum != this.ftNum.getSzabo(this.modalPrice.number)) {
+      this.modalPrice.number = this.ftNum.subtractBigNumber(this.modalPrice.number, this.ftNum.multiplyBigNumber(this.ftNum.getSzabo(this.modalPrice.number).toString(),"1000000000000"));
+      this.modalPrice.number = this.ftNum.addBigNumber(this.modalPrice.number, this.ftNum.multiplyBigNumber(newNum, "1000000000000"));
     }
     if(this.modalPrice.max != "0") {
-      if(this.compareBigNumber(this.modalPrice.number, this.modalPrice.max)==1){
+      if(this.ftNum.compareBigNumber(this.modalPrice.number, this.modalPrice.max)==1){
         this.modalPrice.number = oldNumber;
-        (document.getElementById('modalPriceEther') as HTMLFormElement).value = this.getEther(this.modalPrice.number);
-        (document.getElementById('modalPriceFinney') as HTMLFormElement).value = this.getFinney(this.modalPrice.number);
-        (document.getElementById('modalPriceSzabo') as HTMLFormElement).value = this.getSzabo(this.modalPrice.number);
+        (document.getElementById('modalPriceEther') as HTMLFormElement).value = this.ftNum.getEther(this.modalPrice.number);
+        (document.getElementById('modalPriceFinney') as HTMLFormElement).value = this.ftNum.getFinney(this.modalPrice.number);
+        (document.getElementById('modalPriceSzabo') as HTMLFormElement).value = this.ftNum.getSzabo(this.modalPrice.number);
       }
     }
   }
@@ -344,7 +345,6 @@ export class FTMyAccountOld {
     this.modalPrice.orig = "0";
     this.modalPrice.max = "0";
   }
-
 
   showModal(modal: number): void {
       this.modal = modal;
@@ -362,132 +362,13 @@ export class FTMyAccountOld {
       this.showModal(1);
   }
 
-  addBigNumber(numberA: string, numberB: string): string {
-    if(numberA == "" || !numberA){
-      numberA="0";
-    }
-    if(numberB == "" || !numberB){
-      numberB="0"
-    }
-    let x = new BigNumber(numberA);
-    let y = new BigNumber(numberB);
-    return x.plus(y).toString(10);
-  }
-  subtractBigNumber(numberA: string, numberB: string): string {
-    if(numberA == "" || !numberA){
-      numberA="0";
-    }
-    if(numberB == "" || !numberB){
-      numberB="0"
-    }
-    let x = new BigNumber(numberA);
-    let y = new BigNumber(numberB);
-    return x.minus(y).toString(10);
-  }
-  divideBigNumber(numberA: string, numberB: string): string {
-    if(numberA == ""){
-      numberA="0";
-    }
-    if(numberB == ""){
-      numberB="0"
-    }
-    let x = new BigNumber(numberA);
-    let y = new BigNumber(numberB);
-    return x.dividedToIntegerBy(y).toString(10);
-  }
-  multiplyBigNumber(numberA: string, numberB: string): string {
-    if(numberA == ""){
-      numberA = "0";
-    }
-    if(numberB == ""){
-      numberB = "0";
-    }
-    let x = new BigNumber(numberA);
-    let y = new BigNumber(numberB);
-    return x.times(y).toString(10);
-  }
-  compareBigNumber(numberA: string, numberB: string): number {
-    if(numberA == "" || !numberA){
-      numberA="0";
-    }
-    if(numberB == "" || !numberB){
-      numberB="0"
-    }
-    let x = new BigNumber(numberA);
-    let y = new BigNumber(numberB);
-    return x.comparedTo(y);
-  }
   
   getSortedKeys(map: any, direction: boolean): any{
     if(!direction) {
-      return this.objectKeys(map).sort((a,b) => {return this.compareBigNumber(b,a)})
+      return this.objectKeys(map).sort((a,b) => {return this.ftNum.compareBigNumber(b,a)})
     } else {
-      return this.objectKeys(map).sort((a,b) => {return this.compareBigNumber(a,b)})
+      return this.objectKeys(map).sort((a,b) => {return this.ftNum.compareBigNumber(a,b)})
     }
-  }
-
-  getEther(number:string): number{
-    if(number.length > 18){
-      return +number.substr(0,number.length-18);
-    }
-    else {
-      return 0;
-    }
-  }
-  hasFraction(number: string): boolean{
-    if(number.length > 18){
-      number = number.substr(number.length-18,18);
-      let number1 = number.substr(0, 3);
-      if(+number1 != 0){
-        return true
-      }
-      number = number.substr(3,15);
-    }
-    if(+number != 0) {
-      return true;
-    }
-    return false;
-  }
-
-  getFinney(number: string): number{
-    if(number.length > 18){
-      number = number.substr(number.length-18, 18);
-    }
-    if(number.length > 15){
-      return +number.substr(0,number.length-15);
-    } else {
-      return 0;
-    }
-  }
-  getSzabo(number: string): number{
-    if(number.length > 15){
-      number = number.substr(number.length-15, 15);
-    }
-    return Math.floor(this.wb3.utils.fromWei(number, 'szabo'));
-  }
-  getGwei(number: string): number{
-    if(number.length > 12){
-      number = number.substr(number.length-12, 12);
-    }
-    return Math.floor(this.wb3.utils.fromWei(number, 'gwei'));
-  }
-  getMwei(number: string): number{
-    if(number.length > 9){
-      number = number.substr(number.length-9, 9);
-    }
-    return Math.floor(this.wb3.utils.fromWei(number, 'mwei'));
-  }
-  getKwei(number: string): number{
-    if(number.length > 6){
-      number = number.substr(number.length-6, 6);
-    }
-    return Math.floor(this.wb3.utils.fromWei(number, 'kwei'));
-  }
-  getWei(number: string): number{
-    if(number.length > 3){
-      number = number.substr(number.length-3, 3);
-    }
-    return Math.floor(this.wb3.utils.fromWei(number, 'wei'));
   }
 
   ngOnInit(): void{
@@ -497,34 +378,20 @@ export class FTMyAccountOld {
     this.subscribeParam = this.route.params.subscribe(params => {
       //params = the block that is passed in route
     });
-    this.subscribeBNSec = this.obs.getObserver('blockSeconds').subscribe( (bnsec) => {
-      this.seconds = bnsec;
-    });
-    this.fromAddress = this.cache.getCache('encrypted_id') ? this.cache.getCache('encrypted_id').address : this.fromAddress;
+
     this.wb3 = this.cache.getCache('wb3');
+    this.fromAddress = this.cache.getCache('encrypted_id') ? this.cache.getCache('encrypted_id').address : this.fromAddress;
     this.FreeToken.abi = [{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"gotFree","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"success_","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalOutstanding","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"success_","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"getFreeToken","outputs":[{"name":"success_","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"author","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"name":"success_","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"},{"name":"_extraData","type":"bytes"}],"name":"approveAndCall","outputs":[{"name":"success_","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"address"}],"name":"allowance","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"admin","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"}],"name":"unapprove","outputs":[{"name":"success_","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"payable":true,"stateMutability":"payable","type":"fallback"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"owner","type":"address"},{"indexed":true,"name":"spender","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Approval","type":"event"}];
-    this.FreeToken.contract = new this.wb3.eth.Contract(this.FreeToken.abi, '0x'+this.FreeToken.address, {
-      from: '0x' + this.fromAddress, // default from address
-      gasPrice: '0' // default gas price in wei
-    });
+    this.FreeToken.contract = this.ftweb3.createContractInterface(this.FreeToken.abi, "0x" + this.FreeToken.address); 
 
     this.TradeToken.abi = [{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"gotFree","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"success_","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalOutstanding","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"success_","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"getFreeToken","outputs":[{"name":"success_","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"author","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"name":"success_","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"},{"name":"_extraData","type":"bytes"}],"name":"approveAndCall","outputs":[{"name":"success_","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"address"}],"name":"allowance","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"admin","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"}],"name":"unapprove","outputs":[{"name":"success_","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"payable":true,"stateMutability":"payable","type":"fallback"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"owner","type":"address"},{"indexed":true,"name":"spender","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Approval","type":"event"}];
-    this.TradeToken.contract = new this.wb3.eth.Contract(this.TradeToken.abi, '0x'+this.TradeToken.address, {
-      from: '0x' + this.fromAddress, // default from address
-      gasPrice: '0' // default gas price in wei
-    });
+    this.TradeToken.contract = this.ftweb3.createContractInterface( this.TradeToken.abi, "0x"+this.TradeToken.address);
 
     this.Market.abi = [{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_newTransactionFee","type":"uint8"},{"name":"_newTransactionFeeMultiple","type":"uint8"},{"name":"_newAddToBookFee","type":"uint256"}],"name":"updateFees","outputs":[{"name":"success_","type":"bool"}],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[{"name":"_token","type":"address"},{"name":"_buy","type":"bool"},{"name":"_amount","type":"uint256"},{"name":"_shares","type":"uint256"},{"name":"_startAmount","type":"uint256"}],"name":"makeOffer","outputs":[{"name":"success_","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_token","type":"address"},{"name":"_value","type":"uint256"}],"name":"deposit","outputs":[{"name":"success_","type":"bool"}],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[{"name":"_grantor","type":"address"},{"name":"_value","type":"uint256"},{"name":"_from","type":"address"}],"name":"receiveApproval","outputs":[{"name":"success_","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"bool"},{"name":"","type":"uint256"}],"name":"offersAtPrice","outputs":[{"name":"nextPrice","type":"uint256"},{"name":"currentOffersLength","type":"uint24"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"addToBookFee","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_token","type":"address"},{"name":"_value","type":"uint256"}],"name":"withdrawal","outputs":[{"name":"success_","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"freeze","outputs":[{"name":"success_","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_token","type":"address"},{"name":"_buy","type":"bool"},{"name":"_amount","type":"uint256"}],"name":"cancelOffer","outputs":[{"name":"success_","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"address"}],"name":"accountBalance","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"transactionFee","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"ownerChanged","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"author","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_newOwner","type":"address"}],"name":"changeOwner","outputs":[{"name":"success_","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"bidDecimal","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"transactionFeeMultiple","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"payable":true,"stateMutability":"payable","type":"fallback"},{"anonymous":false,"inputs":[{"indexed":true,"name":"mToken","type":"address"},{"indexed":true,"name":"mAccount","type":"address"},{"indexed":false,"name":"mValue","type":"uint256"},{"indexed":false,"name":"mNow","type":"uint256"}],"name":"MessageAccountDeposit","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"mToken","type":"address"},{"indexed":true,"name":"mAccount","type":"address"},{"indexed":false,"name":"mValue","type":"uint256"},{"indexed":false,"name":"mNow","type":"uint256"}],"name":"MessageAccountWithdrawal","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"mToken","type":"address"},{"indexed":true,"name":"mFromAccount","type":"address"},{"indexed":true,"name":"mToAccount","type":"address"},{"indexed":false,"name":"mPrice","type":"uint256"},{"indexed":false,"name":"mCount","type":"uint256"},{"indexed":false,"name":"mSellerFee","type":"uint256"},{"indexed":false,"name":"mNow","type":"uint256"}],"name":"MessageTransaction","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"mToken","type":"address"},{"indexed":true,"name":"mFromAccount","type":"address"},{"indexed":false,"name":"mCount","type":"uint256"},{"indexed":false,"name":"mSellerFee","type":"uint256"},{"indexed":false,"name":"mNow","type":"uint256"}],"name":"MessagePayTransactionFee","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"mToken","type":"address"},{"indexed":true,"name":"mBuy","type":"bool"},{"indexed":true,"name":"mAccount","type":"address"},{"indexed":false,"name":"mAddLiquidity","type":"bool"},{"indexed":false,"name":"mPrice","type":"uint256"},{"indexed":false,"name":"mCount","type":"uint256"},{"indexed":false,"name":"mFee","type":"uint256"},{"indexed":false,"name":"mNow","type":"uint256"}],"name":"MessageOffer","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"mTransFee","type":"uint8"},{"indexed":false,"name":"mTransmultiple","type":"uint8"},{"indexed":false,"name":"mBookFee","type":"uint256"},{"indexed":false,"name":"mNow","type":"uint256"}],"name":"MessageChangeFees","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"mOwner","type":"address"},{"indexed":false,"name":"mNow","type":"uint256"}],"name":"MessageOwner","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"mFreeze","type":"bool"},{"indexed":false,"name":"mNow","type":"uint256"}],"name":"MessageFreeze","type":"event"}];
-    this.Market.contract = new this.wb3.eth.Contract(this.Market.abi, '0x' + this.Market.address, {
-      from: '0x'+this.fromAddress, // default from address
-      gasPrice: '0' // default gas price in wei
-    });
+    this.Market.contract = this.ftweb3.createContractInterface(this.Market.abi, "0x" + this.Market.address);
 
-    this.tutorial.contract = new this.wb3.eth.Contract(this.tutorial.abi, '0x' + this.tutorial.address, {
-      from: '0x' + this.fromAddress, // default from address
-      gasPrice: '0' // default gas price in wei
-    });
-    this.tutorial.stateKey = this.wb3.utils.asciiToHex('Tutorial');
+    this.tutorial.contract = this.ftweb3.createContractInterface(this.tutorial.abi, "0x" + this.tutorial.address);
+    this.tutorial.stateKey = this.ftweb3.asciiToHex('Tutorial');
   }    
 
   changeTabs(tab:number): void{
@@ -590,7 +457,7 @@ export class FTMyAccountOld {
       }
     });
 
-    this.wb3.eth.getBalance(this.fromAddress).then( (balance) => {
+    this.ftweb3.getBalance(this.fromAddress).then( (balance) => {
       this.accountBalance = balance.toString(); 
     });
     this.FreeToken.contract.methods.balanceOf(this.fromAddress).call().then( 
@@ -620,18 +487,18 @@ export class FTMyAccountOld {
     })
     .on( 'data', (events) => {
       if(events.returnValues.mBuy){
-        let x = this.multiplyBigNumber(events.returnValues.mPrice, events.returnValues.mCount);
-        x = this.divideBigNumber(x, "1000000");
-        x = this.addBigNumber(x, events.returnValues.mFee);
+        let x = this.ftNum.multiplyBigNumber(events.returnValues.mPrice, events.returnValues.mCount);
+        x = this.ftNum.divideBigNumber(x, "1000000");
+        x = this.ftNum.addBigNumber(x, events.returnValues.mFee);
         if(this.book.has(events.returnValues.mToken)){
           if(this.book.get(events.returnValues.mToken).has(events.returnValues.mPrice)){
             if(events.returnValues.mAddLiquidity){
-              let newCount = this.addBigNumber(this.book.get(events.returnValues.mToken).get(events.returnValues.mPrice).count, events.returnValues.mCount);
-              let newFee = this.addBigNumber(this.book.get(events.returnValues.mToken).get(events.returnValues.mPrice).fee, events.returnValues.mFee);
+              let newCount = this.ftNum.addBigNumber(this.book.get(events.returnValues.mToken).get(events.returnValues.mPrice).count, events.returnValues.mCount);
+              let newFee = this.ftNum.addBigNumber(this.book.get(events.returnValues.mToken).get(events.returnValues.mPrice).fee, events.returnValues.mFee);
               this.book.get(events.returnValues.mToken).set(events.returnValues.mPrice,{count: newCount, fee: newFee});  
             } else {
-              let newCount = this.subtractBigNumber(this.book.get(events.returnValues.mToken).get(events.returnValues.mPrice).count, events.returnValues.mCount);
-              let newFee = this.subtractBigNumber(this.book.get(events.returnValues.mToken).get(events.returnValues.mPrice).fee, events.returnValues.mFee);
+              let newCount = this.ftNum.subtractBigNumber(this.book.get(events.returnValues.mToken).get(events.returnValues.mPrice).count, events.returnValues.mCount);
+              let newFee = this.ftNum.subtractBigNumber(this.book.get(events.returnValues.mToken).get(events.returnValues.mPrice).fee, events.returnValues.mFee);
               this.book.get(events.returnValues.mToken).set(events.returnValues.mPrice,{count: newCount, fee: newFee});  
               if(newCount != "0" || newFee != "0") {
               } else {
@@ -649,9 +516,9 @@ export class FTMyAccountOld {
           this.book.get(events.returnValues.mToken).set(events.returnValues.mPrice,{count: events.returnValues.mCount, fee: events.returnValues.mFee});
         }
         if(events.returnValues.mAddLiquidity){
-          this.bookEther = this.addBigNumber(this.bookEther,x);
+          this.bookEther = this.ftNum.addBigNumber(this.bookEther,x);
         } else {
-          this.bookEther = this.subtractBigNumber(this.bookEther,x);
+          this.bookEther = this.ftNum.subtractBigNumber(this.bookEther,x);
         }
       }
       if(!events.returnValues.mBuy){
@@ -659,10 +526,10 @@ export class FTMyAccountOld {
         if(this.bookToken.has(events.returnValues.mToken)){
           if(this.bookToken.get(events.returnValues.mToken).has(events.returnValues.mPrice)){
             if(events.returnValues.mAddLiquidity){
-              let newCount = this.addBigNumber(this.bookToken.get(events.returnValues.mToken).get(events.returnValues.mPrice).count, events.returnValues.mCount);
+              let newCount = this.ftNum.addBigNumber(this.bookToken.get(events.returnValues.mToken).get(events.returnValues.mPrice).count, events.returnValues.mCount);
               this.bookToken.get(events.returnValues.mToken).set(events.returnValues.mPrice,{count: newCount, fee: "0"});  
             } else {
-              let newCount = this.subtractBigNumber(this.bookToken.get(events.returnValues.mToken).get(events.returnValues.mPrice).count, events.returnValues.mCount);
+              let newCount = this.ftNum.subtractBigNumber(this.bookToken.get(events.returnValues.mToken).get(events.returnValues.mPrice).count, events.returnValues.mCount);
               this.bookToken.get(events.returnValues.mToken).set(events.returnValues.mPrice,{count: newCount, fee: "0"});  
               if(newCount != "0") {
               } else {
@@ -681,15 +548,15 @@ export class FTMyAccountOld {
         }
         if(events.returnValues.mAddLiquidity){
           if(this.bookTokenEther.has(events.returnValues.mToken)){
-            this.bookTokenEther.set(events.returnValues.mToken,this.addBigNumber(this.bookTokenEther.get(events.returnValues.mToken),x));
+            this.bookTokenEther.set(events.returnValues.mToken,this.ftNum.addBigNumber(this.bookTokenEther.get(events.returnValues.mToken),x));
           } else {
             this.bookTokenEther.set(events.returnValues.mToken, x);
           }
         } else {
           if(this.bookTokenEther.has(events.returnValues.mToken)){
-            this.bookTokenEther.set(events.returnValues.mToken, this.subtractBigNumber(this.bookTokenEther.get(events.returnValues.mToken),x));
+            this.bookTokenEther.set(events.returnValues.mToken, this.ftNum.subtractBigNumber(this.bookTokenEther.get(events.returnValues.mToken),x));
           } else {
-            this.bookTokenEther.set(events.returnValues.mToken, this.subtractBigNumber("0",x));
+            this.bookTokenEther.set(events.returnValues.mToken, this.ftNum.subtractBigNumber("0",x));
           }
         }
       }
@@ -706,28 +573,28 @@ export class FTMyAccountOld {
       if(events.returnValues.mBuy){
         if(events.returnValues.mToken == '0x' + this.FreeToken.address) {
           if(events.returnValues.mAddLiquidity){
-            this.FreeToken.buyMap[events.returnValues.mPrice] = this.addBigNumber(this.FreeToken.buyMap[events.returnValues.mPrice], events.returnValues.mCount);
+            this.FreeToken.buyMap[events.returnValues.mPrice] = this.ftNum.addBigNumber(this.FreeToken.buyMap[events.returnValues.mPrice], events.returnValues.mCount);
           } else {
-            this.FreeToken.buyMap[events.returnValues.mPrice] = this.subtractBigNumber(this.FreeToken.buyMap[events.returnValues.mPrice], events.returnValues.mCount);
+            this.FreeToken.buyMap[events.returnValues.mPrice] = this.ftNum.subtractBigNumber(this.FreeToken.buyMap[events.returnValues.mPrice], events.returnValues.mCount);
           }
           if(events.returnValues.mPrice==this.FreeToken.buyPrice){
             if(events.returnValues.mAddLiquidity){
-              this.FreeToken.buyCount = this.addBigNumber(this.FreeToken.buyCount, events.returnValues.mCount);
+              this.FreeToken.buyCount = this.ftNum.addBigNumber(this.FreeToken.buyCount, events.returnValues.mCount);
             } else {
-              this.FreeToken.buyCount = this.subtractBigNumber(this.FreeToken.buyCount, events.returnValues.mCount);
+              this.FreeToken.buyCount = this.ftNum.subtractBigNumber(this.FreeToken.buyCount, events.returnValues.mCount);
             }
           }
         } else if(events.returnValues.mToken == '0x' + this.TradeToken.address) {
           if(events.returnValues.mAddLiquidity){
-            this.TradeToken.buyMap[events.returnValues.mPrice] = this.addBigNumber(this.TradeToken.buyMap[events.returnValues.mPrice], events.returnValues.mCount);
+            this.TradeToken.buyMap[events.returnValues.mPrice] = this.ftNum.addBigNumber(this.TradeToken.buyMap[events.returnValues.mPrice], events.returnValues.mCount);
           } else {
-            this.TradeToken.buyMap[events.returnValues.mPrice] = this.subtractBigNumber(this.TradeToken.buyMap[events.returnValues.mPrice], events.returnValues.mCount);
+            this.TradeToken.buyMap[events.returnValues.mPrice] = this.ftNum.subtractBigNumber(this.TradeToken.buyMap[events.returnValues.mPrice], events.returnValues.mCount);
           }
           if(events.returnValues.mPrice==this.TradeToken.buyPrice){
             if(events.returnValues.mAddLiquidity){
-              this.TradeToken.buyCount = this.addBigNumber(this.TradeToken.buyCount, events.returnValues.mCount);
+              this.TradeToken.buyCount = this.ftNum.addBigNumber(this.TradeToken.buyCount, events.returnValues.mCount);
             } else {
-              this.TradeToken.buyCount = this.subtractBigNumber(this.TradeToken.buyCount, events.returnValues.mCount);
+              this.TradeToken.buyCount = this.ftNum.subtractBigNumber(this.TradeToken.buyCount, events.returnValues.mCount);
             }
           }
         }
@@ -735,28 +602,28 @@ export class FTMyAccountOld {
       if(!events.returnValues.mBuy){
         if(events.returnValues.mToken == '0x' + this.FreeToken.address) {
           if(events.returnValues.mAddLiquidity){
-            this.FreeToken.sellMap[events.returnValues.mPrice] = this.addBigNumber(this.FreeToken.sellMap[events.returnValues.mPrice], events.returnValues.mCount);
+            this.FreeToken.sellMap[events.returnValues.mPrice] = this.ftNum.addBigNumber(this.FreeToken.sellMap[events.returnValues.mPrice], events.returnValues.mCount);
           } else {
-            this.FreeToken.sellMap[events.returnValues.mPrice] = this.subtractBigNumber(this.FreeToken.sellMap[events.returnValues.mPrice], events.returnValues.mCount);
+            this.FreeToken.sellMap[events.returnValues.mPrice] = this.ftNum.subtractBigNumber(this.FreeToken.sellMap[events.returnValues.mPrice], events.returnValues.mCount);
           }
           if(events.returnValues.mPrice==this.FreeToken.sellPrice){
             if(events.returnValues.mAddLiquidity){
-              this.FreeToken.sellCount = this.addBigNumber(this.FreeToken.sellCount, events.returnValues.mCount);
+              this.FreeToken.sellCount = this.ftNum.addBigNumber(this.FreeToken.sellCount, events.returnValues.mCount);
             } else {
-              this.FreeToken.sellCount = this.subtractBigNumber(this.FreeToken.sellCount, events.returnValues.mCount);
+              this.FreeToken.sellCount = this.ftNum.subtractBigNumber(this.FreeToken.sellCount, events.returnValues.mCount);
             }
           }
         }else if(events.returnValues.mToken == '0x' + this.TradeToken.address) {
           if(events.returnValues.mAddLiquidity){
-            this.TradeToken.sellMap[events.returnValues.mPrice] = this.addBigNumber(this.TradeToken.sellMap[events.returnValues.mPrice], events.returnValues.mCount);
+            this.TradeToken.sellMap[events.returnValues.mPrice] = this.ftNum.addBigNumber(this.TradeToken.sellMap[events.returnValues.mPrice], events.returnValues.mCount);
           } else {
-            this.TradeToken.sellMap[events.returnValues.mPrice] = this.subtractBigNumber(this.TradeToken.sellMap[events.returnValues.mPrice], events.returnValues.mCount);
+            this.TradeToken.sellMap[events.returnValues.mPrice] = this.ftNum.subtractBigNumber(this.TradeToken.sellMap[events.returnValues.mPrice], events.returnValues.mCount);
           }
           if(events.returnValues.mPrice==this.TradeToken.sellPrice){
             if(events.returnValues.mAddLiquidity){
-              this.TradeToken.sellCount = this.addBigNumber(this.TradeToken.sellCount, events.returnValues.mCount);
+              this.TradeToken.sellCount = this.ftNum.addBigNumber(this.TradeToken.sellCount, events.returnValues.mCount);
             } else {
-              this.TradeToken.sellCount = this.subtractBigNumber(this.TradeToken.sellCount, events.returnValues.mCount);
+              this.TradeToken.sellCount = this.ftNum.subtractBigNumber(this.TradeToken.sellCount, events.returnValues.mCount);
             }
           }
         }
@@ -764,7 +631,7 @@ export class FTMyAccountOld {
     });
 
     this.subscribeBlock = this.obs.getObserver('block').subscribe( (bn) => {
-      this.wb3.eth.getBalance(this.fromAddress).then( (balance) => {
+      this.ftweb3.getBalance(this.fromAddress).then( (balance) => {
         this.accountBalance = balance.toString();
       });
       this.FreeToken.contract.methods.balanceOf(this.fromAddress).call().then( 
@@ -819,34 +686,24 @@ export class FTMyAccountOld {
 
   withdraw(notupdate: boolean): void{
     if(!notupdate){
-      this.withdrawAmount = this.Market.free;
+      this.withdrawAmount = this.currentToken.market;
     }
-    var privateKey = Buffer.from(rlp.stripHexPrefix(this.cache.getCache('key')), 'hex');
     var ABIdata = this.Market.contract.methods.withdrawal('0x'+this.currentToken.address,this.withdrawAmount).encodeABI();
-    var chainId = "913945103463586943";
-    this.Market.contract.methods.withdrawal('0x'+this.currentToken.address,this.withdrawAmount).estimateGas({gas:500000,from:'0x'+this.fromAddress}).then( (returns) => {
-      this.Market.estimate = returns;
-      this.maxGas = this.multiplyBigNumber(this.Market.estimate,"2");
-      this.wb3.eth.getTransactionCount('0x' + this.fromAddress).then( (nonce) => {
-        const txData = {
-            nonce:    numberToHex(nonce),
-            gasPrice: numberToHex(this.gasPrice),
-            gasLimit: numberToHex(this.maxGas),
-            to:       '0x' + this.Market.address,
-            value:    '0x00',
-            data:     ABIdata,
-            chainId:  chainId.toString()
-        }
-        var tx = new EthJS.Tx(txData);
-        tx.sign(privateKey);
-        this.Market.serializedTx = tx.serialize();
+    this.Market.contract.methods.withdrawal('0x'+this.currentToken.address,this.withdrawAmount).estimateGas({gas:500000,from:'0x'+this.fromAddress})
+    .then( (gasEstimate) => {
+      this.Market.estimate = gasEstimate;
+      this.maxGas = this.ftNum.multiplyBigNumber(this.Market.estimate,"2");
+      this.ftweb3.signTrans(gasEstimate, this.Market.address, 0, ABIdata)
+      .then(signedTrans => {
+        this.Market.serializedTx = signedTrans;
         this.Market.receipt = null;
         this.Market.transaction = '';
         this.Market.confirmed = 0;
         this.Market.error = '';
         return null;
-      });
-    });
+      })
+    })
+    .catch(err => null);
     this.showModal(7);
   }
 
@@ -863,12 +720,12 @@ export class FTMyAccountOld {
     if(this.Market.subscription){
       this.Market.subscription.removeAllListeners();
     }
-    this.Market.subscription = this.wb3.eth.sendSignedTransaction('0x' + this.Market.serializedTx.toString('hex'))
+    this.Market.subscription = this.ftweb3.sendSignedTrans(this.Market.serializedTx)
     .once('transactionHash', (hash) => { this.Market.transaction = hash; })
     .once('receipt', (receipt) =>{ this.Market.receipt = receipt; })
     .on('confirmation', (confNumber, receipt) => { this.Market.confirmed = confNumber; })
     .on('error', (error) => { console.log('ERROR' + error); this.Market.error = error;})
-    this.showModal(8);
+    this.showModal(0);
   }
 
   deposit(notupdate: boolean): void{
@@ -881,7 +738,7 @@ export class FTMyAccountOld {
     var chainId = "913945103463586943";
     this.currentToken.contract.methods.approve('0x'+this.Market.address,this.depositAmount).estimateGas({gas:500000,from:'0x'+this.fromAddress}).then( (returns) => {
       this.currentToken.estimate = returns;
-      this.maxGas = this.multiplyBigNumber(this.currentToken.estimate,"2");
+      this.maxGas = this.ftNum.multiplyBigNumber(this.currentToken.estimate,"2");
       this.wb3.eth.getTransactionCount('0x' + this.fromAddress).then( (nonce) => {
         const txData = {
             nonce:    numberToHex(nonce),
@@ -901,8 +758,9 @@ export class FTMyAccountOld {
         this.currentToken.error = '';
         return null;
       });
-    });
-    /*ToDo once we publish fixed approveandcall in the Market contract implement this so deposit can be 1 call (Check if estimate gas error and do 2 step if error)
+    })
+    .catch(err => null);
+    /*ToDo once we publish fixecd approveandcall in the Market contract implement this so deposit can be 1 call (Check if estimate gas error and do 2 step if error)
       this.currentToken.contract.methods.approveAndCall('0x'+this.Market.address,this.currentToken.mine,'').estimateGas({gas:500000,from:'0x'+this.fromAddress}).then( (returns) => {
       this.Market.estimate = returns;
     });*/
@@ -932,7 +790,7 @@ export class FTMyAccountOld {
       var chainId = "913945103463586943";
       this.Market.contract.methods.deposit('0x'+this.currentToken.address,this.depositAmount).estimateGas({gas:500000,from:'0x'+this.fromAddress}).then( (returns) => {
         this.Market.estimate = returns;
-        this.maxGas = this.multiplyBigNumber(returns, "2");
+        this.maxGas = this.ftNum.multiplyBigNumber(returns, "2");
         this.wb3.eth.getTransactionCount('0x' + this.fromAddress).then( (nonce) => {
           const txData = {
               nonce:    numberToHex(nonce),
@@ -977,19 +835,19 @@ export class FTMyAccountOld {
     .once('receipt', (receipt) =>{ this.Market.receipt = receipt; })
     .on('confirmation', (confNumber, receipt) => { this.Market.confirmed = confNumber; })
     .on('error', (error) => { console.log('ERROR' + error); this.Market.error = error;})
-    this.showModal(6);
+    this.showModal(0);
   }
 
   depositEther(notupdate: boolean): void{    
     if(!notupdate){
-      this.depositEtherAmount = this.subtractBigNumber(this.accountBalance,"100000000000000000");
+      this.depositEtherAmount = this.ftNum.subtractBigNumber(this.accountBalance,"100000000000000000");
     }
     var privateKey = Buffer.from(rlp.stripHexPrefix(this.cache.getCache('key')), 'hex');
     var ABIdata = this.Market.contract.methods.deposit('0x' + this.zero, "0").encodeABI();
     var chainId = "913945103463586943";
     this.Market.contract.methods.deposit('0x' + this.zero, "0").estimateGas({from:'0x'+this.fromAddress,value:this.depositEtherAmount}).then( (returns) => {
       this.Market.estimate = returns;
-      this.maxGas = this.multiplyBigNumber(returns, "2");
+      this.maxGas = this.ftNum.multiplyBigNumber(returns, "2");
       this.wb3.eth.getTransactionCount('0x' + this.fromAddress).then( (nonce) => {
         const txData = {
             nonce:    numberToHex(nonce),
@@ -1014,7 +872,7 @@ export class FTMyAccountOld {
   }
 
   changeEtherDeposit(): void{
-    this.openModalNumber(this.depositEtherAmount, this.subtractBigNumber(this.accountBalance,"100000000000000000"));
+    this.openModalNumber(this.depositEtherAmount, this.ftNum.subtractBigNumber(this.accountBalance,"100000000000000000"));
     this.obs.getObserver('modalNumber').subscribe( (result) => {
       this.depositEtherAmount = result;
       this.depositEther(true);
@@ -1031,7 +889,7 @@ export class FTMyAccountOld {
     .once('receipt', (receipt) =>{ this.Market.receipt = receipt; })
     .on('confirmation', (confNumber, receipt) => { this.Market.confirmed = confNumber; })
     .on('error', (error) => { console.log('ERROR' + error); this.Market.error = error;})
-    this.showModal(14);
+    this.showModal(0);
   }
 
   withdrawEther(notupdate: boolean): void{
@@ -1043,7 +901,7 @@ export class FTMyAccountOld {
     var chainId = "913945103463586943";
     this.Market.contract.methods.withdrawal('0x' + this.zero, this.withdrawEtherAmount).estimateGas({from:'0x'+this.fromAddress}).then( (returns) => {
       this.Market.estimate = returns;
-      this.maxGas = this.multiplyBigNumber(this.Market.estimate,"2");
+      this.maxGas = this.ftNum.multiplyBigNumber(this.Market.estimate,"2");
       this.wb3.eth.getTransactionCount('0x' + this.fromAddress).then( (nonce) => {
         const txData = {
             nonce:    numberToHex(nonce),
@@ -1085,7 +943,7 @@ export class FTMyAccountOld {
     .once('receipt', (receipt) =>{ this.Market.receipt = receipt; })
     .on('confirmation', (confNumber, receipt) => { this.Market.confirmed = confNumber; })
     .on('error', (error) => { console.log('ERROR' + error); this.Market.error = error;})
-    this.showModal(16);
+    this.showModal(0);
   }
 
   setCancelOffer(token: string, amount: string, buysell: boolean): void{
@@ -1098,7 +956,7 @@ export class FTMyAccountOld {
     var chainId = "913945103463586943";
     this.Market.contract.methods.cancelOffer(token, buysell, amount).estimateGas({gas:500000,from:'0x'+this.fromAddress}).then( (returns) => {
       this.Market.estimate = returns;
-      this.maxGas = this.multiplyBigNumber(this.Market.estimate, "2");
+      this.maxGas = this.ftNum.multiplyBigNumber(this.Market.estimate, "2");
       this.wb3.eth.getTransactionCount('0x' + this.fromAddress).then( (nonce) => {
         const txData = {
             nonce:    numberToHex(nonce),
@@ -1165,7 +1023,7 @@ export class FTMyAccountOld {
     var chainId = "913945103463586943";
     this.Market.contract.methods.makeOffer('0x' + this.currentToken.address, true, this.buyPrice, this.buyToken, "0x00").estimateGas({from:'0x'+this.fromAddress}).then( (returns) => {
       this.Market.estimate = returns;
-      this.maxGas = this.multiplyBigNumber(returns,"2");
+      this.maxGas = this.ftNum.multiplyBigNumber(returns,"2");
       this.wb3.eth.getTransactionCount('0x' + this.fromAddress).then( (nonce) => {
         const txData = {
             nonce:    numberToHex(nonce),
@@ -1194,7 +1052,7 @@ export class FTMyAccountOld {
     if(this.buyPrice == "0") {
       maxToken = "0";
     } else {
-      maxToken = this.divideBigNumber(this.multiplyBigNumber(this.subtractBigNumber(this.Market.ether, "1000000000000000"),"1000000"),this.buyPrice);
+      maxToken = this.ftNum.divideBigNumber(this.ftNum.multiplyBigNumber(this.ftNum.subtractBigNumber(this.Market.ether, "1000000000000000"),"1000000"),this.buyPrice);
     }
     this.openModalNumber(this.buyToken, maxToken);
     this.obs.getObserver('modalNumber').subscribe( (result) => {
@@ -1207,13 +1065,13 @@ export class FTMyAccountOld {
     if(this.buyToken == "0") {
       maxPrice = "0";
     } else {
-      maxPrice = this.divideBigNumber(this.multiplyBigNumber(this.subtractBigNumber(this.Market.ether, "1000000000000000"),"1000000"),this.buyToken);
+      maxPrice = this.ftNum.divideBigNumber(this.ftNum.multiplyBigNumber(this.ftNum.subtractBigNumber(this.Market.ether, "1000000000000000"),"1000000"),this.buyToken);
     }
-    maxPrice = this.multiplyBigNumber(maxPrice, "1000000000000")
-    let buyPriceNew = this.multiplyBigNumber(this.buyPrice,"1000000000000");
+    maxPrice = this.ftNum.multiplyBigNumber(maxPrice, "1000000000000")
+    let buyPriceNew = this.ftNum.multiplyBigNumber(this.buyPrice,"1000000000000");
     this.openModalPrice(buyPriceNew, maxPrice);
     this.obs.getObserver('modalPrice').subscribe( (result) => {
-      this.buyPrice = this.divideBigNumber(result,"1000000000000");
+      this.buyPrice = this.ftNum.divideBigNumber(result,"1000000000000");
       this.buy();
     });
   }
@@ -1246,7 +1104,7 @@ export class FTMyAccountOld {
     var chainId = "913945103463586943";
     this.Market.contract.methods.makeOffer('0x' + this.currentToken.address, false, this.sellPrice, this.sellToken, "0x00").estimateGas({gas:500000,from:'0x'+this.fromAddress}).then( (returns) => {
       this.Market.estimate = returns;
-      this.maxGas = this.multiplyBigNumber(returns,"2");
+      this.maxGas = this.ftNum.multiplyBigNumber(returns,"2");
       this.wb3.eth.getTransactionCount('0x' + this.fromAddress).then( (nonce) => {
         const txData = {
             nonce:    numberToHex(nonce),
@@ -1280,10 +1138,10 @@ export class FTMyAccountOld {
   }
   changeSellPrice(): void{
     // Todo: calculate max based on Token (Also, limit fractions based on tokens)
-    let sellPriceNew = this.multiplyBigNumber(this.sellPrice,"1000000000000");
+    let sellPriceNew = this.ftNum.multiplyBigNumber(this.sellPrice,"1000000000000");
     this.openModalPrice(sellPriceNew, "0");
     this.obs.getObserver('modalPrice').subscribe( (result) => {
-      this.sellPrice = this.divideBigNumber(result,"1000000000000");
+      this.sellPrice = this.ftNum.divideBigNumber(result,"1000000000000");
       this.sell();
     });
   }
@@ -1316,9 +1174,6 @@ export class FTMyAccountOld {
     this.subscribeParam.unsubscribe();
     if(this.subscribeBlock){
       this.subscribeBlock.unsubscribe();
-    }
-    if(this.subscribeBNSec){
-      this.subscribeBNSec.unsubscribe();
     }
     if(this.currentToken.subscription){
       this.currentToken.subscription.removeAllListeners();

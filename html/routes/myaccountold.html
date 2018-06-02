@@ -43,7 +43,7 @@
                                                     <td>Ether</td>
                                                     <td>
                                                         <a *ngIf="accountBalance != '0'" href="javascript:void(0);" (click)="viewNumber(accountBalance);">
-                                                            {{getEther(accountBalance) | number : '1.0-0'}}<span *ngIf="hasFraction(accountBalance)">.#</span>
+                                                            {{ftNum.getEther(accountBalance) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(accountBalance)">.#</span>
                                                         </a>
                                                         <span *ngIf="accountBalance == '0'">0</span>
                                                         <span *ngIf="!tutorial.subscription">
@@ -57,13 +57,13 @@
                                                     </td>
                                                     <td>
                                                         <a *ngIf="Market.ether != '0'" href="javascript:void(0);" (click)="viewNumber(Market.ether);">
-                                                            {{getEther(Market.ether) | number : '1.0-0'}}<span *ngIf="hasFraction(Market.ether)">.#</span>
+                                                            {{ftNum.getEther(Market.ether) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(Market.ether)">.#</span>
                                                         </a>
                                                         <span *ngIf="Market.ether == '0'">0</span>
                                                     </td>
                                                     <td>
                                                         <a *ngIf="bookEther != '0'" href="javascript:void(0);" (click)="viewNumber(bookEther);">
-                                                            {{getEther(bookEther) | number : '1.0-0'}}<span *ngIf="hasFraction(bookEther)">.#</span>
+                                                            {{ftNum.getEther(bookEther) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(bookEther)">.#</span>
                                                         </a>
                                                         <span *ngIf="bookEther == '0'">0</span>
                                                         <span *ngIf="!tutorial.subscription">
@@ -77,7 +77,7 @@
                                                     <td><a [routerLink]="['/token',FreeToken.address]" href="javascript:void(0);">FreeToken</a> <span *ngIf="FreeToken.lastPrice">({{+FreeToken.lastPrice/1000000}})</span></td>
                                                     <td>
                                                         <a *ngIf="FreeToken.mine != '0'" href="javascript:void(0);" (click)="viewNumber(FreeToken.mine);">
-                                                            {{getEther(FreeToken.mine) | number : '1.0-0'}}<span *ngIf="hasFraction(FreeToken.mine)">.#</span>
+                                                            {{ftNum.getEther(FreeToken.mine) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(FreeToken.mine)">.#</span>
                                                         </a>
                                                         <span *ngIf="FreeToken.mine == '0'">0</span>
                                                         <span *ngIf="!tutorial.subscription">
@@ -91,7 +91,7 @@
                                                     </td>
                                                     <td>
                                                         <a *ngIf="Market.free != '0'" href="javascript:void(0);" (click)="viewNumber(Market.free);">
-                                                            {{getEther(Market.free) | number : '1.0-0'}}<span *ngIf="hasFraction(Market.free)">.#</span>
+                                                            {{ftNum.getEther(Market.free) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(Market.free)">.#</span>
                                                         </a>
                                                         <span *ngIf="Market.free == '0'">0</span>
                                                         <span *ngIf="!tutorial.subscription">
@@ -105,7 +105,7 @@
                                                     </td>
                                                     <td>
                                                         <a *ngIf="getBookTokenEther('0x' + FreeToken.address) != '0'" href="javascript:void(0);" (click)="viewNumber(getBookTokenEther('0x' + FreeToken.address));">
-                                                            {{getEther(getBookTokenEther('0x' + FreeToken.address)) | number : '1.0-0'}}<span *ngIf="hasFraction(getBookTokenEther('0x' + FreeToken.address))">.#</span>
+                                                            {{ftNum.getEther(getBookTokenEther('0x' + FreeToken.address)) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(getBookTokenEther('0x' + FreeToken.address))">.#</span>
                                                         </a>
                                                         <span *ngIf="getBookTokenEther('0x' + FreeToken.address) == '0'">0</span>
                                                         <span *ngIf="!tutorial.subscription">
@@ -119,7 +119,7 @@
                                                     <td><a [routerLink]="['/token',TradeToken.address]" href="javascript:void(0);">TradingToken</a> <span *ngIf="TradeToken.lastPrice">({{+TradeToken.lastPrice/1000000}})</span></td>
                                                     <td>
                                                         <a *ngIf="TradeToken.mine != '0'" href="javascript:void(0);" (click)="viewNumber(TradeToken.mine);">
-                                                            {{getEther(TradeToken.mine) | number : '1.0-0'}}<span *ngIf="hasFraction(TradeToken.mine)">.#</span>
+                                                            {{ftNum.getEther(TradeToken.mine) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(TradeToken.mine)">.#</span>
                                                         </a>
                                                         <span *ngIf="TradeToken.mine == '0'">0</span>
                                                         <span *ngIf="!tutorial.subscription">
@@ -133,7 +133,7 @@
                                                     </td>
                                                     <td>
                                                         <a *ngIf="Market.trade != '0'" href="javascript:void(0);" (click)="viewNumber(Market.trade);">
-                                                            {{getEther(Market.trade) | number : '1.0-0'}}<span *ngIf="hasFraction(Market.trade)">.#</span>
+                                                            {{ftNum.getEther(Market.trade) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(Market.trade)">.#</span>
                                                         </a>
                                                         <span *ngIf="Market.trade == '0'">0</span>
                                                         <span *ngIf="!tutorial.subscription">
@@ -147,7 +147,7 @@
                                                     </td>
                                                     <td>
                                                         <a *ngIf="getBookTokenEther('0x' + TradeToken.address) != '0'" href="javascript:void(0);" (click)="viewNumber(getBookTokenEther('0x' + TradeToken.address));">
-                                                            {{getEther(getBookTokenEther('0x' + TradeToken.address)) | number : '1.0-0'}}<span *ngIf="hasFraction(getBookTokenEther('0x' + TradeToken.address))">.#</span>
+                                                            {{ftNum.getEther(getBookTokenEther('0x' + TradeToken.address)) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(getBookTokenEther('0x' + TradeToken.address))">.#</span>
                                                         </a>
                                                         <span *ngIf="getBookTokenEther('0x' + TradeToken.address) == '0'">0</span>
                                                         <span *ngIf="!tutorial.subscription">
@@ -170,7 +170,7 @@
                                         <table class="table table-sm table-bordered">
                                             <tr><th>Token</th><th>Price</th><th>Tokens</th></tr>
                                             <ng-container *ngFor="let key of getSortedKeys(myTradesMap,false)">
-                                                <tr><td><span *ngIf="myTradesMap[key].token == '0x' + FreeToken.address">Free Token</span><span *ngIf="myTradesMap[key].token == '0x' + TradeToken.address">Trade Token</span><span *ngIf="myTradesMap[key].token != '0x' + FreeToken.address && myTradesMap[key].token != '0x' + TradeToken.address">{{myTradesMap[key].token}}</span></td><td>{{+myTradesMap[key].price/1000000}}</td><td>{{wb3.utils.fromWei(myTradesMap[key].count, 'ether') | number: '1.0-6'}}</td></tr>
+                                                <tr><td><span *ngIf="myTradesMap[key].token == '0x' + FreeToken.address">Free Token</span><span *ngIf="myTradesMap[key].token == '0x' + TradeToken.address">Trade Token</span><span *ngIf="myTradesMap[key].token != '0x' + FreeToken.address && myTradesMap[key].token != '0x' + TradeToken.address">{{myTradesMap[key].token}}</span></td><td>{{+myTradesMap[key].price/1000000}}</td><td>{{ftweb3.fromWei(myTradesMap[key].count, 'ether') | number: '1.0-6'}}</td></tr>
                                             </ng-container>
                                         </table>
                                     </div>
@@ -204,20 +204,20 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content roboto">
             <div class="modal-header">
-                <h5 class="modal-title">Pick amount: {{wb3.utils.fromWei(modalNumber.number, 'ether')}} <small><br>An Ether is 1 with 18 zero's after it. We use "Ether" as an amount. It may represent an amount in tokens, or an amount of ether.</small></h5>
+                <h5 class="modal-title">Pick amount: {{ftweb3.fromWei(modalNumber.number, 'ether')}} <small><br>An Ether is 1 with 18 zero's after it. We use "Ether" as an amount. It may represent an amount in tokens, or an amount of ether.</small></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModalNumber(modalNumber.orig)" href="javascript:void(0);">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <div *ngIf="modalNumber.max != '0'">Maximum amount is {{wb3.utils.fromWei(modalNumber.max, 'ether')}}</div>
-                <input min="0" max="999999999999" type="number" (change)="updateModalNumber();" value="{{getEther(modalNumber.number)}}" id="modalNumberEther"> Ether<br>
-                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{getFinney(modalNumber.number) | number : '1.0-0'}}" id="modalNumberFinney"> Finney<br>
-                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{getSzabo(modalNumber.number) | number : '1.0-0'}}" id="modalNumberSzabo"> Szabo<br>
-                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{getGwei(modalNumber.number) | number : '1.0-0'}}" id="modalNumberGwei"> Gwei<br>
-                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{getMwei(modalNumber.number) | number : '1.0-0'}}" id="modalNumberMwei"> Mwei <br>
-                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{getKwei(modalNumber.number) | number : '1.0-0'}}" id="modalNumberKwei"> Kwei <br>
-                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{getWei(modalNumber.number) | number : '1.0-0'}}" id="modalNumberWei"> Wei<Br><Br>
+                <div *ngIf="modalNumber.max != '0'">Maximum amount is {{ftweb3.fromWei(modalNumber.max, 'ether')}}</div>
+                <input min="0" max="999999999999" type="number" (change)="updateModalNumber();" value="{{ftNum.getEther(modalNumber.number)}}" id="modalNumberEther"> Ether<br>
+                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{ftNum.getFinney(modalNumber.number) | number : '1.0-0'}}" id="modalNumberFinney"> Finney<br>
+                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{ftNum.getSzabo(modalNumber.number) | number : '1.0-0'}}" id="modalNumberSzabo"> Szabo<br>
+                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{ftNum.getGwei(modalNumber.number) | number : '1.0-0'}}" id="modalNumberGwei"> Gwei<br>
+                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{ftNum.getMwei(modalNumber.number) | number : '1.0-0'}}" id="modalNumberMwei"> Mwei <br>
+                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{ftNum.getKwei(modalNumber.number) | number : '1.0-0'}}" id="modalNumberKwei"> Kwei <br>
+                <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{ftNum.getWei(modalNumber.number) | number : '1.0-0'}}" id="modalNumberWei"> Wei<Br><Br>
             </div>
             <div class="modal-footer">
                 <ul class="nav nav-pills modal-nav text-center">
@@ -237,16 +237,16 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content roboto">
             <div class="modal-header">
-                <h5 class="modal-title">Pick amount: {{wb3.utils.fromWei(modalPrice.number, 'ether')}}</h5>
+                <h5 class="modal-title">Pick amount: {{ftweb3.fromWei(modalPrice.number, 'ether')}}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModalPrice(modalPrice.orig)" href="javascript:void(0);">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <div *ngIf="modalPrice.max != '0'">Maximum amount is {{wb3.utils.fromWei(modalPrice.max, 'ether')}}</div>
-                <input min="0" max="999999999999" type="number" (change)="updateModalPrice();" value="{{getEther(modalPrice.number)}}" id="modalPriceEther"> Ether<br>
-                <input min="0" max="999" type="number" (change)="updateModalPrice();" value="{{getFinney(modalPrice.number) | number : '1.0-0'}}" id="modalPriceFinney"> Finney<br>
-                <input min="0" max="999" type="number" (change)="updateModalPrice();" value="{{getSzabo(modalPrice.number) | number : '1.0-0'}}" id="modalPriceSzabo"> Szabo<br>
+                <div *ngIf="modalPrice.max != '0'">Maximum amount is {{ftweb3.fromWei(modalPrice.max, 'ether')}}</div>
+                <input min="0" max="999999999999" type="number" (change)="updateModalPrice();" value="{{ftNum.getEther(modalPrice.number)}}" id="modalPriceEther"> Ether<br>
+                <input min="0" max="999" type="number" (change)="updateModalPrice();" value="{{ftNum.getFinney(modalPrice.number) | number : '1.0-0'}}" id="modalPriceFinney"> Finney<br>
+                <input min="0" max="999" type="number" (change)="updateModalPrice();" value="{{ftNum.getSzabo(modalPrice.number) | number : '1.0-0'}}" id="modalPriceSzabo"> Szabo<br>
                 <!-- <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{getGwei(modalNumber.number) | number : '1.0-0'}}" id="modalNumberGwei"> Gwei<br>
                 <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{getMwei(modalNumber.number) | number : '1.0-0'}}" id="modalNumberMwei"> Mwei <br>
                 <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{getKwei(modalNumber.number) | number : '1.0-0'}}" id="modalNumberKwei"> Kwei <br>
@@ -273,19 +273,19 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content roboto">
             <div class="modal-header">
-                <h5 class="modal-title">{{wb3.utils.fromWei(number, 'ether')}} Ether <small><br>An Ether is 1 with 18 zero's after it. We use "Ether" as an amount. It may represent an amount in tokens, or an amount of ether.</small></h5>
+                <h5 class="modal-title">{{ftweb3.fromWei(number, 'ether')}} Ether <small><br>An Ether is 1 with 18 zero's after it. We use "Ether" as an amount. It may represent an amount in tokens, or an amount of ether.</small></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                {{getEther(number) | number : '1.0-0'}} Ether<br>
-                {{getFinney(number) | number : '1.0-0'}} Finney<br>
-                {{getSzabo(number) | number : '1.0-0'}} Szabo<br>
-                {{getGwei(number) | number : '1.0-0'}} Gwei<br>
-                {{getMwei(number) | number : '1.0-0'}} Mwei <br>
-                {{getKwei(number) | number : '1.0-0'}} Kwei <br>
-                {{getWei(number) | number : '1.0-0'}} Wei<Br><Br>
+                {{ftNum.getEther(number) | number : '1.0-0'}} Ether<br>
+                {{ftNum.getFinney(number) | number : '1.0-0'}} Finney<br>
+                {{ftNum.getSzabo(number) | number : '1.0-0'}} Szabo<br>
+                {{ftNum.getGwei(number) | number : '1.0-0'}} Gwei<br>
+                {{ftNum.getMwei(number) | number : '1.0-0'}} Mwei <br>
+                {{ftNum.getKwei(number) | number : '1.0-0'}} Kwei <br>
+                {{ftNum.getWei(number) | number : '1.0-0'}} Wei<Br><Br>
             </div>
             <div class="modal-footer">
                 <ul class="nav nav-pills modal-nav text-center">
@@ -358,11 +358,11 @@
         <div class="modal-body">
             <h5>Depositing Tokens involves 2 steps.</h5>
             First, the {{currentToken.name}} Smart Contract needs permission from you to allow
-            the Market Smart Contract to transfer <a (click)="changeDeposit()" href="javascript:void(0);">{{wb3.utils.fromWei(depositAmount, 'ether')}}</a> {{currentToken.name}}.<br><Br>
+            the Market Smart Contract to transfer <a (click)="changeDeposit()" href="javascript:void(0);">{{ftweb3.fromWei(depositAmount,'ether')}}</a> {{currentToken.name}}.<br><Br>
             Second, the Market Smart Contract deposits the {{currentToken.name}} into your Market account.
             <Br><Br>
             <h5>Confirm that you approve the deposit.</h5>
-            This transaction costs you {{wb3.utils.fromWei(multiplyBigNumber(currentToken.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
+            This transaction costs you {{ftweb3.fromWei(ftNum.multiplyBigNumber(currentToken.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
             <br>
             <select *ngIf="accountBalance != '0'" [(ngModel)]="gasPrice" (click)="deposit(true)">
                 <option value="0">Free Gas</option>
@@ -401,7 +401,7 @@
         </div>
         <div class="modal-body">
             <h5>Once the approval is added to the blockchain you will be able to send the deposit transaction to the blockchain.</h5>
-            This transaction costs you {{wb3.utils.fromWei(multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
+            This transaction costs you {{ftweb3.fromWei(ftNum.multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
             <br>
             <select *ngIf="accountBalance != '0'" [(ngModel)]="gasPrice" (click)="approveConfirm()">
                 <option value="0">Free Gas</option>
@@ -487,8 +487,8 @@
         </div>
         <div class="modal-body">
             <h5>Withdraw {{currentToken.name}}</h5>
-            Withdraw <a (click)="changeWithdraw()" href="javascript:void(0);">{{wb3.utils.fromWei(withdrawAmount, 'ether')}}</a> {{currentToken.name}}.<br><Br>
-                This transaction costs you {{wb3.utils.fromWei(multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
+            Withdraw <a (click)="changeWithdraw()" href="javascript:void(0);">{{ftweb3.fromWei(withdrawAmount,'ether')}}</a> {{currentToken.name}}.<br><Br>
+                This transaction costs you {{ftweb3.fromWei(ftNum.multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
                 <br>
                 <select *ngIf="accountBalance != '0'" [(ngModel)]="gasPrice" (click)="withdraw(true)">
                     <option value="0">Free Gas</option>
@@ -574,14 +574,14 @@
                         You need Ether to purchase a token. Try selling a token or adding Ether to your account.
                     </div>
                     <div *ngIf="Market.ether != '0'">
-                        Number of Tokens: <a (click)="changeBuyToken()" href="javascript:void(0);">{{wb3.utils.fromWei(buyToken, 'ether')}}</a><br>
+                        Number of Tokens: <a (click)="changeBuyToken()" href="javascript:void(0);">{{ftweb3.fromWei(buyToken, 'ether')}}</a><br>
                         Price in ether per Ether of tokens: <a (click)="changeBuyPrice()" href="javascript:void(0);">{{+buyPrice/1000000 | number  : '1.0-6'}}</a><br>
                         Transactional fee: 0<br>
                         Add to book fee: 0.001 (only if you add a new entry to the book because there is no immediate seller)<br>
-                        <strong>Total Ether: {{wb3.utils.fromWei(addBigNumber(divideBigNumber(multiplyBigNumber(buyToken,buyPrice),"1000000"),"1000000000000000"),'ether') | number : '1.0-18'}}</strong><br>
+                        <strong>Total Ether: {{ftweb3.fromWei(ftNum.addBigNumber(ftNum.divideBigNumber(ftNum.multiplyBigNumber(buyToken,buyPrice),"1000000"),"1000000000000000"),'ether') | number : '1.0-18'}}</strong><br>
                         <br>
                         <h5>Confirm that you approve the offer to buy tokens</h5>
-                        This transaction costs you {{wb3.utils.fromWei(multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
+                        This transaction costs you {{ftweb3.fromWei(ftNum.multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
                         <br>
                         <select *ngIf="accountBalance != '0'" [(ngModel)]="gasPrice" (click)="buy()">
                             <option value="0">Free Gas</option>
@@ -601,7 +601,7 @@
                     <div>
                         <span *ngIf="currentToken.lastPrice">
                             <strong>LastPrice:</strong>
-                            {{+currentToken.lastPrice/1000000}} Ether per token for {{wb3.utils.fromWei(currentToken.lastCount, 'ether') | number : '1.0-18'}} tokens
+                            {{+currentToken.lastPrice/1000000}} Ether per token for {{ftweb3.fromWei(currentToken.lastCount, 'ether') | number : '1.0-18'}} tokens
                             <br>
                         </span>
                         
@@ -612,7 +612,7 @@
                                 <table class="tab-white table table-sm table-bordered">
                                     <tr><th>Price</th><th>Tokens</th></tr>
                                     <ng-container *ngFor="let key of getSortedKeys(currentToken.buyMap, false)">
-                                        <tr *ngIf="currentToken.buyMap[key] != '0'"><td>{{+key/1000000}}</td><td>{{wb3.utils.fromWei(currentToken.buyMap[key], 'ether') | number : '1.0-6'}}</td></tr>
+                                        <tr *ngIf="currentToken.buyMap[key] != '0'"><td>{{+key/1000000}}</td><td>{{ftweb3.fromWei(currentToken.buyMap[key], 'ether') | number : '1.0-6'}}</td></tr>
                                     </ng-container>
                                 </table>
                             </td>
@@ -620,7 +620,7 @@
                                 <table class="tab-white table table-sm table-bordered">
                                     <tr><th>Price</th><th>Tokens</th></tr>
                                     <ng-container *ngFor="let key of getSortedKeys(currentToken.sellMap, true)">
-                                        <tr *ngIf="currentToken.sellMap[key] != '0'"><td>{{+key/1000000}}</td><td>{{wb3.utils.fromWei(currentToken.sellMap[key], 'ether') | number: '1.0-6'}}</td></tr>
+                                        <tr *ngIf="currentToken.sellMap[key] != '0'"><td>{{+key/1000000}}</td><td>{{ftweb3.fromWei(currentToken.sellMap[key], 'ether') | number: '1.0-6'}}</td></tr>
                                     </ng-container>
                                 </table>
                             </td></tr>
@@ -637,7 +637,7 @@
                         <table class="table table-sm table-bordered">
                             <tr><th>Price</th><th>Tokens</th></tr>
                             <ng-container *ngFor="let key of getSortedKeys(currentToken.tradeMap,false)">
-                                <tr><td>{{+currentToken.tradeMap[key].price/1000000}}</td><td>{{wb3.utils.fromWei(currentToken.tradeMap[key].count, 'ether') | number: '1.0-6'}}</td></tr>
+                                <tr><td>{{+currentToken.tradeMap[key].price/1000000}}</td><td>{{ftweb3.fromWei(currentToken.tradeMap[key].count, 'ether') | number: '1.0-6'}}</td></tr>
                             </ng-container>
                         </table>
                     </div>
@@ -733,14 +733,14 @@
                         You need a token in your account to sell a token. Try getting a free token, buying a token, or depositing a token to your account.
                     </div>
                     <div *ngIf="currentToken.market != '0'">
-                        Number of Tokens: <a (click)="changeSellToken(currentToken.market)" href="javascript:void(0);">{{wb3.utils.fromWei(sellToken, 'ether')}}</a><br>
+                        Number of Tokens: <a (click)="changeSellToken(currentToken.market)" href="javascript:void(0);">{{ftweb3.fromWei(sellToken, 'ether')}}</a><br>
                         Price in ether per Ether of tokens: <a (click)="changeSellPrice()" href="javascript:void(0);">{{+sellPrice/1000000 | number  : '1.0-6'}}</a><br>
-                        Transactional fee: {{wb3.utils.fromWei(divideBigNumber(multiplyBigNumber(sellToken,sellPrice),"1000000000"), 'ether') | number: '1.0-18'}}<br>
+                        Transactional fee: {{ftweb3.fromWei(ftNum.divideBigNumber(ftNum.multiplyBigNumber(sellToken,sellPrice),"1000000000"), 'ether') | number: '1.0-18'}}<br>
                         Add to book fee: 0.001 (only if you add a new entry to the book because there is no immediate buyer)<br>
-                        <strong>Total Ether You Get: {{wb3.utils.fromWei(subtractBigNumber(divideBigNumber(multiplyBigNumber(sellToken,sellPrice),"1000000"),addBigNumber(divideBigNumber(multiplyBigNumber(sellToken,sellPrice),"1000000000"),"1000000000000000")),'ether') | number : '1.0-18'}}</strong><br>
+                        <strong>Total Ether You Get: {{ftweb3.fromWei(ftNum.subtractBigNumber(ftNum.divideBigNumber(ftNum.multiplyBigNumber(sellToken,sellPrice),"1000000"),ftNum.addBigNumber(ftNum.divideBigNumber(ftNum.multiplyBigNumber(sellToken,sellPrice),"1000000000"),"1000000000000000")),'ether') | number : '1.0-18'}}</strong><br>
                         <br>
                         <h5>Confirm that you approve the offer to buy tokens</h5>
-                        This transaction costs you {{wb3.utils.fromWei(multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
+                        This transaction costs you {{ftweb3.fromWei(ftNum.multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
                         <br>
                         <select *ngIf="accountBalance != '0'" [(ngModel)]="gasPrice" (click)="sell()">
                             <option value="0">Free Gas</option>
@@ -760,7 +760,7 @@
                     <div>
                         <span *ngIf="currentToken.lastPrice">
                             <strong>LastPrice:</strong>
-                            {{+currentToken.lastPrice/1000000}} Ether per token for {{wb3.utils.fromWei(currentToken.lastCount, 'ether') | number : '1.0-18'}} tokens
+                            {{+currentToken.lastPrice/1000000}} Ether per token for {{ftweb3.fromWei(currentToken.lastCount, 'ether') | number : '1.0-18'}} tokens
                             <br>
                         </span>
                         
@@ -771,7 +771,7 @@
                                 <table class="tab-white table table-sm table-bordered">
                                     <tr><th>Price</th><th>Tokens</th></tr>
                                     <ng-container *ngFor="let key of getSortedKeys(currentToken.buyMap, false)">
-                                        <tr *ngIf="currentToken.buyMap[key] != '0'"><td>{{+key/1000000}}</td><td>{{wb3.utils.fromWei(currentToken.buyMap[key], 'ether') | number : '1.0-6'}}</td></tr>
+                                        <tr *ngIf="currentToken.buyMap[key] != '0'"><td>{{+key/1000000}}</td><td>{{ftweb3.fromWei(currentToken.buyMap[key], 'ether') | number : '1.0-6'}}</td></tr>
                                     </ng-container>
                                 </table>
                             </td>
@@ -779,7 +779,7 @@
                                 <table class="tab-white table table-sm table-bordered">
                                     <tr><th>Price</th><th>Tokens</th></tr>
                                     <ng-container *ngFor="let key of getSortedKeys(currentToken.sellMap, true)">
-                                        <tr *ngIf="currentToken.sellMap[key] != '0'"><td>{{+key/1000000}}</td><td>{{wb3.utils.fromWei(currentToken.sellMap[key], 'ether') | number: '1.0-6'}}</td></tr>
+                                        <tr *ngIf="currentToken.sellMap[key] != '0'"><td>{{+key/1000000}}</td><td>{{ftweb3.fromWei(currentToken.sellMap[key], 'ether') | number: '1.0-6'}}</td></tr>
                                     </ng-container>
                                 </table>
                             </td></tr>
@@ -796,7 +796,7 @@
                         <table class="table table-sm table-bordered">
                             <tr><th>Price</th><th>Tokens</th></tr>
                             <ng-container *ngFor="let key of getSortedKeys(currentToken.tradeMap,false)">
-                                <tr><td>{{+currentToken.tradeMap[key].price/1000000}}</td><td>{{wb3.utils.fromWei(currentToken.tradeMap[key].count, 'ether') | number: '1.0-6'}}</td></tr>
+                                <tr><td>{{+currentToken.tradeMap[key].price/1000000}}</td><td>{{ftweb3.fromWei(currentToken.tradeMap[key].count, 'ether') | number: '1.0-6'}}</td></tr>
                             </ng-container>
                         </table>
                     </div>
@@ -886,10 +886,10 @@
             Make sure you always keep enough Ether on the blockchain to pay for gas to run your transactions.
             We recommend keeping a balance of at least 0.1 Ether.
             <Br><Br>
-            Amount to deposit: <a (click)="changeEtherDeposit()" href="javascript:void(0);">{{wb3.utils.fromWei(depositEtherAmount, 'ether') | number}}</a>
-            <br>Amount remaining: {{wb3.utils.fromWei(subtractBigNumber(accountBalance, depositEtherAmount), 'ether') | number }}
+            Amount to deposit: <a (click)="changeEtherDeposit()" href="javascript:void(0);">{{ftweb3.fromWei(depositEtherAmount, 'ether') | number}}</a>
+            <br>Amount remaining: {{ftweb3.fromWei(ftNum.subtractBigNumber(accountBalance, depositEtherAmount), 'ether') | number }}
             <h5>Confirm that you approve the deposit</h5>
-            This transaction costs you {{wb3.utils.fromWei(multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
+            This transaction costs you {{ftweb3.fromWei(ftNum.multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
             <br>
             <select *ngIf="accountBalance != '0'" [(ngModel)]="gasPrice" (click)="depositEther(true)">
                 <option value="0">Free Gas</option>
@@ -966,9 +966,9 @@
         <div class="modal-body">
             <h5>Withdraw Ether Into Your Account</h5>
             <Br><Br>
-            Amount to withdraw: <a (click)="changeEtherWithdraw()" href="javascript:void(0);">{{wb3.utils.fromWei(withdrawEtherAmount, 'ether') | number }}</a><br>
+            Amount to withdraw: <a (click)="changeEtherWithdraw()" href="javascript:void(0);">{{ftweb3.fromWei(withdrawEtherAmount, 'ether') | number : '1.0-9' }}</a><br>
             <h5>Confirm that you approve the withdraw</h5>
-            This transaction costs you {{wb3.utils.fromWei(multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
+            This transaction costs you {{ftweb3.fromWei(ftNum.multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
             <br>
             <select *ngIf="accountBalance != '0'" [(ngModel)]="gasPrice" (click)="withdrawEther(true)">
                 <option value="0">Free Gas</option>
@@ -1052,16 +1052,16 @@
                 <span *ngIf="item!='0x9287bb21719d283CfdD7d644a89E8492f9845B64' && item!='0x2d5e86187855CC29B40469e8a7355f3fDBf4C088'">{{item}}</span><br>
                 <div *ngFor="let item2 of getPricesOfTokenBook(item)">
                     --Price: {{+item2/1000000 | number}}<br>
-                    ----Count: {{wb3.utils.fromWei(this.book.get(item).get(item2).count, 'ether') | number}}<br>
-                    ----Fee: {{wb3.utils.fromWei(this.book.get(item).get(item2).fee, 'ether') | number}}<br>
-                    ----TOTAL: {{wb3.utils.fromWei(addBigNumber(divideBigNumber(multiplyBigNumber(item2,this.book.get(item).get(item2).count),"1000000"),this.book.get(item).get(item2).fee), 'ether') | number}}<br>
+                    ----Count: {{ftweb3.fromWei(this.book.get(item).get(item2).count, 'ether') | number}}<br>
+                    ----Fee: {{ftweb3.fromWei(this.book.get(item).get(item2).fee, 'ether') | number}}<br>
+                    ----TOTAL: {{ftweb3.fromWei(ftNum.addBigNumber(ftNum.divideBigNumber(ftNum.multiplyBigNumber(item2,this.book.get(item).get(item2).count),"1000000"),this.book.get(item).get(item2).fee), 'ether') | number}}<br>
                     <a class="btn btn-ft" href="javascript:void(0);" (click)="setCancelOffer(item,item2,true)">Cancel This Offer</a>
                     <br>
                     <Br>
                 </div>
             </div>
             <h5>Confirm that you approve the cancellation</h5>
-            This transaction costs you {{wb3.utils.fromWei(multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
+            This transaction costs you {{ftweb3.fromWei(ftNum.multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
             <br>
             <select *ngIf="accountBalance != '0'" [(ngModel)]="gasPrice" (click)="cancelOffer(lastOffer.token, lastOffer.amount, lastOffer.buysell);">
                 <option value="0">Free Gas</option>
@@ -1114,14 +1114,14 @@
                 <span *ngIf="currentToken.address!='9287bb21719d283CfdD7d644a89E8492f9845B64' && currentToken.address!='2d5e86187855CC29B40469e8a7355f3fDBf4C088'">{{'0x' + currentToken.address}}</span><br>
                 <div *ngFor="let item2 of getPricesSellOfTokenBook('0x' + currentToken.address)">
                     --Price: {{+item2/1000000 | number}}<br>
-                    ----Count: {{wb3.utils.fromWei(this.bookToken.get('0x' + currentToken.address).get(item2).count, 'ether') | number}}<br>
+                    ----Count: {{ftweb3.fromWei(this.bookToken.get('0x' + currentToken.address).get(item2).count, 'ether') | number}}<br>
                     <a class="btn btn-ft" href="javascript:void(0);" (click)="setCancelOffer('0x' + currentToken.address,item2,false)">Cancel This Offer</a>
                     <br>
                     <Br>
                 </div>
             </div>
             <h5>Confirm that you approve the cancellation</h5>
-            This transaction costs you {{wb3.utils.fromWei(multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
+            This transaction costs you {{ftweb3.fromWei(ftNum.multiplyBigNumber(Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
             <br>
             <select *ngIf="accountBalance != '0'" [(ngModel)]="gasPrice" (click)="cancelTokenOffer(lastOffer.token, lastOffer.amount, lastOffer.buysell);">
                 <option value="0">Free Gas</option>

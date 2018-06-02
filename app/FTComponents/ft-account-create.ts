@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { FTWeb3Service } from '../FTServices/ft-web3';
+import { FTObserver } from '../FTFramework/FT-Observer';
 import { FTHttpClient } from '../FTFramework/FT-HttpClient';
 import { FTSession } from '../FTFramework/FT-Session';
 
@@ -25,7 +26,7 @@ export class FTAccountCreate {
   myContracts;
   JSON=JSON;
 
-  constructor( private router:Router, private web3: FTWeb3Service, private http: FTHttpClient, private session:FTSession ) 
+  constructor( private router:Router, private web3: FTWeb3Service, private http: FTHttpClient, private session:FTSession, private obs: FTObserver ) 
   {
     this.solidityCode = this.x();
     this.tokenName = "";
@@ -34,17 +35,27 @@ export class FTAccountCreate {
   ngOnInit(): void {} 
 
   ngAfterViewInit(): void{
-    let token = this.session.getItem('token');
-    let account = this.session.getItem('account');
-    this.http.put("publishContract", JSON.stringify({
-        "token" : token,
-        "address": account
-        })).toPromise()
-    .then( data => {
-        data = JSON.parse(data).sort(function(a, b){return a.ContractNameVer - b.ContractNameVer});
-        this.myContracts = data;
-    })
-    .catch( err => {console.log(err);});
+    this.obs.getObserver('isSignedIn').forEach( (data) => {
+        if(data == true) {
+            let token = this.session.getItem('token');
+            let account = this.session.getItem('account');
+            if(token && account)
+                this.http.put("publishContract", JSON.stringify({
+                    "token" : token,
+                    "address": account
+                    })).toPromise()
+                .then( data => {
+                    if(data) {
+                        data = JSON.parse(data).sort(function(a, b){return a.ContractNameVer - b.ContractNameVer});
+                        this.myContracts = data;
+                    }
+                })
+                .catch( err => {console.log(err);});
+        } else {
+            
+        }
+    });
+
   } 
 
   changeTabs(tab:number): void {
@@ -88,9 +99,9 @@ export class FTAccountCreate {
 
   publish(): void {
       this.publishedAddress = null;
-      this.web3.publishContract(this.compiledCode, this.gasEst)
+      this.web3.signAndSendTrans(this.gasEst, null, 0, this.compiledCode)
       .then(addr => {
-          this.publishedAddress = addr;
+          this.publishedAddress = addr.contractAddress;
           let account = this.session.getItem('account');
           let token = this.session.getItem('token');
           this.http.put("publishContract", JSON.stringify({

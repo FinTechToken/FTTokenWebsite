@@ -13,7 +13,6 @@ import { FTText } from './FTFramework/FT-Text';
 
 export class FTHeader {
   blocknumber = 0;
-  seconds = 0;
   texts=[];
   over=false;
   isSignedIn:boolean=false;
@@ -28,11 +27,6 @@ export class FTHeader {
     this.obs.getObserver('block')
     .forEach( (bn) => {
       this.blocknumber = bn;
-    });
-    
-    this.obs.getObserver('blockSeconds')
-    .forEach( (localseconds) => {
-      this.seconds = localseconds;
     });
 
     this.obs.getObserver('isSignedIn')

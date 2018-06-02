@@ -181,7 +181,7 @@ private unlockAccountNow(pw:string){
         this.unlockResetFeilds();
         document.getElementById('unlockbad').innerHTML = '<br>';
         this.cryptoPassService.unlockToken(pw);
-        this.obs.putObserver('isSignedIn', true);
+        // this.obs.putObserver('isSignedIn', true);
         this.router.navigate(['/myaccount']);
         this.processing = false;
     }
