@@ -6,7 +6,7 @@
     <table class="table table-sm table-bordered">
         <tr><th>Price</th><th>Tokens</th></tr>
         <ng-container *ngFor="let key of getSortedKeys(ftTokenWatch.TokenWatch[tokenIndex].tradeMap,false)">
-            <tr><td>{{+ftTokenWatch.TokenWatch[tokenIndex].tradeMap[key].price/1000000}}</td><td>{{ftweb3.fromWei(ftTokenWatch.TokenWatch[tokenIndex].tradeMap[key].count, 'ether') | number: '1.0-6'}}</td></tr>
+            <tr><td>{{+ftTokenWatch.TokenWatch[tokenIndex].tradeMap[key].price/1000000}}</td><td>{{ftweb3.fromWei(ftTokenWatch.TokenWatch[tokenIndex].tradeMap[key].count, 'ether') }}</td></tr>
         </ng-container>
     </table>
 </div>

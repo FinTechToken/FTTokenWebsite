@@ -8,8 +8,8 @@
 <div class="modal-body" [ngStyle]="{'height':modalHeight}">
     <h5>Withdraw Token From Your Trading Account</h5>
     <Br><Br>
-    Amount to withdraw: <a (click)="changeTokenWithdraw()" href="javascript:void(0);">{{ftweb3.fromWei(withdrawTokenAmount, 'ether') | number}}</a>
-    <br>Amount remaining: {{ftweb3.fromWei(ftNum.subtractBigNumber(ftTokenWatch.TokenWatch[tokenIndex].mineTrade, withdrawTokenAmount), 'ether') | number }}
+    Amount to withdraw: <a (click)="changeTokenWithdraw()" href="javascript:void(0);">{{ftweb3.fromWei(withdrawTokenAmount, 'ether')}}</a>
+    <br>Amount remaining: {{ftweb3.fromWei(ftNum.subtractBigNumber(ftTokenWatch.TokenWatch[tokenIndex].mineTrade, withdrawTokenAmount), 'ether')}}
 </div>
 <div class="modal-footer">
     <ul class="nav nav-pills modal-nav text-center">

@@ -18,7 +18,7 @@
             <div *ngIf="ftTokenWatch.TokenWatch[tokenIndex].mineTrade != '0'">
                 Number of Tokens: <a (click)="changeSellToken()" href="javascript:void(0);">{{ftweb3.fromWei(sellToken, 'ether')}}</a><br>
                 Price in FTT per token: <a (click)="changeSellPrice()" href="javascript:void(0);">{{ftweb3.fromWei(sellPrice, 'ether')}}</a><br>
-                Total FTT: {{ftweb3.fromWei(ftNum.divideBigNumber(ftNum.multiplyBigNumber(sellToken,ftNum.divideBigNumber(sellPrice,"1000000000000")),"1000000"),'ether') | number : '1.0-18'}}
+                Total FTT: {{ftweb3.fromWei(ftNum.divideBigNumber(ftNum.multiplyBigNumber(sellToken,ftNum.divideBigNumber(sellPrice,"1000000000000")),"1000000"),'ether') }}
                 <br><br>
                 - Transactional fee: {{ftweb3.fromWei(
                     ftNum.divideBigNumber(
@@ -30,7 +30,7 @@
                             )
                         ),
                         "1000000000"
-                    ), 'ether') | number: '1.0-18'}}<br>
+                    ), 'ether') }}<br>
                 - Add to book fee: 0.001<br>
                 <strong>Total FTT You Get: {{ftweb3.fromWei(
                     ftNum.subtractBigNumber(
@@ -57,7 +57,7 @@
                             ),
                             "1000000000000000"
                         )
-                    ),'ether') | number : '1.0-18'}}
+                    ),'ether') }}
                 </strong>
             </div>
         </div>

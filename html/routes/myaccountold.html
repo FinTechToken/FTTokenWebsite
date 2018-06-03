@@ -414,7 +414,7 @@
             <span *ngIf="Market.estimate != '0'">Deposit is estimated to use {{Market.estimate | number}} gas.</span>
             <span *ngIf="Market.estimate == maxGas">That is all the gas. Most likely an error. Please wait for approval to complete.</span>
             <br><Br>
-            This may take a few blocks for the approval. (Time since last block {{seconds}})
+            This may take a few blocks for the approval. (Time since last block seconds)
             <div [ngClass]="{ 'alert-warning': !currentToken.transaction, 'alert-success': currentToken.transaction }" class="alert" role="alert">Transaction sent to blockchain
                 <br>{{currentToken.transaction}}
             </div>
@@ -452,7 +452,7 @@
             </button>
         </div>
         <div class="modal-body">
-            This may take a few blocks. (Time since last block {{seconds}})
+            This may take a few blocks. (Time since last block seconds)
             <div [ngClass]="{ 'alert-warning': !Market.transaction, 'alert-success': Market.transaction }" class="alert" role="alert">Transaction sent to blockchain
                 <br>{{Market.transaction}}
             </div>
@@ -529,7 +529,7 @@
             </button>
         </div>
         <div class="modal-body">
-            This may take a few blocks. (Time since last block {{seconds}})
+            This may take a few blocks. (Time since last block seconds)
             <div [ngClass]="{ 'alert-warning': !Market.transaction, 'alert-success': Market.transaction }" class="alert" role="alert">Transaction sent to blockchain
                 <br>{{Market.transaction}}
             </div>
@@ -687,7 +687,7 @@
             You can either cancel the offer to move Ether off the book and into your account or wait until a seller sells. If you cancel the offer you get the 1 finney back.<br>
             When a seller sells you tokens, you will get the tokens in your account and the seller will get the 1 finney.<br><Br>
 
-            This may take a few blocks. (Time since last block {{seconds}})
+            This may take a few blocks. (Time since last block seconds)
             <div [ngClass]="{ 'alert-warning': !Market.transaction, 'alert-success': Market.transaction }" class="alert" role="alert">Transaction sent to blockchain
                 <br>{{Market.transaction}}
             </div>
@@ -846,7 +846,7 @@
             You can either cancel the offer to move Tokens off the book and into your account or wait until a buyer buys.<br>
             When a buyer buys your tokens, you will get the Ether in your account minus the 1 finney.<br><Br>
 
-            This may take a few blocks. (Time since last block {{seconds}})
+            This may take a few blocks. (Time since last block seconds)
             <div [ngClass]="{ 'alert-warning': !Market.transaction, 'alert-success': Market.transaction }" class="alert" role="alert">Transaction sent to blockchain
                 <br>{{Market.transaction}}
             </div>
@@ -930,7 +930,7 @@
             </button>
         </div>
         <div class="modal-body">
-            This may take a few blocks for the approval. (Time since last block {{seconds}})
+            This may take a few blocks for the approval. (Time since last block seconds)
             <div [ngClass]="{ 'alert-warning': !Market.transaction, 'alert-success': Market.transaction }" class="alert" role="alert">Transaction sent to blockchain
                 <br>{{Market.transaction}}
             </div>
@@ -1009,7 +1009,7 @@
             </button>
         </div>
         <div class="modal-body">
-            This may take a few blocks. (Time since last block {{seconds}})
+            This may take a few blocks. (Time since last block seconds)
             <div [ngClass]="{ 'alert-warning': !Market.transaction, 'alert-success': Market.transaction }" class="alert" role="alert">Transaction sent to blockchain
                 <br>{{Market.transaction}}
             </div>
@@ -1166,7 +1166,7 @@
             </button>
         </div>
         <div class="modal-body">
-            This may take a few blocks. (Time since last block {{seconds}})
+            This may take a few blocks. (Time since last block seconds)
             <div [ngClass]="{ 'alert-warning': !Market.transaction, 'alert-success': Market.transaction }" class="alert" role="alert">Transaction sent to blockchain
                 <br>{{Market.transaction}}
             </div>

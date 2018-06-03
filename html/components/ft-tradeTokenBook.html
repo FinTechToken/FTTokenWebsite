@@ -6,7 +6,7 @@
     
     <span *ngIf="ftTokenWatch.TokenWatch[tokenIndex].lastPrice">
         <strong>Last Transaction:</strong>
-        <a (click)="setPrice(ftTokenWatch.TokenWatch[tokenIndex].lastPrice)" href="javascript:void(0);">{{+ftTokenWatch.TokenWatch[tokenIndex].lastPrice/1000000}}</a> FTT per token for {{ftweb3.fromWei(ftTokenWatch.TokenWatch[tokenIndex].lastCount, 'ether') | number : '1.0-18'}} tokens
+        <a (click)="setPrice(ftTokenWatch.TokenWatch[tokenIndex].lastPrice)" href="javascript:void(0);">{{+ftTokenWatch.TokenWatch[tokenIndex].lastPrice/1000000}}</a> FTT per token for {{ftweb3.fromWei(ftTokenWatch.TokenWatch[tokenIndex].lastCount, 'ether') }} tokens
         <br>
     </span>
     <br>
@@ -18,7 +18,7 @@
                 <ng-container *ngFor="let key of getSortedKeys(ftTokenWatch.TokenWatch[tokenIndex].buyMap, false)">
                     <tr *ngIf="ftTokenWatch.TokenWatch[tokenIndex].buyMap[key] != '0'"><td>
                             <a (click)="setPrice(key)" href="javascript:void(0);">{{+key/1000000}}</a>
-                    </td><td>{{ftweb3.fromWei(ftTokenWatch.TokenWatch[tokenIndex].buyMap[key], 'ether') | number : '1.0-6'}}</td></tr>
+                    </td><td>{{ftweb3.fromWei(ftTokenWatch.TokenWatch[tokenIndex].buyMap[key], 'ether')}}</td></tr>
                 </ng-container>
             </table>
         </td>
@@ -28,7 +28,7 @@
                 <ng-container *ngFor="let key of getSortedKeys(ftTokenWatch.TokenWatch[tokenIndex].sellMap, true)">
                     <tr *ngIf="ftTokenWatch.TokenWatch[tokenIndex].sellMap[key] != '0'"><td>
                         <a (click)="setPrice(key)" href="javascript:void(0);">{{+key/1000000}}</a>
-                    </td><td>{{ftweb3.fromWei(ftTokenWatch.TokenWatch[tokenIndex].sellMap[key], 'ether') | number: '1.0-6'}}</td></tr>
+                    </td><td>{{ftweb3.fromWei(ftTokenWatch.TokenWatch[tokenIndex].sellMap[key], 'ether')}}</td></tr>
                 </ng-container>
             </table>
         </td></tr>
