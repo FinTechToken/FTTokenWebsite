@@ -17,7 +17,7 @@ export class FTTradeTokenBook {
   @Input() tokenIndex: number;
   objectKeys = Object.keys;
 
-  constructor( private ftTokenWatch: FTTokenWatchService, private ftweb3: FTWeb3Service, private ftNum: FTBigNumberService, private obs: FTObserver ) 
+  constructor( public ftTokenWatch: FTTokenWatchService, private ftweb3: FTWeb3Service, private ftNum: FTBigNumberService, private obs: FTObserver ) 
   { 
     this.setText();
   }

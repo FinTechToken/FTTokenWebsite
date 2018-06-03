@@ -21,7 +21,7 @@ export class FTAccountTrade {
 
   action=[];
 
-  constructor( private ftTokenWatch: FTTokenWatchService, private ftNum: FTBigNumberService, private ftMarket: FTMarketService, private ftWallet: FTWalletService, private router:Router, private obs: FTObserver,  private cache: FTCache, private web3: FTWeb3Service, private http: FTHttpClient, private session:FTSession ) 
+  constructor( public ftTokenWatch: FTTokenWatchService, private ftNum: FTBigNumberService, public ftMarket: FTMarketService, private ftWallet: FTWalletService, private router:Router, private obs: FTObserver,  private cache: FTCache, private web3: FTWeb3Service, private http: FTHttpClient, private session:FTSession ) 
   {}
   
   ngOnInit(): void {

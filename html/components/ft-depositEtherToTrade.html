@@ -8,8 +8,8 @@
 <div class="modal-body" [ngStyle]="{'height':modalHeight}">
     <h5>Deposit Ether Into Your Trading Account</h5>
     <Br><Br>
-    Amount to deposit: <a (click)="changeEtherDeposit()" href="javascript:void(0);">{{ftweb3.fromWei(depositEtherAmount, 'ether') | number}}</a>
-    <br>Amount remaining: {{ftweb3.fromWei(ftNum.subtractBigNumber(ftWallet.getBalance(), depositEtherAmount), 'ether') | number }}
+    Amount to deposit: <a (click)="changeEtherDeposit()" href="javascript:void(0);">{{ftweb3.fromWei(depositEtherAmount, 'ether')}}</a>
+    <br>Amount remaining: {{ftweb3.fromWei(ftNum.subtractBigNumber(ftWallet.getBalance(), depositEtherAmount), 'ether')}}
     <!--<h5>Confirm that you approve the deposit</h5>!-->
     <!--
     This transaction costs you {{ftweb3.fromWei(ftNum.multiplyBigNumber(ftMarket.Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther

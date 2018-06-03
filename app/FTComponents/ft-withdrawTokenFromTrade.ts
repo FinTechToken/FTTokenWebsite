@@ -27,7 +27,7 @@ export class FTWithdrawTokenFromTrade {
   gasPrice="0";
   tokenIndex;
 
-  constructor( private ftTokenWatch: FTTokenWatchService, private ftNum: FTBigNumberService, private ftWallet: FTWalletService, private ftweb3: FTWeb3Service, private ftMarket: FTMarketService, private cache: FTCache, private text: FTText, private obs: FTObserver, private http: FTHttpClient, private session: FTSession, private FTLocalStorage: FTStorage ) 
+  constructor( public ftTokenWatch: FTTokenWatchService, public ftNum: FTBigNumberService, private ftWallet: FTWalletService, public ftweb3: FTWeb3Service, public ftMarket: FTMarketService, private cache: FTCache, private text: FTText, private obs: FTObserver, private http: FTHttpClient, private session: FTSession, private FTLocalStorage: FTStorage ) 
   { 
     this.setText();
   }

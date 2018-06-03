@@ -8,8 +8,8 @@
 <div class="modal-body" [ngStyle]="{'height':modalHeight}">
     <h5>Deposit Token Into Your Trading Account</h5>
     <Br><Br>
-    Amount to deposit: <a (click)="changeTokenDeposit()" href="javascript:void(0);">{{ftweb3.fromWei(depositTokenAmount, 'ether') | number}}</a>
-    <br>Amount remaining: {{ftweb3.fromWei(ftNum.subtractBigNumber(ftTokenWatch.TokenWatch[tokenIndex].mine, depositTokenAmount), 'ether') | number }}
+    Amount to deposit: <a (click)="changeTokenDeposit()" href="javascript:void(0);">{{ftweb3.fromWei(depositTokenAmount, 'ether')}}</a>
+    <br>Amount remaining: {{ftweb3.fromWei(ftNum.subtractBigNumber(ftTokenWatch.TokenWatch[tokenIndex].mine, depositTokenAmount), 'ether') }}
 </div>
 <div class="modal-footer">
     <ul class="nav nav-pills modal-nav text-center">

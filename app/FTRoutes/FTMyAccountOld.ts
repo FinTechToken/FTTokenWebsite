@@ -162,7 +162,7 @@ export class FTMyAccountOld {
     subscription: null as any
   }
    
-  constructor( private ftweb3: FTWeb3Service, private ftNum: FTBigNumberService, private obs: FTObserver, private router: Router, private route: ActivatedRoute, private session: FTSession, private cache: FTCache, private http:Http, private cd: ChangeDetectorRef )
+  constructor( public ftweb3: FTWeb3Service, public ftNum: FTBigNumberService, public obs: FTObserver, public router: Router, public route: ActivatedRoute, public session: FTSession, public cache: FTCache, public http:Http, public cd: ChangeDetectorRef )
   {   
     this.zone=new NgZone({enableLongStackTrace:false});//Zone used for old version of IPad. Doesn't update without it.
   }

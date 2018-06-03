@@ -8,8 +8,8 @@
 <div class="modal-body" [ngStyle]="{'height':modalHeight}">
     <h5>Withdraw Ether From Your Trading Account</h5>
     <Br><Br>
-    Amount to withdraw: <a (click)="changeEtherWithdraw()" href="javascript:void(0);">{{ftweb3.fromWei(withdrawEtherAmount, 'ether') | number}}</a>
-    <br>Amount remaining: {{ftweb3.fromWei(ftNum.subtractBigNumber(ftMarket.getAccountBalance(), withdrawEtherAmount), 'ether') | number }}
+    Amount to withdraw: <a (click)="changeEtherWithdraw()" href="javascript:void(0);">{{ftweb3.fromWei(withdrawEtherAmount, 'ether')}}</a>
+    <br>Amount remaining: {{ftweb3.fromWei(ftNum.subtractBigNumber(ftMarket.getAccountBalance(), withdrawEtherAmount), 'ether') }}
     <!--<h5>Confirm that you approve the withdraw</h5>!-->
     <!--
     This transaction costs you {{ftweb3.fromWei(ftNum.multiplyBigNumber(ftMarket.Market.estimate,gasPrice), 'ether') | number : '1.0-9' }} TestEther
