@@ -32,7 +32,7 @@ export class FTTradeSellToken {
   withdrawTokenAmount:string = "0";
   gasPrice="0";
 
-  constructor( public ftTokenWatch: FTTokenWatchService, private ftNum: FTBigNumberService, private ftWallet: FTWalletService, private ftweb3: FTWeb3Service, private ftMarket: FTMarketService, private cache: FTCache, private text: FTText, private obs: FTObserver, private http: FTHttpClient, private session: FTSession, private FTLocalStorage: FTStorage ) 
+  constructor( public ftTokenWatch: FTTokenWatchService, public ftNum: FTBigNumberService, private ftWallet: FTWalletService, private ftweb3: FTWeb3Service, private ftMarket: FTMarketService, private cache: FTCache, private text: FTText, private obs: FTObserver, private http: FTHttpClient, private session: FTSession, private FTLocalStorage: FTStorage ) 
   { 
     this.setText();
   }
@@ -81,6 +81,34 @@ export class FTTradeSellToken {
       this.ftMarket.buildSellOfferTrans(this.sellPrice, this.sellToken, this.tokenIndex);
     else
       this.ftMarket.resetTrans();
+  }
+
+  amtToReceive() {
+    return this.ftNum.subtractBigNumber(
+      this.ftNum.divideBigNumber(
+          this.ftNum.multiplyBigNumber(
+              this.sellToken,
+              this.ftNum.divideBigNumber(
+                  this.sellPrice,
+                  "1000000000000"
+              )
+          ),
+          "1000000"
+      ),
+      this.ftNum.addBigNumber(
+          this.ftNum.divideBigNumber(
+              this.ftNum.multiplyBigNumber(
+                  this.sellToken,
+                  this.ftNum.divideBigNumber(
+                      this.sellPrice,
+                      "1000000000000"
+                  )       
+              ),
+              "1000000000"
+          ),
+          "1000000000000000"
+      )
+    )
   }
 
   changeSellToken() {

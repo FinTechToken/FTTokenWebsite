@@ -35,6 +35,17 @@ export class FTAccountTrade {
     this.obs.putObserver('modal', 'showNumber');
   }
 
+  showOffersToBuy(number) {
+    this.cache.putCache('number', number);
+    this.obs.putObserver('modal', 'account-trade.buyOffers');
+  }
+
+  showOffersToSell(index, number) {
+    this.cache.putCache('number', number);
+    this.obs.putObserver('tokenIndex', index);
+    this.obs.putObserver('modal', 'account-trade.sellOffers');
+  }
+
   takeAction(index){
     if(this.action[index]=='move_ether_to_wallet'){
       this.obs.putObserver('modal', 'account-trade.withdrawEther');

@@ -33,31 +33,7 @@
                     ), 'ether') }}<br>
                 - Add to book fee: 0.001<br>
                 <strong>Total FTT You Get: {{ftweb3.fromWei(
-                    ftNum.subtractBigNumber(
-                        ftNum.divideBigNumber(
-                            ftNum.multiplyBigNumber(
-                                sellToken,
-                                ftNum.divideBigNumber(
-                                    sellPrice,
-                                    "1000000000000"
-                                )
-                            ),
-                            "1000000"
-                        ),
-                        ftNum.addBigNumber(
-                            ftNum.divideBigNumber(
-                                ftNum.multiplyBigNumber(
-                                    sellToken,
-                                    ftNum.divideBigNumber(
-                                        sellPrice,
-                                        "1000000000000"
-                                    )       
-                                ),
-                                "1000000000"
-                            ),
-                            "1000000000000000"
-                        )
-                    ),'ether') }}
+                        amtToReceive(),'ether') }}
                 </strong>
             </div>
         </div>
@@ -81,7 +57,7 @@
                 Close
             </a>
         </li>
-        <li *ngIf="ftTokenWatch.TokenWatch[tokenIndex].mineTrade != '0' && sellToken != '0' && sellPrice != '0'" class="nav-item w-50 next">
+        <li *ngIf="ftTokenWatch.TokenWatch[tokenIndex].mineTrade != '0' && sellToken != '0' && sellPrice != '0' && ftNum.compareBigNumber(amtToReceive(),'0') >0" class="nav-item w-50 next">
             <a class="nav-link" (click)="sellOfferConfirm()" href="javascript:void(0);">
                 Confirm Sell Offer
                 <small><br>Gas Est: {{ftMarket.Market.estimate | number}}</small>
@@ -89,6 +65,9 @@
         </li>
         <li *ngIf="ftTokenWatch.TokenWatch[tokenIndex].mineTrade != '0' && ( sellToken == '0' || sellPrice == '0')" class="nav-item w-50 next">
             Need amount + price
+        </li>
+        <li *ngIf="ftTokenWatch.TokenWatch[tokenIndex].mineTrade != '0' && sellToken != '0' && sellPrice != '0' && ftNum.compareBigNumber(amtToReceive(),'0') < 1" class="nav-item w-50 next">
+            Sale minus fees must be positive
         </li>
     </ul>
 </div>

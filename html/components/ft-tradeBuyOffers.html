@@ -1,0 +1,48 @@
+<div class="modal-header">
+    <h5 class="modal-title">My Buy Offers</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close();" href="javascript:void(0);">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body" [ngStyle]="{'height':modalHeight}">
+    <h5>Total Ether Offered To Buy Tokens: {{ftweb3.fromWei(number, 'ether')}}</h5>
+    <table *ngIf="ftMarket.getTokensOfBook()" class="alert-success tab-white table table-sm table-bordered">
+        <tr><th>Token</th><th>Price</th><th>Count</th><th>Fee</th><th>Total</th></tr>
+        <ng-container *ngFor="let item of ftMarket.getTokensOfBook()">
+            <ng-container *ngFor="let item2 of ftMarket.getPricesOfTokenBook(item)">
+                <tr>
+                    <td>
+                        {{ftTokenWatch.TokenWatch[ftTokenWatch.getTokenIndexByAddress(item)].name}}
+                        <!--<small><br>{{item}}</small>!-->
+                        <small><br><a class="btn btn-ft" href="javascript:void(0);" (click)="cancelEtherOffer(item,item2)">Cancel</a></small>
+                    </td>
+                    <td>{{+item2/1000000}}</td>
+                    <td>{{ftweb3.fromWei(ftMarket.book.get(item).get(item2).count, 'ether')}}</td>
+                    <td>{{ftweb3.fromWei(ftMarket.book.get(item).get(item2).fee, 'ether')}}</td>
+                    <td>{{ftweb3.fromWei(ftNum.addBigNumber(ftNum.divideBigNumber(ftNum.multiplyBigNumber(item2,ftMarket.book.get(item).get(item2).count),"1000000"),ftMarket.book.get(item).get(item2).fee), 'ether')}}</td>
+                </tr>
+            </ng-container>
+        </ng-container>
+    </table>
+</div>
+<div class="modal-footer">
+    <ul class="nav nav-pills modal-nav text-center">
+        <li *ngIf="ftMarket.Market.estimate == '0'" class="nav-item w-100 prev">
+            <a class="nav-link" (click)="close()" href="javascript:void(0);">
+                Close
+            </a>
+        </li>
+
+        <li *ngIf="ftMarket.Market.estimate != '0'" class="nav-item w-50 prev">
+            <a class="nav-link" (click)="close()" href="javascript:void(0);">
+                Close
+            </a>
+        </li>
+        <li *ngIf="ftMarket.Market.estimate != '0'" class="nav-item w-50 next">
+            <a class="nav-link" (click)="cancelOfferConfirm()" href="javascript:void(0);">
+                Confirm Cancel Offer
+                <small><br>Gas Est: {{ftMarket.Market.estimate | number}}</small>
+            </a>
+        </li>
+    </ul>
+</div>

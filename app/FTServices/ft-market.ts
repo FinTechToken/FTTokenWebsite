@@ -9,6 +9,7 @@ import { FTTokenWatchService } from '../FTServices/ft-tokenWatch';
 @Injectable()
 export class FTMarketService {
     subscribeBlock;
+    subscribeMyOffers;
     maxGas="0";
     private accountBalance="0";
     Market = {
@@ -22,6 +23,12 @@ export class FTMarketService {
         error:'',
         serializedTx:null
       };
+
+      book = new Map();
+      bookTokenEther = new Map();
+      bookEther ="0";
+      bookToken = new Map();
+
 
     constructor ( private ftTokenWatch: FTTokenWatchService, private ftweb3: FTWeb3Service, private ftNum: FTBigNumberService, private cache: FTCache, private obs: FTObserver ) { 
         this.Market.contract = this.ftweb3.createContractInterface(this.Market.abi, "0x" + this.Market.address);
@@ -44,6 +51,15 @@ export class FTMarketService {
                   });
                 });
                 
+                this.subscribeMyOffers = this.Market.contract.events.MessageOffer({
+                  filter: {mAccount: this.cache.getCache('encrypted_id').address},
+                  fromBlock: 0,
+                  toBlock: 'latest'
+                })
+                .on('data', (events) => {
+                  this.processMyOfferEvents(events);
+                });
+
                 this.ftTokenWatch.TokenWatch.forEach( token => {
                   //Get Book
                   token.subscribeBook = this.Market.contract.events.MessageOffer({
@@ -103,6 +119,30 @@ export class FTMarketService {
         return this.accountBalance;
     }
 
+    getTokensOfBook() {
+      return Array.from(this.book.keys());
+    }
+  
+    getPricesOfTokenBook(token: string) {
+      return Array.from(this.book.get(token).keys());
+    }
+  
+    getTokensSellOfBook() {
+      return Array.from(this.bookToken.keys());
+    }
+  
+    getPricesSellOfTokenBook(token: string) {
+      return Array.from(this.bookToken.get(token).keys());
+    }
+  
+    getBookTokenEther(token: string) {
+      if(this.bookTokenEther.has(token)){
+        return this.bookTokenEther.get(token);
+      } else {
+        return "0";
+      }
+    }
+
     resetTrans() {
       this.Market.estimate = "0";
       this.Market.receipt = null;
@@ -152,7 +192,6 @@ export class FTMarketService {
       }
 
       buildBuyOfferTrans(buyPrice, buyAmount, index) {
-        console.log('buildBuy');
         // makeOffer( address _token, bool _buy, uint256 _amount, uint256 _shares, uint256 _startAmount )
         buyPrice = this.ftNum.divideBigNumber(buyPrice,"1000000000000");
         var ABIdata = this.Market.contract.methods.makeOffer(this.ftTokenWatch.TokenWatch[index].address, true, buyPrice, buyAmount, "0").encodeABI();
@@ -168,11 +207,24 @@ export class FTMarketService {
       }
 
       buildSellOfferTrans(sellPrice, sellAmount, index) {
-        console.log('buildSell');
         // makeOffer( address _token, bool _buy, uint256 _amount, uint256 _shares, uint256 _startAmount )
         sellPrice = this.ftNum.divideBigNumber(sellPrice,"1000000000000");
         var ABIdata = this.Market.contract.methods.makeOffer(this.ftTokenWatch.TokenWatch[index].address, false, sellPrice, sellAmount, "0").encodeABI();
         this.Market.contract.methods.makeOffer(this.ftTokenWatch.TokenWatch[index].address, false, sellPrice, sellAmount, "0").estimateGas({from:'0x'+this.cache.getCache('encrypted_id').address})
+        .then( (gasEstimate) => {
+          this.setGasAndSignTrans(gasEstimate, "0", ABIdata)
+            .then(signedTrans => {
+              this.signTrans(signedTrans);
+              return null;
+            })
+        })
+        .catch(err => null);
+      }
+
+      buildCancelOffer(token: string, amount: string, buysell: boolean): void{
+        // function cancelOffer( address _token, bool _buy, uint256 _amount ) public returns ( bool success_ ) {
+        var ABIdata = this.Market.contract.methods.cancelOffer(token, buysell, amount).encodeABI();
+        this.Market.contract.methods.cancelOffer(token, buysell, amount).estimateGas({from:'0x'+this.cache.getCache('encrypted_id').address})
         .then( (gasEstimate) => {
           this.setGasAndSignTrans(gasEstimate, "0", ABIdata)
             .then(signedTrans => {
@@ -226,10 +278,90 @@ export class FTMarketService {
         if(this.subscribeBlock){
           this.subscribeBlock.unsubscribe();
         }
+        if(this.subscribeMyOffers){
+          this.subscribeMyOffers.unsubscribe();
+        }
         this.ftTokenWatch.TokenWatch.forEach( token => {
           token.subscribeBook.unsubscribe();
           token.subscribeTrades.unsubscribe();
         });
+      }
+
+      private processMyOfferEvents(events) {
+        if(events.returnValues.mBuy){
+          let x = this.ftNum.multiplyBigNumber(events.returnValues.mPrice, events.returnValues.mCount);
+          x = this.ftNum.divideBigNumber(x, "1000000");
+          x = this.ftNum.addBigNumber(x, events.returnValues.mFee);
+          if(this.book.has(events.returnValues.mToken)){
+            if(this.book.get(events.returnValues.mToken).has(events.returnValues.mPrice)){
+              if(events.returnValues.mAddLiquidity){
+                let newCount = this.ftNum.addBigNumber(this.book.get(events.returnValues.mToken).get(events.returnValues.mPrice).count, events.returnValues.mCount);
+                let newFee = this.ftNum.addBigNumber(this.book.get(events.returnValues.mToken).get(events.returnValues.mPrice).fee, events.returnValues.mFee);
+                this.book.get(events.returnValues.mToken).set(events.returnValues.mPrice,{count: newCount, fee: newFee});  
+              } else {
+                let newCount = this.ftNum.subtractBigNumber(this.book.get(events.returnValues.mToken).get(events.returnValues.mPrice).count, events.returnValues.mCount);
+                let newFee = this.ftNum.subtractBigNumber(this.book.get(events.returnValues.mToken).get(events.returnValues.mPrice).fee, events.returnValues.mFee);
+                this.book.get(events.returnValues.mToken).set(events.returnValues.mPrice,{count: newCount, fee: newFee});  
+                if(newCount != "0" || newFee != "0") {
+                } else {
+                  this.book.get(events.returnValues.mToken).delete(events.returnValues.mPrice);
+                  if(this.book.get(events.returnValues.mToken).size == 0){
+                    this.book.delete(events.returnValues.mToken);
+                  }
+                }
+              }
+            } else{
+              this.book.get(events.returnValues.mToken).set(events.returnValues.mPrice,{count: events.returnValues.mCount, fee: events.returnValues.mFee});
+            }
+          } else {
+            this.book.set(events.returnValues.mToken, new Map());
+            this.book.get(events.returnValues.mToken).set(events.returnValues.mPrice,{count: events.returnValues.mCount, fee: events.returnValues.mFee});
+          }
+          if(events.returnValues.mAddLiquidity){
+            this.bookEther = this.ftNum.addBigNumber(this.bookEther,x);
+          } else {
+            this.bookEther = this.ftNum.subtractBigNumber(this.bookEther,x);
+          }
+        }
+        if(!events.returnValues.mBuy){
+          let x = events.returnValues.mCount;
+          if(this.bookToken.has(events.returnValues.mToken)){
+            if(this.bookToken.get(events.returnValues.mToken).has(events.returnValues.mPrice)){
+              if(events.returnValues.mAddLiquidity){
+                let newCount = this.ftNum.addBigNumber(this.bookToken.get(events.returnValues.mToken).get(events.returnValues.mPrice).count, events.returnValues.mCount);
+                this.bookToken.get(events.returnValues.mToken).set(events.returnValues.mPrice,{count: newCount, fee: "0"});  
+              } else {
+                let newCount = this.ftNum.subtractBigNumber(this.bookToken.get(events.returnValues.mToken).get(events.returnValues.mPrice).count, events.returnValues.mCount);
+                this.bookToken.get(events.returnValues.mToken).set(events.returnValues.mPrice,{count: newCount, fee: "0"});  
+                if(newCount != "0") {
+                } else {
+                  this.bookToken.get(events.returnValues.mToken).delete(events.returnValues.mPrice);
+                  if(this.bookToken.get(events.returnValues.mToken).size == 0){
+                    this.bookToken.delete(events.returnValues.mToken);
+                  }
+                }
+              }
+            } else{
+              this.bookToken.get(events.returnValues.mToken).set(events.returnValues.mPrice,{count: events.returnValues.mCount, fee: "0"});
+            }
+          } else {
+            this.bookToken.set(events.returnValues.mToken, new Map());
+            this.bookToken.get(events.returnValues.mToken).set(events.returnValues.mPrice,{count: events.returnValues.mCount, fee: "0"});
+          }
+          if(events.returnValues.mAddLiquidity){
+            if(this.bookTokenEther.has(events.returnValues.mToken)){
+              this.bookTokenEther.set(events.returnValues.mToken,this.ftNum.addBigNumber(this.bookTokenEther.get(events.returnValues.mToken),x));
+            } else {
+              this.bookTokenEther.set(events.returnValues.mToken, x);
+            }
+          } else {
+            if(this.bookTokenEther.has(events.returnValues.mToken)){
+              this.bookTokenEther.set(events.returnValues.mToken, this.ftNum.subtractBigNumber(this.bookTokenEther.get(events.returnValues.mToken),x));
+            } else {
+              this.bookTokenEther.set(events.returnValues.mToken, this.ftNum.subtractBigNumber("0",x));
+            }
+          }
+        }
       }
 
       private setGasAndSignTrans(gasEstimate, amtToSend, ABIdata) {

@@ -13,6 +13,8 @@
             <ft-withdrawTokenFromTrade *ngIf="modal=='account-trade.withdrawToken'"></ft-withdrawTokenFromTrade>
             <ft-tradeBuyToken *ngIf="modal=='account-trade.buyToken'"></ft-tradeBuyToken>
             <ft-tradeSellToken *ngIf="modal=='account-trade.sellToken'"></ft-tradeSellToken>
+            <ft-tradeBuyOffers *ngIf="modal=='account-trade.buyOffers'"></ft-tradeBuyOffers>
+            <ft-tradeSellOffers *ngIf="modal=='account-trade.sellOffers'"></ft-tradeSellOffers>
         </div>
     </div>
 </div>
@@ -21,12 +23,13 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content roboto">
             <div class="modal-header">
-                <h5 class="modal-title">{{ftweb3.fromWei(number, 'ether')}} Ether <small><br>An Ether is 1 with 18 zero's after it. We use "Ether" as an amount. It may represent an amount in tokens, or an amount of ether.</small></h5>
+                <h5 class="modal-title">{{ftweb3.fromWei(number, 'ether')}} Ether </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close();" href="javascript:void(0);">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body"  [ngStyle]="{'height':modalHeight}">
+                <small>* An Ether is 1 with 18 zero's after it. We use "Ether" as an amount. It may represent an amount in tokens, or an amount of ether.<br><Br></small>
                 {{ftNum.getEther(number) | number : '1.0-0'}} Ether<br>
                 {{ftNum.getFinney(number) | number : '1.0-0'}} Finney<br>
                 {{ftNum.getSzabo(number) | number : '1.0-0'}} Szabo<br>
@@ -52,7 +55,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content roboto">
             <div class="modal-header">
-                <h5 class="modal-title">Pick amount: {{ftweb3.fromWei(number, 'ether')}} <small><br>An Ether is 1 with 18 zero's after it. We use "Ether" as an amount. It may represent an amount in tokens, or an amount of ether.</small></h5>
+                <h5 class="modal-title">Pick amount: {{ftweb3.fromWei(number, 'ether')}} </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()" href="javascript:void(0);">
                 <span aria-hidden="true">&times;</span>
                 </button>

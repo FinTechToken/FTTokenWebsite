@@ -20,7 +20,12 @@
           </a>
           <span *ngIf="ftMarket.getAccountBalance() == '0'">0</span>
         </td>
-        <td></td>
+        <td>
+          <a *ngIf="ftMarket.bookEther != '0'" href="javascript:void(0);" (click)="showOffersToBuy(ftMarket.bookEther);">
+              {{ftNum.getEther(ftMarket.bookEther) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(ftMarket.bookEther)">.#</span>
+          </a>
+          <span *ngIf="ftMarket.bookEther == '0'">0</span>
+        </td>
         <td>
             <select (change)="takeAction(0)" [(ngModel)]="action[0]">
               <option value=""></option>
@@ -52,7 +57,12 @@
             {{ftNum.getEther(token.mineTrade) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(token.mineTrade)">.#</span>
           </a>
           <span *ngIf="token.mineTrade == '0'">0</span></td>
-        <td></td>
+        <td>
+            <a *ngIf="ftMarket.getBookTokenEther(token.address) != '0'" href="javascript:void(0);" (click)="showOffersToSell(i, ftMarket.getBookTokenEther(token.address));">
+                {{ftNum.getEther(ftMarket.getBookTokenEther(token.address)) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(ftMarket.getBookTokenEther(token.address))">.#</span>
+            </a>
+            <span *ngIf="ftMarket.getBookTokenEther(token.address) == '0'">0</span>
+        </td>
         <td>
           <select (change)="takeAction(i+1)" [(ngModel)]="action[i+1]">
             <option value=""></option>
