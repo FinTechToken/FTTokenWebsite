@@ -26,4 +26,8 @@ export class FTTokenWatchService {
   ngOnDestroy(): void {
   }
 
+  getTokenIndexByAddress(address) {
+    return this.TokenWatch.findIndex(x => x.address === address);
+  }
+
 }

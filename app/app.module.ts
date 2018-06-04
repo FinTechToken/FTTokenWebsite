@@ -48,6 +48,8 @@ import { FTTradeBuyToken } from './FTComponents/ft-tradeBuyToken';
 import { FTTradeSellToken } from './FTComponents/ft-tradeSellToken';
 import { FTTradeTokenBook } from './FTComponents/ft-tradeTokenBook';
 import { FTTradeTokenTrades } from './FTComponents/ft-tradeTokenTrades';
+import { FTTradeBuyOffers } from './FTComponents/ft-tradeBuyOffers';
+import { FTTradeSellOffers } from './FTComponents/ft-tradeSellOffers';
 
 import { FTMyAccountOld } from './FTRoutes/FTMyAccountOld';
 
@@ -87,7 +89,9 @@ import { FTMyAccountOld } from './FTRoutes/FTMyAccountOld';
     FTTradeBuyToken,
     FTTradeSellToken,
     FTTradeTokenBook,
-    FTTradeTokenTrades
+    FTTradeTokenTrades,
+    FTTradeBuyOffers,
+    FTTradeSellOffers
   ],
   entryComponents: [ ],
   providers: [ 
