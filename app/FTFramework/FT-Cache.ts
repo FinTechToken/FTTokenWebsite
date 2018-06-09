@@ -11,12 +11,16 @@ export class FTCache {
     putCache(myName:string, myValue:any): void{
         this.cache.set(myName, myValue);
     }
+
     getCache(myName:string): any {
-        return this.cache.get(myName);
+        let cacheVar = this.cache.get(myName);
+        return cacheVar ? cacheVar : '';
     }
+
     hasCache(myName:string): any {
         return this.cache.has(myName);
     }
+
     deleteCache(myName:string): void{
         this.cache.delete(myName);
     }

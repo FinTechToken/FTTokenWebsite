@@ -8,9 +8,10 @@ import { FTHome } from './FTRoutes/FThome';
 import { FTBlockchain } from './FTRoutes/FTBlockchain';
 import { FTCryptoPass } from './FTRoutes/FTCryptoPass';
 import { FTMyAccount } from './FTRoutes/FTMyAccount';
+
+import { FTMessagesOld } from './FTRoutes/FTMessagesOld';
 import { FTMyAccountOld } from './FTRoutes/FTMyAccountOld';
-import { FTMessages } from './FTRoutes/FTMessages';
-import { FTToken } from './FTRoutes/FTToken';
+import { FTTokenOld } from './FTRoutes/FTTokenOld';
 
 const routes: Routes = [ {
         path: '',
@@ -37,23 +38,23 @@ const routes: Routes = [ {
         component: FTBlockchain
     },
     {
-        path:'messages',
+        path:'messagesOld',
         data: {title: 'Blockchain transactions and messages'},
-        component: FTMessages
+        component: FTMessagesOld
     },
     {
-        path:'messages/:id',
-        component: FTMessages
+        path:'messagesOld/:id',
+        component: FTMessagesOld
     },
     {
-        path:'token',
+        path:'tokenOld',
         data: {title: 'Blockchain tokens'},
-        component: FTToken
+        component: FTTokenOld
     },
     {
-        path:'token/:id',
+        path:'tokenOld/:id',
         data: {title: 'A blockchain token'},
-        component: FTToken
+        component: FTTokenOld
     },
     {
         path:'myaccount',

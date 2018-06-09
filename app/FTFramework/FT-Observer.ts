@@ -22,6 +22,13 @@ export class FTObserver {
         return this.myObserver[myName];
     }
 
+    getObserverValue(myName:string): any {
+        if(this.myObserver[myName]===undefined) {
+            this.myObserver[myName]=new BehaviorSubject('');
+        }
+        return this.myObserver[myName].value;
+    }
+
     deleteObserver(myName:string): void{
         if(this.myObserver[myName]===undefined){}
         else{

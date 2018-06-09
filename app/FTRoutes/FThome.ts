@@ -18,8 +18,6 @@ export class FTHome {
   zone: NgZone;   
   name = 'FinTechToken';
   texts = [];
-  isPreviousUser = false;
-  isSignedIn = false;
    
   constructor( private observer: FTObserver, private router: Router, private route: ActivatedRoute, private session: FTSession, private cache: FTCache, private http:Http, private text: FTText  )
   { 
@@ -28,19 +26,20 @@ export class FTHome {
   }
   
   ngOnInit(): void{
-    this.observer.getObserver('isSignedIn').forEach( isSign => {
-      this.isSignedIn = isSign;
-    });
-
-    this.observer.getObserver('isPreviousUser').forEach( isPrev => {
-      this.isPreviousUser = isPrev;
-    });
   }    
 
   ngAfterViewInit(): void{
   } 
 
   ngDoCheck(): void{
+  }
+
+  isSignedIn() {
+    return this.observer.getObserverValue('isSignedIn');
+  }
+
+  isPreviousUser() {
+    return this.observer.getObserverValue('isPreviousUser');
   }
 
   private setText() {

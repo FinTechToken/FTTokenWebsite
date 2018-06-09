@@ -1,7 +1,7 @@
 declare var sjcl: any;
 import { AfterViewInit, Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observer } from 'rxjs';
+import { Observer, BehaviorSubject } from 'rxjs';
 
 import { FTHttpClient } from '../FTFramework/FT-HttpClient';
 import { FTCache } from '../FTFramework/FT-Cache';
@@ -21,15 +21,13 @@ import { FTCryptoPassService } from '../FTServices/ft-cryptoPass';
 
 export class FTCryptoPass {
   zone: NgZone;   
-  isPreviousUser:boolean=false;
   texts = [];
-  rememberedAddress;
   processing = false;
   pwGroupStatus = '';
   pwUnlockGroupStatus = '';
   AuthenticateTabs = {
         getStarted:0,
-        signIn:1,
+        signIn:0,
         import:2,
         clear:3
     };
@@ -49,24 +47,29 @@ export class FTCryptoPass {
   }
 
   ngOnInit(): void { 
-    if(this.obs.getObserver('isSignedIn').getValue()) {
+    if(this.obs.getObserverValue('isSignedIn')) {
         this.router.navigate(['/myaccount']);
     }
 
-    this.obs.getObserver('isPreviousUser').forEach( isPrev => {
-        this.isPreviousUser = isPrev;
-        if(this.isPreviousUser){
-            this.rememberedAddress = this.cache.getCache('encrypted_id').address;
-            this.tabs=this.AuthenticateTabs.signIn;
-        } else {
-            this.tabs=this.AuthenticateTabs.getStarted;
-        }
-    });
+    if(this.obs.getObserverValue('isPreviousUser')){
+        this.tabs=this.AuthenticateTabs.signIn;
+    } else {
+        this.tabs=this.AuthenticateTabs.getStarted;
+    }
   }    
 
   ngAfterViewInit(): void{} 
 
-  ngOnDestroy(): void{}
+  ngOnDestroy(): void{
+  }
+
+  isPreviousUser() {
+      return this.obs.getObserverValue('isPreviousUser');
+  }
+
+  getRememberedAddress() {
+      return this.cache.getCache('encrypted_id').address;
+  }
 
   createAccount(): void {
     if( !this.processing ) {
@@ -103,7 +106,6 @@ export class FTCryptoPass {
     this.pwGroupStatus='has-success';
     let privateKey = this.web3.getNewAccount().privateKey;
     let encrypted_id = this.web3.getEncryptedId(privateKey, pw);
-    this.rememberedAddress = encrypted_id.address;
     this.cache.putCache('encrypted_id', encrypted_id);
     this.session.setItem( 'account', encrypted_id.address );
     this.FTlocalStorage.setItem('account', this.cache.getCache('encrypted_id').address);
@@ -197,7 +199,6 @@ private unlockAccountNow(pw:string){
         try{
             enc = JSON.parse(enc);
             if(enc.id && enc.address && enc.crypto && enc.crypto.ciphertext && enc.crypto.cipherparams && enc.crypto.cipher && enc.crypto.kdf && enc.crypto.kdfparams && enc.crypto.mac) {
-                this.rememberedAddress = enc.address;
                 this.cache.putCache('encrypted_id',enc);
                 this.obs.putObserver('isPreviousUser', true);
             }

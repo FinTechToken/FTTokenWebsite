@@ -40,13 +40,13 @@ export class FTTradeBuyToken {
   ngOnInit(): void {
     this.modalHeight=((window.innerHeight-1)*1-100)*.8+'px';
 
-    this.tokenIndex = this.obs.getObserver('tokenIndex').getValue();
+    this.tokenIndex = this.obs.getObserverValue('tokenIndex');
     
-    if(this.obs.getObserver('modalNumber').getValue()) {
+    if(this.obs.getObserverValue('modalNumber')) {
       if(this.cache.getCache('tradeBuyToken.type') == 'token')
-        this.cache.putCache('tradeBuyToken.token', this.obs.getObserver('modalNumber').getValue());
+        this.cache.putCache('tradeBuyToken.token', this.obs.getObserverValue('modalNumber'));
       else if(this.cache.getCache('tradeBuyToken.type') == 'price')
-        this.cache.putCache('tradeBuyToken.price', this.obs.getObserver('modalNumber').getValue());
+        this.cache.putCache('tradeBuyToken.price', this.obs.getObserverValue('modalNumber'));
       this.cache.deleteCache('tradeBuyToken.type');
       this.obs.deleteObserver('modalNumber');
     } 

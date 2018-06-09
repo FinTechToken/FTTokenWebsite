@@ -29,12 +29,13 @@ export class FTWeb3Service {
             this.nets['existing'] = web3.currentProvider;
         }
         this.nets['testnet'] = 'wss://testmarket.fintechtoken.com';
-        this.nets['local'] = 'http://localhost:8545';
+        this.nets['local'] = 'ws://localhost:8545';
     }
     
     initializeWeb3(): void{
         if (typeof web3 !== 'undefined') {
             //Todo: use on realnet: this.setWeb3('existing');
+            //this.setWeb3('local');
             this.setWeb3('testnet');
         } 
         else {
