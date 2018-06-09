@@ -11,7 +11,7 @@
                                 <div class="media-body">
                                     <h2 class="padleft">
                                         <i class="hidden-lg-up icon-disc icon-gradient"></i>
-                                        {{token.name}} TokenOld
+                                        {{token.name}} Token
                                         <span *ngIf="token.address" class="p-small return m-left-m30">{{token.address}}</span>
                                     </h2>    
                                     <ul class="nav nav-tabs">
@@ -81,12 +81,12 @@
                                             <span *ngIf="token.totalOutstanding != '0'"><br><strong>% Owned Of Outstanding</strong> {{token.mine*100/token.totalOutstanding}}%</span>
                                             <br>
                                         </span>
-                                        <span *ngIf="token.address == '9287bb21719d283CfdD7d644a89E8492f9845B64' && tutorial.state == 0">
+                                        <span *ngIf="token.address == '9287bb21719d283CfdD7d644a89E8492f9845B64'">
                                             <br>
                                             <a class="btn btn-lg btn-ft" href="javascript:void(0);" (click)="getFreeToken();">Get a Free Token</a>
                                             <br>
                                         </span>
-                                        <span *ngIf="token.address == '2d5e86187855CC29B40469e8a7355f3fDBf4C088' && tutorial.state == 5">
+                                        <span *ngIf="token.address == '2d5e86187855CC29B40469e8a7355f3fDBf4C088'">
                                             <br>
                                             <a class="btn btn-lg btn-ft" href="javascript:void(0);" (click)="getFreeToken();">Get a Free Token</a>
                                             <br>

@@ -27,6 +27,7 @@ import { FTBlockchain } from './FTRoutes/FTBlockchain';
 import { FTCryptoPass } from './FTRoutes/FTCryptoPass';
 import { FTHome } from './FTRoutes/FThome';
 import { FTMyAccount } from './FTRoutes/FTMyAccount';
+import { FTToken } from './FTRoutes/FTToken';
 
 import { FTPhoneVerify } from './FTComponents/ft-phoneVerify';
 import { FTPhoneSMS } from './FTComponents/ft-phoneSMS';
@@ -73,6 +74,7 @@ import { FTMessagesOld } from './FTRoutes/FTMessagesOld';
     FTFooter,
     FTModal,
     FTMyAccount, 
+    FTToken,
     FTPhoneVerify,
     FTPhoneSMS,
     FTAccountExit,

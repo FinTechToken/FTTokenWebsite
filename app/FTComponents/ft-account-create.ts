@@ -1,10 +1,12 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { FTWeb3Service } from '../FTServices/ft-web3';
+import { FTTokenWatchService } from '../FTServices/ft-tokenWatch';
 import { FTObserver } from '../FTFramework/FT-Observer';
 import { FTHttpClient } from '../FTFramework/FT-HttpClient';
 import { FTSession } from '../FTFramework/FT-Session';
+import { Observer, BehaviorSubject } from 'rxjs';
 
 @Component({
   moduleId: module.id,
@@ -15,6 +17,7 @@ import { FTSession } from '../FTFramework/FT-Session';
 export class FTAccountCreate {
 
   tabs = 1;
+  signedInSubscribe:BehaviorSubject<any>;
   solidityCode;
   tokenName;
   compileError;
@@ -26,7 +29,7 @@ export class FTAccountCreate {
   myContracts;
   JSON=JSON;
 
-  constructor( private router:Router, private web3: FTWeb3Service, private http: FTHttpClient, private session:FTSession, private obs: FTObserver ) 
+  constructor( private ftTokenWatch:FTTokenWatchService, private router:Router, private web3: FTWeb3Service, private http: FTHttpClient, private session:FTSession, private obs: FTObserver ) 
   {
     this.solidityCode = this.x();
     this.tokenName = "";
@@ -34,8 +37,13 @@ export class FTAccountCreate {
   
   ngOnInit(): void {} 
 
+  ngOnDestry(): void {
+    this.signedInSubscribe.unsubscribe();
+  }
+
   ngAfterViewInit(): void{
-    this.obs.getObserver('isSignedIn').forEach( (data) => {
+    this.signedInSubscribe = this.obs.getObserver('isSignedIn');
+    this.signedInSubscribe.forEach( (data) => {
         if(data == true) {
             let token = this.session.getItem('token');
             let account = this.session.getItem('account');
@@ -47,7 +55,10 @@ export class FTAccountCreate {
                 .then( data => {
                     if(data) {
                         try{
-                                data = JSON.parse(data).sort(function(a, b){return a.ContractNameVer - b.ContractNameVer});
+                            data = JSON.parse(data).sort(function(a, b){return a.ContractNameVer - b.ContractNameVer});
+                            data.forEach(element => {
+                                this.ftTokenWatch.addTokenToWatch(element.PublishedAddress, element.ContractNameVer,JSON.parse(element.ContractABI));
+                            });
                         }
                         catch {}
                         this.myContracts = data;

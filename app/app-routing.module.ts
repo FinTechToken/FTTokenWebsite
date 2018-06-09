@@ -8,6 +8,7 @@ import { FTHome } from './FTRoutes/FThome';
 import { FTBlockchain } from './FTRoutes/FTBlockchain';
 import { FTCryptoPass } from './FTRoutes/FTCryptoPass';
 import { FTMyAccount } from './FTRoutes/FTMyAccount';
+import { FTToken } from './FTRoutes/FTToken';
 
 import { FTMessagesOld } from './FTRoutes/FTMessagesOld';
 import { FTMyAccountOld } from './FTRoutes/FTMyAccountOld';
@@ -38,6 +39,22 @@ const routes: Routes = [ {
         component: FTBlockchain
     },
     {
+        path:'myaccount',
+        data: {title: 'My FinTechToken account'},
+        component: FTMyAccount
+    },
+    {
+        path:'token',
+        data: {title: 'Blockchain tokens'},
+        component: FTToken
+    },
+    {
+        path:'token/:id',
+        data: {title: 'A blockchain token'},
+        component: FTToken
+    },
+
+    {
         path:'messagesOld',
         data: {title: 'Blockchain transactions and messages'},
         component: FTMessagesOld
@@ -48,18 +65,13 @@ const routes: Routes = [ {
     },
     {
         path:'tokenOld',
-        data: {title: 'Blockchain tokens'},
+        data: {title: 'Blockchain tokens Old'},
         component: FTTokenOld
     },
     {
         path:'tokenOld/:id',
-        data: {title: 'A blockchain token'},
+        data: {title: 'A blockchain token Old'},
         component: FTTokenOld
-    },
-    {
-        path:'myaccount',
-        data: {title: 'My FinTechToken account'},
-        component: FTMyAccount
     },
     {
         path:'myaccountold',
