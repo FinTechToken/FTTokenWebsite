@@ -74,7 +74,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td><a [routerLink]="['/token',FreeToken.address]" href="javascript:void(0);">FreeToken</a> <span *ngIf="FreeToken.lastPrice">({{+FreeToken.lastPrice/1000000}})</span></td>
+                                                    <td><a [routerLink]="['/tokenOld',FreeToken.address]" href="javascript:void(0);">FreeToken</a> <span *ngIf="FreeToken.lastPrice">({{+FreeToken.lastPrice/1000000}})</span></td>
                                                     <td>
                                                         <a *ngIf="FreeToken.mine != '0'" href="javascript:void(0);" (click)="viewNumber(FreeToken.mine);">
                                                             {{ftNum.getEther(FreeToken.mine) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(FreeToken.mine)">.#</span>
@@ -116,7 +116,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td><a [routerLink]="['/token',TradeToken.address]" href="javascript:void(0);">TradingToken</a> <span *ngIf="TradeToken.lastPrice">({{+TradeToken.lastPrice/1000000}})</span></td>
+                                                    <td><a [routerLink]="['/tokenOld',TradeToken.address]" href="javascript:void(0);">TradingToken</a> <span *ngIf="TradeToken.lastPrice">({{+TradeToken.lastPrice/1000000}})</span></td>
                                                     <td>
                                                         <a *ngIf="TradeToken.mine != '0'" href="javascript:void(0);" (click)="viewNumber(TradeToken.mine);">
                                                             {{ftNum.getEther(TradeToken.mine) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(TradeToken.mine)">.#</span>

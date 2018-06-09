@@ -13,17 +13,20 @@ export class FTTokenWatchService {
   */
 
   constructor ( private ftweb3: FTWeb3Service ) { 
-    let token:any = {address:'0x2d5e86187855CC29B40469e8a7355f3fDBf4C088', name:'TradeToken', mine:'0', mineTrade:'0', buyMap:{}, sellMap:{}, tradeMap:{}, myTradesMap:{}, lastPrice:'0', lastCount:'0' };
-    this.TokenWatch.push(token);
-    token = {address:'0x9287bb21719d283CfdD7d644a89E8492f9845B64', name:'FreeToken', mine:'0', mineTrade:'0', buyMap:{}, sellMap:{}, tradeMap:{}, myTradesMap:{}, lastPrice:'0', lastCount:'0' };
-    this.TokenWatch.push(token);
-
-    this.TokenWatch.forEach( token => {
-      token.contract = this.ftweb3.createContractInterface(this.ERC20ABI, token.address.substring(2));
-    });
+    this.addTokenToWatch('0x2d5e86187855CC29B40469e8a7355f3fDBf4C088', 'TradeToken', this.ERC20ABI);
+    this.addTokenToWatch('0x9287bb21719d283CfdD7d644a89E8492f9845B64', 'FreeToken', this.ERC20ABI);
   }
 
   ngOnDestroy(): void {
+  }
+
+  addTokenToWatch(address, name, ABI) {
+    if(this.getTokenIndexByAddress(address==-1)) {
+      //ToDo: Be better to look up name/ABI from AWS
+      let contract: any = this.ftweb3.createContractInterface(ABI, address.substring(2));
+      let token:any = {address:address, name:name, contract:contract, mine:'0', mineTrade:'0', buyMap:{}, sellMap:{}, tradeMap:{}, myTradesMap:{}, lastPrice:'0', lastCount:'0' };
+      this.TokenWatch.push(token);
+    }
   }
 
   getTokenIndexByAddress(address) {
