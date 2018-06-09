@@ -32,8 +32,8 @@ export class FTWithdrawEtherFromTrade {
   
   ngOnInit(): void {
     this.modalHeight=((window.innerHeight-1)*1-100)*.8+'px';
-    if(this.obs.getObserver('modalNumber').getValue()) {
-      this.withdrawEtherAmount = this.obs.getObserver('modalNumber').getValue();
+    if(this.obs.getObserverValue('modalNumber')) {
+      this.withdrawEtherAmount = this.obs.getObserverValue('modalNumber');
       this.obs.deleteObserver('modalNumber');
     } else {
       this.withdrawEtherAmount = this.ftMarket.getAccountBalance();

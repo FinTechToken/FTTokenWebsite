@@ -52,7 +52,7 @@
         <td></td>
       </tr>
       <tr *ngFor="let token of ftTokenWatch.TokenWatch; let i = index;">
-        <th><a href="javascript:void(0)" routerLink="/token/{{token.address.substring(2)}}">{{token.name}}</a></th>
+        <th><a href="javascript:void(0)" routerLink="/tokenOld/{{token.address.substring(2)}}">{{token.name}}</a></th>
         <td> <a *ngIf="token.mineTrade != '0'" href="javascript:void(0);" (click)="viewNumber(token.mineTrade);">
             {{ftNum.getEther(token.mineTrade) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(token.mineTrade)">.#</span>
           </a>

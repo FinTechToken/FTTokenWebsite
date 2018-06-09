@@ -30,7 +30,7 @@ export class FTTradeSellOffers {
   ngOnInit(): void {
     this.modalHeight=((window.innerHeight-1)*1-100)*.8+'px';
     this.number = this.cache.getCache('number');
-    this.tokenIndex = this.obs.getObserver('tokenIndex').getValue();
+    this.tokenIndex = this.obs.getObserverValue('tokenIndex');
     this.ftMarket.resetTrans();
   } 
 

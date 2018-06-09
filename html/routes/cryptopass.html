@@ -11,26 +11,26 @@
                                 <div class="media-body">
                                     <h2 class="padleft">
                                         <i class="hidden-lg-up icon-user icon-gradient"></i>
-                                        <span *ngIf="isPreviousUser">Sign In</span>
-                                        <span *ngIf="!isPreviousUser">Get Started</span>
+                                        <span *ngIf="isPreviousUser()">Sign In</span>
+                                        <span *ngIf="!isPreviousUser()">Get Started</span>
                                     </h2>  
                                     <ul class="nav nav-tabs">
-                                        <li *ngIf="!isPreviousUser" class="nav-item">
+                                        <li *ngIf="!isPreviousUser()" class="nav-item">
                                             <a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == AuthenticateTabs.getStarted }" (click)="changeTabs(AuthenticateTabs.getStarted)" href="javascript:void(0);">
                                                 Start
                                             </a>
                                         </li>
-                                        <li *ngIf="isPreviousUser" class="nav-item">
+                                        <li *ngIf="isPreviousUser()" class="nav-item">
                                             <a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == AuthenticateTabs.signIn }" (click)="changeTabs(AuthenticateTabs.signIn)" href="javascript:void(0);">
                                                 Sign In
                                             </a>
                                         </li>
-                                        <li *ngIf="!isPreviousUser" class="nav-item">
+                                        <li *ngIf="!isPreviousUser()" class="nav-item">
                                             <a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == AuthenticateTabs.import }" (click)="changeTabs(AuthenticateTabs.import)" href="javascript:void(0);">
                                                 Return
                                             </a>
                                         </li>
-                                        <li *ngIf="isPreviousUser" class="nav-item">
+                                        <li *ngIf="isPreviousUser()" class="nav-item">
                                             <a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == AuthenticateTabs.clear }" (click)="changeTabs(AuthenticateTabs.clear)" href="javascript:void(0);">
                                                 Clear
                                             </a>
@@ -44,9 +44,9 @@
                                 </div>
                             </div>
                             <div class="tab-white tab-content text-left">
-                                <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == AuthenticateTabs.getStarted }">
+                                <div *ngIf="!isPreviousUser()" class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == AuthenticateTabs.getStarted }">
                                     <br>
-                                    <div *ngIf="!isPreviousUser">
+                                    <div>
                                         <h3><a (click)="showSignUpInfo();" href="javascript:void(0);" ><span style="font-size:1.5rem"><i class="icon-info hover" id="create1"></i></span></a>
                                             Get A Free CryptoPass</h3>
                                         <hr><br>
@@ -69,13 +69,13 @@
                                     </div>
                                 </div>
 
-                                <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == AuthenticateTabs.signIn }">
+                                <div *ngIf="isPreviousUser()" class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == AuthenticateTabs.signIn }">
                                     <br>
                                     <h3><a (click)="showSignUpInfo();" href="javascript:void(0);" ><span style="font-size:1.5rem"><i class="icon-info hover" id="create1"></i></span></a>
                                         CryptoPass Sign in
                                     </h3>
                                     Account#:<br>
-                                    <span class="p-small return" id="unlockaccount">{{rememberedAddress}}</span>
+                                    <span class="p-small return" id="unlockaccount">{{getRememberedAddress()}}</span>
                                     <hr>
                                     <div>
                                         <form (submit)="unlockAccount();">    

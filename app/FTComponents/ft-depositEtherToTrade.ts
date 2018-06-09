@@ -32,8 +32,8 @@ export class FTDepositEtherToTrade {
   
   ngOnInit(): void {
     this.modalHeight=((window.innerHeight-1)*1-100)*.8+'px';
-    if(this.obs.getObserver('modalNumber').getValue()) {
-      this.depositEtherAmount = this.obs.getObserver('modalNumber').getValue();
+    if(this.obs.getObserverValue('modalNumber')) {
+      this.depositEtherAmount = this.obs.getObserverValue('modalNumber');
       this.obs.deleteObserver('modalNumber');
     } else {
       this.depositEtherAmount = this.ftWallet.getBalance();

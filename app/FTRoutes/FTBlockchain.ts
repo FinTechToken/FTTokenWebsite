@@ -21,9 +21,7 @@ export class FTBlockchain {
   zone: NgZone;   
   name = 'FinTechToken';
   visibility="hiddenss";
-  blocknumber=0;
   subscribeParam;
-  subscribeBN;
   tabs=1;
    
   constructor( private obs: FTObserver, private router: Router, private route: ActivatedRoute, private session: FTSession, private cache: FTCache, private http:Http )
@@ -44,14 +42,6 @@ export class FTBlockchain {
     this.subscribeParam = this.route.params.subscribe(params => {
       //params = the block that is passed in route
     });
-    this.subscribeBN = this.obs.getObserver('block')
-    .subscribe( (bn) => {
-      this.blocknumber = bn;
-    });
-  }
-
-  changeTabs(tab:number): void{
-    this.tabs = tab;
   }
 
   ngAfterViewInit(): void{
@@ -62,6 +52,14 @@ export class FTBlockchain {
 
   ngOnDestroy(){
     this.subscribeParam.unsubscribe();
-    this.subscribeBN.unsubscribe();
   }
+
+  getBlocknumber() {
+    return this.obs.getObserverValue('block');
+  }
+
+  changeTabs(tab:number): void{
+    this.tabs = tab;
+  }
+
 }

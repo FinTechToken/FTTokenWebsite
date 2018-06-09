@@ -26,9 +26,7 @@ import { FTTokenWatchService } from './FTServices/ft-tokenWatch';
 import { FTBlockchain } from './FTRoutes/FTBlockchain';
 import { FTCryptoPass } from './FTRoutes/FTCryptoPass';
 import { FTHome } from './FTRoutes/FThome';
-import { FTMessages } from './FTRoutes/FTMessages';
 import { FTMyAccount } from './FTRoutes/FTMyAccount';
-import { FTToken } from './FTRoutes/FTToken';
 
 import { FTPhoneVerify } from './FTComponents/ft-phoneVerify';
 import { FTPhoneSMS } from './FTComponents/ft-phoneSMS';
@@ -52,6 +50,8 @@ import { FTTradeBuyOffers } from './FTComponents/ft-tradeBuyOffers';
 import { FTTradeSellOffers } from './FTComponents/ft-tradeSellOffers';
 
 import { FTMyAccountOld } from './FTRoutes/FTMyAccountOld';
+import { FTTokenOld } from './FTRoutes/FTTokenOld';
+import { FTMessagesOld } from './FTRoutes/FTMessagesOld';
 
 @NgModule({
   imports: [ 
@@ -61,17 +61,18 @@ import { FTMyAccountOld } from './FTRoutes/FTMyAccountOld';
     HttpModule, 
   ],
   declarations: [
+    FTMyAccountOld,
+    FTTokenOld,
+    FTMessagesOld, 
+
     AppComponent,
     FTHeader,
     FTHome, 
     FTBlockchain,
     FTCryptoPass,
     FTFooter,
-    FTMessages, 
     FTModal,
     FTMyAccount, 
-    FTMyAccountOld,
-    FTToken,
     FTPhoneVerify,
     FTPhoneSMS,
     FTAccountExit,

@@ -46,13 +46,14 @@ export class FTAccountCreate {
                     })).toPromise()
                 .then( data => {
                     if(data) {
-                        data = JSON.parse(data).sort(function(a, b){return a.ContractNameVer - b.ContractNameVer});
+                        try{
+                                data = JSON.parse(data).sort(function(a, b){return a.ContractNameVer - b.ContractNameVer});
+                        }
+                        catch {}
                         this.myContracts = data;
                     }
                 })
                 .catch( err => {console.log(err);});
-        } else {
-            
         }
     });
 

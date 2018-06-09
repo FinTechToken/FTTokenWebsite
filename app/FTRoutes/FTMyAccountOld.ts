@@ -16,7 +16,7 @@ import { FTWeb3Service } from '../FTServices/ft-web3';
 @Component({
   moduleId: module.id,
   selector: 'ft-my-account',
-  templateUrl: '../../html/routes/myaccountold.html',
+  templateUrl: '../../html/routes/myaccountOld.html',
   animations: [trigger('visibilityChanged',[
     state('shownss',style({opacity:0,display:'none' })),
     state('hiddenss',style({opacity:1})),

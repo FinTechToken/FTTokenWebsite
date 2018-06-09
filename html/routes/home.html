@@ -13,9 +13,9 @@
                 <div class="col-sm-10 offset-sm-1 text-center">
                     <a class="btn btn-ft btn-lg margin-half" routerLink="/crypto_pass" routerLinkActive="active">
                         <img src="{{texts['home.StickImageURL']}}" width="25px"/>
-                        <span *ngIf="!isPreviousUser">{{texts['home.startButton']}}</span>
-                        <span *ngIf="isPreviousUser && !isSignedIn">{{texts['home.startButtonUser']}}</span>
-                        <span *ngIf="isPreviousUser && isSignedIn">{{texts['home.startButtonAccount']}}</span>
+                        <span *ngIf="!isPreviousUser()">{{texts['home.startButton']}}</span>
+                        <span *ngIf="isPreviousUser() && !isSignedIn()">{{texts['home.startButtonUser']}}</span>
+                        <span *ngIf="isPreviousUser() && isSignedIn()">{{texts['home.startButtonAccount']}}</span>
                     </a>
                 </div>
             </div>
@@ -237,9 +237,9 @@
                     <div class="padsmalltop">
                         <a class="btn btn-ft btn-lg margin-half" routerLink="/crypto_pass" routerLinkActive="active">
                             <img src="{{texts['home.StickImageURL']}}" width="25px"/>
-                            <span *ngIf="!isPreviousUser">{{texts['home.startButton']}}</span>
-                            <span *ngIf="isPreviousUser && !isSignedIn">{{texts['home.startButtonUser']}}</span>
-                            <span *ngIf="isPreviousUser && isSignedIn">{{texts['home.startButtonAccount']}}</span>
+                            <span *ngIf="!isPreviousUser()">{{texts['home.startButton']}}</span>
+                            <span *ngIf="isPreviousUser() && !isSignedIn()">{{texts['home.startButtonUser']}}</span>
+                            <span *ngIf="isPreviousUser() && isSignedIn()">{{texts['home.startButtonAccount']}}</span>
                         </a>
                         <br><Br><br>
                     </div>
@@ -271,9 +271,9 @@
                             !--
                             <div class="ftherobutton">
                                 <a class="btn btn-ft btn-lg margin-half" routerLink="/crypto_pass" routerLinkActive="active">
-                                    <span *ngIf="!isPreviousUser">{{texts['home.startButton']}}</span>
-                                    <span *ngIf="isPreviousUser && !isSignedIn">{{texts['home.startButtonUser']}}</span>
-                                    <span *ngIf="isPreviousUser && isSignedIn">{{texts['home.startButtonAccount']}}</span>
+                                    <span *ngIf="!isPreviousUser()">{{texts['home.startButton']}}</span>
+                                    <span *ngIf="isPreviousUser() && !isSignedIn()">{{texts['home.startButtonUser']}}</span>
+                                    <span *ngIf="isPreviousUser() && isSignedIn()">{{texts['home.startButtonAccount']}}</span>
                                 </a>
                             </div>
                         </div>         

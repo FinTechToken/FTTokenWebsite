@@ -13,8 +13,8 @@ import { FTObserver } from '../FTFramework/FT-Observer';
 /* ToDo: Each time you change tabs scroll to top */
 @Component({
   moduleId: module.id,
-  selector: 'ft-token',
-  templateUrl: '../../html/routes/token.html',
+  selector: 'ft-token-old',
+  templateUrl: '../../html/routes/tokenOld.html',
   animations: [trigger('visibilityChanged',[
     state('shownss',style({opacity:0,display:'none' })),
     state('hiddenss',style({opacity:1})),
@@ -22,7 +22,7 @@ import { FTObserver } from '../FTFramework/FT-Observer';
   ])]
 })
 
-export class FTToken {
+export class FTTokenOld {
   objectKeys = Object.keys;
   zone: NgZone;   
   name = "FinTechToken";

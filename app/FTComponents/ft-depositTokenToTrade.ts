@@ -34,9 +34,9 @@ export class FTDepositTokenToTrade {
   
   ngOnInit(): void {
     this.modalHeight=((window.innerHeight-1)*1-100)*.8+'px';
-    this.tokenIndex = this.obs.getObserver('tokenIndex').getValue();
-    if(this.obs.getObserver('modalNumber').getValue()) {
-      this.depositTokenAmount = this.obs.getObserver('modalNumber').getValue();
+    this.tokenIndex = this.obs.getObserverValue('tokenIndex');
+    if(this.obs.getObserverValue('modalNumber')) {
+      this.depositTokenAmount = this.obs.getObserverValue('modalNumber');
       this.obs.deleteObserver('modalNumber');
     } else {
       this.depositTokenAmount = this.ftTokenWatch.TokenWatch[this.tokenIndex].mine;

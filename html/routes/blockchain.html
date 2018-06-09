@@ -33,7 +33,7 @@
                                         run by FinTechToken on Amazon Web Services (AWS). FinTechToken works just like Ethereum
                                         except it is totally free so you can try it without risking anything.<br>
                                         <br>
-                                        FTT is on block <strong>{{!blocknumber ? 0 : blocknumber | number}}</strong>. We show the last 3 digits in the navigation bar at the top of your screen.
+                                        FTT is on block <strong>{{!getBlocknumber() ? 0 : getBlocknumber() | number}}</strong>. We show the last 3 digits in the navigation bar at the top of your screen.
                                         <br><Br>
                                         Transactions happen when a new block is mined, which should happen approximately every second. 
                                     </div>
