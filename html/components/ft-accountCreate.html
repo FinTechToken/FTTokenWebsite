@@ -9,10 +9,8 @@
         <br>
         <strong>My Contracts</strong>
         <br><Br>
-        <div *ngIf="myContracts">
-          <span *ngFor="let contract of myContracts">{{contract.ContractNameVer}}<br>
-          <small><a href="javascript:void(0)" routerLink="/token/{{contract.PublishedAddress.substring(2)}}">{{contract.PublishedAddress}}</a><br><Br></small></span>
-        </div>
+        <span *ngFor="let contract of getMyContracts()">{{contract.ContractNameVer}}<br>
+        <small><a href="javascript:void(0)" routerLink="/token/{{contract.PublishedAddress.substring(2)}}">{{contract.PublishedAddress}}</a><br><Br></small></span>
     </div>
     <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 2 }">
       <br>

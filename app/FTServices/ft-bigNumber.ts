@@ -4,9 +4,17 @@ import { Injectable }     from '@angular/core';
 
 @Injectable()
 export class FTBigNumberService {
-    
+    objectKeys = Object.keys;
     constructor ( ) { }
 
+    getSortedKeys(map: any, direction: boolean): any{
+        if(!direction) {
+            return this.objectKeys(map).sort((a,b) => {return this.compareBigNumber(b,a)})
+        } else {
+            return this.objectKeys(map).sort((a,b) => {return this.compareBigNumber(a,b)})
+        }
+    }
+      
     getZero(): string {
         return "0000000000000000000000000000000000000000";
     }

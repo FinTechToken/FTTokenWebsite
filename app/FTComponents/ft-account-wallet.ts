@@ -22,7 +22,7 @@ export class FTAccountWallet {
   action=[];
   maxGas;
 
-  constructor( public ftTokenWatch: FTTokenWatchService, private ftNum: FTBigNumberService, public ftWallet: FTWalletService, private router:Router, private ftweb3: FTWeb3Service, private obs: FTObserver, private cache: FTCache, private http: FTHttpClient, private session:FTSession ) 
+  constructor( private ftTokenWatch: FTTokenWatchService, private ftNum: FTBigNumberService, public ftWallet: FTWalletService, private router:Router, private ftweb3: FTWeb3Service, private obs: FTObserver, private cache: FTCache, private http: FTHttpClient, private session:FTSession ) 
   {}
   
   ngOnInit(): void {
@@ -31,6 +31,10 @@ export class FTAccountWallet {
   ngAfterViewInit(): void {} 
 
   ngOnDestroy(): void {
+  }
+
+  getftTokenWatch() {
+    return this.ftTokenWatch.TokenWatch;
   }
 
   viewNumber(number:string): void {

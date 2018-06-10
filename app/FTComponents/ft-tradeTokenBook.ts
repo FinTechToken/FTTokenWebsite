@@ -17,7 +17,7 @@ export class FTTradeTokenBook {
   @Input() tokenIndex: number;
   objectKeys = Object.keys;
 
-  constructor( public ftTokenWatch: FTTokenWatchService, private ftweb3: FTWeb3Service, private ftNum: FTBigNumberService, private obs: FTObserver ) 
+  constructor( public ftTokenWatch: FTTokenWatchService, private ftweb3: FTWeb3Service, public ftNum: FTBigNumberService, private obs: FTObserver ) 
   { 
     this.setText();
   }
@@ -27,14 +27,6 @@ export class FTTradeTokenBook {
 
   ngOnDestroy(): void {
 
-  }
-
-  getSortedKeys(map: any, direction: boolean): any{
-    if(!direction) {
-        return this.objectKeys(map).sort((a,b) => {return this.ftNum.compareBigNumber(b,a)})
-    } else {
-        return this.objectKeys(map).sort((a,b) => {return this.ftNum.compareBigNumber(a,b)})
-    }
   }
 
   private setPrice(price) {
