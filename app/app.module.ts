@@ -34,6 +34,7 @@ import { FTPhoneSMS } from './FTComponents/ft-phoneSMS';
 import { FTAccountExit } from './FTComponents/ft-account-exit';
 import { FTAccountCreate } from './FTComponents/ft-account-create';
 import { FTAccountWallet } from './FTComponents/ft-account-wallet';
+import { FTAccountHistory } from './FTComponents/ft-account-history';
 import { FTAccountTrade } from './FTComponents/ft-account-trade';
 import { FTEnterImport } from './FTComponents/ft-enterImport';
 import { FTVerifyDelete } from './FTComponents/ft-verifyDelete';
@@ -80,6 +81,7 @@ import { FTMessagesOld } from './FTRoutes/FTMessagesOld';
     FTAccountExit,
     FTAccountCreate,
     FTAccountWallet,
+    FTAccountHistory,
     FTAccountTrade,
     FTEnterImport,
     FTVerifyDelete,

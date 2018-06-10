@@ -24,6 +24,7 @@ export class FTMarketService {
         serializedTx:null
       };
 
+      myTradesMap = {};
       book = new Map();
       bookTokenEther = new Map();
       bookEther ="0";
@@ -102,11 +103,13 @@ export class FTMarketService {
                     token.lastPrice = events.returnValues.mPrice;
                     token.lastCount = events.returnValues.mCount;
                     token.tradeMap[events.returnValues.mNow] = { price: events.returnValues.mPrice, count: events.returnValues.mCount};
-                    if(events.returnValues.mFromAccount.toUpperCase() == '0X' + this.cache.getCache('encrypted_id').address) {
+                    if(events.returnValues.mFromAccount.toUpperCase() == '0X' + this.cache.getCache('encrypted_id').address.toUpperCase()) {
                       token.myTradesMap[events.returnValues.mNow] = { token: events.returnValues.mToken, price: events.returnValues.mPrice, count: -events.returnValues.mCount};
+                      this.myTradesMap[events.returnValues.mNow] = token.myTradesMap[events.returnValues.mNow];
                     }
-                    if(events.returnValues.mToAccount.toUpperCase() == '0X' + this.cache.getCache('encrypted_id').address) {
+                    if(events.returnValues.mToAccount.toUpperCase() == '0X' + this.cache.getCache('encrypted_id').address.toUpperCase()) {
                       token.myTradesMap[events.returnValues.mNow] = { token: events.returnValues.mToken, price: events.returnValues.mPrice, count: events.returnValues.mCount};
+                      this.myTradesMap[events.returnValues.mNow] = token.myTradesMap[events.returnValues.mNow];
                     }
                   });
                 });

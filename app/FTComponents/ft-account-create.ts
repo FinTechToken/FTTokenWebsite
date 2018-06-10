@@ -17,7 +17,6 @@ import { Observer, BehaviorSubject } from 'rxjs';
 export class FTAccountCreate {
 
   tabs = 1;
-  signedInSubscribe:BehaviorSubject<any>;
   solidityCode;
   tokenName;
   compileError;
@@ -26,7 +25,6 @@ export class FTAccountCreate {
   compiledName;
   publishedAddress;
   gasEst;
-  myContracts;
   JSON=JSON;
 
   constructor( private ftTokenWatch:FTTokenWatchService, private router:Router, private web3: FTWeb3Service, private http: FTHttpClient, private session:FTSession, private obs: FTObserver ) 
@@ -37,41 +35,16 @@ export class FTAccountCreate {
   
   ngOnInit(): void {} 
 
-  ngOnDestry(): void {
-    this.signedInSubscribe.unsubscribe();
-  }
+  ngOnDestroy(): void {}
 
-  ngAfterViewInit(): void{
-    this.signedInSubscribe = this.obs.getObserver('isSignedIn');
-    this.signedInSubscribe.forEach( (data) => {
-        if(data == true) {
-            let token = this.session.getItem('token');
-            let account = this.session.getItem('account');
-            if(token && account)
-                this.http.put("publishContract", JSON.stringify({
-                    "token" : token,
-                    "address": account
-                    })).toPromise()
-                .then( data => {
-                    if(data) {
-                        try{
-                            data = JSON.parse(data).sort(function(a, b){return a.ContractNameVer - b.ContractNameVer});
-                            data.forEach(element => {
-                                this.ftTokenWatch.addTokenToWatch(element.PublishedAddress, element.ContractNameVer,JSON.parse(element.ContractABI));
-                            });
-                        }
-                        catch {}
-                        this.myContracts = data;
-                    }
-                })
-                .catch( err => {console.log(err);});
-        }
-    });
-
-  } 
+  ngAfterViewInit(): void{} 
 
   changeTabs(tab:number): void {
     this.tabs = tab;
+  }
+
+  getMyContracts() {
+      return this.ftTokenWatch.myContracts;
   }
 
   name(): void{
@@ -110,6 +83,8 @@ export class FTAccountCreate {
   }
 
   publish(): void {
+      //Todo: Name should include userName of author
+      //ToDo: when create account should have username
       this.publishedAddress = null;
       this.web3.signAndSendTrans(this.gasEst, null, 0, this.compiledCode)
       .then(addr => {

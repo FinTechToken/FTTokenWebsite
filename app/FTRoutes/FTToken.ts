@@ -111,7 +111,6 @@ export class FTToken {
     var chainId = "913945103463586943";
     this.token.contract.methods.gotFree('0x'+this.fromAddress).call().then( (returns) => {
       this.gotFree = returns;
-      console.log(returns);
       }
     );
     this.token.contract.methods.getFreeToken().estimateGas({gas:500000,from:'0x'+this.fromAddress}).then( (returns) => {
@@ -209,6 +208,7 @@ export class FTToken {
   }
 
   ngOnInit(): void{ 
+    
     if(!this.cache.getCache('key')){
       this.router.navigate(['/crypto_pass']);
     }

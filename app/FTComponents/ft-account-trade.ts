@@ -21,7 +21,7 @@ export class FTAccountTrade {
 
   action=[];
 
-  constructor( public ftTokenWatch: FTTokenWatchService, private ftNum: FTBigNumberService, public ftMarket: FTMarketService, private ftWallet: FTWalletService, private router:Router, private obs: FTObserver,  private cache: FTCache, private web3: FTWeb3Service, private http: FTHttpClient, private session:FTSession ) 
+  constructor( private ftTokenWatch: FTTokenWatchService, private ftNum: FTBigNumberService, public ftMarket: FTMarketService, private ftWallet: FTWalletService, private router:Router, private obs: FTObserver,  private cache: FTCache, private web3: FTWeb3Service, private http: FTHttpClient, private session:FTSession ) 
   {}
   
   ngOnInit(): void {
@@ -29,6 +29,11 @@ export class FTAccountTrade {
 
   ngAfterViewInit(): void {
   } 
+
+  getftTokenWatch() {
+    return this.ftTokenWatch.TokenWatch;
+  }
+
 
   viewNumber(number:string): void {
     this.cache.putCache('number', number);
