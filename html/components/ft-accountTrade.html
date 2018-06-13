@@ -1,78 +1,89 @@
-
-  <div>
-    <strong>Trading Account</strong><br><Br>
-  </div>       
-  <table  class="table table-sm table-bordered table-hover">
-    <thead class="thead">
-      <tr>
-          <th>Tokens</th>
-          <th>Amount</th>
-          <th>Offers</th>
-          <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th>FTT &asymp; USD</th>
-        <td>
-          <a *ngIf="ftMarket.getAccountBalance() != '0'" href="javascript:void(0);" (click)="viewNumber(ftMarket.getAccountBalance());">
-            {{ftNum.getEther(ftMarket.getAccountBalance()) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(ftMarket.getAccountBalance())">.#</span>
-          </a>
-          <span *ngIf="ftMarket.getAccountBalance() == '0'">0</span>
-        </td>
-        <td>
-          <a *ngIf="ftMarket.bookEther != '0'" href="javascript:void(0);" (click)="showOffersToBuy(ftMarket.bookEther);">
-              {{ftNum.getEther(ftMarket.bookEther) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(ftMarket.bookEther)">.#</span>
-          </a>
-          <span *ngIf="ftMarket.bookEther == '0'">0</span>
-        </td>
-        <td>
-            <select (change)="takeAction(0)" [(ngModel)]="action[0]">
-              <option value=""></option>
-              <option value="move_ether_to_wallet">Move to wallet</option>
-            </select>
-        </td>
-      </tr>
-      <tr>
-        <th>Ethereum</th>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <th>Bitcoin</th>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <th>Lightcoin</th>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr *ngFor="let token of getftTokenWatch(); let i = index;">
-        <th><a href="javascript:void(0)" routerLink="/token/{{token.address.substring(2)}}">{{token.name}}</a></th>
-        <td> <a *ngIf="token.mineTrade != '0'" href="javascript:void(0);" (click)="viewNumber(token.mineTrade);">
-            {{ftNum.getEther(token.mineTrade) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(token.mineTrade)">.#</span>
-          </a>
-          <span *ngIf="token.mineTrade == '0'">0</span></td>
-        <td>
-            <a *ngIf="ftMarket.getBookTokenEther(token.address) != '0'" href="javascript:void(0);" (click)="showOffersToSell(i, ftMarket.getBookTokenEther(token.address));">
-                {{ftNum.getEther(ftMarket.getBookTokenEther(token.address)) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(ftMarket.getBookTokenEther(token.address))">.#</span>
-            </a>
-            <span *ngIf="ftMarket.getBookTokenEther(token.address) == '0'">0</span>
-        </td>
-        <td>
-          <select (change)="takeAction(i+1)" [(ngModel)]="action[i+1]">
-            <option value=""></option>
-            <option value="move_token_to_wallet">Move to wallet</option>
-            <option value="trade_buy_token">Offer to buy</option>
-            <option value="trade_sell_token">Offer to sell</option>
-          </select>
-        </td>
-      </tr>
-    </tbody>   
-  </table>
-
+<div class="col-md-12">
+  <ul class="nav flex-colum">
+    <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 1 }" (click)="changeTabs(1)" href="javascript:void(0);"><small>Trading Account</small></a></li>  
+    <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 2 }" (click)="changeTabs(2)" href="javascript:void(0);"><small>History</small></a></li>
+  </ul>
+  <div class="tab-content text-left">
+    <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 1 }">
+      <div><br>
+        <strong>M</strong>y Trading Account<br><Br>
+      </div>       
+      <table  class="table table-sm table-bordered table-hover">
+        <thead class="thead">
+          <tr>
+              <th>Tokens</th>
+              <th>Amount</th>
+              <th>Offers</th>
+              <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>FTT &asymp; USD</th>
+            <td>
+              <a *ngIf="ftMarket.getAccountBalance() != '0'" href="javascript:void(0);" (click)="viewNumber(ftMarket.getAccountBalance());">
+                {{ftNum.getEther(ftMarket.getAccountBalance()) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(ftMarket.getAccountBalance())">.#</span>
+              </a>
+              <span *ngIf="ftMarket.getAccountBalance() == '0'">0</span>
+            </td>
+            <td>
+              <a *ngIf="ftMarket.bookEther != '0'" href="javascript:void(0);" (click)="showOffersToBuy(ftMarket.bookEther);">
+                  {{ftNum.getEther(ftMarket.bookEther) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(ftMarket.bookEther)">.#</span>
+              </a>
+              <span *ngIf="ftMarket.bookEther == '0'">0</span>
+            </td>
+            <td>
+                <select (change)="takeAction(0)" [(ngModel)]="action[0]">
+                  <option value=""></option>
+                  <option value="move_ether_to_wallet">Move to wallet</option>
+                </select>
+            </td>
+          </tr>
+          <tr>
+            <th>Ethereum</th>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th>Bitcoin</th>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th>Lightcoin</th>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr *ngFor="let token of getftTokenWatch(); let i = index;">
+            <th><a href="javascript:void(0)" routerLink="/token/{{token.address.substring(2)}}">{{token.name}}</a></th>
+            <td> <a *ngIf="token.mineTrade != '0'" href="javascript:void(0);" (click)="viewNumber(token.mineTrade);">
+                {{ftNum.getEther(token.mineTrade) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(token.mineTrade)">.#</span>
+              </a>
+              <span *ngIf="token.mineTrade == '0'">0</span></td>
+            <td>
+                <a *ngIf="ftMarket.getBookTokenEther(token.address) != '0'" href="javascript:void(0);" (click)="showOffersToSell(i, ftMarket.getBookTokenEther(token.address));">
+                    {{ftNum.getEther(ftMarket.getBookTokenEther(token.address)) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(ftMarket.getBookTokenEther(token.address))">.#</span>
+                </a>
+                <span *ngIf="ftMarket.getBookTokenEther(token.address) == '0'">0</span>
+            </td>
+            <td>
+              <select (change)="takeAction(i+1)" [(ngModel)]="action[i+1]">
+                <option value=""></option>
+                <option value="move_token_to_wallet">Move to wallet</option>
+                <option value="trade_buy_token">Offer to buy</option>
+                <option value="trade_sell_token">Offer to sell</option>
+              </select>
+            </td>
+          </tr>
+        </tbody>   
+      </table>
+    </div>
+    <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 2 }">
+      <ft-accountHistory></ft-accountHistory>
+    </div>
+  </div>
+</div>
 

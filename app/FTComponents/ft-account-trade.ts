@@ -18,7 +18,8 @@ import { FTTokenWatchService } from '../FTServices/ft-tokenWatch';
 })
 
 export class FTAccountTrade {
-
+  
+  tabs = 1;
   action=[];
 
   constructor( private ftTokenWatch: FTTokenWatchService, private ftNum: FTBigNumberService, public ftMarket: FTMarketService, private ftWallet: FTWalletService, private router:Router, private obs: FTObserver,  private cache: FTCache, private web3: FTWeb3Service, private http: FTHttpClient, private session:FTSession ) 
@@ -29,6 +30,10 @@ export class FTAccountTrade {
 
   ngAfterViewInit(): void {
   } 
+
+  changeTabs(tab:number): void {
+    this.tabs = tab;
+  }
 
   getftTokenWatch() {
     return this.ftTokenWatch.TokenWatch;
