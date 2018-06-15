@@ -1,0 +1,31 @@
+<div class="modal-header">
+    <h5 class="modal-title">About Tokens</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close();" href="javascript:void(0);">
+    <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <strong>Total Supply:</strong> This is the number of tokens that can eventually be created.<Br>
+        <br>
+    <strong>Total Outstanding:</strong> This is the number of tokens that have been created.<br>
+    <br>
+    <strong>My Balance:</strong> This is the number of tokens that you own.<br>
+    <br>
+    <strong>Why does it show a link on the number?</strong> Blockchain numbers are extremely large. This makes them 
+    difficult for people to read. We show numbers in "Ether" and allow you to click on them to visually see everything after the decimal point.<br>
+    <br>
+    <strong>Why don't I have a whole number of tokens?</strong> 18 digits after the decimal point is
+    the standard for most tokens, and what Ether uses. Currencly we assume all tokens use 18 digits. 
+    If a specific token uses something else we still show it as if it has 18 digits. Please remember this 
+    when buying/selling tokens with different number of digits.
+
+</div>
+<div class="modal-footer">
+    <ul class="nav nav-pills modal-nav text-center">
+        <li class="nav-item w-100 next">
+            <a class="nav-link" (click)="close()" href="javascript:void(0);">
+                Got it
+            </a>
+        </li>
+    </ul>
+</div>

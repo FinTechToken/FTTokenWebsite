@@ -15,6 +15,7 @@ import { FTObserver } from '../FTFramework/FT-Observer';
 
 export class FTTradeTokenBook {
   @Input() tokenIndex: number;
+  @Input() modal: number = 1;
   objectKeys = Object.keys;
 
   constructor( public ftTokenWatch: FTTokenWatchService, private ftweb3: FTWeb3Service, public ftNum: FTBigNumberService, private obs: FTObserver ) 
@@ -30,7 +31,13 @@ export class FTTradeTokenBook {
   }
 
   private setPrice(price) {
-    this.obs.putObserver('tradeSetPrice', this.ftNum.multiplyBigNumber(price,"1000000000000"));
+    if(this.modal)
+      this.obs.putObserver('tradeSetPrice', this.ftNum.multiplyBigNumber(price,"1000000000000"));
+    else {
+      this.obs.putObserver('tokenIndex', this.tokenIndex);
+      this.obs.putObserver('tradeSetPrice', this.ftNum.multiplyBigNumber(price,"1000000000000"));
+      this.obs.putObserver('modal', 'account-trade.buyToken');
+    }
   }
 
   private setText(): void {

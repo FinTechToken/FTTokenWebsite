@@ -11,8 +11,8 @@
                                 <div class="media-body">
                                     <h2 class="padleft">
                                         <i class="hidden-lg-up icon-disc icon-gradient"></i>
-                                        {{token.name}} Token
-                                        <span *ngIf="token.address" class="p-small return m-left-m30">{{token.address}}</span>
+                                        {{tokenName}} Token
+                                        <span *ngIf="tokenAddress" class="p-small return m-left-m30">{{tokenAddress}}</span>
                                     </h2>    
                                     <ul class="nav nav-tabs">
                                         <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 1 }" (click)="changeTabs(1)" href="javascript:void(0);">Overview</a></li>
@@ -24,122 +24,61 @@
                             <div class="tab-white tab-content text-left">
                                 <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 1 }">
                                     <h4>
-                                        <i (click)="showModal(2);" href="javascript:void(0);" class="icon-info hover"></i>
+                                        <i (click)="showTokenInfo();" href="javascript:void(0);" class="icon-info hover"></i>
                                         <strong>O</strong>verview
                                     </h4>
                                     <div>
-                                        <span *ngIf="token.address == '9287bb21719d283CfdD7d644a89E8492f9845B64'">
-                                            FreeToken is a fake company that is offering 1 free token to every address. 
-                                            <br>
-                                            <span *ngIf="tutorial.state > 0 ">
-                                                You already received a free token!
-                                            </span>
-                                        </span>
-                                        <span *ngIf="token.address == '2d5e86187855CC29B40469e8a7355f3fDBf4C088'">
-                                            TradingToken is a fake company that is offering 5 free tokens to every address that gets to step 7 of the tutorial.
-
-                                            Trade these tokens with others for free and for fun!
-                                            <br>
-                                            <span *ngIf="tutorial.state < 5 ">
-                                                Keep working on the tutorial!
-                                            </span>
-                                            <span *ngIf="tutorial.state > 5 ">
-                                                You already received 5 free trading tokens. 
-                                            </span>
-                                        </span>
+                                        <span>*ToDo: add description of Token.</span>
                                         <br>
-                                        <span *ngIf="token.lastPrice">
+                                        <span *ngIf="ftTokenWatch.TokenWatch[tokenIndex].lastPrice">
                                             <strong>LastPrice:</strong>
-                                            {{+token.lastPrice/1000000}} Ether per token for {{getEther(token.lastCount) | number : '1.0-18'}} tokens
+                                            <span *ngIf="ftTokenWatch.TokenWatch[tokenIndex].lastPrice=='0'">Never Traded</span>
+                                            <span *ngIf="ftTokenWatch.TokenWatch[tokenIndex].lastPrice!='0'">
+                                                {{+ftTokenWatch.TokenWatch[tokenIndex].lastPrice/1000000}} Ether per token for {{ftweb3.fromWei(ftTokenWatch.TokenWatch[tokenIndex].lastCount, 'ether') | number : '1.0-18'}} tokens
+                                            </span>
                                             <br>
                                         </span>
-                                        <span *ngIf="token.totalSupply">
+                                        
+                                        <span *ngIf="tokenTotalSupply">
                                             <strong>TotalSupply:</strong> 
-                                            <a *ngIf="token.totalSupply != '0'" href="javascript:void(0);" (click)="viewNumber(token.totalSupply);">
-                                                {{getEther(token.totalSupply) | number : '1.0-0'}}<span *ngIf="hasFraction(token.totalSupply)">.#</span>
+                                            <a *ngIf="tokenTotalSupply != '0'" href="javascript:void(0);" (click)="viewNumber(tokenTotalSupply);">
+                                                {{ftNum.getEther(tokenTotalSupply) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(tokenTotalSupply)">.#</span>
                                             </a>
-                                            <span *ngIf="token.totalSupply == '0'">0</span>
+                                            <span *ngIf="tokenTotalSupply == '0'">0</span>
                                             <br>
                                         </span>
-                                        <span *ngIf="token.totalOutstanding">
+
+                                        <span *ngIf="tokenTotalOutstanding">
                                             <strong>TotalOutstanding:</strong> 
-                                            <a *ngIf="token.totalOutstanding != '0'" href="javascript:void(0);" (click)="viewNumber(token.totalOutstanding);">
-                                                {{getEther(token.totalOutstanding) | number : '1.0-0' }}<span *ngIf="hasFraction(token.totalOutstanding)">.#</span>
+                                            <a *ngIf="tokenTotalOutstanding != '0'" href="javascript:void(0);" (click)="viewNumber(tokenTotalOutstanding);">
+                                                {{ftNum.getEther(tokenTotalOutstanding) | number : '1.0-0' }}<span *ngIf="ftNum.hasFraction(tokenTotalOutstanding)">.#</span>
                                             </a>
-                                            <span *ngIf="token.totalOutstanding == '0'">0</span>
+                                            <span *ngIf="tokenTotalOutstanding == '0'">0</span>
                                             <br>
                                         </span>
                                         <span>
                                             <strong>My Balance:</strong>
-                                            <a *ngIf="token.mine != '0'" href="javascript:void(0);" (click)="viewNumber(token.mine);">
-                                                {{getEther(token.mine) | number : '1.0-0'}}<span *ngIf="hasFraction(token.mine)">.#</span>
+                                            <a *ngIf="tokenMine != '0'" href="javascript:void(0);" (click)="viewNumber(tokenMine);">
+                                                {{ftNum.getEther(tokenMine) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(tokenMine)">.#</span>
                                             </a>
-                                            <span *ngIf="token.mine == '0'">0</span>
-                                            <!--
-                                            <span *ngIf="token.totalSupply > 0"><br>{{token.mine/token.totalSupply}}</span>
-                                            !-->
-                                            <span *ngIf="token.totalOutstanding != '0'"><br><strong>% Owned Of Outstanding</strong> {{token.mine*100/token.totalOutstanding}}%</span>
+                                            <span *ngIf="tokenMine == '0'">0</span>
+                                            
+                                            <span *ngIf="tokenTotalSupply > 0"><br>{{ftNum.divideBigNumber(ftNum.multiplyBigNumber(tokenMine,"100"),tokenTotalSupply)}}.{{ftNum.divideBigNumberRemain(ftNum.multiplyBigNumber(tokenMine,"100"),tokenTotalSupply)}}%</span>
+                                            
+                                            <span *ngIf="tokenTotalOutstanding != '0'"><br><strong>% Owned Of Outstanding</strong> {{ftNum.divideBigNumber(ftNum.multiplyBigNumber(tokenMine,"100"),tokenTotalOutstanding)}}.{{ftNum.divideBigNumberRemain(ftNum.multiplyBigNumber(tokenMine,"100"),tokenTotalOutstanding)}}%</span>
                                             <br>
                                         </span>
-                                        <span *ngIf="token.address == '9287bb21719d283CfdD7d644a89E8492f9845B64'">
-                                            <br>
-                                            <a class="btn btn-lg btn-ft" href="javascript:void(0);" (click)="getFreeToken();">Get a Free Token</a>
-                                            <br>
-                                        </span>
-                                        <span *ngIf="token.address == '2d5e86187855CC29B40469e8a7355f3fDBf4C088'">
-                                            <br>
-                                            <a class="btn btn-lg btn-ft" href="javascript:void(0);" (click)="getFreeToken();">Get a Free Token</a>
-                                            <br>
+                                        <span>
+                                            *ToDo: add functions from ABI
                                         </span>
                                     </div>
                                 </div>
+                                
                                 <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 2 }">
-                                    <h4>
-                                        <strong>O</strong>ffers<br>
-                                    </h4>
-                                    <div>
-                                        <span *ngIf="token.lastPrice">
-                                            <strong>LastPrice:</strong>
-                                            {{+token.lastPrice/1000000}} Ether per token for {{wb3.utils.fromWei(token.lastCount, 'ether') | number : '1.0-18'}} tokens
-                                            <br>
-                                        </span>
-                                        
-                                        <br>
-                                        <table class="table table-sm">
-                                            <tr><th class="alert-success">Buy</th><th class="alert-danger">Sell</th></tr>
-                                            <tr valign="top"><td class="alert-success">
-                                                <table class="tab-white table table-sm table-bordered">
-                                                    <tr><th>Price</th><th>Tokens</th></tr>
-                                                    <ng-container *ngFor="let key of getSortedKeys(token.buyMap, false)">
-                                                        <tr *ngIf="token.buyMap[key] != '0'"><td>{{+key/1000000}}</td><td>{{wb3.utils.fromWei(token.buyMap[key], 'ether') | number : '1.0-6'}}</td></tr>
-                                                    </ng-container>
-                                                </table>
-                                            </td>
-                                            <td valign="top" class="alert-danger">
-                                                <table class="tab-white table table-sm table-bordered">
-                                                    <tr><th>Price</th><th>Tokens</th></tr>
-                                                    <ng-container *ngFor="let key of getSortedKeys(token.sellMap, true)">
-                                                        <tr *ngIf="token.sellMap[key] != '0'"><td>{{+key/1000000}}</td><td>{{wb3.utils.fromWei(token.sellMap[key], 'ether') | number: '1.0-6'}}</td></tr>
-                                                    </ng-container>
-                                                </table>
-                                            </td></tr>
-
-                                        </table>
-                                    </div>
+                                    <ft-tradeTokenBook *ngIf="tokenIndex>=0" [tokenIndex]="tokenIndex" [modal]="0"></ft-tradeTokenBook>
                                 </div>
                                 <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 3 }">
-                                    <h4>
-                                        <strong>T</strong>rades
-                                    </h4>
-                                    <div>
-                                        <br>
-                                        <table class="table table-sm table-bordered">
-                                            <tr><th>Price</th><th>Tokens</th></tr>
-                                            <ng-container *ngFor="let key of getSortedKeys(token.tradeMap,false)">
-                                                <tr><td>{{+token.tradeMap[key].price/1000000}}</td><td>{{wb3.utils.fromWei(token.tradeMap[key].count, 'ether') | number: '1.0-6'}}</td></tr>
-                                            </ng-container>
-                                        </table>
-                                    </div>
+                                    <ft-tradeTokenTrades *ngIf="tokenIndex>=0" [tokenIndex]="tokenIndex" ></ft-tradeTokenTrades>
                                 </div>
                             </div>
                         </div>
@@ -155,77 +94,9 @@
     </div>
 </section>
 
-<!-- Modal 1 Number -->
-<div *ngIf="modal == 1" [ngClass]="{ 'show block': modal == 1 }" class="modal fade" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content roboto">
-            <div class="modal-header">
-                <h5 class="modal-title">{{wb3.utils.fromWei(number, 'ether')}} Ether</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                {{getEther(number) | number : '1.0-0'}} Ether<br>
-                {{getFinney(number) | number : '1.0-0'}} Finney<br>
-                {{getSzabo(number) | number : '1.0-0'}} Szabo<br>
-                {{getGwei(number) | number : '1.0-0'}} Gwei<br>
-                {{getMwei(number) | number : '1.0-0'}} Mwei <br>
-                {{getKwei(number) | number : '1.0-0'}} Kwei <br>
-                {{getWei(number) | number : '1.0-0'}} Wei<Br><Br>
-            </div>
-            <div class="modal-footer">
-                <ul class="nav nav-pills modal-nav text-center">
-                    <li class="nav-item w-100 next">
-                        <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
-                            Got it
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
 
-<!-- Modal 2 Overview -->
-<div  [ngClass]="{ 'show block': modal == 2 }" class="modal fade" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content roboto">
-            <div class="modal-header">
-                <h5 class="modal-title">About Tokens</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModal(0);" href="javascript:void(0);">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <strong>Total Supply:</strong> This is the number of tokens that can eventually be created.<Br>
-                    <br>
-                <strong>Total Outstanding:</strong> This is the number of tokens that have been created.<br>
-                <br>
-                <strong>My Balance:</strong> This is the number of tokens that you own.<br>
-                <br>
-                <strong>Why does it show a link on the number?</strong> Blockchain numbers are extremely large. This makes them 
-                difficult for people to read. We show numbers in "Ether" and allow you to click on them to visually see everything after the decimal point.<br>
-                <br>
-                <strong>Why don't I have a whole number of tokens?</strong> 18 digits after the decimal point is
-                the standard for most tokens, and what Ether uses. Currencly we assume all tokens use 18 digits. 
-                If a specific token uses something else we still show it as if it has 18 digits. Please remember this 
-                when buying/selling tokens with different number of digits.
 
-            </div>
-            <div class="modal-footer">
-                <ul class="nav nav-pills modal-nav text-center">
-                    <li class="nav-item w-100 next">
-                        <a class="nav-link" (click)="showModal(0)" href="javascript:void(0);">
-                            Got it
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal 3 Get Free Token-->
+<!-- Modal 3 Get Free Token
 <div [ngClass]="{ 'show block': modal == 3 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
     <div *ngIf="!gotFree" class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -295,7 +166,10 @@
         </div>
     </div>
 </div>
-<!-- Modal 4 Got Free Token-->
+!-->
+
+
+<!-- Modal 4 Got Free Token
 <div [ngClass]="{ 'show block': modal == 4 }" class="modal fade roboto" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -332,3 +206,4 @@
         </div>
     </div>
 </div>
+!-->
