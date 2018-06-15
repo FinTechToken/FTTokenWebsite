@@ -67,6 +67,11 @@ export class FTTradeSellToken {
     })
   } 
 
+  buy() {
+    this.cache.putCache('tradeBuyToken.price', this.sellPrice);
+    this.obs.putObserver('modal', 'account-trade.buyToken');
+  }
+
   ngOnDestroy() {
     this.obs.deleteObserver('tradeSetPrice');
   }

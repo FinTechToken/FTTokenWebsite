@@ -55,6 +55,19 @@ export class FTBigNumberService {
         return x.dividedToIntegerBy(y).toString(10);
     }
     
+    divideBigNumberRemain(numberA: string, numberB: string): string {
+        if(numberA == "" || !numberA){
+            numberA="0";
+        }
+        if(numberB == "" || !numberB){
+            numberB="0"
+        }
+        let x = new BigNumber(numberA);
+        let y = new BigNumber(numberB);
+        return x.modulo(y).dividedBy(y).toString(10).substr(2);
+        //return s.replace(/0+$/, "");
+    }
+
     multiplyBigNumber(numberA: string, numberB: string): string {
         if(numberA == "" || !numberA){
             numberA="0";

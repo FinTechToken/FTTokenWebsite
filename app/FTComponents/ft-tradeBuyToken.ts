@@ -75,6 +75,11 @@ export class FTTradeBuyToken {
     this.obs.deleteObserver('tradeSetPrice');
   }
 
+  sell() {
+    this.cache.putCache('tradeSellToken.price', this.buyPrice);
+    this.obs.putObserver('modal', 'account-trade.sellToken');
+  }
+
   buyOfferConfirm(){
     this.ftMarket.confirmTrans();
     this.close();
