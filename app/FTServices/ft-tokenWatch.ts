@@ -13,7 +13,7 @@ export class FTTokenWatchService {
   TokenWatch:any[] = [];
   myContracts:any[] = [];
   /*
-  address, name, contract, mine, mineTrade, subscribeBook, buyMap, sellMap, subscribeTrades, lastPrice, lastCount, tradeMap, myTradesMap
+  address, name, contract, abi, mine, mineTrade, subscribeBook, buyMap, sellMap, subscribeTrades, lastPrice, lastCount, tradeMap, myTradesMap
   */
 
   constructor ( private ftweb3: FTWeb3Service, private obs: FTObserver, private http: FTHttpClient, private session:FTSession ) { 
@@ -56,7 +56,7 @@ export class FTTokenWatchService {
   addTokenToWatch(address, name, ABI) {
     if(this.getTokenIndexByAddress(address==-1)) {
       let contract: any = this.ftweb3.createContractInterface(ABI, address.substring(2));
-      let token:any = {address:address, name:name, contract:contract, mine:'0', mineTrade:'0', buyMap:{}, sellMap:{}, tradeMap:{}, myTradesMap:{}, lastPrice:'0', lastCount:'0' };
+      let token:any = {address:address, name:name, contract:contract, abi:ABI, mine:'0', mineTrade:'0', buyMap:{}, sellMap:{}, tradeMap:{}, myTradesMap:{}, lastPrice:'0', lastCount:'0' };
       this.TokenWatch.push(token);
     }
   }
