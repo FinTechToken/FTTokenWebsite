@@ -91,6 +91,7 @@ export class FTAccountCreate {
           this.publishedAddress = addr.contractAddress;
           let account = this.session.getItem('account');
           let token = this.session.getItem('token');
+          this.ftTokenWatch.addTokenToWatch(this.publishedAddress, this.compiledName,this.compiledABI);
           this.http.put("publishContract", JSON.stringify({
                 "account" : account,
                 "token" : token,

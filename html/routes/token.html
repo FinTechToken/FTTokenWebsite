@@ -12,7 +12,7 @@
                                     <h2 class="padleft">
                                         <i class="hidden-lg-up icon-disc icon-gradient"></i>
                                         {{tokenName}} Token
-                                        <span *ngIf="tokenAddress" class="p-small return m-left-m30">{{tokenAddress}}</span>
+                                        <span *ngIf="tokenAddress" class="p-small return m-left-m30">0x{{tokenAddress}}</span>
                                     </h2>    
                                     <ul class="nav nav-tabs">
                                         <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 1 }" (click)="changeTabs(1)" href="javascript:void(0);">Overview</a></li>
@@ -30,6 +30,7 @@
                                     <div>
                                         <span>*ToDo: add description of Token.</span>
                                         <br>
+                                        <strong>Ether Held By Contract:</strong> {{ftweb3.fromWei(etherBalance,'ether')}}<br>
                                         <span *ngIf="ftTokenWatch.TokenWatch[tokenIndex].lastPrice">
                                             <strong>LastPrice:</strong>
                                             <span *ngIf="ftTokenWatch.TokenWatch[tokenIndex].lastPrice=='0'">Never Traded</span>
@@ -63,13 +64,31 @@
                                             </a>
                                             <span *ngIf="tokenMine == '0'">0</span>
                                             
-                                            <span *ngIf="tokenTotalSupply > 0"><br>{{ftNum.divideBigNumber(ftNum.multiplyBigNumber(tokenMine,"100"),tokenTotalSupply)}}.{{ftNum.divideBigNumberRemain(ftNum.multiplyBigNumber(tokenMine,"100"),tokenTotalSupply)}}%</span>
+                                            <span *ngIf="ftNum.compareBigNumber(tokenTotalSupply,'0') == 1"><br>{{ftNum.divideBigNumber(ftNum.multiplyBigNumber(tokenMine,"100"),tokenTotalSupply)}}.{{ftNum.divideBigNumberRemain(ftNum.multiplyBigNumber(tokenMine,"100"),tokenTotalSupply)}}%</span>
                                             
                                             <span *ngIf="tokenTotalOutstanding != '0'"><br><strong>% Owned Of Outstanding</strong> {{ftNum.divideBigNumber(ftNum.multiplyBigNumber(tokenMine,"100"),tokenTotalOutstanding)}}.{{ftNum.divideBigNumberRemain(ftNum.multiplyBigNumber(tokenMine,"100"),tokenTotalOutstanding)}}%</span>
                                             <br>
                                         </span>
-                                        <span>
-                                            *ToDo: add functions from ABI
+                                        <span *ngFor="let function of getABI(); let myindex=index">
+                                            <span *ngIf="function.type == 'constructor'"></span>
+                                            <div *ngIf="function.type == 'event'"><br>Subscribe to Event: {{function.name}}</div>
+                                            <div *ngIf="function.type == 'fallback' || function.type =='function'">
+                                                <br>
+                                                <a class="btn btn-lg btn-ft" (click)="callFunction(myindex);" href="javascript:void(0);">
+                                                    <span *ngIf="function.type=='fallback'"><strong>FallBack Function</strong></span>
+                                                    <span *ngIf="function.type=='function'"><strong>Function: {{function.name}}</strong></span>
+                                                    <small *ngIf="gasEst[myindex]"><br>Gas Est: {{gasEst[myindex] | number}}</small>
+                                                    <small *ngIf="errMessage[myindex]"><br>{{errMessage[myindex]}}</small>
+                                                </a>
+                                                <span *ngIf="results[myindex]!==undefined"><strong>Result:</strong> {{results[myindex]}}</span>
+                                                <span *ngIf="function.payable"><br><strong>Amount to send:</strong> <a (click)="changeAmountToSend(myindex)" href="javascript:void(0);">{{ftweb3.fromWei(amountToSend[myindex], 'ether')}}</a><br></span>
+                                                <span *ngFor="let input of function.inputs; let myindex2=index">
+                                                    <br><strong>{{input.name}}:</strong> Type:{{input.type}} Value:
+                                                    <a *ngIf="input.type.substring(0,4) == 'uint'" (click)="changeInputAmount(myindex, myindex2)" href="javascript:void(0);">{{ftweb3.fromWei(inputs[myindex][myindex2], 'ether')}}</a>
+                                                    <input *ngIf="input.type.substring(0,4) != 'uint'" (input)="getGasEst(myindex)" [(ngModel)]="inputs[myindex][myindex2]">
+                                                </span>
+                                                <br>
+                                            </div>
                                         </span>
                                     </div>
                                 </div>

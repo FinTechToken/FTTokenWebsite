@@ -93,6 +93,8 @@ export class FTWeb3Service {
     }
 
     fromWei(amount, convertTo): any {
+        if(!amount)
+            amount = '0';
         return this.currentWeb3.utils.fromWei(amount, convertTo);
     }
 
@@ -128,11 +130,15 @@ export class FTWeb3Service {
             tx.sign(privateKey);
             return '0x' + tx.serialize().toString('hex');
         })
-        .catch(console.log);
+        .catch(err => {throw err;});
     }
 
     sendSignedTrans(signedTrans): any {
         return this.currentWeb3.eth.sendSignedTransaction(signedTrans);
+    }
+
+    estimateGas(to, tran) {
+        return this.currentWeb3.eth.estimateGas({to:to, data:tran});
     }
 
     signAndSendTrans(gasEst, toAddress, sendValue, encodedABI): any {
