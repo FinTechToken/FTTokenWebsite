@@ -1,0 +1,80 @@
+<div class="modal-header">
+    <h5 class="modal-title">Send FTT To Cell Number
+        <small><br>If person doesn't accept within 30 days funds will be returned to you.</small>
+    </h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close();" href="javascript:void(0);">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body" [ngStyle]="{'height':modalHeight}">    
+    <div class="form-group row">
+        <div  *ngIf="send_step==send_steps.enterInfo">
+            <label for="example-tel-input" class="col-12 col-form-label">
+                Mobile Number To Send To
+            </label><br>
+            <div class="col-12">
+                1-(<input class="form-control" style="display:inline-block; width:auto;" type="tel" value="" placeholder="" minlength="3" maxlength="3" size="3" id="tel1" [(ngModel)]="tel1">)
+                <input class="form-control" style="display:inline-block; width:auto;" type="tel" value="" placeholder="" minlength="3" maxlength="3" size="3" id="tel2" [(ngModel)]="tel2">
+                -
+                <input class="form-control" style="display:inline-block; width:auto;" type="tel" value="" placeholder="" minlength="4" maxlength="4" size="3" id="tel3" [(ngModel)]="tel3">
+                <br>
+                <Br>
+                FTT To Send: <a (click)="changeSendAmount()" href="javascript:void(0);">{{ftweb3.fromWei(sendAmount, 'ether')}}</a>
+                <br>
+                Fees:{{ftweb3.fromWei( 
+                    ftNum.addBigNumber(
+                        "100000000000000000",
+                        ftNum.divideBigNumber(
+                            ftNum.subtractBigNumber(
+                                sendAmount,
+                                "100000000000000000"
+                            ),
+                            "1000"
+                        )
+                    ), 'ether')}}
+                <br>
+                Amount Person Gets: {{ftweb3.fromWei( 
+                    ftNum.subtractBigNumber(
+                        ftNum.subtractBigNumber(
+                            sendAmount,
+                            "100000000000000000"),
+                        ftNum.divideBigNumber(
+                            ftNum.subtractBigNumber(
+                                sendAmount,
+                                "100000000000000000"
+                            ),
+                            "1000"
+                        )
+                    ), 'ether')}}
+                <br>
+                <small>Costs $0.10 + 0.1% of amount</small>
+            </div>
+        </div>
+        <div *ngIf="send_step==send_steps.success">
+            <label for="example-tel-input" class="col-12 col-form-label">
+                Successfully sent.
+            </label><br>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <ul class="nav nav-pills modal-nav text-center">
+        <li  *ngIf="send_step==send_steps.enterInfo" class="nav-item w-50 prev">
+            <a class="nav-link" aria-label="Close" (click)="close();" href="javascript:void(0);">
+                <span>Cancel</span>
+            </a>
+        </li>
+        <li  *ngIf="send_step==send_steps.enterInfo" class="nav-item w-50 next">
+            <a *ngIf="ftNum.compareBigNumber(sendAmount,'100000000000000000') ==1 && tel1.length==3 && tel2.length==3 && tel3.length==4" class="nav-link" aria-label="Close" (click)="sendEther();" href="javascript:void(0);">
+                <span>Send Ether</span>
+            </a>
+            <span *ngIf="ftNum.compareBigNumber(sendAmount,'100000000000000000') <=0">Enter amount over $0.1</span>
+            <span *ngIf="tel1.length !=3 || tel2.length !=3 || tel3.length !=4">Enter Cell #</span>
+        </li>
+        <li  *ngIf="send_step==send_steps.success" class="nav-item w-100 next">
+            <a class="nav-link" aria-label="Close" (click)="close();" href="javascript:void(0);">
+                <span  *ngIf="send_step==send_steps.success">Close</span>
+            </a>
+        </li>
+    </ul>
+</div>

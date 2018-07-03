@@ -8,8 +8,10 @@
             <ft-verifyPhoneExists *ngIf="modal == 'verify.PhoneExists'"></ft-verifyPhoneExists>
             <ft-signUpInfo *ngIf="modal == 'authenticate.signupInfo'"></ft-signUpInfo>
             <ft-depositEtherToTrade *ngIf="modal=='account-trade.depositEther'"></ft-depositEtherToTrade>
-            <ft-withdrawEtherFromTrade *ngIf="modal=='account-trade.withdrawEther'"></ft-withdrawEtherFromTrade>
             <ft-depositTokenToTrade *ngIf="modal=='account-trade.depositToken'"></ft-depositTokenToTrade>
+            <ft-sendEther *ngIf="modal=='account-trade.sendEther'"></ft-sendEther>
+            <ft-sendToken *ngIf="modal=='account-trade.sendToken'"></ft-sendToken>
+            <ft-withdrawEtherFromTrade *ngIf="modal=='account-trade.withdrawEther'"></ft-withdrawEtherFromTrade>
             <ft-withdrawTokenFromTrade *ngIf="modal=='account-trade.withdrawToken'"></ft-withdrawTokenFromTrade>
             <ft-tradeBuyToken *ngIf="modal=='account-trade.buyToken'"></ft-tradeBuyToken>
             <ft-tradeSellToken *ngIf="modal=='account-trade.sellToken'"></ft-tradeSellToken>
