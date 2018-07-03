@@ -59,6 +59,7 @@
                 <select (change)="takeAction(0)" [(ngModel)]="action[0]">
                   <option value=""></option>
                   <option value="move_ether_to_trade">Move to trade</option>
+                  <option value="send_ether">Send</option>
                 </select>
               </td>
             </tr>
@@ -87,6 +88,7 @@
                 <select (change)="takeAction(i+1)" [(ngModel)]="action[i+1]">
                   <option value=""></option>
                   <option value="move_token_to_trade">Move to trade</option>
+                  <option value="send_token">Send</option>
                 </select>
               </td>
             </tr>

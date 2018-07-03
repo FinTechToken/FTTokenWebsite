@@ -38,6 +38,7 @@ export class FTToken {
   abi=[];
   signTrans=[];
   inputs=[[]];
+  inputsProcessed=[[]];
   gasEst=[];
   results=[];
   errMessage=[];
@@ -57,20 +58,23 @@ export class FTToken {
         this.router.navigate(['/myaccount']);
       this.tokenName = this.ftTokenWatch.TokenWatch[this.tokenIndex].name;
       this.tokenMine = this.ftNum.addBigNumber(this.ftTokenWatch.TokenWatch[this.tokenIndex].mine, this.ftTokenWatch.TokenWatch[this.tokenIndex].mineTrade);
-      this.ftTokenWatch.TokenWatch[this.tokenIndex].contract.methods.name().call(fromValue).then( 
-        (result5) => {
-          let tokenName = result5 == 0 ? "0" : result5.toString();
-          if(tokenName != '32')
-            this.tokenName = tokenName;
-        });
-      this.ftTokenWatch.TokenWatch[this.tokenIndex].contract.methods.totalSupply().call(fromValue).then( 
-        (result1) => {
-          this.tokenTotalSupply = result1 == 0 ? "0" : result1.toString();
-        }
-      );
-      this.ftTokenWatch.TokenWatch[this.tokenIndex].contract.methods.totalOutstanding().call(fromValue).then( 
-        (result2) => this.tokenTotalOutstanding = result2 == 0 ? "0" : result2.toString()
-      );
+      if(this.ftTokenWatch.TokenWatch[this.tokenIndex].contract.methods.name)
+        this.ftTokenWatch.TokenWatch[this.tokenIndex].contract.methods.name().call(fromValue).then( 
+          (result5) => {
+            let tokenName = result5 == 0 ? "0" : result5.toString();
+            if(tokenName != '32')
+              this.tokenName = tokenName;
+          });
+      if(this.ftTokenWatch.TokenWatch[this.tokenIndex].contract.methods.totalSupply)
+        this.ftTokenWatch.TokenWatch[this.tokenIndex].contract.methods.totalSupply().call(fromValue).then( 
+          (result1) => {
+            this.tokenTotalSupply = result1 == 0 ? "0" : result1.toString();
+          }
+        );
+      if(this.ftTokenWatch.TokenWatch[this.tokenIndex].contract.methods.totalOutstanding)
+        this.ftTokenWatch.TokenWatch[this.tokenIndex].contract.methods.totalOutstanding().call(fromValue).then( 
+          (result2) => this.tokenTotalOutstanding = result2 == 0 ? "0" : result2.toString()
+        );
       this.ftweb3.getBalance(this.tokenAddress).then(value=>this.etherBalance=value);
       
       //console.log(this.ftTokenWatch.TokenWatch[this.tokenIndex].abi);
@@ -167,7 +171,6 @@ export class FTToken {
       this.errMessage[index] = '';
       
       //var ABIdata = this.ftTokenWatch.TokenWatch[this.tokenIndex].contract.methods[this.getABI()[index].name]('0x' + this.ftNum.getZero(), "0").encodeABI();
-      //console.log(ABIdata);
       if(!this.amountToSend[index])
           this.amountToSend[index]='0';
       var fromValue;
@@ -178,17 +181,25 @@ export class FTToken {
         fromValue = {from:'0x'+this.cache.getCache('encrypted_id').address};
       if(!this.inputs[index])
         this.inputs[index] = [];
+      if(!this.inputsProcessed[index])
+        this.inputsProcessed[index] = [];
       this.getABI()[index].inputs.forEach((input, input_index) => {
-        if(input.type=='address')  
-          this.inputs[index][input_index] = this.inputs[index][input_index] ? this.inputs[index][input_index] : this.ftNum.getZero();
-        else if(input.type.substring(0,4) == 'uint')
+        if(input.type=='address') {
+          this.inputs[index][input_index] = this.inputs[index][input_index] ? this.inputs[index][input_index] : '0x' + this.ftNum.getZero();
+          this.inputsProcessed[index][input_index] = this.inputs[index][input_index];
+        }
+        else if(input.type.substring(0,4) == 'uint') {
           this.inputs[index][input_index] = this.inputs[index][input_index] ? this.inputs[index][input_index] : '0';
-        else
+          this.inputsProcessed[index][input_index] = this.inputs[index][input_index];
+        }
+        else {
           this.inputs[index][input_index] = this.inputs[index][input_index] ? this.inputs[index][input_index] : '';
+          this.inputsProcessed[index][input_index] = this.inputs[index][input_index];
+        }
       });
-      try{
-      this.abi[index] = this.ftTokenWatch.TokenWatch[this.tokenIndex].contract.methods[this.getABI()[index].name](...this.inputs[index]).encodeABI();
-      this.ftTokenWatch.TokenWatch[this.tokenIndex].contract.methods[this.getABI()[index].name](...this.inputs[index]).estimateGas(fromValue)
+try {
+      this.abi[index] = this.ftTokenWatch.TokenWatch[this.tokenIndex].contract.methods[this.getABI()[index].name](...this.inputsProcessed[index]).encodeABI();
+      this.ftTokenWatch.TokenWatch[this.tokenIndex].contract.methods[this.getABI()[index].name](...this.inputsProcessed[index]).estimateGas(fromValue)
       .then( (gasEstimate) => {
         if(this.getABI()[index].constant)
           this.gasEst[index] = 0;
@@ -202,12 +213,10 @@ export class FTToken {
           .catch(err => {this.errMessage[index]=err.message;});
       })
       .catch(err => {this.errMessage[index]=err.message;}); 
-      }
-      catch(err) {
-        this.errMessage[index]=err.message;
-      }
     }
+  catch(e){console.log(e.message);}
   }
+}
 
   callFunction(index) {
     var fromValue;
@@ -217,7 +226,7 @@ export class FTToken {
       else
         fromValue = {from:'0x'+this.cache.getCache('encrypted_id').address};
     if(this.getABI()[index].constant)
-      this.ftTokenWatch.TokenWatch[this.tokenIndex].contract.methods[this.getABI()[index].name](...this.inputs[index]).call(fromValue).then(response =>    
+      this.ftTokenWatch.TokenWatch[this.tokenIndex].contract.methods[this.getABI()[index].name](...this.inputsProcessed[index]).call(fromValue).then(response =>    
         {this.results[index] = response;})
         .catch(err => {this.errMessage[index]=err.message});
     else
@@ -228,7 +237,7 @@ export class FTToken {
             this.getGasEst(myindex);
           });
         })
-        .catch(err => {this.errMessage[index]=err.message; });
+        .catch(err => {this.errMessage[index]=err.message;});
   }
 
 /*
