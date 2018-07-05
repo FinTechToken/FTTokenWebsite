@@ -77,6 +77,7 @@ export class FTPhoneVerify {
           if(data.token) {
             this.session.setItem('token', data.token);
             this.FTLocalStorage.setItem('token', data.token);
+            this.obs.putObserver('isSignedIn', true);
             this.close();
           }
       })

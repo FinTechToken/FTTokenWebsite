@@ -47,7 +47,10 @@ export class FTAccountWallet {
       this.obs.putObserver('modal', 'account-trade.depositEther');
     } else if(this.action[index]=='send_ether'){
       this.obs.putObserver('modal', 'account-trade.sendEther');
-    } else if(this.action[index]=='move_token_to_trade'){
+    } else if(this.action[index]=='refer_friend') {
+      this.obs.putObserver('modal', 'account-trade.referFriend');
+    }
+    else if(this.action[index]=='move_token_to_trade'){
       this.obs.putObserver('tokenIndex', index-1);
       this.obs.putObserver('modal', 'account-trade.depositToken');
     } else if(this.action[index]=='send_token'){
