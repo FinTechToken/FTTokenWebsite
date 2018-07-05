@@ -18,8 +18,8 @@ export class FTWalletService {
   
   HashCollect = {
     //address: '418c6908502601dc60e7C25068BFbAD51984cEaD',
-    //address: '27f525a5e5FE408415Ae6dF4707212CEC5Bdc8cd',
-    address: '3929A3f520B3434755dDBaccF25025270dE828C7',
+    address: 'F26974f4926Fe328c766F290C8a2FB20A57e4313',
+    //address: '3929A3f520B3434755dDBaccF25025270dE828C7',
     abi:
     [
       {
@@ -393,21 +393,9 @@ export class FTWalletService {
               "account": account
               })).toPromise()
           .then( data => { 
-            console.log(data);
             this.collectHash(JSON.parse(data).received);
             this.collectExpiredHash(JSON.parse(data).sent); 
           });
-
-          /*==
-          console.log('Call CreateHash');
-          this.http.put("hashSend", JSON.stringify({
-            "token" : token,
-            "account": account,
-            "phone": '7771112222'
-            })).toPromise()
-          .then( data => {console.log(data)});
-          */
-
         }      
       }
     });

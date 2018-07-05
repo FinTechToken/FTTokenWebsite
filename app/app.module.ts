@@ -47,6 +47,7 @@ import { FTDepositTokenToTrade } from './FTComponents/ft-depositTokenToTrade';
 import { FTWithdrawTokenFromTrade } from './FTComponents/ft-withdrawTokenFromTrade';
 import { FTSendEther } from './FTComponents/ft-sendEther';
 import { FTSendToken } from './FTComponents/ft-sendToken';
+import { FTReferFriend } from './FTComponents/ft-referFriend';
 import { FTTradeBuyToken } from './FTComponents/ft-tradeBuyToken';
 import { FTTradeSellToken } from './FTComponents/ft-tradeSellToken';
 import { FTTradeTokenBook } from './FTComponents/ft-tradeTokenBook';
@@ -92,6 +93,7 @@ import { FTMessagesOld } from './FTRoutes/FTMessagesOld';
     FTSignUpInfo,
     FTTokenInfo,
     FTSendEther,
+    FTReferFriend,
     FTSendToken,
     FTDepositEtherToTrade,
     FTWithdrawEtherFromTrade,
