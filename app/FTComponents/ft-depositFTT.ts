@@ -23,7 +23,7 @@ export class FTDepositFTT {
   texts=[];
   modalHeight;
 
-  constructor( public ftNum: FTBigNumberService, private ftWallet: FTWalletService, public ftweb3: FTWeb3Service, public ftMarket: FTMarketService, private cache: FTCache, private text: FTText, private obs: FTObserver, private http: FTHttpClient, private session: FTSession, private FTLocalStorage: FTStorage ) 
+  constructor( public ftNum: FTBigNumberService, public ftWallet: FTWalletService, public ftweb3: FTWeb3Service, public ftMarket: FTMarketService, private cache: FTCache, private text: FTText, private obs: FTObserver, private http: FTHttpClient, private session: FTSession, private FTLocalStorage: FTStorage ) 
   { 
     this.setText();
   }
@@ -41,8 +41,8 @@ export class FTDepositFTT {
       "deposit": true
       })).toPromise()
     .then( data => {
-      //console.log(data);
-    });
+    })
+    .catch( err => console.log(err));
     this.close();
   }
 

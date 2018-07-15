@@ -18,6 +18,12 @@
     We will add funds to your account within 14 days, after the check clears.<br>
     <br>
     <small>Note: Soon, we will add other options to send us money.</small>
+    <br><Br>
+    <span *ngIf="ftWallet.bankTransDeposit.length"><strong>Past Deposits<br></strong></span>
+    <span *ngFor="let deposit of ftWallet.bankTransDeposit">
+        <span *ngIf="deposit.BlockNumber=='0'">We are waiting for check.<br></span>
+        <span *ngIf="deposit.BlockNumber!='0'">Trans: {{deposit.BlockNumber}} - Amount: {{ftweb3.fromWei(deposit.Amount,'ether')}} - Processed: {{deposit.Processed}}<br></span>
+    </span>
 </div>
 <div class="modal-footer">
     <ul class="nav nav-pills modal-nav text-center">

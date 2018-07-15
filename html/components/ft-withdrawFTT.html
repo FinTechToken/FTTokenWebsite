@@ -13,6 +13,11 @@
     We send check to your address within 14 days<br>
     <br>
     <small>Note: Soon, we will add other options to get money.</small>
+    <br><Br>
+    <span *ngIf="ftWallet.bankTransWithdraw.length"><strong>Past Withdrawals<br></strong></span>
+    <span *ngFor="let withdraw of ftWallet.bankTransWithdraw">
+        <span *ngIf="withdraw.BlockNumber!='0'">Block: {{withdraw.BlockNumber}} - Amount: {{ftweb3.fromWei(withdraw.Amount,'ether')}} - Processed: {{withdraw.Processed}}<br></span>
+    </span>
 </div>
 <div class="modal-footer">
     <ul class="nav nav-pills modal-nav text-center">

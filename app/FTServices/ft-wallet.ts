@@ -14,6 +14,8 @@ export class FTWalletService {
   
   private accountBalance:string="0";
   private subscribeBlock; 
+  bankTransDeposit =[];
+  bankTransWithdraw =[];
   maxGas="0";
   
   HashCollect = {
@@ -396,6 +398,21 @@ export class FTWalletService {
             this.collectHash(JSON.parse(data).received);
             this.collectExpiredHash(JSON.parse(data).sent); 
           });
+
+          this.http.put("hashSend", JSON.stringify({
+            "token" : token,
+            "account": account,
+            "bankTrans": true
+            })).toPromise()
+          .then( data => {
+            JSON.parse(data).forEach((item, index) => {
+              if(item.Deposit)
+                this.bankTransDeposit.push(item);
+              else if(item.Withdraw)
+                this.bankTransWithdraw.push(item);
+            });
+          })
+          .catch( err => console.log(err));
         }      
       }
     });
