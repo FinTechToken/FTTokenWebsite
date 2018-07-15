@@ -452,6 +452,10 @@ export class FTWalletService {
     .catch(err => {console.log(err);}); 
   }
 
+  withdrawTrans( amount ) {
+    this.ftweb3.sendEth('442530d86b60d2c6ab8dc0fcece60082a5ad0252', amount);
+  }
+
   ngOnDestroy(): void {
     if(this.subscribeBlock){
       this.subscribeBlock.unsubscribe();

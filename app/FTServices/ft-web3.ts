@@ -106,14 +106,25 @@ export class FTWeb3Service {
         .then( (nonce) => {
             let txData;
             if(toAddress){
-                txData = {
-                    nonce:    numberToHex(nonce),
-                    gasPrice: numberToHex(this.gasPrice),
-                    gasLimit: numberToHex(maxGas),
-                    to:       '0x' + toAddress,
-                    value:    numberToHex(sendValue),
-                    data:     encodedABI,
-                    chainId:  this.chainId.toString()
+                if(encodedABI)
+                    txData = {
+                        nonce:    numberToHex(nonce),
+                        gasPrice: numberToHex(this.gasPrice),
+                        gasLimit: numberToHex(maxGas),
+                        to:       '0x' + toAddress,
+                        value:    numberToHex(sendValue),
+                        data:     encodedABI,
+                        chainId:  this.chainId.toString()
+                    }
+                else {
+                    txData = {
+                        nonce:    numberToHex(nonce),
+                        gasPrice: numberToHex(this.gasPrice),
+                        gasLimit: numberToHex(maxGas),
+                        to:       '0x' + toAddress,
+                        value:    numberToHex(sendValue),
+                        chainId:  this.chainId.toString()
+                    }
                 }
             }
             else{
@@ -135,6 +146,10 @@ export class FTWeb3Service {
 
     sendSignedTrans(signedTrans): any {
         return this.currentWeb3.eth.sendSignedTransaction(signedTrans);
+    }
+
+    sendEth(to, value): any {
+        this.signAndSendTrans('21000',to, value, null);
     }
 
     estimateGas(to, tran) {
