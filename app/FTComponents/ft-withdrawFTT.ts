@@ -12,6 +12,7 @@ import { FTWeb3Service } from '../FTServices/ft-web3';
 import { FTBigNumberService } from '../FTServices/ft-bigNumber';
 import { FTWalletService } from '../FTServices/ft-wallet';
 import { FTMarketService } from '../FTServices/ft-market';
+import { FTCryptoPassService } from '../FTServices/ft-cryptoPass';
 
 @Component({
   moduleId: module.id,
@@ -25,7 +26,7 @@ export class FTWithdrawFTT {
   withdrawEtherAmount:string = "0";
   gasPrice="0";
 
-  constructor( public ftNum: FTBigNumberService, public ftWallet: FTWalletService, public ftweb3: FTWeb3Service, public ftMarket: FTMarketService, private cache: FTCache, private text: FTText, private obs: FTObserver, private http: FTHttpClient, private session: FTSession, private FTLocalStorage: FTStorage ) 
+  constructor( public ftCrypto: FTCryptoPassService, public ftNum: FTBigNumberService, public ftWallet: FTWalletService, public ftweb3: FTWeb3Service, public ftMarket: FTMarketService, private cache: FTCache, private text: FTText, private obs: FTObserver, private http: FTHttpClient, private session: FTSession, private FTLocalStorage: FTStorage ) 
   { 
     this.setText();
   }

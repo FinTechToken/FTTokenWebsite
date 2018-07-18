@@ -12,7 +12,8 @@
     <br><Br>
     We send check to your address within 14 days<br>
     <br>
-    <small>Note: Soon, we will add other options to get money.</small>
+    <small>Note: Check will be made out to {{ftCrypto.name}} and mailed to {{ftCrypto.homeAddress}}.</small>
+    <small><br>Note: Soon, we will add other options to get money.</small>
     <br><Br>
     <span *ngIf="ftWallet.bankTransWithdraw.length"><strong>Past Withdrawals<br></strong></span>
     <span *ngFor="let withdraw of ftWallet.bankTransWithdraw">

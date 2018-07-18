@@ -31,6 +31,7 @@ import { FTToken } from './FTRoutes/FTToken';
 
 import { FTPhoneVerify } from './FTComponents/ft-phoneVerify';
 import { FTPhoneSMS } from './FTComponents/ft-phoneSMS';
+import { FTSetAddress } from './FTComponents/ft-setAddress';
 import { FTAccountExit } from './FTComponents/ft-account-exit';
 import { FTAccountCreate } from './FTComponents/ft-account-create';
 import { FTAccountWallet } from './FTComponents/ft-account-wallet';
@@ -82,6 +83,7 @@ import { FTMessagesOld } from './FTRoutes/FTMessagesOld';
     FTModal,
     FTMyAccount, 
     FTToken,
+    FTSetAddress,
     FTPhoneVerify,
     FTPhoneSMS,
     FTAccountExit,

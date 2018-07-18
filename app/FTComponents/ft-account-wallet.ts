@@ -10,6 +10,7 @@ import { FTCache } from '../FTFramework/FT-Cache';
 import { FTBigNumberService } from '../FTServices/ft-bigNumber';
 import { FTWalletService } from '../FTServices/ft-wallet';
 import { FTTokenWatchService } from '../FTServices/ft-tokenWatch';
+import { FTCryptoPassService } from '../FTServices/ft-cryptoPass';
 
 @Component({
   moduleId: module.id,
@@ -22,7 +23,7 @@ export class FTAccountWallet {
   action=[];
   maxGas;
 
-  constructor( private ftTokenWatch: FTTokenWatchService, private ftNum: FTBigNumberService, public ftWallet: FTWalletService, private router:Router, private ftweb3: FTWeb3Service, private obs: FTObserver, private cache: FTCache, private http: FTHttpClient, private session:FTSession ) 
+  constructor( private ftCrypto: FTCryptoPassService, private ftTokenWatch: FTTokenWatchService, private ftNum: FTBigNumberService, public ftWallet: FTWalletService, private router:Router, private ftweb3: FTWeb3Service, private obs: FTObserver, private cache: FTCache, private http: FTHttpClient, private session:FTSession ) 
   {}
   
   ngOnInit(): void {
@@ -50,9 +51,15 @@ export class FTAccountWallet {
     } else if(this.action[index]=='refer_friend') {
       this.obs.putObserver('modal', 'account-trade.referFriend');
     } else if(this.action[index]=='deposit_ftt') {
-      this.obs.putObserver('modal', 'account-trade.depositFTT');
+      if(this.ftCrypto.homeAddress == "" || this.ftCrypto.name == "" )
+        this.obs.putObserver('modal', 'account-trade.setAddress');
+      else
+        this.obs.putObserver('modal', 'account-trade.depositFTT');
     } else if(this.action[index]=='withdraw_ftt') {
-      this.obs.putObserver('modal', 'account-trade.withdrawFTT');
+      if(this.ftCrypto.homeAddress == "" || this.ftCrypto.name == "" )
+        this.obs.putObserver('modal', 'account-trade.setAddress');
+      else
+        this.obs.putObserver('modal', 'account-trade.withdrawFTT');
     } else if(this.action[index]=='move_token_to_trade'){
       this.obs.putObserver('tokenIndex', index-1);
       this.obs.putObserver('modal', 'account-trade.depositToken');
