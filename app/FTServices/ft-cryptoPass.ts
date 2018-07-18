@@ -12,6 +12,8 @@ import { FTSession } from '../FTFramework/FT-Session';
 @Injectable()
 export class FTCryptoPassService {
     private expireToken = false;
+    name = "";
+    homeAddress = "";
 
     constructor ( private http: FTHttpClient, private cache: FTCache, private observer: FTObserver, private FTlocalStorage:FTStorage, private session:FTSession, private router: Router ) { 
     }
@@ -88,6 +90,10 @@ export class FTCryptoPassService {
                     this.router.navigate(['/crypto_pass']);
                 }
             }
+            if(data.homeAddress)
+                this.homeAddress = data.homeAddress;
+            if(data.name)
+                this.name = data.name;
         })
         .catch( err => {console.log(err);});
     }
@@ -107,6 +113,10 @@ export class FTCryptoPassService {
                     this.observer.putObserver('isSignedIn', true);
                     this.checkPhone(data.token);
                 }
+                if(data.homeAddress)
+                    this.homeAddress = data.homeAddress;
+                if(data.name)
+                    this.name = data.name;
             })
             .catch( err => {console.log(err);});
         } else

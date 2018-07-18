@@ -17,7 +17,9 @@
     <br>
     We will add funds to your account within 14 days, after the check clears.<br>
     <br>
-    <small>Note: Soon, we will add other options to send us money.</small>
+    <small>Note: Check must be from {{ftCrypto.name}} and include your address: {{ftCrypto.homeAddress}}.</small>
+    <small><Br>Note: Soon, we will add other options to send us money.</small>
+
     <br><Br>
     <span *ngIf="ftWallet.bankTransDeposit.length"><strong>Past Deposits<br></strong></span>
     <span *ngFor="let deposit of ftWallet.bankTransDeposit">

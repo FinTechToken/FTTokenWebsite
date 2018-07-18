@@ -1,0 +1,52 @@
+<div class="modal-header">
+    <h5 class="modal-title">Know Your Customer</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close();" href="javascript:void(0);">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body" [ngStyle]="{'height':modalHeight}">    
+    <div class="form-group row">
+        <div *ngIf="phone_step==phone_steps.enter">
+            <div class="col-12">
+                <div>
+                    To make withdrawals or deposits we ask for your Name and Address. This allows us to avoid bad actors.<br>
+                    For withdrawals: Checks will be made out to this name, and sent to this address.<br>
+                    For deposits: We will only accept checks from this name that include this address.<br>
+                </div>
+                <label for="example-name" class="col-12 col-form-label">
+                    My Full Name
+                </label><br>
+                <input class="form-control" style="display:inline-block; width:auto;" type="text" value="" placeholder="" minlength="5" maxlength="50" size="10" id="myName" [(ngModel)]="myName">
+                <br><Br>
+                <label for="example-address" class="col-12 col-form-label">
+                    My Address
+                </label><br>
+                <textarea style="width:100%; height:100px;" id="myAddress" spellcheck="false" [(ngModel)]="myAddress"></textarea>
+            </div>
+        </div>
+        <div *ngIf="phone_step==phone_steps.submitted">
+            Thanks. You can now deposit/withdraw funds.
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <ul *ngIf="phone_step==phone_steps.enter" class="nav nav-pills modal-nav text-center">
+        <li class="nav-item w-50 prev">
+            <a class="nav-link" routerLink="/myaccount" (click)="close();" href="javascript:void(0);">
+                Cancel
+            </a>
+        </li>
+        <li class="nav-item w-50 next">
+            <a class="nav-link" (click)="submitInfo();" href="javascript:void(0);">
+                Submit My Information
+            </a>
+        </li>
+    </ul>
+    <ul *ngIf="phone_step==phone_steps.submitted" class="nav nav-pills modal-nav text-center">
+        <li class="nav-item w-100 next">
+            <a class="nav-link" routerLink="/myaccount" (click)="close();" href="javascript:void(0);">
+                Close
+            </a>
+        </li>
+    </ul>
+</div>
