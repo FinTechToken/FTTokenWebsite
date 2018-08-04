@@ -46,6 +46,9 @@ import { FTDepositEtherToTrade } from './FTComponents/ft-depositEtherToTrade';
 import { FTWithdrawEtherFromTrade } from './FTComponents/ft-withdrawEtherFromTrade';
 import { FTDepositTokenToTrade } from './FTComponents/ft-depositTokenToTrade';
 import { FTWithdrawTokenFromTrade } from './FTComponents/ft-withdrawTokenFromTrade';
+import { FTExportToken } from './FTComponents/ft-exportToken';
+import { FTImportToken } from './FTComponents/ft-importToken';
+import { FTBuyEther } from './FTComponents/ft-buyEther';
 import { FTSendEther } from './FTComponents/ft-sendEther';
 import { FTSendToken } from './FTComponents/ft-sendToken';
 import { FTDepositFTT } from './FTComponents/ft-depositFTT';
@@ -96,7 +99,10 @@ import { FTMessagesOld } from './FTRoutes/FTMessagesOld';
     FTVerifyPhoneExists,
     FTSignUpInfo,
     FTTokenInfo,
+    FTExportToken,
+    FTImportToken,
     FTSendEther,
+    FTBuyEther,
     FTDepositFTT,
     FTWithdrawFTT,
     FTReferFriend,

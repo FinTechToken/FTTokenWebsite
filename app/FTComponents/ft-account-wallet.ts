@@ -50,6 +50,8 @@ export class FTAccountWallet {
       this.obs.putObserver('modal', 'account-trade.sendEther');
     } else if(this.action[index]=='refer_friend') {
       this.obs.putObserver('modal', 'account-trade.referFriend');
+    } else if(this.action[index]=='buy_ether'){
+      this.obs.putObserver('modal', 'account-trade.buyEther');
     } else if(this.action[index]=='deposit_ftt') {
       if(this.ftCrypto.homeAddress == "" || this.ftCrypto.name == "" )
         this.obs.putObserver('modal', 'account-trade.setAddress');
@@ -66,6 +68,12 @@ export class FTAccountWallet {
     } else if(this.action[index]=='send_token'){
       this.obs.putObserver('tokenIndex', index-1);
       this.obs.putObserver('modal', 'account-trade.sendToken');
+    } else if(this.action[index]=='export_token'){
+      this.obs.putObserver('tokenIndex', index-1);
+      this.obs.putObserver('modal', 'account-trade.exportToken');
+    } else if(this.action[index]=='import_token'){
+      this.obs.putObserver('tokenIndex', index-1);
+      this.obs.putObserver('modal', 'account-trade.importToken');
     }
     this.action[index] = "";
   }

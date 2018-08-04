@@ -1,0 +1,34 @@
+
+<div class="modal-header">
+    <h5 class="modal-title">Import Crypto Into Your FTT account</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close();" href="javascript:void(0);">
+    <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body" [ngStyle]="{'height':modalHeight}">
+    <br>
+    Send crypto to this address to import it to the FTT network.<br><br>
+    <strong>{{tokenAddress}}</strong><br><br>
+    <small>Once crypto is imported to your FTT account. You get 0 gas costs and 1 second blocks.</small>
+
+    <br><Br>
+    <span *ngIf="ftWallet.bankTransImport.length"><strong>Past Imports<br></strong></span>
+    <span *ngFor="let import of ftWallet.bankTransImport">
+        <span *ngIf="import.BlockNumber=='0'">We are waiting for check.<br></span>
+        <span *ngIf="import.BlockNumber!='0'">Trans: {{import.BlockNumber}} - Amount: {{ftweb3.fromWei(import.Amount,'ether')}} - Processed: {{import.Processed}}<br></span>
+    </span>
+</div>
+<div class="modal-footer">
+    <ul class="nav nav-pills modal-nav text-center">
+        <li class="nav-item w-50 prev">
+            <a class="nav-link" (click)="close()" href="javascript:void(0);">
+                Cancel<br>
+            </a>
+        </li>
+        <li class="nav-item w-50 next">
+            <a class="nav-link" (click)="close()" href="javascript:void(0);">
+                Okay
+            </a>
+        </li>
+    </ul>
+</div>

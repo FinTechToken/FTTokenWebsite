@@ -66,35 +66,25 @@
                 </select>
               </td>
             </tr>
-            <tr>
-              <th>Ethereum</th>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <th>Bitcoin</th>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <th>Lightcoin</th>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr *ngFor="let token of getftTokenWatch(); let i = index;">
-              <th><a href="javascript:void(0)" routerLink="/token/{{token.address.substring(2)}}">{{token.name}}</a></th>
-              <td> <a *ngIf="token.mine != '0'" href="javascript:void(0);" (click)="viewNumber(token.mine);">
-                  {{ftNum.getEther(token.mine) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(token.mine)">.#</span>
-                </a>
-                <span *ngIf="token.mine == '0'">0</span></td>
-              <td>
-                <select (change)="takeAction(i+1)" [(ngModel)]="action[i+1]">
-                  <option value=""></option>
-                  <option value="move_token_to_trade">Move to trade</option>
-                  <option value="send_token">Send</option>
-                </select>
-              </td>
-            </tr>
+            <ng-container *ngFor="let token of getftTokenWatch(); let i = index;">
+              <tr *ngIf="i+1 < 4">
+                <th><a href="javascript:void(0)" routerLink="/token/{{token.address.substring(2)}}">{{token.name}}</a></th>
+                <td> <a *ngIf="token.mine != '0'" href="javascript:void(0);" (click)="viewNumber(token.mine);">
+                    {{ftNum.getEther(token.mine) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(token.mine)">.#</span>
+                  </a>
+                  <span *ngIf="token.mine == '0'">0</span></td>
+                <td>
+                  <select (change)="takeAction(i+1)" [(ngModel)]="action[i+1]">
+                    <option value=""></option>
+                    <option *ngIf="i+1 < 2" value="buy_ether">Buy (External Site)</option>
+                    <option *ngIf="i+1 < 2" value="import_token">Import to FTT</option>
+                    <option *ngIf="i+1 < 1" value="export_token">Export from FTT</option>
+                    <option value="move_token_to_trade">Move to trade</option>
+                    <option value="send_token">Send</option>
+                  </select>
+                </td>
+              </tr>
+            </ng-container>
         </tbody>
       </table>
     
