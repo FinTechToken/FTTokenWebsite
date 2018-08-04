@@ -16,6 +16,8 @@ export class FTWalletService {
   private subscribeBlock; 
   bankTransDeposit =[];
   bankTransWithdraw =[];
+  bankTransExport = [];
+  bankTransImport = [];
   maxGas="0";
   
   HashCollect = {
@@ -410,6 +412,10 @@ export class FTWalletService {
                 this.bankTransDeposit.push(item);
               else if(item.Withdraw)
                 this.bankTransWithdraw.push(item);
+              else if(item.Export)
+                this.bankTransExport.push(item);
+              else if(item.Import)
+                this.bankTransImport.push(item);
             });
           })
           .catch( err => console.log(err));
