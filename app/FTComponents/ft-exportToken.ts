@@ -29,6 +29,7 @@ export class FTExportToken {
   exportAddress;
   gasPrice="0";
   exportAddressStatus;
+  private ABIdata;
 
   constructor( public ftTokenWatch: FTTokenWatchService, public ftCrypto: FTCryptoPassService, public ftNum: FTBigNumberService, public ftWallet: FTWalletService, public ftweb3: FTWeb3Service, public ftMarket: FTMarketService, private cache: FTCache, private text: FTText, private obs: FTObserver, private http: FTHttpClient, private session: FTSession, private FTLocalStorage: FTStorage ) 
   { 
@@ -65,7 +66,7 @@ export class FTExportToken {
 
   private checkExportGas() {
     try {
-      var ABIdata = this.ftTokenWatch.TokenWatch[this.tokenIndex].contract.methods.export(this.exportAddress, this.exportTokenAmount ).encodeABI();
+      this.ABIdata = this.ftTokenWatch.TokenWatch[this.tokenIndex].contract.methods.export(this.exportAddress, this.exportTokenAmount ).encodeABI();
       this.exportAddressClearError();
       this.ftTokenWatch.TokenWatch[this.tokenIndex].contract.methods.export(this.exportAddress, this.exportTokenAmount ).estimateGas({from:'0x'+this.cache.getCache('encrypted_id').address,value:0})
       .then( (gasEstimate) => {
@@ -84,17 +85,21 @@ export class FTExportToken {
   changeExportToken(){
     this.cache.putCache('number', this.exportTokenAmount);
     this.cache.putCache('maxNumber', this.ftTokenWatch.TokenWatch[this.tokenIndex].mine);
+    this.obs.putObserver('exportAddress',this.exportAddress);
     this.obs.putObserver('modal','pickNumber');
   }
 
   exportTokenConfirm(){
-    var ABIdata = this.ftTokenWatch.TokenWatch[this.tokenIndex].contract.methods.export(this.exportAddress, this.exportTokenAmount ).encodeABI();
+    this.ABIdata = this.ftTokenWatch.TokenWatch[this.tokenIndex].contract.methods.export(this.exportAddress, this.exportTokenAmount ).encodeABI();
     this.ftTokenWatch.TokenWatch[this.tokenIndex].contract.methods.export(this.exportAddress, this.exportTokenAmount ).estimateGas({from:'0x'+this.cache.getCache('encrypted_id').address,value:0})
     .then( (gasEstimate) => {
       this.gasPrice=gasEstimate;
-      //ToDo: Create And Send Transaction
+      this.ftweb3.signAndSendTrans(gasEstimate, this.ftTokenWatch.TokenWatch[this.tokenIndex].address.slice(2), '0', this.ABIdata)
+      .then(data=> {
+        this.close();
+      })
+      .catch(err=> console.log(err));
     });
-    //this.close(); // Only after trans sent.
   }
 
   close(): void {

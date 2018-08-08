@@ -20,7 +20,7 @@ export class FTTokenWatchService {
   constructor ( private ftweb3: FTWeb3Service, private obs: FTObserver, private http: FTHttpClient, private session:FTSession ) { 
     //ToDo: Be better to look up name/ABI from AWS
     //ToDo: Should have token type (Main, Created, Watch)
-    this.addTokenToWatch('0xf8D93b4eEd700991D4aa29525D9aD414bDac7ecE', 'Ethereum', this.EtherABI);
+    this.addTokenToWatch('0xdF5c7D102fAC895cB21bF0AaA55458562b018D92', 'Ethereum', this.EtherABI);
     this.addTokenToWatch('0x2d5e86187855CC29B40469e8a7355f3fDBf4C088', 'TradeToken', this.ERC20ABI);
     this.addTokenToWatch('0x9287bb21719d283CfdD7d644a89E8492f9845B64', 'FreeToken', this.ERC20ABI);
 
