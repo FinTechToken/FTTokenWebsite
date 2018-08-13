@@ -46,7 +46,12 @@ export class FTImportToken {
       "import": true,
       "crypto": (this.tokenIndex+1).toString()
       })).toPromise()
-    .then( data => {this.tokenAddress = '0x' + JSON.parse(data);})
+    .then( data => 
+      {
+        this.tokenAddress = JSON.parse(data);
+        if(this.tokenIndex==0) this.tokenAddress='0x' + this.tokenAddress;
+      }
+    )
     .catch( err => console.log(err));
   }
 

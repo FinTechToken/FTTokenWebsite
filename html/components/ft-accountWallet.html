@@ -76,9 +76,9 @@
                 <td>
                   <select (change)="takeAction(i+1)" [(ngModel)]="action[i+1]">
                     <option value=""></option>
-                    <option *ngIf="i+1 < 2" value="buy_ether">Buy (External Site)</option>
-                    <option *ngIf="i+1 < 2" value="import_token">Import to FTT</option>
-                    <option *ngIf="i+1 < 2" value="export_token">Export from FTT</option>
+                    <option *ngIf="i+1 < 3" value="buy_ether">Buy (External Site)</option>
+                    <option *ngIf="i+1 < 3" value="import_token">Import to FTT</option>
+                    <option *ngIf="i+1 < 3" value="export_token">Export from FTT</option>
                     <option value="move_token_to_trade">Move to trade</option>
                     <option value="send_token">Send</option>
                   </select>

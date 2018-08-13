@@ -18,7 +18,7 @@ export class FTHeader {
   isSignedIn:boolean=false;
   isPreviousUser:boolean=false;
 
-  constructor( private obs: FTObserver, private router: Router, private text: FTText ) 
+  constructor( private obs: FTObserver, public router: Router, private text: FTText ) 
   { 
     this.setText();
   }
