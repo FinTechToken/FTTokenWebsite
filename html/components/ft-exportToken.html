@@ -19,7 +19,7 @@
     <br><Br>
     <span *ngIf="ftWallet.bankTransExport.length"><strong>Past Exports<br></strong></span>
     <span *ngFor="let export of ftWallet.bankTransExport">
-        <span *ngIf="export.BlockNumber!='0'">Block: {{export.BlockNumber}} - Amount: {{ftweb3.fromWei(export.Amount,'ether')}} - Processed: {{export.Processed}}<br></span>
+        <span *ngIf="export.Crypto==tokenIndex+1">Block: {{export.BlockNumber}} - Amount: {{ftweb3.fromWei(export.Amount,'ether')}} - Processed: {{export.Processed}}<br></span>
     </span>
 </div>
 <div class="modal-footer">
