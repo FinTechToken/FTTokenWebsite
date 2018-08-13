@@ -15,8 +15,8 @@
     <span *ngIf="ftWallet.bankTransImport.length"><strong>Past Imports<br></strong></span>
     <span *ngFor="let import of ftWallet.bankTransImport">
         <span *ngIf="import.BlockNumber==0">We are waiting for check.<br></span>
-        <span *ngIf="import.BlockNumber==tokenIndex+1">We are waiting for crypto.<br></span>
-        <span *ngIf="import.Crypto==tokenIndex+1">Trans: {{import.BlockNumber}} - Amount: {{ftweb3.fromWei(import.Amount,'ether')}} - Processed: {{import.Processed}}<br></span>
+        <span *ngIf="import.BlockNumber==tokenIndex+1 && import.Crypto==import.BlockNumber">We are waiting for crypto.<br></span>
+        <span *ngIf="import.Crypto==tokenIndex+1 && import.Crypto!=import.BlockNumber">Trans: {{import.BlockNumber}} - Amount: {{ftweb3.fromWei(import.Amount,'ether')}} - Processed: {{import.Processed}}<br></span>
     </span>
 </div>
 <div class="modal-footer">
