@@ -61,8 +61,6 @@ import { FTTradeTokenTrades } from './FTComponents/ft-tradeTokenTrades';
 import { FTTradeBuyOffers } from './FTComponents/ft-tradeBuyOffers';
 import { FTTradeSellOffers } from './FTComponents/ft-tradeSellOffers';
 
-import { FTMyAccountOld } from './FTRoutes/FTMyAccountOld';
-import { FTTokenOld } from './FTRoutes/FTTokenOld';
 import { FTMessagesOld } from './FTRoutes/FTMessagesOld';
 
 @NgModule({
@@ -73,8 +71,6 @@ import { FTMessagesOld } from './FTRoutes/FTMessagesOld';
     HttpModule, 
   ],
   declarations: [
-    FTMyAccountOld,
-    FTTokenOld,
     FTMessagesOld, 
 
     AppComponent,

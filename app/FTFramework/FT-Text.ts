@@ -62,22 +62,22 @@ export class FTText {
         this.putText('en_us', 'home.StickImageURL', '/img/svg/FTT-Character.svg');
         // Home Explanations
         this.putText('en_us', 'home.explainationImageHeader1', 'Secured with CryptoPass');
-        this.putText('en_us', 'home.explainationWhatWeDo1', 'Use any major blockchain, secured with one wallet.');
-        this.putText('en_us', 'home.explainationImageHeader2', 'We Are BlockChain DNA');
+        this.putText('en_us', 'home.explainationWhatWeDo1', `
+        Add any major crypto currency to CryptoPass. Get fast cheap transactions using the latest community built tech.`);
+        this.putText('en_us', 'home.explainationImageHeader2', 'BlockChain DNA');
         this.putText('en_us', 'home.explainationWhatWeDo2', `
-        Crypto currencies are tokenized on the FinTechToken (FTT) network. 
-        This lets you transact and trade fast with ultra low gas costs.`);
+        The FinTechToken (FTT) platform gives engineers building blocks so they can quickly deploy blockchain technologies for mass user adoption.`);
         // Home Explanation images
         this.putText('en_us', 'home.explainationImageURL', '/img/svg/FinTechToken_Visual1-04.svg');
         this.putText('en_us', 'home.explainationImageHeader1URL', '/img/svg/Icon_Key.svg');
         this.putText('en_us', 'home.explainationImageHeader2URL', '/img/svg/Icon_DNA.svg');
         // Home Problem Solution Statements
         this.putText('en_us', 'home.valueProblem1', 'Other blockchains are slow and congested');
-        this.putText('en_us', 'home.valueSolution1', 'We offer 1 second transactions with ultra low gas costs');
-        this.putText('en_us', 'home.valueProblem2', 'Most crypto wallets and keys are hard to manage');
-        this.putText('en_us', 'home.valueSolution2', 'Our wallet lets you access all major blockchains. Never lose keys with CryptoPass');
-        this.putText('en_us', 'home.valueProblem3', 'There have been many 3rd party scams and hacks.');
-        this.putText('en_us', 'home.valueSolution3', 'Our 100% on blockchain platform keeps you secure and in control.');
+        this.putText('en_us', 'home.valueSolution1', 'FTT has 1 second transactions with ultra low costs');
+        this.putText('en_us', 'home.valueProblem2', 'Other crypto wallets and keys are hard to manage');
+        this.putText('en_us', 'home.valueSolution2', 'CryptoPass lets you access all major blockchains with a simple safe key');
+        this.putText('en_us', 'home.valueProblem3', 'Others are plagued by 3rd party scams and hacks');
+        this.putText('en_us', 'home.valueSolution3', 'The FTT platform keeps you secure and in control with community reviewed tech');
         // Home Problem Solution Statement Images
         this.putText('en_us', 'home.ScenarioImageURL1a', '/img/svg/Scenario-Traffic-Lane.svg');
         this.putText('en_us', 'home.ScenarioImageURL1b', '/img/svg/Scenario-Traffic-Fast-Lane.svg');
