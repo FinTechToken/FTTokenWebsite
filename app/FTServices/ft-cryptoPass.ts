@@ -87,7 +87,7 @@ export class FTCryptoPassService {
                     this.observer.putObserver('isSignedIn', true);
                     this.router.navigate(['/myaccount']);
                 } else {
-                    this.router.navigate(['/crypto_pass']);
+                    //this.router.navigate(['/crypto_pass']);
                 }
             }
             if(data.homeAddress)

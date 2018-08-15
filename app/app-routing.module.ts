@@ -11,8 +11,6 @@ import { FTMyAccount } from './FTRoutes/FTMyAccount';
 import { FTToken } from './FTRoutes/FTToken';
 
 import { FTMessagesOld } from './FTRoutes/FTMessagesOld';
-import { FTMyAccountOld } from './FTRoutes/FTMyAccountOld';
-import { FTTokenOld } from './FTRoutes/FTTokenOld';
 
 const routes: Routes = [ {
         path: '',
@@ -62,21 +60,6 @@ const routes: Routes = [ {
     {
         path:'messagesOld/:id',
         component: FTMessagesOld
-    },
-    {
-        path:'tokenOld',
-        data: {title: 'Blockchain tokens Old'},
-        component: FTTokenOld
-    },
-    {
-        path:'tokenOld/:id',
-        data: {title: 'A blockchain token Old'},
-        component: FTTokenOld
-    },
-    {
-        path:'myaccountold',
-        data: {title: 'My FinTechToken Old Account'},
-        component: FTMyAccountOld
     }
 ];
 

@@ -12,7 +12,9 @@ body {
     background-color: #e4e5e6;
     background-color: #fff;
 }
-
+.center {
+    text-align:center;
+}
 .mobileimage{
     max-width:250px;
 }
@@ -30,7 +32,14 @@ body {
 }
 
 .backmustard {
-    background-color:#ffb41b;
+    /*background-color:#ffb41b;*/
+    background-color: #FEC45F;
+    margin-top:-2px;
+
+}
+
+.backteal {
+    background-color: #AACDD2;
 }
 
 .footer{
@@ -131,6 +140,7 @@ body {
     left: 0%;
     margin-top: 6px;
     margin-left: 5px;
+    color:#222;
 }
 .badge-small{
     font-size:25%;
@@ -310,7 +320,7 @@ b, strong {
 
 .navbar-brand {
     text-align: center;
-    width: 125px;
+    width: 175px;
     height: 40px;
     padding: .3rem .25rem;
     margin-right: 0;
