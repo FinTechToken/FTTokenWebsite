@@ -30,6 +30,9 @@ body {
     padding-bottom:25px;
     height:100%;
 }
+.backwhite {
+    background-color: #fff;
+}
 
 .backmustard {
     /*background-color:#ffb41b;*/

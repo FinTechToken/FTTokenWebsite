@@ -72,11 +72,11 @@ export class FTText {
         this.putText('en_us', 'home.explainationImageHeader1URL', '/img/svg/Icon_Key.svg');
         this.putText('en_us', 'home.explainationImageHeader2URL', '/img/svg/Icon_DNA.svg');
         // Home Problem Solution Statements
-        this.putText('en_us', 'home.valueProblem1', 'Other blockchains are slow and congested');
+        this.putText('en_us', 'home.valueProblem1', 'Annoyed by slow and congested blockchains');
         this.putText('en_us', 'home.valueSolution1', 'FTT has 1 second transactions with ultra low costs');
-        this.putText('en_us', 'home.valueProblem2', 'Other crypto wallets and keys are hard to manage');
+        this.putText('en_us', 'home.valueProblem2', 'Frustrated by crypto wallets and keys that are hard to manage');
         this.putText('en_us', 'home.valueSolution2', 'CryptoPass lets you access all major blockchains with a simple safe key');
-        this.putText('en_us', 'home.valueProblem3', 'Others are plagued by 3rd party scams and hacks');
+        this.putText('en_us', 'home.valueProblem3', 'Scared of 3rd party scams and hacks');
         this.putText('en_us', 'home.valueSolution3', 'The FTT platform keeps you secure and in control with community reviewed tech');
         // Home Problem Solution Statement Images
         this.putText('en_us', 'home.ScenarioImageURL1a', '/img/svg/Scenario-Traffic-Lane.svg');
