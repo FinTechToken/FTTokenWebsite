@@ -36,18 +36,18 @@
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link text-uppercase" (click)="showSignUpInfo();" href="javascript:void(0);">
+                                            <a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == AuthenticateTabs.learn }" (click)="changeTabs(AuthenticateTabs.learn)"  href="javascript:void(0);">
                                                 Learn More
                                             </a>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
-                            <div class="tab-white tab-content text-left">
+                            <div class="tab-white tab-content text-left" style="font-size:125%; overflow-y:auto;" [ngStyle]="{'height':setheight}">
                                 <div *ngIf="!isPreviousUser()" class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == AuthenticateTabs.getStarted }">
                                     <br>
                                     <div>
-                                        <h3><a (click)="showSignUpInfo();" href="javascript:void(0);" ><span style="font-size:1.5rem"><i class="icon-info hover" id="create1"></i></span></a>
+                                        <h3><a (click)="changeTabs(AuthenticateTabs.learn);" href="javascript:void(0);" ><span style="font-size:1.5rem"><i class="icon-info hover" id="create1"></i></span></a>
                                             Get A Free CryptoPass</h3>
                                         <hr><br>
                                         <div>
@@ -71,7 +71,7 @@
 
                                 <div *ngIf="isPreviousUser()" class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == AuthenticateTabs.signIn }">
                                     <br>
-                                    <h3><a (click)="showSignUpInfo();" href="javascript:void(0);" ><span style="font-size:1.5rem"><i class="icon-info hover" id="create1"></i></span></a>
+                                    <h3><a (click)="changeTabs(AuthenticateTabs.learn);" href="javascript:void(0);" ><span style="font-size:1.5rem"><i class="icon-info hover" id="create1"></i></span></a>
                                         CryptoPass Sign in
                                     </h3>
                                     Account#:<br>
@@ -134,6 +134,105 @@
                                             Clear CryptoPass
                                         </a>
                                     </div>
+                                </div>
+                                <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == AuthenticateTabs.learn }">
+                                    <br>
+                                    
+                                    <h4>
+                                        What is CryptoPass?
+                                    </h4>
+                                    <p>
+                                        <span>
+                                            CryptoPass provides access to all major blockchains & tokens in one place.
+                                            <br><Br>
+                                        </span>
+                                    </p>
+                                    <hr>
+                                    <br>
+                                    <h4>
+                                        How does CryptoPass work?
+                                    </h4>
+                                    <p>
+                                        <span>
+                                            CryptoPass is built on the same cryptography as the Ethereum network. 
+                                            <br><br>
+                                            Your account/keys are stored in one smart contract. 
+                                            With that smart contract you can send transactions to any major blockchain.
+                                            <br><Br>
+                                        </span>
+                                    </p>
+                                    <hr>
+                                    <br>
+                                    <h4>
+                                        Is CryptoPass secure?
+                                    </h4>
+                                    <p>
+                                        <span>
+                                            Yes. All transactions are encrypted clientside with your account/key pair.
+                                            Because encryption happens on the client, your secure data never travels unencrypted over the internet. 
+                                            Your secure data is always encrypted when stored.
+                                            <br><Br>
+                                        </span>
+                                    </p>        
+                                    <hr>
+                                    <br>
+                                    <h4>
+                                        What is the FinTechToken network?
+                                    </h4>
+                                    <p>
+                                        <span>
+                                            The FinTechToken network tokenizes all major blockchains.
+                                            You can use the network to transact with major cryptocurrencies with 0 fees at 1 second blocks.
+                                            <br><Br>
+                                            You can also create your own smart contracts using any major cryptocurrencies.
+                                            <br><Br>
+                                        </span>
+                                    </p>        
+                                    <hr>
+                                    <br>
+                                    <h4>
+                                        Is FinTechToken verifiable?
+                                    </h4>
+                                    <p>
+                                        <span>
+                                            Yes. We <a href="https://s3.amazonaws.com/fintechtoken.chain/" rel="nofollow" target="_blank">publish</a> all blocks from the FinTechToken network on S3 every 10 minutes so anyone can verify transactions.
+                                            <br><Br>
+                                            Our code is Token Sourced and available for anyone to read.
+                                            <br><Br>
+                                        </span>
+                                    </p>        
+                                    <hr>
+                                    <br>
+                                    <h4>
+                                        What is a pass phrase?
+                                    </h4>
+                                    <p>
+                                        <span>
+                                            A pass phrase is a group of random words.
+                                            The pass phrase unlocks your CryptoPass. Keep it secret and secure.
+                                            If someone knows or guesses your pass phrase they can use your CryptoPass.
+                                            <br><Br>
+                                        </span>
+                                    </p>
+                                    <hr>
+                                    <br>
+                                    <h4>
+                                        What if I forget my passphrase?
+                                    </h4>
+                                    <p>
+                                        <span>
+                                            If a passphrase is lost, it is lost forever.
+                                            The most secure thing is to protect your own passphrase.
+                                            <br><Br>
+                                            We offer an optional service to store your passphrase in our digital vault. 
+                                            This way the pass phrase can be recovered.
+                                            We also allow you to name a beneficiary. 
+                                            <br><Br>
+                                        </span>
+                                    </p>    
+                                    <hr>
+                                    <br>
+
                                 </div>
                             </div>   
                         </div>

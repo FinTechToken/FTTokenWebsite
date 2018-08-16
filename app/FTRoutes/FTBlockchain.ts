@@ -23,7 +23,7 @@ export class FTBlockchain {
   visibility="hiddenss";
   subscribeParam;
   tabs=1;
-   
+  setheight='100%';
   constructor( private obs: FTObserver, private router: Router, private route: ActivatedRoute, private session: FTSession, private cache: FTCache, private http:Http )
   {   
     this.zone=new NgZone({enableLongStackTrace:false});//Zone used for old version of IPad. Doesn't update without it.
@@ -42,6 +42,7 @@ export class FTBlockchain {
     this.subscribeParam = this.route.params.subscribe(params => {
       //params = the block that is passed in route
     });
+    this.setheight=((window.innerHeight-1)*1-100)*.75+'px';
   }
 
   ngAfterViewInit(): void{

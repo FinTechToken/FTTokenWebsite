@@ -12,7 +12,7 @@
                                     <h2 class="padleft">
                                         <i class="hidden-lg-up icon-user icon-gradient"></i>
                                         My Account
-                                       <span class="p-small return">{{fromAddress}}</span>
+                                       <span class="p-small return"><small>{{fromAddress}}</small></span>
                                     </h2>    
                                     <ul class="nav nav-tabs">
                                         <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 1 }" (click)="changeTabs(1)" href="javascript:void(0);">Wallet</a></li>
@@ -23,7 +23,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="tab-white tab-content text-left">
+                            <div class="tab-white tab-content text-left" style="overflow-y:auto;" [ngStyle]="{'height':setheight}">
                                 <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 1 }">
                                     <ft-accountWallet></ft-accountWallet>
                                 </div>
