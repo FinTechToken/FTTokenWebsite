@@ -40,7 +40,6 @@ import { FTAccountTrade } from './FTComponents/ft-account-trade';
 import { FTEnterImport } from './FTComponents/ft-enterImport';
 import { FTVerifyDelete } from './FTComponents/ft-verifyDelete';
 import { FTVerifyPhoneExists } from './FTComponents/ft-verifyPhoneExists';
-import { FTSignUpInfo } from './FTComponents/ft-signUpInfo';
 import { FTTokenInfo } from './FTComponents/ft-tokenInfo';
 import { FTDepositEtherToTrade } from './FTComponents/ft-depositEtherToTrade';
 import { FTWithdrawEtherFromTrade } from './FTComponents/ft-withdrawEtherFromTrade';
@@ -93,7 +92,6 @@ import { FTMessagesOld } from './FTRoutes/FTMessagesOld';
     FTEnterImport,
     FTVerifyDelete,
     FTVerifyPhoneExists,
-    FTSignUpInfo,
     FTTokenInfo,
     FTExportToken,
     FTImportToken,

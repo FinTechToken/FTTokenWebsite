@@ -11,7 +11,7 @@
                                 <div class="media-body">
                                     <h2 class="padleft">
                                         <img class="hidden-lg-up" src="/img/svg/FinTechToken_Block.svg" width="25px" alt="FinTechToken">   
-                                        FinTechToken Blockchains
+                                        FTT Blockchains
                                     </h2>    
                                     <ul class="nav nav-tabs">
                                         <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 1 }" (click)="changeTabs(1)" href="javascript:void(0);">Public</a></li>
@@ -23,7 +23,7 @@
 
 
 
-                            <div class="tab-white tab-content text-left">
+                            <div class="tab-white tab-content text-left" style="font-size:125%;  overflow-y:auto;" [ngStyle]="{'height':setheight}">
                                 <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 1 }">
                                     <h4><img src="/img/svg/FinTechToken_Block.svg" width="25px" alt="FTT">
                                         <strong>F</strong>TT <small> - The FinTechToken Public Network</small></h4>

@@ -29,7 +29,8 @@ export class FTCryptoPass {
         getStarted:0,
         signIn:0,
         import:2,
-        clear:3
+        clear:3,
+        learn:4
     };
     ImportList = {
         list:0,
@@ -39,6 +40,7 @@ export class FTCryptoPass {
     };
     importCryptoList = this.ImportList.list;
   tabs = this.AuthenticateTabs.getStarted;
+  setheight='100%';
 
   constructor( private http:FTHttpClient, private cryptoPassService: FTCryptoPassService, private obs: FTObserver, private router: Router, private session: FTSession, private cache: FTCache, private FTlocalStorage:FTStorage, private web3:FTWeb3Service,  private text: FTText )
   {   
@@ -56,6 +58,7 @@ export class FTCryptoPass {
     } else {
         this.tabs=this.AuthenticateTabs.getStarted;
     }
+    this.setheight=((window.innerHeight-1)*1-100)*.75+'px';
   }    
 
   ngAfterViewInit(): void{} 
@@ -214,10 +217,6 @@ private unlockAccountNow(pw:string){
         }
     }
   }
-    
-    showSignUpInfo(): void {
-        this.obs.putObserver('modal', 'authenticate.signupInfo');
-    }
 
     showVerifyDelete(): void{
         this.obs.putObserver('modal', 'authenticate.verifyDelete');

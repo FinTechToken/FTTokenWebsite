@@ -4,12 +4,17 @@
 /*lightblue: 20a8d8, */
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", 'Roboto', 'Helvetica Neue', Arial, sans-serif; 
-    font-size: 1rem;
+    /*font-family: Helvetica, Arial, sans-serif;*/
+    color: #333;
+
+    /*font-size: 1rem;*/
     font-weight: 300;
-    line-height: 1.5;
+    /* line-height: 1.5;*/ 
+    font-size: 1em;
+    line-height: 1.6;
     /*letter-spacing: 1px;*/
-    color: #151b1e;
-    background-color: #e4e5e6;
+    /*color: #151b1e;*/
+    /*background-color: #e4e5e6;*/
     background-color: #fff;
 }
 .center {
@@ -328,7 +333,7 @@ b, strong {
     padding: .3rem .25rem;
     margin-right: 0;
     color: #fff;
-    font-size: 1.25rem;
+    font-size: 1.25em;
     font-weight: 400;
     white-space: nowrap;
     border-bottom: 2px solid #93acb9;
@@ -361,14 +366,14 @@ b, strong {
 
 .nav-item {
     min-width: 40px;
-    font-size: 1rem;
+    font-size: 1em;
     text-align:center;
 }
 
 .px-3 {
     padding-right: 1rem !important;
     padding-left: 1rem !important;
-    font-size:1.25rem;
+    font-size:1.25em;
 }
 
 a {
@@ -416,7 +421,7 @@ a {
     padding: .25rem .5rem;
 }
 .navtext {
-    font-size: .75rem;
+    font-size: .75em;
 }
 
 .nav-link > i {
@@ -461,7 +466,7 @@ h5{
 .tab-white {
     color: #050b0e;
     /*background-color: rgba(237,242,249,.5);*/
-    background-color: rgba(256,256,256,.5);
+    background-color: rgba(256,256,256,.75);
     /*background-color: #edf2f9;*/
     border-radius: 10px;
     margin-top:0px;
@@ -488,14 +493,14 @@ h5{
     color: #334c59;
 }
 .nav-tabs .nav-link.subnav {
-    font-size: .8rem;
+    font-size: .8em;
     padding: 0;
 }
 .nav-tabs .nav-link.subnav > i {
-    font-size: 1.2rem;
+    font-size: 1.2em;
 }
 .p-small {
-    font-size:.75rem;
+    font-size:.75em;
     letter-spacing:.5px;
     font-weight:200;
 }
@@ -548,7 +553,7 @@ h5{
     .px-3 {
         padding-right: 1.25rem !important;
         padding-left: 1.25rem !important;
-        font-size:1.12rem;
+        font-size:1.12em;
     }
     .navbar {
         background-color: #fff;
@@ -559,7 +564,7 @@ h5{
         /* background-color: rgba(242, 167, 14,.85); */
         width: 175px;
         height: 45px;
-        font-size: 1.25rem;
+        font-size: 1.25em;
         padding: .45rem .25rem;
     }
     .navbar-brand:focus, .navbar-brand:hover {
@@ -584,7 +589,7 @@ h5{
     }
     
     .px-3 {
-        font-size:1.3rem !important;
+        font-size:1.3em !important;
     }
     .badge-under{
         margin-left:21px;
@@ -606,14 +611,14 @@ h5{
     .navbar-brand {
         width: 200px;
         height: 50px;
-        font-size: 1.4rem;
+        font-size: 1.4em;
         padding: .55rem 1rem;
     }
     .navbar-nav {
         margin-right: 25px;
     }
     .nav-item {
-        font-size: 1.1rem;
+        font-size: 1.1em;
     }
     .nav-link {
         font-weight: 500;
@@ -623,7 +628,7 @@ h5{
         margin-left: 2px;
     }
     .nav-tabs .nav-link.subnav > i {
-        font-size: 1.5rem;
+        font-size: 1.5em;
     }
 }
   
@@ -632,7 +637,7 @@ h5{
         margin-top:150px; 
     }
     .px-3 {
-        font-size:1.5rem !important;
+        font-size:1.5em !important;
     }
     .badge-under2 {
         margin-left: 10px;
@@ -649,7 +654,7 @@ h5{
     }
     .navbar-brand {
         width: 250px;
-        font-size: 1.5rem;
+        font-size: 1.5em;
         height: 55px;
         padding: .5rem 1rem;
     }
@@ -657,18 +662,18 @@ h5{
         margin-right: 50px;
     }
     .nav-item {
-        font-size: 1.2rem;
+        font-size: 1.2em;
     }
     .nav-link > i {
         margin-right: 5px;
         margin-left: 5px;
     }
     .nav-tabs .nav-link.subnav {
-        font-size: 1rem;
+        font-size: 1em;
         padding: .5rem 1rem;
     }
     .nav-tabs .nav-link.subnav > i {
-        font-size: 2rem;
+        font-size: 2em;
     }
 }
   
@@ -772,7 +777,7 @@ h5{
 
 .btn-lg {
     padding: .55rem 1.3rem;
-    font-size: 1.1rem;
+    font-size: 1.1em;
     border-radius: .3rem;
 } 
 .video-container.filter, #video.filter {
@@ -823,7 +828,7 @@ button, .btn {
 @media (min-width: 576px) { /* sm landscape phones*/
     .btn-lg {
         padding: .65rem 1.4rem;
-        font-size: 1.2rem;
+        font-size: 1.2em;
     }
     .video-annotation-1{
         padding-top:45px;
@@ -842,7 +847,7 @@ button, .btn {
 @media (min-width: 768px) { /* md tablets*/
     .btn-lg {
         padding: .75rem 1.5rem;
-        font-size: 1.25rem;
+        font-size: 1.25em;
     }
     .video-annotation-1{
         padding-top:50px;
@@ -882,7 +887,7 @@ button, .btn {
     }
     .btn-lg {
         padding: .8rem 1.55rem;
-        font-size: 1.3rem;
+        font-size: 1.3em;
     }
     .video-annotation-1{
         padding-top:55px;
