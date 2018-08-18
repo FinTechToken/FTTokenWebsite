@@ -43,13 +43,12 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="tab-white tab-content text-left" style="font-size:125%; overflow-y:auto;" [ngStyle]="{'height':setheight}">
+                            <div class="tab-white tab-content text-left modal-body" style="font-size:125%; overflow-y:auto;" [ngStyle]="{'height':setheight}">
                                 <div *ngIf="!isPreviousUser()" class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == AuthenticateTabs.getStarted }">
-                                    <br>
                                     <div>
                                         <h3><a (click)="changeTabs(AuthenticateTabs.learn);" href="javascript:void(0);" ><span style="font-size:1.5rem"><i class="icon-info hover" id="create1"></i></span></a>
                                             Get A Free CryptoPass</h3>
-                                        <hr><br>
+                                        <hr>
                                         <div>
                                             <form (submit)="createAccount();">
                                                 <div class="form-group" [ngClass]="pwGroupStatus" id ="PWgroup">
@@ -70,7 +69,6 @@
                                 </div>
 
                                 <div *ngIf="isPreviousUser()" class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == AuthenticateTabs.signIn }">
-                                    <br>
                                     <h3><a (click)="changeTabs(AuthenticateTabs.learn);" href="javascript:void(0);" ><span style="font-size:1.5rem"><i class="icon-info hover" id="create1"></i></span></a>
                                         CryptoPass Sign in
                                     </h3>
@@ -93,13 +91,12 @@
                                 </div>
 
                                 <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == AuthenticateTabs.import }">
-                                    <Br>
                                     <h3>Returning User</h3>
                                     <div *ngIf="importCryptoList == ImportList.list">
                                         <hr>
-                                        <a href="javascript:void(0);" (click)="importCryptoList=ImportList.import">Paste Saved CryptoPass</a>
-                                        <hr>
                                         <a href="javascript:void(0);" (click)="SMSPhone();">Recover by text</a>
+                                        <hr>
+                                        <a href="javascript:void(0);" (click)="importCryptoList=ImportList.import">Paste Saved CryptoPass</a>
                                         <hr>
                                         <!--<a href="javascript:alert('coming soon');">Verify by email</a>
                                         <hr>!-->
@@ -122,11 +119,9 @@
 
 
                                 <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == AuthenticateTabs.clear }">
-                                    <br>
                                     <h3>
                                         Clear CryptoPass
                                     </h3>
-                                    <br>
                                     <div>
                                         Remove CryptoPass from this device to use a different CryptoPass, or create a new CryptoPass.
                                         <hr>
@@ -136,8 +131,6 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == AuthenticateTabs.learn }">
-                                    <br>
-                                    
                                     <h4>
                                         What is CryptoPass?
                                     </h4>
