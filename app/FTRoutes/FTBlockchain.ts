@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FTCache } from '../FTFramework/FT-Cache';
 import { FTSession } from '../FTFramework/FT-Session';
 import { FTObserver } from '../FTFramework/FT-Observer';
+import { FTText } from '../FTFramework/FT-Text';
 /* ToDo: Each time you change tabs scroll to top */
 @Component({
   moduleId: module.id,
@@ -24,8 +25,10 @@ export class FTBlockchain {
   subscribeParam;
   tabs=1;
   setheight='100%';
-  constructor( private obs: FTObserver, private router: Router, private route: ActivatedRoute, private session: FTSession, private cache: FTCache, private http:Http )
-  {   
+  texts = [];
+  constructor( private obs: FTObserver, private router: Router, private route: ActivatedRoute, private session: FTSession, private cache: FTCache, private http:Http, private text: FTText )
+  {  
+    this.setText();
     this.zone=new NgZone({enableLongStackTrace:false});//Zone used for old version of IPad. Doesn't update without it.
   }
   
@@ -63,4 +66,7 @@ export class FTBlockchain {
     this.tabs = tab;
   }
 
+  private setText() {
+    this.texts['home.StickImageURL'] = this.text.getText('home.StickImageURL');
+  }
 }
