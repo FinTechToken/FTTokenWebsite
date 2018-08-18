@@ -254,6 +254,11 @@
                             <span *ngIf="isPreviousUser() && !isSignedIn()">{{texts['home.startButtonUser']}}</span>
                             <span *ngIf="isPreviousUser() && isSignedIn()">{{texts['home.startButtonAccount']}}</span>
                         </a>
+                        -
+                        <a class="btn btn-ft btn-lg margin-half" routerLink="/blockchain" routerLinkActive="active">
+                            <img src="{{texts['home.blockImageURL']}}" height="70px"/>
+                            {{texts['home.learnMoreButton']}}
+                        </a>
                         <br><Br><br>
                     </div>
                 </div>

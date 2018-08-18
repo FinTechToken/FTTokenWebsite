@@ -6,11 +6,11 @@
 </div>
 <div class="modal-body" [ngStyle]="{'height':modalHeight}">    
     <div class="form-group row">
-        <div *ngIf="verify_step==verify_steps.sendCode">
-            <label for="example-tel-input" class="col-12 col-form-label">
+        <div *ngIf="verify_step==verify_steps.sendCode" >
+            <label for="example-tel-input" class="col-form-label">
                 My Mobile Number
             </label><br>
-            <div class="col-12">
+            <div >
                 1-(<input class="form-control" style="display:inline-block; width:auto;" type="tel" value="" placeholder="" minlength="3" maxlength="3" size="3" id="tel1" [(ngModel)]="tel1">)
                 <input class="form-control" style="display:inline-block; width:auto;" type="tel" value="" placeholder="" minlength="3" maxlength="3" size="3" id="tel2" [(ngModel)]="tel2">
                 -
@@ -21,11 +21,11 @@
                 </a>
             </div>
         </div>
-        <div *ngIf="verify_step==verify_steps.verifyCode">
-            <label for="example-tel-input" class="col-12 col-form-label">
+        <div *ngIf="verify_step==verify_steps.verifyCode" class="col-12">
+            <label for="example-tel-input" class="col-form-label">
                 Enter Code
             </label><br>
-            <div class="col-12">
+            <div>
                 <input class="form-control" style="display:inline-block; width:auto;" type="number" value="" placeholder="" minlength="6" maxlength="6" size="6" id="code" [(ngModel)]="code">
                 <br><Br>
                 <a class="btn btn-ft btn-lg" routerLink="/myaccount" (click)="verify(verify_steps.verified);" href="javascript:void(0);">

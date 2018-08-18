@@ -29,8 +29,7 @@ export class FTCryptoPass {
         getStarted:0,
         signIn:0,
         import:2,
-        clear:3,
-        learn:4
+        clear:3
     };
     ImportList = {
         list:0,

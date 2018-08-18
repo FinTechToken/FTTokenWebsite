@@ -58,8 +58,10 @@ export class FTText {
         this.putText('en_us', 'home.startButton', 'Get Started');
         this.putText('en_us', 'home.startButtonUser', 'Sign In');
         this.putText('en_us', 'home.startButtonAccount', 'My Account');
+        this.putText('en_us', 'home.learnMoreButton', 'About FTT');
         // Home main text image
         this.putText('en_us', 'home.StickImageURL', '/img/svg/FTT-Character.svg');
+        this.putText('en_us', 'home.blockImageURL', '/img/svg/FinTechToken_Block.svg');
         // Home Explanations
         this.putText('en_us', 'home.explainationImageHeader1', 'Secured with CryptoPass');
         this.putText('en_us', 'home.explainationWhatWeDo1', `

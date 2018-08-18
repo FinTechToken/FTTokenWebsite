@@ -49,9 +49,11 @@ export class FTHome {
     this.texts['home.Hero3Head'] = this.text.getText('home.Hero3Head');
     this.texts['home.Hero4'] = this.text.getText('home.Hero4');
     this.texts['home.startButton'] = this.text.getText('home.startButton');
+    this.texts['home.learnMoreButton'] = this.text.getText('home.learnMoreButton');
     this.texts['home.startButtonUser'] = this.text.getText('home.startButtonUser');
     this.texts['home.startButtonAccount'] = this.text.getText('home.startButtonAccount');
     this.texts['home.StickImageURL'] = this.text.getText('home.StickImageURL');
+    this.texts['home.blockImageURL'] = this.text.getText('home.blockImageURL');
     this.texts['home.explainationImageURL'] = this.text.getText('home.explainationImageURL');
     this.texts['home.explainationImageHeader1'] = this.text.getText('home.explainationImageHeader1');
     this.texts['home.explainationImageHeader1URL'] = this.text.getText('home.explainationImageHeader1URL');
