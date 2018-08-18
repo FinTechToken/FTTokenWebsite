@@ -38,7 +38,7 @@ export class FTText {
         // Footer
         this.putText('en_us', 'footer.Code', 'Token Sourced Code');
         this.putText('en_us', 'footer.Community', 'Decentralized Community');
-        this.putText('en_us', 'footer.CodeSmall', 'Code');
+        this.putText('en_us', 'footer.CodeSmall', 'Token Sourced Code');
         this.putText('en_us', 'footer.CommunitySmall', 'Community');
         // FooterLinks
         this.putText('en_us', 'footer.CodeLink', 'https://github.com/FinTechToken');
@@ -75,15 +75,15 @@ export class FTText {
         this.putText('en_us', 'home.valueProblem1', 'Annoyed by slow and congested blockchains');
         this.putText('en_us', 'home.valueSolution1', 'FTT has 1 second transactions with ultra low costs');
         this.putText('en_us', 'home.valueProblem2', 'Frustrated by crypto wallets and keys that are hard to manage');
-        this.putText('en_us', 'home.valueSolution2', 'CryptoPass lets you access all major blockchains with a simple safe key');
+        this.putText('en_us', 'home.valueSolution2', 'Use CryptoPass to access all major blockchains with one safe key');
         this.putText('en_us', 'home.valueProblem3', 'Scared of 3rd party scams and hacks');
-        this.putText('en_us', 'home.valueSolution3', 'The FTT platform keeps you secure and in control with community reviewed tech');
+        this.putText('en_us', 'home.valueSolution3', 'Stay secure and in control with our community reviewed tech');
         // Home Problem Solution Statement Images
-        this.putText('en_us', 'home.ScenarioImageURL1a', '/img/svg/Scenario-Traffic-Lane.svg');
-        this.putText('en_us', 'home.ScenarioImageURL1b', '/img/svg/Scenario-Traffic-Fast-Lane.svg');
-        this.putText('en_us', 'home.ScenarioImageURL2a', '/img/svg/Scenario-Keys.svg');
-        this.putText('en_us', 'home.ScenarioImageURL2b', '/img/svg/Scenario-Cafe.svg');
-        this.putText('en_us', 'home.ScenarioImageURL3a', '/img/svg/Scenario-Protesters.svg');
-        this.putText('en_us', 'home.ScenarioImageURL3b', '/img/svg/Scenario-Handshake.svg');
+        this.putText('en_us', 'home.ScenarioImageURL1a', '/img/svg/Scenario-Traffic-Lane.svg?v=1');
+        this.putText('en_us', 'home.ScenarioImageURL1b', '/img/svg/Scenario-Traffic-Fast-Lane.svg?v=1');
+        this.putText('en_us', 'home.ScenarioImageURL2a', '/img/svg/Scenario-Keys.svg?v=1');
+        this.putText('en_us', 'home.ScenarioImageURL2b', '/img/svg/Scenario-Cafe.svg?v=1');
+        this.putText('en_us', 'home.ScenarioImageURL3a', '/img/svg/Scenario-Protesters.svg?v=1');
+        this.putText('en_us', 'home.ScenarioImageURL3b', '/img/svg/Scenario-Handshake.svg?v=1');
     }
 }
