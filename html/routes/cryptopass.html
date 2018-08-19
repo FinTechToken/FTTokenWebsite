@@ -38,17 +38,19 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="tab-white tab-content text-left setheighttab" style="font-size:125%; overflow-y:auto;">
+                            <div class="tab-white tab-content text-left setheighttab" style="overflow-y:auto;">
                                 <div *ngIf="!isPreviousUser()" class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == AuthenticateTabs.getStarted }">
                                     <div>
-                                        <h4>
-                                            <!--<a (click)="changeTabs(AuthenticateTabs.learn);" href="javascript:void(0);" ><span style="font-size:1.5rem"><i class="icon-info hover" id="create1"></i></span></a>!-->
+                                         <!--<h4>
+                                           <a (click)="changeTabs(AuthenticateTabs.learn);" href="javascript:void(0);" ><span style="font-size:1.5rem"><i class="icon-info hover" id="create1"></i></span></a>\
                                             Get A Free CryptoPass</h4>
+                                            !-->
                                         <div>
+                                            <hr>
                                             <form (submit)="createAccount();">
                                                 <div class="form-group" [ngClass]="pwGroupStatus" id ="PWgroup">
                                                     <label for="PW">
-                                                        Secure CryptoPass with a secret pass phrase:
+                                                        Pick a secure pass phrase:
                                                     </label>
                                                     <input type="password" [ngClass]="pwGroupStatus == 'has-danger' ? 'form-control-warning' : pwGroupStatus == 'has-success' ? 'form-control-success' : ''" class="form-control" id="PW" placeholder="Enter 3-7 random words">
                                                     <div class="form-control-feedback" id="createbad"></div>
@@ -63,34 +65,31 @@
 
                                 <div *ngIf="isPreviousUser()" class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == AuthenticateTabs.signIn }">
                                     <h4>
-                                        <!--<a (click)="changeTabs(AuthenticateTabs.learn);" href="javascript:void(0);" ><span style="font-size:1.5rem"><i class="icon-info hover" id="create1"></i></span></a>!-->
-                                        CryptoPass Sign in
+                                        CryptoPass:<br>
+                                        <span class="p-small return" id="unlockaccount">{{getRememberedAddress()}}</span>
                                     </h4>
-                                    Account#:<br>
-                                    <span class=" return" id="unlockaccount"><small>{{getRememberedAddress()}}</small></span>
                                     <hr>
                                     <div>
                                         <form (submit)="unlockAccount();">    
                                             <div class="form-group" [ngClass]="pwUnlockGroupStatus" id="PWUnlockgroup">
                                                 <label for="PWUnlock">
-                                                    Enter pass phrase to use CryptoPass:
+                                                    Enter pass phrase:
                                                 </label>
                                                 <input type="password" [ngClass]="pwUnlockGroupStatus == 'has-danger' ? 'form-control-warning' : pwUnlockGroupStatus == 'has-success' ? 'form-control-success' : ''" class="form-control" id="PWUnlock" placeholder="Usually 3-7 random words">
                                                 <div class="form-control-feedback" id="unlockbad"><br></div>
                                             </div>
-                                            <input type="submit" value="Unlock CryptoPass" class="btn btn-lg btn-ft" id="unlockButton">
-                                            <small><Br>(Decryption may take awhile)</small>
+                                            <input type="submit" value="Sign In" class="btn btn-lg btn-ft" id="unlockButton">
+                                            <small><Br>(Decryption may take a bit)</small>
                                         </form>
                                     </div>
                                 </div>
 
                                 <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == AuthenticateTabs.import }">
-                                    <h4>Returning User</h4>
                                     <div *ngIf="importCryptoList == ImportList.list">
                                         <hr>
                                         <a href="javascript:void(0);" (click)="SMSPhone();">Recover by text</a>
                                         <hr>
-                                        <a href="javascript:void(0);" (click)="importCryptoList=ImportList.import">Advanced - Saved CryptoPass</a>
+                                        <a href="javascript:void(0);" (click)="importCryptoList=ImportList.import">Advanced - Import CryptoPass</a>
                                         <hr>
                                         <!--<a href="javascript:alert('coming soon');">Verify by email</a>
                                         <hr>!-->
@@ -98,7 +97,6 @@
                                     </div>
                                     <div *ngIf="importCryptoList == ImportList.import">
                                         <a href="javascript:void(0);" (click)="importCryptoList=ImportList.list">Go Back</a>
-                                        <h3>Enter Saved CryptoPass: </h3>
                                         <hr>
                                         <span style="color:red;" id="importwarning2"></span>
                                         <div class="form-group">
@@ -113,11 +111,8 @@
 
 
                                 <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == AuthenticateTabs.clear }">
-                                    <h4>
-                                        Clear CryptoPass
-                                    </h4>
                                     <div>
-                                        Remove CryptoPass from this device to use a different CryptoPass, or create a new CryptoPass.
+                                        Remove CryptoPass from this device.
                                         <hr>
                                         <a class="btn btn-lg btn-ft" (click)="showVerifyDelete();" href="javascript:void(0);">
                                             Clear CryptoPass

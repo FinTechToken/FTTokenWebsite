@@ -464,7 +464,7 @@ h5{
     letter-spacing:1.5px;
 }
 .tab-white {
-    color: #050b0e;
+    /*color: #050b0e;*/
     /*background-color: rgba(237,242,249,.5);*/
     background-color: rgba(256,256,256,.75);
     /*background-color: #edf2f9;*/
@@ -767,7 +767,7 @@ h5{
     position:relative;
     text-align:center;
     /* color:#f8f8f8; */
-    color: #252b2e; 
+    /*color: #252b2e; */
 }
 .video-annotation-1 h1 {
     font-size: 30px;
