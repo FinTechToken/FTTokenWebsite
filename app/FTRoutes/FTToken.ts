@@ -1,4 +1,4 @@
-
+declare var onResize: any;
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -42,7 +42,6 @@ export class FTToken {
   gasEst=[];
   results=[];
   errMessage=[];
-  setheight='100%';
 
   constructor( public ftWallet:FTWalletService, public ftweb3:FTWeb3Service, public ftNum: FTBigNumberService, private obs: FTObserver, private router: Router, private route: ActivatedRoute, private session: FTSession, private cache: FTCache, public ftTokenWatch: FTTokenWatchService )
   {
@@ -127,7 +126,7 @@ export class FTToken {
 
   ngOnInit(): void{ 
     this.fromAddress = this.cache.getCache('encrypted_id') ? this.cache.getCache('encrypted_id').address : this.fromAddress;
-    this.setheight=((window.innerHeight-1)*1-100)*.75+'px';
+    onResize();
   }    
 
   ngAfterViewInit(): void{
@@ -141,6 +140,7 @@ export class FTToken {
 
   changeTabs(tab:number): void{
     this.tabs = tab;
+    document.getElementsByClassName('setheighttab1')[0].scrollTop = 0;
   }
 
   viewNumber(number:string): void {

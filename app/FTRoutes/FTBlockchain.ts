@@ -1,3 +1,4 @@
+declare var onResize:any;
 import { Component, trigger, state, style, transition, animate, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -24,7 +25,6 @@ export class FTBlockchain {
   visibility="hiddenss";
   subscribeParam;
   tabs=1;
-  setheight='100%';
   texts = [];
   constructor( private obs: FTObserver, private router: Router, private route: ActivatedRoute, private session: FTSession, private cache: FTCache, private http:Http, private text: FTText )
   {  
@@ -45,7 +45,7 @@ export class FTBlockchain {
     this.subscribeParam = this.route.params.subscribe(params => {
       //params = the block that is passed in route
     });
-    this.setheight=((window.innerHeight-1)*1-100)*.75+'px';
+    onResize();
   }
 
   ngAfterViewInit(): void{
@@ -64,6 +64,7 @@ export class FTBlockchain {
 
   changeTabs(tab:number): void{
     this.tabs = tab;
+    document.getElementsByClassName('setheighttab')[0].scrollTop = 0;
   }
 
   private setText() {

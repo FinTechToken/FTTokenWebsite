@@ -22,6 +22,41 @@ function onResize(){ //ToDo: Use logic to allow cover percentages to match image
         x=(window.innerHeight-1)*1;
     }
 
+
+    els = document.getElementsByClassName("setheighttab");
+    for(var i = 0; i < els.length; i++)
+    {
+        if(window.innerWidth <= 575)
+            els[i].style.height=x-178+'px';
+        if(window.innerWidth > 575 && window.innerWidth <= 699)
+            els[i].style.height=x-190+'px';            
+        if(window.innerWidth > 699 && window.innerWidth <= 767)
+            els[i].style.height=x-205+'px';
+        if(window.innerWidth > 767 && window.innerWidth <= 899)
+            els[i].style.height=x-215+'px';            
+        if(window.innerWidth > 899 && window.innerWidth <= 991)
+            els[i].style.height=x-218+'px';
+        if(window.innerWidth > 991 && window.innerWidth <= 10000)
+            els[i].style.height=x-228+'px';            
+    }
+
+    els = document.getElementsByClassName("setheighttab1");
+    for(var i = 0; i < els.length; i++)
+    {
+        if(window.innerWidth <= 575)
+            els[i].style.height=x-178-8+'px';
+        if(window.innerWidth > 575 && window.innerWidth <= 699)
+            els[i].style.height=x-190-8+'px';            
+        if(window.innerWidth > 699 && window.innerWidth <= 767)
+            els[i].style.height=x-205-16+'px';
+        if(window.innerWidth > 767 && window.innerWidth <= 899)
+            els[i].style.height=x-205-22+'px';
+        if(window.innerWidth > 899 && window.innerWidth <= 991)
+            els[i].style.height=x-205-35+'px';            
+        if(window.innerWidth > 991 && window.innerWidth <= 10000)
+            els[i].style.height=x-230-16+'px';            
+    }
+
     els = document.getElementsByClassName("setheightmin");
     for(var i = 0; i < els.length; i++)
     {

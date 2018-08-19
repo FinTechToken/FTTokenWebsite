@@ -5,14 +5,14 @@
             <div class="video-annotation-layer code-container">    
                 <div class="video-annotation-1">
                     <div class="row text-left h-100">
-                        <div class="col-md-6 offset-md-1 padsmalltop">
+                        <div class="col-lg-7 padsmalltop">
                             <div class="media">
-                                <i class="hidden-md-down icon-disc homepage-hero-module-icon icon-gradient d-flex mr-3"></i>
+                                <i class="hidden-lg-down icon-disc homepage-hero-module-icon icon-gradient d-flex mr-3"></i>
                                 <div class="media-body">
                                     <h2 class="padleft">
-                                        <i class="hidden-lg-up icon-disc icon-gradient"></i>
+                                        <i class="hidden-xl-up icon-disc icon-gradient"></i>
                                         {{tokenName}} Token
-                                        <span *ngIf="tokenAddress" class="p-small return m-left-m30"><small>0x{{tokenAddress}}</small></span>
+                                        <span *ngIf="tokenAddress" class="p-small return m-left-m30">0x{{tokenAddress}}</span>
                                     </h2>    
                                     <ul class="nav nav-tabs">
                                         <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 1 }" (click)="changeTabs(1)" href="javascript:void(0);">Overview</a></li>
@@ -21,7 +21,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="tab-white tab-content text-left modal-body" style="overflow-y:auto;" [ngStyle]="{'height':setheight}">
+                            <div class="tab-white tab-content text-left setheighttab1" style="overflow-y:auto;">
                                 <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 1 }">
                                     <h4>
                                         <i (click)="showTokenInfo();" href="javascript:void(0);" class="icon-info hover"></i>
@@ -101,7 +101,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-5 hidden-sm-down">
+                        <div class="col-md-5 hidden-md-down">
                             <div class="imgborder">
                                 <!--<img src="img/office.jpg" class="rounded img-fluid setheightmax">!-->
                             </div>

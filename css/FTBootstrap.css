@@ -500,13 +500,14 @@ h5{
     font-size: 1.2em;
 }
 .p-small {
-    font-size:.75em;
+    font-size:.45em;
     letter-spacing:.5px;
     font-weight:200;
+    margin-top:-10px;
 }
 
 .m-left-m30 {
-    margin-left: -30px;
+    margin-left: -24px;
 }
 
 .return {
