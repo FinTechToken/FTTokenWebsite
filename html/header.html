@@ -5,8 +5,9 @@
     <ul class="nav navbar-nav">
         <li class="nav-item px-3 badge-contain">
             <a class="nav-link" routerLink="/blockchain" routerLinkActive="active" href="javascript:void(0);" (mouseover)="over = true;" (mouseout)="over = false;" (click)="over = false;" >
-                <img  *ngIf="router.url == '/blockchain'" [src]="'/img/svg/FinTechToken_Block.svg'" width="25px" alt="FinTechToken" />
-                <img  *ngIf="router.url != '/blockchain'" [src]="over ? '/img/svg/FinTechToken_Blockd.svg' : '/img/svg/FinTechToken_Blockg.svg'" width="25px" alt="FinTechToken" />
+                <img  [hidden]="!(router.url == '/blockchain')" src="/img/svg/FinTechToken_Block.svg" width="25px" alt="FinTechToken" />
+                <img  [hidden]="!(router.url != '/blockchain' && over)" src="/img/svg/FinTechToken_Blockd.svg" width="25px" alt="FinTechToken" />
+                <img  [hidden]="!(router.url != '/blockchain' && !over)" src="/img/svg/FinTechToken_Blockg.svg" width="25px" alt="FinTechToken" />
                 <span class="badge badge-pill badge-success badge-under2">
                     {{ blocknumber > 999 ? blocknumber.toString().substr(blocknumber.toString().length-3) : blocknumber }}
                 </span>

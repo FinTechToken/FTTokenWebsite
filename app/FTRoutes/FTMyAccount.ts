@@ -1,3 +1,4 @@
+declare var onResize:any;
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -12,7 +13,6 @@ import { FTCache } from '../FTFramework/FT-Cache';
 export class FTMyAccount {
   tabs = 1;
   fromAddress = '0x';
-   setheight='100%';
   constructor( private router: Router, private cache: FTCache ) {}
 
   ngOnInit(): void{
@@ -21,7 +21,7 @@ export class FTMyAccount {
     }
 
     this.fromAddress = this.cache.getCache('encrypted_id') ? this.cache.getCache('encrypted_id').address : this.fromAddress;
-    this.setheight=((window.innerHeight-1)*1-100)*.75+'px';
+    onResize();
   }    
 
   ngAfterViewInit(): void{} 
@@ -30,6 +30,7 @@ export class FTMyAccount {
 
   changeTabs(tab:number): void {
     this.tabs = tab;
+    document.getElementsByClassName('setheighttab1')[0].scrollTop = 0;
   }
 
 }

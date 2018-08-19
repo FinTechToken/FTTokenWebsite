@@ -5,12 +5,12 @@
             <div class="video-annotation-layer code-container">    
                 <div class="video-annotation-1">
                     <div class="row text-left h-100">
-                        <div class="col-md-6 offset-md-1 padsmalltop">
+                        <div class="col-lg-7 padsmalltop">
                             <div class="media">
-                                <i class="hidden-md-down icon-user homepage-hero-module-icon icon-gradient d-flex mr-3"></i>
+                                <i class="hidden-lg-down icon-user homepage-hero-module-icon icon-gradient d-flex mr-3"></i>
                                 <div class="media-body">
                                     <h2 class="padleft">
-                                        <i class="hidden-lg-up icon-user icon-gradient"></i>
+                                        <i class="hidden-xl-up icon-user icon-gradient"></i>
                                         <span *ngIf="isPreviousUser()">Sign In</span>
                                         <span *ngIf="!isPreviousUser()">Get Started</span>
                                     </h2>  
@@ -38,7 +38,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="tab-white tab-content text-left modal-body" style="font-size:125%; overflow-y:auto;" [ngStyle]="{'height':setheight}">
+                            <div class="tab-white tab-content text-left setheighttab" style="font-size:125%; overflow-y:auto;">
                                 <div *ngIf="!isPreviousUser()" class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == AuthenticateTabs.getStarted }">
                                     <div>
                                         <h4>
@@ -51,7 +51,7 @@
                                                         Secure CryptoPass with a secret pass phrase:
                                                     </label>
                                                     <input type="password" [ngClass]="pwGroupStatus == 'has-danger' ? 'form-control-warning' : pwGroupStatus == 'has-success' ? 'form-control-success' : ''" class="form-control" id="PW" placeholder="Enter 3-7 random words">
-                                                    <div class="form-control-feedback" id="createbad"><br></div>
+                                                    <div class="form-control-feedback" id="createbad"></div>
                                                     <input type="password" [ngClass]="pwGroupStatus == 'has-danger' ? 'form-control-warning' : pwGroupStatus == 'has-success' ? 'form-control-success' : ''" class="form-control" id="PWc" placeholder="Reenter your pass phrase">
                                                 </div>
                                                 <input type="submit" value="Create CryptoPass" class="btn btn-lg btn-ft" id="launch">
@@ -67,7 +67,7 @@
                                         CryptoPass Sign in
                                     </h4>
                                     Account#:<br>
-                                    <span class="p-small return" id="unlockaccount">{{getRememberedAddress()}}</span>
+                                    <span class=" return" id="unlockaccount"><small>{{getRememberedAddress()}}</small></span>
                                     <hr>
                                     <div>
                                         <form (submit)="unlockAccount();">    
@@ -127,7 +127,7 @@
                                 
                             </div>   
                         </div>
-                        <div class="col-sm-5 hidden-sm-down">
+                        <div class="col-md-5 hidden-md-down">
                             <div class="imgborder">
                                 <!--<img src="img/office.jpg" class="rounded img-fluid setheightmax">!-->
                             </div>

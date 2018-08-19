@@ -13,10 +13,10 @@
                 Mobile Number To Send To
             </label><br>
             <div class="col-12">
-                1-(<input class="form-control" style="display:inline-block; width:auto;" type="tel" value="" placeholder="" minlength="3" maxlength="3" size="3" id="tel1" [(ngModel)]="tel1">)
-                <input class="form-control" style="display:inline-block; width:auto;" type="tel" value="" placeholder="" minlength="3" maxlength="3" size="3" id="tel2" [(ngModel)]="tel2">
+                1-(<input class="form-control" style="display:inline-block; width:3.5em;" type="tel" value="" placeholder="" minlength="3" maxlength="3" size="3" id="tel1" [(ngModel)]="tel1">)
+                <input class="form-control" style="display:inline-block; width:3.5em;" type="tel" value="" placeholder="" minlength="3" maxlength="3" size="3" id="tel2" [(ngModel)]="tel2">
                 -
-                <input class="form-control" style="display:inline-block; width:auto;" type="tel" value="" placeholder="" minlength="4" maxlength="4" size="3" id="tel3" [(ngModel)]="tel3">
+                <input class="form-control" style="display:inline-block; width:4.5em;" type="tel" value="" placeholder="" minlength="4" maxlength="4" size="3" id="tel3" [(ngModel)]="tel3">
                 <br>
                 <Br>
                 Tokens To Send: <a (click)="changeSendAmount()" href="javascript:void(0);">{{ftweb3.fromWei(sendAmount, 'ether')}}</a>

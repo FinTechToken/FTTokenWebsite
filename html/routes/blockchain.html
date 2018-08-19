@@ -5,12 +5,12 @@
             <div class="video-annotation-layer code-container">    
                 <div class="video-annotation-1">
                     <div class="row text-left h-100">
-                        <div class="col-md-6 offset-md-1 padsmalltop">
+                        <div class="col-lg-7 padsmalltop">
                             <div class="media">
-                                <img class="hidden-md-down homepage-hero-module-icon icon-gradient d-flex mr-3" src="/img/svg/FinTechToken_Block.svg" width="90px" alt="FinTechToken">   
+                                <img class="hidden-lg-down homepage-hero-module-icon icon-gradient d-flex mr-3" src="/img/svg/FinTechToken_Block.svg" width="90px" alt="FinTechToken">   
                                 <div class="media-body">
                                     <h2 class="padleft">
-                                        <img class="hidden-lg-up" src="/img/svg/FinTechToken_Block.svg" width="25px" alt="FinTechToken">   
+                                        <img class="hidden-xl-up" src="/img/svg/FinTechToken_Block.svg" width="25px" alt="FinTechToken">   
                                         About FTT
                                     </h2>    
                                     <ul class="nav nav-tabs">
@@ -24,37 +24,37 @@
 
 
 
-                            <div class="tab-white tab-content text-left modal-body" style="font-size:125%;  overflow-y:auto;" [ngStyle]="{'height':setheight}">
+                            <div class="tab-white tab-content text-left setheighttab" style="font-size:125%;  overflow-y:auto;">
                                 <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 1 }">
                                     <h4><img src="/img/svg/FinTechToken_Block.svg" width="50px" alt="FTT">
-                                        <span class="align-top">FinTechToken (FTT)</span></h4>
+                                        <span class="align-top">FinTechToken</span></h4>
                                     <div>
-                                        <strong>FTT is a Public Blockchain connecting all major crypto currencies</strong><br>
+                                        FTT is a Public Blockchain connecting all major crypto currencies<br>
                                         <Br>
                                         FTT is on block <strong>{{!getBlocknumber() ? 0 : getBlocknumber() | number}}</strong>.
                                         We show the last 3 digits in the navigation bar at the top of your screen.<br>
                                         <br>
-                                        <ol>
-                                            <li><strong>Base currency is US Dollars</strong>
-                                                <br> - Easy to know what things cost<br><br></li>
-                                            <li><strong>Major crypto currencies are tokenized</strong>
-                                                <br>- Like a checking account, users can import/export to FTT only what is needed. Once imported users get cheaper and faster transactions than using the native BitCoin/Ether/etc blockchains.<br><br></li>
+                                        <ol style="margin-left:-15px; margin-right:-15px;">
+                                            <li><strong>Base currency is US Dollars</strong><br> 
+                                                Easy to know what things cost<br><br></li>
+                                            <li><strong>Major crypto currencies are tokenized</strong><br>
+                                                Like a checking account, users can import/export to FTT only what is needed. Once imported users get cheaper and faster transactions than using the native BitCoin/Ether/etc blockchains.<br><br></li>
                                             <li><strong>Accounting of tokinization is done via smart contract</strong><br>
-                                                 - Community can verify digital assets that are imported/exported during tokenization process. This real-time smart-contract based accounting verifiable by anyone prevents fraud.<br><br></li>
+                                                 Community can verify digital assets that are imported/exported during tokenization process. This real-time smart-contract based accounting system prevents fraud.<br><br></li>
                                             <li><strong>Anyone can publish solidity smart contracts</strong><br>
-                                                - Similar to an App-Store. Simple templates for non-developers to quickly use DLT for their business needs. Advanced tools for engineers. Speed up development process with CI/CD integration. Focus on code instead of platform infrastructure.<br><br></li>
+                                                Similar to an App-Store. Simple templates for non-developers to quickly use DLT for their business needs. Advanced tools for engineers. Speed up development process with CI/CD integration. Focus on code instead of platform infrastructure.<br><br></li>
                                             <li><strong>No need for complex blockchain tools</strong><br>
-                                                - Users interact with FTT using phone or browser. Simple and easy to use interface.<br><Br></li>
+                                                Users interact with FTT using phone or browser. Simple and easy to use interface.<br><Br></li>
                                             <li><strong>Gas that runs smart contracts is totally free</strong><br>
-                                                - This makes it economically practical to develop micro services and services for 3rd world. Fees are set by smart contracts. This way pricing can be based on industry and use case.<br><Br></li>
+                                                This makes it economically practical to develop micro services and services for 3rd world. Fees are set by smart contracts. This way pricing can be based on industry and use case.<br><Br></li>
                                             <li><strong>Transaction happen approximately every second</strong><br>
-                                                - Users demand fast response time. Currently supports 1,000 transactions per second (TPS). Can scale much higher as demand grows.<br><Br></li>
+                                                Users demand fast response time. Currently supports 1,000 transactions per second (TPS). Can scale much higher as demand grows.<br><Br></li>
                                             <li><strong>Trigger off-chain actions based on smart contract</strong><br>
-                                                - Smart contracts can trigger external APIs. Send text, email, update database, trigger lambda, etc etc.<br><Br></li>
+                                                Smart contracts can trigger external APIs. Send text, email, update database, trigger lambda, etc etc.<br><Br></li>
                                             <li><strong>Execute smart contract based on real world events</strong><br>
-                                                - Smart contracts can be triggered by external APIs. <br><br></li>
+                                                Smart contracts can be triggered by external APIs. <br><br></li>
                                             <li><strong>FTT is a working product</strong><br>
-                                                - We don't believe in white-papers and marketing fluff. We believe in code.</li>
+                                                We don't believe in white-papers and marketing fluff. We believe in code.</li>
                                         </ol>
                                     </div>
                                 </div>
@@ -62,38 +62,38 @@
                                     <h4><img src="{{texts['home.StickImageURL']}}" width="25px" alt="PrivateChain" />
                                         <span class="align-top">Private Chains</span></h4>
                                     <div>
-                                        <strong>We offer Blockchain As A Service (BaaS)</strong><br><Br>
+                                        Blockchain as a Service (BaaS)<br><Br>
                                         White-label FTT Technology as your own Private Chain
                                         <br><Br>
-                                        <ol>
+                                        <ol style="margin-left:-15px; margin-right:-15px;">
                                             <li><strong>Control how to deploy your blockchain</strong><br>
-                                                - Share your network with the world, to select customers, or keep everything securely in-house.<br><Br></li>
+                                                Share your network with the world, to select customers, or keep everything securely in-house.<br><Br></li>
                                             <li><strong>Make it easy for your engineers to play with DLT</strong><br>
-                                                - An internal blockchain within your company will speed up development of your blockchain tech skills.<br><Br></li>
+                                                An internal blockchain within your company will speed up development of your blockchain tech skills.<br><Br></li>
                                             <li><strong>Get our tech for free</strong><br>
-                                                - As we develop features for the FTT public net, we will deploy those on your private network for free.<br><Br></li>
+                                                As we develop features for the FTT public net, we will deploy those on your private network for free.<br><Br></li>
                                             <li><strong>No worry infrastructure</strong><br>
-                                                - We deploy and manage the network for your company. No need to maintain or manage infrastructure.<br><Br></li>
+                                                We deploy and manage the network for your company. No need to maintain or manage infrastructure.<br><Br></li>
                                             <li><strong>FTT is built for engineers</strong><br>
-                                                - Our tools speed up development and enable quick modern development practices.<br><Br></li>
+                                                Our tools speed up development and enable quick modern agile practices.<br><Br></li>
                                             <li><strong>Easy to integrate with your technology</strong><br>
-                                                - Our platform is API based<br><br></li>
+                                                Our platform is API based<br><br></li>
                                             <li><strong>Easy to integrate with your existing customer digital experiences</strong><br>
-                                                - Our user-interface is browser based, easy for customers to use.<br><Br></li>
+                                                Our user-interface is browser based, easy for customers to use.<br><Br></li>
                                             <li><strong>Securely keep in-house</strong><br>
-                                                - Use AWS security groups to control access.<br><Br></li>
+                                                Use AWS security groups to control access.<br><Br></li>
                                             <li><strong>Simple monthly pricing without long term contract</strong><br>
-                                                - Monthly fee per developer license + user license. Minimum of 10 developers.
+                                                Monthly fee per developer license + user license. Minimum of 10 developers.
                                                 We also offer services to customize and build your product for you.<br><Br>
                                             </li>
                                             <li><strong>No surprises</strong><br>
-                                                - Try the tech for free by using the Public FTT Blockchain.</li>
+                                                Try the tech for free by using the Public FTT Blockchain.</li>
                                         </ol>
                                     </div>
                                 </div>
                                 <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 3 }">
-                                    <h4><span style="font-size:2.5rem; color:#d08d2e;"><i class="icon-question" id="create1"></i></span>
-                                        <span class="align-top">Frequenty Asked Questions</span>
+                                    <h4><span style="font-size:1.5rem; color:#d08d2e;"><i class="icon-question" id="create1"></i></span>
+                                        <span class="align-top">Frequent Questions</span>
                                     </h4>
                                     <h4>
                                         What is CryptoPass?
@@ -202,7 +202,7 @@
                                 </div>    
                             </div>
                         </div>
-                        <div class="col-sm-5 hidden-sm-down">
+                        <div class="col-md-5 hidden-md-down">
                             <div class="imgborder">
                                 <!--<img src="img/office.jpg" class="rounded img-fluid setheightmax">!-->
                             </div>

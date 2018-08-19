@@ -1,4 +1,5 @@
 declare var sjcl: any;
+declare var onResize: any;
 import { AfterViewInit, Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observer, BehaviorSubject } from 'rxjs';
@@ -39,7 +40,6 @@ export class FTCryptoPass {
     };
     importCryptoList = this.ImportList.list;
   tabs = this.AuthenticateTabs.getStarted;
-  setheight='100%';
 
   constructor( private http:FTHttpClient, private cryptoPassService: FTCryptoPassService, private obs: FTObserver, private router: Router, private session: FTSession, private cache: FTCache, private FTlocalStorage:FTStorage, private web3:FTWeb3Service,  private text: FTText )
   {   
@@ -57,7 +57,7 @@ export class FTCryptoPass {
     } else {
         this.tabs=this.AuthenticateTabs.getStarted;
     }
-    this.setheight=((window.innerHeight-1)*1-100)*.75+'px';
+    onResize();
   }    
 
   ngAfterViewInit(): void{} 
@@ -93,7 +93,7 @@ export class FTCryptoPass {
 
   private createAccountSetFieldsOnSubmit() {
     this.pwGroupStatus = '';
-    document.getElementById('createbad').innerHTML = '<br>';
+    document.getElementById('createbad').innerHTML = '';
     document.getElementById('launch').innerHTML = 'Encrypting - Wait';
   }
 
@@ -161,7 +161,7 @@ export class FTCryptoPass {
 
 private unlockSetFieldsOnSubmit() {
     this.pwUnlockGroupStatus = '';
-    document.getElementById('unlockbad').innerHTML = '<br>';
+    document.getElementById('unlockbad').innerHTML = '';
     document.getElementById('unlockButton').innerHTML = 'Decrypting - Wait';
 }
 
@@ -183,14 +183,14 @@ private unlockAccountNow(pw:string){
         this.cache.putCache('key',key);
         this.pwUnlockGroupStatus = 'has-success';
         this.unlockResetFeilds();
-        document.getElementById('unlockbad').innerHTML = '<br>';
+        document.getElementById('unlockbad').innerHTML = '';
         this.cryptoPassService.unlockToken(pw);
         // this.obs.putObserver('isSignedIn', true);
         this.router.navigate(['/myaccount']);
         this.processing = false;
     }
     catch(e){
-        this.unlockAccountSetError('Wrong Password');
+        this.unlockAccountSetError('Wrong Pass Phrase');
         return;
     }
 }
@@ -227,6 +227,7 @@ private unlockAccountNow(pw:string){
 
     changeTabs(tab:number): void{
         this.tabs = tab;
+        document.getElementsByClassName('setheighttab')[0].scrollTop = 0;
     }
 
     private setText() {
