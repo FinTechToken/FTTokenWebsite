@@ -81,11 +81,11 @@ export class FTText {
         this.putText('en_us', 'home.valueProblem3', 'Scared of 3rd party scams and hacks');
         this.putText('en_us', 'home.valueSolution3', 'Stay secure and in control with our community reviewed tech');
         // Home Problem Solution Statement Images
-        this.putText('en_us', 'home.ScenarioImageURL1a', '/img/svg/Scenario-Traffic-Lane.svg?v=1');
-        this.putText('en_us', 'home.ScenarioImageURL1b', '/img/svg/Scenario-Traffic-Fast-Lane.svg?v=1');
-        this.putText('en_us', 'home.ScenarioImageURL2a', '/img/svg/Scenario-Keys.svg?v=1');
-        this.putText('en_us', 'home.ScenarioImageURL2b', '/img/svg/Scenario-Cafe.svg?v=1');
-        this.putText('en_us', 'home.ScenarioImageURL3a', '/img/svg/Scenario-Protesters.svg?v=1');
-        this.putText('en_us', 'home.ScenarioImageURL3b', '/img/svg/Scenario-Handshake.svg?v=1');
+        this.putText('en_us', 'home.ScenarioImageURL1a', '/img/svg/Scenario-Traffic-Lane.png?v=1');
+        this.putText('en_us', 'home.ScenarioImageURL1b', '/img/svg/Scenario-Traffic-Fast-Lane.png?v=1');
+        this.putText('en_us', 'home.ScenarioImageURL2a', '/img/svg/Scenario-Keys.png?v=1');
+        this.putText('en_us', 'home.ScenarioImageURL2b', '/img/svg/Scenario-Cafe.png?v=1');
+        this.putText('en_us', 'home.ScenarioImageURL3a', '/img/svg/Scenario-Protesters.png?v=1');
+        this.putText('en_us', 'home.ScenarioImageURL3b', '/img/svg/Scenario-Handshake.png?v=1');
     }
 }
