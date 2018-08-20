@@ -5,7 +5,7 @@
             <div class="video-annotation-layer code-container">    
                 <div class="video-annotation-1">
                     <div class="row text-left h-100">
-                        <div class="col-lg-7 padsmalltop">
+                        <div class="offset-lg-1 col-lg-7 padsmalltop">
                             <div class="media">
                                 <img class="hidden-lg-down homepage-hero-module-icon icon-gradient d-flex mr-3" src="/img/svg/FinTechToken_Block.svg" width="90px" alt="FinTechToken">   
                                 <div class="media-body">
@@ -18,6 +18,7 @@
                                         <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 2 }" (click)="changeTabs(2)" href="javascript:void(0);">Private</a></li>
                                         <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 3 }" (click)="changeTabs(3)" href="javascript:void(0);">FAQ</a></li>
                                         <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 4 }" (click)="changeTabs(4)" href="javascript:void(0);">Roadmap</a></li>
+                                        <!--<li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 5 }" (click)="changeTabs(5)" href="javascript:void(0);">Who</a></li>!-->
                                     </ul>
                                 </div>
                             </div>
@@ -196,13 +197,87 @@
                                         <span style="font-size:2.5rem; color:#d08d2e;"><i class="icon-direction" id="create1"></i></span>
                                         <span class="align-top">Roadmap</span></h4>
                                     <div>
-                                        <br>
-                                        Add content
+                                        <h4>High Level</h4>
+                                        <div>
+                                            Our goal is to build a central crypto platform that other engineers can build on top of.
+                                            See <a href="https://github.com/FinTechToken" rel="nofollow" target="_blank">FinTechToken GitHub</a> for a detailed
+                                            list of tasks and issues.
+                                            <br><BR>
+                                            Our code is Token Sourced. This means the license to the code is owned by FTT token holders. 
+                                            Tokens go to FinTechToken GitHub contributors. Tokens also go to capital contributors. 
+                                            <br><Br>
+                                            Ultimately we want the roadmap to be prioritized by the community. However we believe many 
+                                            projects that attempt democracy too early end in unescapable conflict that destroys the project.
+                                            Instead we will drive the project forward until the time when external contributions outweigh our own.
+                                            <br><Br> 
+                                            The first step is to build a platform that can perform basic crypto functions.
+                                            As we develop those basic functions we build out tooling that we share with community.<br><br>
+                                            Our vision is that Distributed Public chains is where long term value is held. 
+                                            But, private chains like FTT is where useful day to day things happen.<br><Br>
+                                            Similar to App-Stores we want to let developers add "Smart Contract" applications to our network.
+                                            These can be deployed as hidden addresses, or officially deployed after our quality checks.
+                                            <br><Br>
+                                            We also have the ability to spin up this blockchain and developer tooling for companies to build internal networks.
+                                            We imagine FTT being a hub, with many private chain spokes built on our tech, or built on other tech. 
+                                            The key is we connect them to the outside world through our hub.
+                                            <br><Br>
+                                        </div>
+                                        <h4>Immediate tasks</h4>
+                                        <ol>
+                                            <li>Automate import/export (currently has manually step)</li>
+                                            <li>Combine "Trade" and "Wallet" as one tab to simplify usability (Move funds to trading smart contract in same action as placing trade).</li>
+                                            <li>Have "action" button instead of dropdown that launches modal of actions.</li>
+                                            <li>Remove "gas" unless admin user</li>
+                                            <li>Clean up text for actions to simplify</li>
+                                            <li>Security/privacy review (Transactions should be anonymous for FTT users)</li>
+                                            <li>Reset blockchain</li>
+                                            <li>East/West deployement of blockchain</li>
+                                            <li>Stream events from major blockchains and allow subscribing to those events</li>
+                                            <li>Have FTT blockchain explorer</li>
+                                        </ol>
+                                        <h4>High priority</h4>
+                                        <ol>
+                                            <li>Add all major blockchains and tokens</li>
+                                            <li>Allow token page when user isn't signed in</li>
+                                            <li>Improve token page based on ABI</li>
+                                            <li>Have different ABI for users and admin</li>
+                                            <li>Add filter function from contract ABIs</li>
+                                            <li>Enhance filter function to allow admin developer to trigger javascript</li>
+                                            <li>Add email</li>
+                                            <li>For security only send password via physical address letter</li>
+                                            <li>Add text for other countries</li>
+                                            <li>Also have API to trigger smart contract as admin</li>
+                                        </ol>
+                                        <h4>Priority</h4>
+                                        <ol>
+                                            <li>Provide liquidity to trading. Base price from other exchanges</li>
+                                            <li>Other options for withdraw/deposit</li>
+                                            <li>Basic Income Token</li>
+                                            <li>Improve KYC to upload documents</li>
+                                            <li>Offer smart contract that holds multiple crypto</li>
+                                            <li>Offer short crypto to create synthetic dollars</li>
+                                            <li>Add secure messaging</li>
+                                            <li>Upgrade smart contract (Transfer variables from v1 to v2)</li>
+                                            <li>Add smart contract for donations</li>
+                                            <li>Add smart contract for auctions and buy now</li>
+                                        </ol>
+                                    </div>
+                                </div> 
+                                <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 5 }">
+                                    <h4>
+                                        <span style="font-size:2.5rem; color:#d08d2e;"><i class="icon-people" id="create1"></i></span>
+                                        <span class="align-top">Who is FTT?</span></h4>
+                                    <div>
+                                        <h4>FTT founders have . . .</h4>
+                                        <ol>
+                                            
+                                        </ol>
+                                            
                                     </div>
                                 </div>    
                             </div>
                         </div>
-                        <div class="col-md-5 hidden-md-down">
+                        <div class="col-md-4 hidden-md-down">
                             <div class="imgborder">
                                 <!--<img src="img/office.jpg" class="rounded img-fluid setheightmax">!-->
                             </div>
