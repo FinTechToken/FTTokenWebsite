@@ -46,6 +46,7 @@ export class FTTradeBuyOffers {
 
   cancelOfferConfirm() {
     this.ftMarket.confirmTrans();
+    this.ftMarket.returnEther=true;
     this.close();
   }
 

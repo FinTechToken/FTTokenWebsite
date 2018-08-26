@@ -1,3 +1,4 @@
+//ToDo: Remove component
 import { Component, OnInit } from '@angular/core';
 import { NgStyle } from '@angular/common';
 
@@ -39,7 +40,7 @@ export class FTDepositEtherToTrade {
       this.depositEtherAmount = this.ftWallet.getBalance();
     }
     // this.ftNum.subtractBigNumber(this.ftWallet.getBalance(),"100000000000000000");
-    this.ftMarket.buildDepositEtherTrans(this.depositEtherAmount);
+    //this.ftMarket.buildDepositEtherTrans(this.depositEtherAmount);
   } 
 
   changeEtherDeposit(){

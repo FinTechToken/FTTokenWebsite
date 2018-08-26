@@ -52,16 +52,12 @@ export class FTTradeSellToken {
     } 
     this.sellPrice = this.cache.getCache('tradeSellToken.price') ? this.cache.getCache('tradeSellToken.price') : "0";
     this.sellToken = this.cache.getCache('tradeSellToken.token') ? this.cache.getCache('tradeSellToken.token') : "0";
-
-    this.tryBuildSellOfferTrans();
-
     this.obs.getObserver('tradeSetPrice')
     .forEach( newPrice => {
       if(newPrice){
         this.obs.putObserver('tradeSetPrice','');
         this.cache.putCache('tradeSellToken.price', newPrice);
         this.sellPrice = newPrice;
-        this.tryBuildSellOfferTrans();
         this.changeSellTabs(1);
       }
     })
@@ -77,7 +73,9 @@ export class FTTradeSellToken {
   }
 
   sellOfferConfirm(){
-    this.ftMarket.confirmTrans();
+    this.ftMarket.buildAndSellDepositTokenTrans(this.sellToken,this.tokenIndex, this.sellPrice);
+    //this.tryBuildSellOfferTrans();
+    //this.ftMarket.confirmTrans();
     this.close();
   }
 
@@ -119,7 +117,7 @@ export class FTTradeSellToken {
   changeSellToken() {
     this.cache.putCache('number', this.sellToken);
     this.cache.putCache('tradeSellToken.type', 'token');
-    this.cache.putCache('maxNumber', this.ftTokenWatch.TokenWatch[this.tokenIndex].mineTrade);
+    this.cache.putCache('maxNumber', this.ftTokenWatch.TokenWatch[this.tokenIndex].mine);
     this.obs.putObserver('modal','pickNumber');
   }
 

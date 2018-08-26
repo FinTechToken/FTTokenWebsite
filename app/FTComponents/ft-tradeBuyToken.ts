@@ -32,7 +32,7 @@ export class FTTradeBuyToken {
   withdrawTokenAmount:string = "0";
   gasPrice="0";
 
-  constructor( public ftTokenWatch: FTTokenWatchService, private ftNum: FTBigNumberService, private ftWallet: FTWalletService, private ftweb3: FTWeb3Service, public ftMarket: FTMarketService, private cache: FTCache, private text: FTText, private obs: FTObserver, private http: FTHttpClient, private session: FTSession, private FTLocalStorage: FTStorage ) 
+  constructor( public ftTokenWatch: FTTokenWatchService, private ftNum: FTBigNumberService, public ftWallet: FTWalletService, private ftweb3: FTWeb3Service, public ftMarket: FTMarketService, private cache: FTCache, private text: FTText, private obs: FTObserver, private http: FTHttpClient, private session: FTSession, private FTLocalStorage: FTStorage ) 
   { 
     this.setText();
   }
@@ -53,7 +53,7 @@ export class FTTradeBuyToken {
     this.buyPrice = this.cache.getCache('tradeBuyToken.price') ? this.cache.getCache('tradeBuyToken.price') : "0";
     this.buyToken = this.cache.getCache('tradeBuyToken.token') ? this.cache.getCache('tradeBuyToken.token') : "0";
 
-    this.tryBuildBuyOfferTrans();
+    //this.tryBuildBuyOfferTrans();
 
     this.obs.getObserver('tradeSetPrice')
     .forEach( newPrice => {
@@ -65,7 +65,7 @@ export class FTTradeBuyToken {
           this.cache.putCache('tradeBuyToken.token', this.calculateMaxTokens());
           this.buyToken = this.cache.getCache('tradeBuyToken.token');
         } 
-        this.tryBuildBuyOfferTrans();
+        //this.tryBuildBuyOfferTrans();
         this.changeBuyTabs(1);
       }
     })
@@ -81,7 +81,8 @@ export class FTTradeBuyToken {
   }
 
   buyOfferConfirm(){
-    this.ftMarket.confirmTrans();
+    //this.ftMarket.confirmTrans();
+    this.ftMarket.buildAndSendDepositBuyTokenTrans(this.buyPrice, this.buyToken, this.tokenIndex, this.calculateEtherNeeded());
     this.close();
   }
 
@@ -106,13 +107,17 @@ export class FTTradeBuyToken {
     this.obs.putObserver('modal','pickNumberSmall');
   }
 
+  private calculateEtherNeeded() {
+    return this.ftNum.addBigNumber(this.ftNum.divideBigNumber(this.ftNum.multiplyBigNumber(this.buyToken,this.ftNum.divideBigNumber(this.buyPrice,"1000000000000")),"1000000"),"1000000000000000")
+  }
+
   private calculateMaxTokens() {
-    let accountMinusBookFee = this.ftNum.subtractBigNumber(this.ftMarket.getAccountBalance(),"1000000000000000");
+    let accountMinusBookFee = this.ftNum.subtractBigNumber(this.ftWallet.getBalance(),"1000000000000000");
     return this.ftNum.multiplyBigNumber(this.ftNum.divideBigNumber(accountMinusBookFee,this.ftNum.divideBigNumber(this.buyPrice,"1000000000000")),"1000000");
   }
 
   private calculateMaxPrice() {
-    let accountMinusBookFee = this.ftNum.subtractBigNumber(this.ftMarket.getAccountBalance(),"1000000000000000");
+    let accountMinusBookFee = this.ftNum.subtractBigNumber(this.ftWallet.getBalance(),"1000000000000000");
     return this.ftNum.divideBigNumber(this.ftNum.multiplyBigNumber(accountMinusBookFee,"1000000000000000000"),this.buyToken);
   }
 
