@@ -1,3 +1,4 @@
+//ToDo Remove Component
 import { Component, OnInit } from '@angular/core';
 import { NgStyle } from '@angular/common';
 
@@ -41,7 +42,7 @@ export class FTDepositTokenToTrade {
     } else {
       this.depositTokenAmount = this.ftTokenWatch.TokenWatch[this.tokenIndex].mine;
     }
-    this.ftMarket.buildDepositTokenTrans(this.depositTokenAmount, this.tokenIndex);
+    //this.ftMarket.buildDepositTokenTrans(this.depositTokenAmount, this.tokenIndex);
   } 
 
   changeTokenDeposit(){

@@ -13,10 +13,10 @@
     </ul>
     <div class="tab-white tab-content text-left">
         <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': sellTabs == 1 }">
-            <div *ngIf="ftTokenWatch.TokenWatch[tokenIndex].mineTrade == '0'">
+            <div *ngIf="ftTokenWatch.TokenWatch[tokenIndex].mine == '0'">
                 You need tokens to sell. Try buying a token or moving tokens to your trading account.
             </div>
-            <div *ngIf="ftTokenWatch.TokenWatch[tokenIndex].mineTrade != '0'">
+            <div *ngIf="ftTokenWatch.TokenWatch[tokenIndex].mine != '0'">
                 Number of Tokens: <a (click)="changeSellToken()" href="javascript:void(0);">{{ftweb3.fromWei(sellToken, 'ether')}}</a><br>
                 Price in FTT per token: <a (click)="changeSellPrice()" href="javascript:void(0);">{{ftweb3.fromWei(sellPrice, 'ether')}}</a><br>
                 Total FTT: {{ftweb3.fromWei(ftNum.divideBigNumber(ftNum.multiplyBigNumber(sellToken,ftNum.divideBigNumber(sellPrice,"1000000000000")),"1000000"),'ether') }}
@@ -48,26 +48,26 @@
 </div>
 <div class="modal-footer">
     <ul class="nav nav-pills modal-nav text-center">
-        <li *ngIf="ftTokenWatch.TokenWatch[tokenIndex].mineTrade == '0'" class="nav-item w-100 prev">
+        <li *ngIf="ftTokenWatch.TokenWatch[tokenIndex].mine == '0'" class="nav-item w-100 prev">
             <a class="nav-link" (click)="close()" href="javascript:void(0);">
                 Close
             </a>
         </li>
-        <li *ngIf="ftTokenWatch.TokenWatch[tokenIndex].mineTrade != '0'" class="nav-item w-50 prev">
+        <li *ngIf="ftTokenWatch.TokenWatch[tokenIndex].mine != '0'" class="nav-item w-50 prev">
             <a class="nav-link" (click)="close()" href="javascript:void(0);">
                 Close
             </a>
         </li>
-        <li *ngIf="ftTokenWatch.TokenWatch[tokenIndex].mineTrade != '0' && sellToken != '0' && sellPrice != '0' && ftNum.compareBigNumber(amtToReceive(),'0') >0" class="nav-item w-50 next">
+        <li *ngIf="ftTokenWatch.TokenWatch[tokenIndex].mine != '0' && sellToken != '0' && sellPrice != '0' && ftNum.compareBigNumber(amtToReceive(),'0') >0" class="nav-item w-50 next">
             <a class="nav-link" (click)="sellOfferConfirm()" href="javascript:void(0);">
                 Confirm Sell Offer
                 <small><br>Gas Est: {{ftMarket.Market.estimate | number}}</small>
             </a>
         </li>
-        <li *ngIf="ftTokenWatch.TokenWatch[tokenIndex].mineTrade != '0' && ( sellToken == '0' || sellPrice == '0')" class="nav-item w-50 next">
+        <li *ngIf="ftTokenWatch.TokenWatch[tokenIndex].mine != '0' && ( sellToken == '0' || sellPrice == '0')" class="nav-item w-50 next">
             Need amount + price
         </li>
-        <li *ngIf="ftTokenWatch.TokenWatch[tokenIndex].mineTrade != '0' && sellToken != '0' && sellPrice != '0' && ftNum.compareBigNumber(amtToReceive(),'0') < 1" class="nav-item w-50 next">
+        <li *ngIf="ftTokenWatch.TokenWatch[tokenIndex].mine != '0' && sellToken != '0' && sellPrice != '0' && ftNum.compareBigNumber(amtToReceive(),'0') < 1" class="nav-item w-50 next">
             Sale minus fees must be positive
         </li>
     </ul>

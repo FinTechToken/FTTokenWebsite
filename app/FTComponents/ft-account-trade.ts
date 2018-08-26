@@ -1,3 +1,4 @@
+//ToDo Remove component
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 

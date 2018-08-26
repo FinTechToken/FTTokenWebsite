@@ -48,6 +48,7 @@ export class FTTradeSellOffers {
 
   cancelOfferConfirm() {
     this.ftMarket.confirmTrans();
+    this.ftMarket.returnToken=true;
     this.close();
   }
 

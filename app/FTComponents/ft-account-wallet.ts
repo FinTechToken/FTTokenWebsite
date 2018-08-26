@@ -9,6 +9,7 @@ import { FTCache } from '../FTFramework/FT-Cache';
 
 import { FTBigNumberService } from '../FTServices/ft-bigNumber';
 import { FTWalletService } from '../FTServices/ft-wallet';
+import { FTMarketService } from '../FTServices/ft-market';
 import { FTTokenWatchService } from '../FTServices/ft-tokenWatch';
 import { FTCryptoPassService } from '../FTServices/ft-cryptoPass';
 
@@ -19,11 +20,11 @@ import { FTCryptoPassService } from '../FTServices/ft-cryptoPass';
 })
 
 export class FTAccountWallet {
-
+  tabs = 1;
   action=[];
   maxGas;
 
-  constructor( private ftCrypto: FTCryptoPassService, private ftTokenWatch: FTTokenWatchService, private ftNum: FTBigNumberService, public ftWallet: FTWalletService, private router:Router, private ftweb3: FTWeb3Service, private obs: FTObserver, private cache: FTCache, private http: FTHttpClient, private session:FTSession ) 
+  constructor( private ftCrypto: FTCryptoPassService, private ftTokenWatch: FTTokenWatchService, public ftMarket: FTMarketService, private ftNum: FTBigNumberService, public ftWallet: FTWalletService, private router:Router, private ftweb3: FTWeb3Service, private obs: FTObserver, private cache: FTCache, private http: FTHttpClient, private session:FTSession ) 
   {}
   
   ngOnInit(): void {
@@ -32,6 +33,10 @@ export class FTAccountWallet {
   ngAfterViewInit(): void {} 
 
   ngOnDestroy(): void {
+  }
+
+  changeTabs(tab:number): void {
+    this.tabs = tab;
   }
 
   getftTokenWatch() {
@@ -43,10 +48,19 @@ export class FTAccountWallet {
     this.obs.putObserver('modal', 'showNumber');
   }
 
+  showOffersToBuy(number) {
+    this.cache.putCache('number', number);
+    this.obs.putObserver('modal', 'account-trade.buyOffers');
+  }
+
+  showOffersToSell(index, number) {
+    this.cache.putCache('number', number);
+    this.obs.putObserver('tokenIndex', index);
+    this.obs.putObserver('modal', 'account-trade.sellOffers');
+  }
+
   takeAction(index){
-    if(this.action[index]=='move_ether_to_trade'){
-      this.obs.putObserver('modal', 'account-trade.depositEther');
-    } else if(this.action[index]=='send_ether'){
+    if(this.action[index]=='send_ether'){
       this.obs.putObserver('modal', 'account-trade.sendEther');
     } else if(this.action[index]=='refer_friend') {
       this.obs.putObserver('modal', 'account-trade.referFriend');
@@ -62,9 +76,6 @@ export class FTAccountWallet {
         this.obs.putObserver('modal', 'account-trade.setAddress');
       else
         this.obs.putObserver('modal', 'account-trade.withdrawFTT');
-    } else if(this.action[index]=='move_token_to_trade'){
-      this.obs.putObserver('tokenIndex', index-1);
-      this.obs.putObserver('modal', 'account-trade.depositToken');
     } else if(this.action[index]=='send_token'){
       this.obs.putObserver('tokenIndex', index-1);
       this.obs.putObserver('modal', 'account-trade.sendToken');
@@ -74,6 +85,12 @@ export class FTAccountWallet {
     } else if(this.action[index]=='import_token'){
       this.obs.putObserver('tokenIndex', index-1);
       this.obs.putObserver('modal', 'account-trade.importToken');
+    } else if(this.action[index]=='trade_buy_token') {
+      this.obs.putObserver('tokenIndex', index-1);
+      this.obs.putObserver('modal', 'account-trade.buyToken');
+    } else if(this.action[index]=='trade_sell_token') {
+      this.obs.putObserver('tokenIndex', index-1);
+      this.obs.putObserver('modal', 'account-trade.sellToken');
     }
     this.action[index] = "";
   }

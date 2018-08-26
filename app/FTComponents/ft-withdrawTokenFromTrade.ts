@@ -1,3 +1,4 @@
+//ToDo: Remove component
 import { Component, OnInit } from '@angular/core';
 import { NgStyle } from '@angular/common';
 
@@ -41,7 +42,6 @@ export class FTWithdrawTokenFromTrade {
     } else {
       this.withdrawTokenAmount = this.ftTokenWatch.TokenWatch[this.tokenIndex].mineTrade;
     }
-    this.ftMarket.buildWithdrawTokenTrans(this.withdrawTokenAmount, this.tokenIndex);
   } 
 
   changeTokenWithdraw(){
@@ -51,7 +51,7 @@ export class FTWithdrawTokenFromTrade {
   }
 
   withdrawTokenConfirm(){
-    this.ftMarket.confirmTrans();
+    this.ftMarket.buildAndSendWithdrawTokenTrans(this.withdrawTokenAmount, this.tokenIndex);
     this.close();
   }
 

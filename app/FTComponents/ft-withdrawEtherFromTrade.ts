@@ -1,3 +1,4 @@
+//ToDo remove component
 import { Component, OnInit } from '@angular/core';
 import { NgStyle } from '@angular/common';
 
@@ -38,7 +39,6 @@ export class FTWithdrawEtherFromTrade {
     } else {
       this.withdrawEtherAmount = this.ftMarket.getAccountBalance();
     }
-    this.ftMarket.buildWithdrawEtherTrans(this.withdrawEtherAmount);
   } 
 
   changeEtherWithdraw(){
@@ -48,7 +48,7 @@ export class FTWithdrawEtherFromTrade {
   }
 
   withdrawEtherConfirm(){
-    this.ftMarket.confirmTrans();
+    this.ftMarket.buildAndSendWithdrawEtherTrans(this.withdrawEtherAmount);
     this.close();
   }
 
