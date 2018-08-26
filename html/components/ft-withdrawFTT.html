@@ -30,7 +30,6 @@
         <li class="nav-item w-50 next">
             <a class="nav-link" (click)="withdrawEtherConfirm()" href="javascript:void(0);">
                 Withdraw {{ftweb3.fromWei(withdrawEtherAmount, 'ether') | number}}
-                <small><br>Gas Est: {{gasPrice | number}}</small>
             </a>
         </li>
     </ul>

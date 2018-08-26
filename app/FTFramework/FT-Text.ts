@@ -57,7 +57,7 @@ export class FTText {
         We made it easy so you can get on blockchain to transact, trade, or create something exciting all in one place.`);
         this.putText('en_us', 'home.startButton', 'Get Started');
         this.putText('en_us', 'home.startButtonUser', 'Sign In');
-        this.putText('en_us', 'home.startButtonAccount', 'CryptoPass');
+        this.putText('en_us', 'home.startButtonAccount', 'My CryptoPass');
         this.putText('en_us', 'home.learnMoreButton', 'About FTT');
         // Home main text image
         this.putText('en_us', 'home.StickImageURL', '/img/svg/FTT-Character.svg');

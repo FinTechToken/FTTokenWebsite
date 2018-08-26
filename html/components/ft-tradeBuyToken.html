@@ -49,7 +49,6 @@
         <li *ngIf="ftWallet.getBalance() != '0' && buyToken != '0' && buyPrice != '0'" class="nav-item w-50 next">
             <a class="nav-link" (click)="buyOfferConfirm()" href="javascript:void(0);">
                 Confirm Buy Offer
-                <small><br>Gas Est: {{ftMarket.Market.estimate | number}}</small>
             </a>
         </li>
         <li *ngIf="ftWallet.getBalance() != '0' && ( buyToken == '0' || buyPrice == '0')" class="nav-item w-50 next">
