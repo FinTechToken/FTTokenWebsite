@@ -36,15 +36,10 @@ import { FTAccountExit } from './FTComponents/ft-account-exit';
 import { FTAccountCreate } from './FTComponents/ft-account-create';
 import { FTAccountWallet } from './FTComponents/ft-account-wallet';
 import { FTAccountHistory } from './FTComponents/ft-account-history';
-import { FTAccountTrade } from './FTComponents/ft-account-trade';
 import { FTEnterImport } from './FTComponents/ft-enterImport';
 import { FTVerifyDelete } from './FTComponents/ft-verifyDelete';
 import { FTVerifyPhoneExists } from './FTComponents/ft-verifyPhoneExists';
 import { FTTokenInfo } from './FTComponents/ft-tokenInfo';
-import { FTDepositEtherToTrade } from './FTComponents/ft-depositEtherToTrade';
-import { FTWithdrawEtherFromTrade } from './FTComponents/ft-withdrawEtherFromTrade';
-import { FTDepositTokenToTrade } from './FTComponents/ft-depositTokenToTrade';
-import { FTWithdrawTokenFromTrade } from './FTComponents/ft-withdrawTokenFromTrade';
 import { FTExportToken } from './FTComponents/ft-exportToken';
 import { FTImportToken } from './FTComponents/ft-importToken';
 import { FTBuyEther } from './FTComponents/ft-buyEther';
@@ -88,7 +83,6 @@ import { FTMessagesOld } from './FTRoutes/FTMessagesOld';
     FTAccountCreate,
     FTAccountWallet,
     FTAccountHistory,
-    FTAccountTrade,
     FTEnterImport,
     FTVerifyDelete,
     FTVerifyPhoneExists,
@@ -101,10 +95,6 @@ import { FTMessagesOld } from './FTRoutes/FTMessagesOld';
     FTWithdrawFTT,
     FTReferFriend,
     FTSendToken,
-    FTDepositEtherToTrade,
-    FTWithdrawEtherFromTrade,
-    FTDepositTokenToTrade,
-    FTWithdrawTokenFromTrade,
     FTTradeBuyToken,
     FTTradeSellToken,
     FTTradeTokenBook,
