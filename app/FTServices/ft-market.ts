@@ -31,8 +31,8 @@ export class FTMarketService {
       bookTokenEther = new Map();
       bookEther ="0";
       bookToken = new Map();
-      returnEther=false;
-      returnToken=false;
+      returnEther=true;
+      returnToken=true;
 
     constructor ( private ftTokenWatch: FTTokenWatchService, private ftweb3: FTWeb3Service, private ftNum: FTBigNumberService, private cache: FTCache, private obs: FTObserver ) { 
         this.Market.contract = this.ftweb3.createContractInterface(this.Market.abi, "0x" + this.Market.address);
@@ -52,7 +52,6 @@ export class FTMarketService {
                     result => {
                       this.accountBalance = result;
                       if(this.returnEther && this.accountBalance != "0" && this.accountBalance){
-                        this.returnEther = false;
                         this.buildAndSendWithdrawEtherTrans(this.accountBalance);
                       }}
                   );
@@ -62,7 +61,6 @@ export class FTMarketService {
                       result => { 
                         token.mineTrade = result.toString();
                         if(this.returnToken && token.mineTrade != "0" && token.mineTrade){
-                          this.returnToken = false;
                           this.buildAndSendWithdrawTokenTrans(token.mineTrade,index);
                         }
                     });
@@ -80,12 +78,6 @@ export class FTMarketService {
 
                 this.ftTokenWatch.TokenWatch.forEach( (token,index) => {
                   //Get Book
-                  this.Market.contract.methods.accountBalance(token.address.substring(2), this.cache.getCache('encrypted_id').address).call().then(
-                    result => {
-                      if(result.toString() && result.toString() != "0")
-                        this.buildAndSendWithdrawTokenTrans(result.toString(),index);
-                    }
-                  )
                   token.subscribeBook = this.Market.contract.events.MessageOffer({
                     filter: {
                       mToken: [token.address]
@@ -178,7 +170,8 @@ export class FTMarketService {
       this.Market.serializedTx = null;
     }
 
-    buildAndSendDepositBuyTokenTrans(buyAmt, buyPrice, index, etherNeeded) {
+    buildAndSendDepositBuyTokenTrans(buyPrice, buyAmt, index, etherNeeded) {
+        this.returnEther=false;
         var ABIdata = this.Market.contract.methods.deposit('0x' + this.ftNum.getZero(), "0").encodeABI();
         this.Market.contract.methods.deposit('0x' + this.ftNum.getZero(), "0").estimateGas({from:'0x'+this.cache.getCache('encrypted_id').address,value:etherNeeded})
         .then( (gasEstimate) => {
@@ -227,11 +220,12 @@ export class FTMarketService {
         .then( (gasEstimate) => {
           this.setGasAndSignTrans(gasEstimate, "0", ABIdata)
             .then(signedTrans => {
-              this.ftweb3.sendSignedTrans(signedTrans).catch(err => console.log(err));
+              this.ftweb3.sendSignedTrans(signedTrans).catch(err => console.log(err)).then(res => {this.returnEther=true;});
               return null;
             })
+            .catch(err => console.log(err));
         })
-        .catch(err => null);
+        .catch(err => console.log(err));
       }
 
       buildSellOfferTrans(sellPrice, sellAmount, index) {
@@ -242,7 +236,7 @@ export class FTMarketService {
         .then( (gasEstimate) => {
           this.setGasAndSignTrans(gasEstimate, "0", ABIdata)
             .then(signedTrans => {
-              this.ftweb3.sendSignedTrans(signedTrans).catch(err => console.log(err));
+              this.ftweb3.sendSignedTrans(signedTrans).catch(err => console.log(err)).then(res => {this.returnToken=true;});
               return null;
             })
         })
@@ -264,6 +258,7 @@ export class FTMarketService {
       }
 
       buildAndSellDepositTokenTrans(amtToDeposit, index, price) {
+        this.returnToken=false;
         var ABIdata = this.ftTokenWatch.TokenWatch[index].contract.methods.approve('0x' + this.Market.address, amtToDeposit).encodeABI();
         this.ftTokenWatch.TokenWatch[index].contract.methods.approve('0x' + this.Market.address, amtToDeposit).estimateGas({from:'0x'+this.cache.getCache('encrypted_id').address})
         .then( (gasEstimate) => {

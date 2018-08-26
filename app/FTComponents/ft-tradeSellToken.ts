@@ -74,16 +74,7 @@ export class FTTradeSellToken {
 
   sellOfferConfirm(){
     this.ftMarket.buildAndSellDepositTokenTrans(this.sellToken,this.tokenIndex, this.sellPrice);
-    //this.tryBuildSellOfferTrans();
-    //this.ftMarket.confirmTrans();
     this.close();
-  }
-
-  tryBuildSellOfferTrans() {
-    if(this.sellPrice != "0" && this.sellToken != "0")
-      this.ftMarket.buildSellOfferTrans(this.sellPrice, this.sellToken, this.tokenIndex);
-    else
-      this.ftMarket.resetTrans();
   }
 
   amtToReceive() {
