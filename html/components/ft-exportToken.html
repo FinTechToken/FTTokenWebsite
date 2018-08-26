@@ -23,7 +23,7 @@
     </span>
 </div>
 <div class="modal-footer">
-    <ul class="nav nav-pills modal-nav text-center">
+    <ul *ngIf="gasPrice != '0'" class="nav nav-pills modal-nav text-center">
         <li class="nav-item w-50 prev">
             <a class="nav-link" (click)="close()" href="javascript:void(0);">
                 Cancel<br>
@@ -32,7 +32,13 @@
         <li class="nav-item w-50 next">
             <a class="nav-link" (click)="exportTokenConfirm()" href="javascript:void(0);">
                 Export {{ftweb3.fromWei(exportTokenAmount, 'ether') | number}}
-                <small><br>Gas Est: {{gasPrice | number}}</small>
+            </a>
+        </li>
+    </ul>
+    <ul *ngIf="gasPrice == '0'" class="nav nav-pills modal-nav text-center">
+        <li class="nav-item w-100 prev">
+            <a class="nav-link" (click)="close()" href="javascript:void(0);">
+                Cancel<br>
             </a>
         </li>
     </ul>

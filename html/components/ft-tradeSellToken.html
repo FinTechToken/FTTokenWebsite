@@ -61,7 +61,6 @@
         <li *ngIf="ftTokenWatch.TokenWatch[tokenIndex].mine != '0' && sellToken != '0' && sellPrice != '0' && ftNum.compareBigNumber(amtToReceive(),'0') >0" class="nav-item w-50 next">
             <a class="nav-link" (click)="sellOfferConfirm()" href="javascript:void(0);">
                 Confirm Sell Offer
-                <small><br>Gas Est: {{ftMarket.Market.estimate | number}}</small>
             </a>
         </li>
         <li *ngIf="ftTokenWatch.TokenWatch[tokenIndex].mine != '0' && ( sellToken == '0' || sellPrice == '0')" class="nav-item w-50 next">

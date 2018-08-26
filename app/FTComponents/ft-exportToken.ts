@@ -72,10 +72,12 @@ export class FTExportToken {
 
   private checkExportGas() {
     try {
+      this.gasPrice='0';
       this.ABIdata = this.ftTokenWatch.TokenWatch[this.tokenIndex].contract.methods.export(this.exportAddress, this.exportTokenAmount ).encodeABI();
       this.exportAddressClearError();
       this.ftTokenWatch.TokenWatch[this.tokenIndex].contract.methods.export(this.exportAddress, this.exportTokenAmount ).estimateGas({from:'0x'+this.cache.getCache('encrypted_id').address,value:0})
       .then( (gasEstimate) => {
+        console.log('working');
         this.gasPrice=gasEstimate;
       })
       .catch(err => {console.log(err.message);});
@@ -88,8 +90,10 @@ export class FTExportToken {
     if(this.tokenIndex==1){
       if(this.checkBTC(this.exportAddress))
         this.checkExportGas();
-      else
+      else {
+        this.gasPrice = '0';
         this.exportAddressSetError('Not BitCoin Address');
+      }
     } else if(this.tokenIndex==0)
       this.checkExportGas();
   }
