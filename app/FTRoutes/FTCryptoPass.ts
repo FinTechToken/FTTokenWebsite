@@ -80,9 +80,9 @@ export class FTCryptoPass {
         let pw = (document.getElementById('PW') as HTMLInputElement).value;
         let pwc = (document.getElementById('PWc') as HTMLInputElement).value;
         if(!pw) {
-            this.createAccountSetError('Enter 3 to 5 random words to create a passphrase');
+            this.createAccountSetError('Enter password');
         } else if(pw != pwc){
-            this.createAccountSetError('Pass phrase needs to match');
+            this.createAccountSetError('Password needs to match');
         } else {
             setTimeout(()=> {
                 this.createAccountNow(pw);

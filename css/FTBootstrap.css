@@ -46,6 +46,38 @@ body {
 
 }
 
+.accordion {
+}
+.card-header {
+    background-color:#fafafa;
+}
+.card-body {
+    padding:15px;
+}
+.accordion .card-header {
+    cursor: pointer; 
+}
+.blockchainBTN {
+    white-space: normal;
+    padding:0px;
+    text-align:left;
+    margin-left:-12px;
+    margin-right: -12px;
+}
+
+.collapse{
+    max-height:0;
+    display:block;
+    overflow:hidden;
+}
+
+.collapse.show {
+    overflow:hidden;
+    transition:max-height 1s ease-out;
+    height:auto;
+    max-height:800px;
+}
+
 .backteal {
     background-color: #AACDD2;
 }
@@ -375,6 +407,8 @@ b, strong {
     padding-left: 1rem !important;
     font-size:1.25em;
 }
+
+
 
 a {
     color: #0088b8;
