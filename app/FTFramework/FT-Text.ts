@@ -37,12 +37,12 @@ export class FTText {
         this.putText('en_us', 'header.messagesName', 'Messages');
         // Footer
         this.putText('en_us', 'footer.Code', 'Token Sourced Code');
-        this.putText('en_us', 'footer.Community', 'Decentralized Community');
+        this.putText('en_us', 'footer.Community', 'FTT Community');
         this.putText('en_us', 'footer.CodeSmall', 'Token Sourced Code');
-        this.putText('en_us', 'footer.CommunitySmall', 'Community');
+        this.putText('en_us', 'footer.CommunitySmall', 'FTT Community');
         // FooterLinks
         this.putText('en_us', 'footer.CodeLink', 'https://github.com/FinTechToken');
-        this.putText('en_us', 'footer.CommunityLink', 'http://decstack.com/');
+        this.putText('en_us', 'footer.CommunityLink', 'https://hub.decstack.com/projects/channels/fintechtoken');
         // Home Hero
         this.putText('en_us', 'home.Hero1', 'One Blockchain Hub<br>Connecting All Crypto');
         this.putText('en_us', 'home.Hero2', `
@@ -58,14 +58,14 @@ export class FTText {
         this.putText('en_us', 'home.startButton', 'Get Started');
         this.putText('en_us', 'home.startButtonUser', 'Sign In');
         this.putText('en_us', 'home.startButtonAccount', 'My CryptoPass');
-        this.putText('en_us', 'home.learnMoreButton', 'About FTT');
+        this.putText('en_us', 'home.learnMoreButton', 'Learn More');
         // Home main text image
         this.putText('en_us', 'home.StickImageURL', '/img/svg/FTT-Character.svg');
         this.putText('en_us', 'home.blockImageURL', '/img/svg/FinTechToken_Block.svg');
         // Home Explanations
         this.putText('en_us', 'home.explainationImageHeader1', 'Secured with CryptoPass');
         this.putText('en_us', 'home.explainationWhatWeDo1', `
-        Add any major crypto currency to CryptoPass. Get fast cheap transactions using the latest community built tech.`);
+        Use any major crypto currency with CryptoPass. Get fast cheap transactions on our community built platform.`);
         this.putText('en_us', 'home.explainationImageHeader2', 'BlockChain DNA');
         this.putText('en_us', 'home.explainationWhatWeDo2', `
         The FinTechToken (FTT) platform gives engineers building blocks so they can quickly deploy blockchain technologies for mass user adoption.`);

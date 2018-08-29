@@ -50,14 +50,13 @@
                                             <form (submit)="createAccount();">
                                                 <div class="form-group" [ngClass]="pwGroupStatus" id ="PWgroup">
                                                     <label for="PW">
-                                                        Pick a secure pass phrase:
+                                                        Pick a secure password:
                                                     </label>
-                                                    <input type="password" [ngClass]="pwGroupStatus == 'has-danger' ? 'form-control-warning' : pwGroupStatus == 'has-success' ? 'form-control-success' : ''" class="form-control" id="PW" placeholder="Enter 3-7 random words">
+                                                    <input type="password" [ngClass]="pwGroupStatus == 'has-danger' ? 'form-control-warning' : pwGroupStatus == 'has-success' ? 'form-control-success' : ''" class="form-control" id="PW" placeholder="Enter password">
                                                     <div class="form-control-feedback" id="createbad"></div>
-                                                    <input type="password" [ngClass]="pwGroupStatus == 'has-danger' ? 'form-control-warning' : pwGroupStatus == 'has-success' ? 'form-control-success' : ''" class="form-control" id="PWc" placeholder="Reenter your pass phrase">
+                                                    <input type="password" [ngClass]="pwGroupStatus == 'has-danger' ? 'form-control-warning' : pwGroupStatus == 'has-success' ? 'form-control-success' : ''" class="form-control" id="PWc" placeholder="Reenter your password">
                                                 </div>
                                                 <input type="submit" value="Create CryptoPass" class="btn btn-lg btn-ft" id="launch">
-                                                <small><Br>(Encryption may take awhile)</small>
                                             </form>
                                         </div>
                                     </div>
