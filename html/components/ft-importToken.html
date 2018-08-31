@@ -1,21 +1,21 @@
 
 <div class="modal-header">
-    <h5 class="modal-title">Import Crypto Into Your FTT account</h5>
+    <h5 class="modal-title">Import {{ftToken.TokenWatch[this.tokenIndex].name}} into your account</h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close();" href="javascript:void(0);">
     <span aria-hidden="true">&times;</span>
     </button>
 </div>
 <div class="modal-body" [ngStyle]="{'height':modalHeight}">
     <br>
-    Send crypto to this address to import it to the FTT network.<br><br>
+    Send {{ftToken.TokenWatch[this.tokenIndex].name}} to this address and it will be added to your account.<br><br>
     <strong>{{tokenAddress}}</strong><br><br>
-    <small>Once crypto is imported to your FTT account. You get 0 gas costs and 1 second blocks.</small>
+    <!--<small>Once crypto is imported. You can use it on the FTT network with 0 gas costs and 1 second blocks.</small>
 
-    <br><Br>
+    <br><Br>!-->
     <span *ngIf="ftWallet.bankTransImport.length"><strong>Past Imports<br></strong></span>
     <span *ngFor="let import of ftWallet.bankTransImport">
         <span *ngIf="import.BlockNumber==0">We are waiting for check.<br></span>
-        <span *ngIf="import.BlockNumber==tokenIndex+1 && import.Crypto==import.BlockNumber">We are waiting for crypto.<br></span>
+        <span *ngIf="import.BlockNumber==tokenIndex+1 && import.Crypto==import.BlockNumber">We are waiting for {{ftToken.TokenWatch[this.tokenIndex].name}}.<br></span>
         <span *ngIf="import.Crypto==tokenIndex+1 && import.Crypto!=import.BlockNumber">Trans: {{import.BlockNumber}} - Amount: {{ftweb3.fromWei(import.Amount,'ether')}} - Processed: {{import.Processed}}<br></span>
     </span>
 </div>
@@ -28,7 +28,7 @@
         </li>
         <li class="nav-item w-50 next">
             <a class="nav-link" (click)="close()" href="javascript:void(0);">
-                Okay
+                Sending {{ftToken.TokenWatch[this.tokenIndex].name}}
             </a>
         </li>
     </ul>

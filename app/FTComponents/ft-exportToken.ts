@@ -34,7 +34,7 @@ export class FTExportToken {
   ALPHABET = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
   ALPHABET_MAP = {}
 
-  constructor( public ftTokenWatch: FTTokenWatchService, public ftCrypto: FTCryptoPassService, public ftNum: FTBigNumberService, public ftWallet: FTWalletService, public ftweb3: FTWeb3Service, public ftMarket: FTMarketService, private cache: FTCache, private text: FTText, private obs: FTObserver, private http: FTHttpClient, private session: FTSession, private FTLocalStorage: FTStorage ) 
+  constructor( public ftToken: FTTokenWatchService, public ftCrypto: FTCryptoPassService, public ftNum: FTBigNumberService, public ftWallet: FTWalletService, public ftweb3: FTWeb3Service, public ftMarket: FTMarketService, private cache: FTCache, private text: FTText, private obs: FTObserver, private http: FTHttpClient, private session: FTSession, private FTLocalStorage: FTStorage ) 
   { 
     this.setText();
     for(let i = 0; i < this.ALPHABET.length; i++) {
@@ -49,7 +49,7 @@ export class FTExportToken {
       this.exportTokenAmount = this.obs.getObserverValue('modalNumber');
       this.obs.deleteObserver('modalNumber');
     } else {
-      this.exportTokenAmount = this.ftTokenWatch.TokenWatch[this.tokenIndex].mine;
+      this.exportTokenAmount = this.ftToken.TokenWatch[this.tokenIndex].mine;
     }
     if(this.obs.getObserverValue('exportAddress')) {
       this.exportAddress = this.obs.getObserverValue('exportAddress');
@@ -73,9 +73,9 @@ export class FTExportToken {
   private checkExportGas() {
     try {
       this.gasPrice='0';
-      this.ABIdata = this.ftTokenWatch.TokenWatch[this.tokenIndex].contract.methods.export(this.exportAddress, this.exportTokenAmount ).encodeABI();
+      this.ABIdata = this.ftToken.TokenWatch[this.tokenIndex].contract.methods.export(this.exportAddress, this.exportTokenAmount ).encodeABI();
       this.exportAddressClearError();
-      this.ftTokenWatch.TokenWatch[this.tokenIndex].contract.methods.export(this.exportAddress, this.exportTokenAmount ).estimateGas({from:'0x'+this.cache.getCache('encrypted_id').address,value:0})
+      this.ftToken.TokenWatch[this.tokenIndex].contract.methods.export(this.exportAddress, this.exportTokenAmount ).estimateGas({from:'0x'+this.cache.getCache('encrypted_id').address,value:0})
       .then( (gasEstimate) => {
         console.log('working');
         this.gasPrice=gasEstimate;
@@ -100,17 +100,17 @@ export class FTExportToken {
 
   changeExportToken(){
     this.cache.putCache('number', this.exportTokenAmount);
-    this.cache.putCache('maxNumber', this.ftTokenWatch.TokenWatch[this.tokenIndex].mine);
+    this.cache.putCache('maxNumber', this.ftToken.TokenWatch[this.tokenIndex].mine);
     this.obs.putObserver('exportAddress',this.exportAddress);
     this.obs.putObserver('modal','pickNumber');
   }
 
   exportTokenConfirm(){
-    this.ABIdata = this.ftTokenWatch.TokenWatch[this.tokenIndex].contract.methods.export(this.exportAddress, this.exportTokenAmount ).encodeABI();
-    this.ftTokenWatch.TokenWatch[this.tokenIndex].contract.methods.export(this.exportAddress, this.exportTokenAmount ).estimateGas({from:'0x'+this.cache.getCache('encrypted_id').address,value:0})
+    this.ABIdata = this.ftToken.TokenWatch[this.tokenIndex].contract.methods.export(this.exportAddress, this.exportTokenAmount ).encodeABI();
+    this.ftToken.TokenWatch[this.tokenIndex].contract.methods.export(this.exportAddress, this.exportTokenAmount ).estimateGas({from:'0x'+this.cache.getCache('encrypted_id').address,value:0})
     .then( (gasEstimate) => {
       this.gasPrice=gasEstimate;
-      this.ftweb3.signAndSendTrans(gasEstimate, this.ftTokenWatch.TokenWatch[this.tokenIndex].address.slice(2), '0', this.ABIdata)
+      this.ftweb3.signAndSendTrans(gasEstimate, this.ftToken.TokenWatch[this.tokenIndex].address.slice(2), '0', this.ABIdata)
       .then(data=> {
         this.close();
       })

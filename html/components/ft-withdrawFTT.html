@@ -1,23 +1,24 @@
 
 <div class="modal-header">
-    <h5 class="modal-title">Withdraw USD from your FTT account</h5>
+    <h5 class="modal-title">Withdraw $ from your account</h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close();" href="javascript:void(0);">
     <span aria-hidden="true">&times;</span>
     </button>
 </div>
 <div class="modal-body" [ngStyle]="{'height':modalHeight}">
     <Br>
-    Amount to withdraw: <a (click)="changeEtherWithdraw()" href="javascript:void(0);">{{ftweb3.fromWei(withdrawEtherAmount, 'ether')}}</a>
-    <br>Amount remaining: {{ftweb3.fromWei(ftNum.subtractBigNumber(ftWallet.getBalance(), withdrawEtherAmount), 'ether') }}
+    Amount: <a (click)="changeEtherWithdraw()" href="javascript:void(0);">${{ftweb3.fromWei(withdrawEtherAmount, 'ether')}}</a>
+    <br>Amount remaining: ${{ftweb3.fromWei(ftNum.subtractBigNumber(ftWallet.getBalance(), withdrawEtherAmount), 'ether') }}
     <br><Br>
-    We send check to your address within 14 days<br>
+    A check will be sent to your address within 14 days<br>
     <br>
-    <small>Note: Check will be made out to {{ftCrypto.name}} and mailed to {{ftCrypto.homeAddress}}.</small>
-    <small><br>Note: Soon, we will add other options to get money.</small>
+    <small>*Check will be made out to {{ftCrypto.name}} and mailed to {{ftCrypto.homeAddress}}.</small>
+    <br>
+    <small>*Amount will be round down to nearest penny.</small>
     <br><Br>
     <span *ngIf="ftWallet.bankTransWithdraw.length"><strong>Past Withdrawals<br></strong></span>
     <span *ngFor="let withdraw of ftWallet.bankTransWithdraw">
-        <span *ngIf="withdraw.BlockNumber!='0'">Block: {{withdraw.BlockNumber}} - Amount: {{ftweb3.fromWei(withdraw.Amount,'ether')}} - Processed: {{withdraw.Processed}}<br></span>
+        <span *ngIf="withdraw.BlockNumber!='0'">Block: {{withdraw.BlockNumber}} - Amount: ${{ftweb3.fromWei(withdraw.Amount,'ether')}} - Processed: {{withdraw.Processed}}<br></span>
     </span>
 </div>
 <div class="modal-footer">
@@ -29,7 +30,7 @@
         </li>
         <li class="nav-item w-50 next">
             <a class="nav-link" (click)="withdrawEtherConfirm()" href="javascript:void(0);">
-                Withdraw {{ftweb3.fromWei(withdrawEtherAmount, 'ether') | number}}
+                Withdraw ${{ftweb3.fromWei(withdrawEtherAmount, 'ether') | number}}
             </a>
         </li>
     </ul>

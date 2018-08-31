@@ -11,7 +11,7 @@
                                 <div class="media-body">
                                     <h2 class="padleft">
                                         <i class="hidden-xl-up icon-disc icon-gradient"></i>
-                                        {{tokenName}} Token
+                                        {{tokenName}}
                                         <span *ngIf="tokenAddress" class="p-small return m-left-m30">0x{{tokenAddress}}</span>
                                     </h2>    
                                     <ul class="nav nav-tabs">
@@ -25,17 +25,18 @@
                                 <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 1 }">
                                     <h4>
                                         <i (click)="showTokenInfo();" href="javascript:void(0);" class="icon-info hover"></i>
-                                        <strong>O</strong>verview
+                                        <strong>S</strong>orry This Is A Mess
                                     </h4>
                                     <div>
-                                        <span>*ToDo: add description of Token.</span>
+                                        
                                         <br>
-                                        <strong>Ether Held By Contract:</strong> {{ftweb3.fromWei(etherBalance,'ether')}}<br>
+                                        <strong>$ Held By Contract:</strong> ${{ftweb3.fromWei(etherBalance,'ether')}}<br>
                                         <span *ngIf="ftTokenWatch.TokenWatch[tokenIndex].lastPrice">
-                                            <strong>LastPrice:</strong>
+                                            <strong>Last Trade:<br></strong>
                                             <span *ngIf="ftTokenWatch.TokenWatch[tokenIndex].lastPrice=='0'">Never Traded</span>
                                             <span *ngIf="ftTokenWatch.TokenWatch[tokenIndex].lastPrice!='0'">
-                                                {{+ftTokenWatch.TokenWatch[tokenIndex].lastPrice/1000000}} Ether per token for {{ftweb3.fromWei(ftTokenWatch.TokenWatch[tokenIndex].lastCount, 'ether') | number : '1.0-18'}} tokens
+                                                Price: ${{+ftTokenWatch.TokenWatch[tokenIndex].lastPrice/1000000}} per {{tokenName}}<br>
+                                                Count: {{ftweb3.fromWei(ftTokenWatch.TokenWatch[tokenIndex].lastCount, 'ether') | number : '1.0-18'}}
                                             </span>
                                             <br>
                                         </span>
@@ -81,7 +82,7 @@
                                                     <small *ngIf="errMessage[myindex]"><br>{{errMessage[myindex]}}</small>
                                                 </a>
                                                 <span *ngIf="results[myindex]!==undefined"><strong>Result:</strong> {{results[myindex]}}</span>
-                                                <span *ngIf="function.payable"><br><strong>Amount to send:</strong> <a (click)="changeAmountToSend(myindex)" href="javascript:void(0);">{{ftweb3.fromWei(amountToSend[myindex], 'ether')}}</a><br></span>
+                                                <span *ngIf="function.payable"><br><strong>$ to send:</strong> <a (click)="changeAmountToSend(myindex)" href="javascript:void(0);">${{ftweb3.fromWei(amountToSend[myindex], 'ether')}}</a><br></span>
                                                 <span *ngFor="let input of function.inputs; let myindex2=index">
                                                     <br><strong>{{input.name}}:</strong> Type:{{input.type}} Value:
                                                     <a *ngIf="input.type.substring(0,4) == 'uint'" (click)="changeInputAmount(myindex, myindex2)" href="javascript:void(0);">{{ftweb3.fromWei(inputs[myindex][myindex2], 'ether')}}</a>
@@ -90,6 +91,7 @@
                                                 <br>
                                             </div>
                                         </span>
+                                        <br><Br>
                                     </div>
                                 </div>
                                 

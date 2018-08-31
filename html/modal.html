@@ -28,20 +28,21 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content roboto">
             <div class="modal-header">
-                <h5 class="modal-title">{{ftweb3.fromWei(number, 'ether')}} Ether </h5>
+                <h5 class="modal-title">{{ftNum.getEther(number) | number : '1.0-0'}}{{ftweb3.fromWei(ftNum.getFraction(number),'ether').substring(1)}}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close();" href="javascript:void(0);">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body"  [ngStyle]="{'height':modalHeight}">
-                <small>* An Ether is 1 with 18 zero's after it. We use "Ether" as an amount. It may represent an amount in tokens, or an amount of ether.<br><Br></small>
-                {{ftNum.getEther(number) | number : '1.0-0'}} Ether<br>
+                <strong>{{ftNum.getEther(number) | number : '1.0-0'}}</strong><br>
                 {{ftNum.getFinney(number) | number : '1.0-0'}} Finney<br>
                 {{ftNum.getSzabo(number) | number : '1.0-0'}} Szabo<br>
                 {{ftNum.getGwei(number) | number : '1.0-0'}} Gwei<br>
                 {{ftNum.getMwei(number) | number : '1.0-0'}} Mwei <br>
                 {{ftNum.getKwei(number) | number : '1.0-0'}} Kwei <br>
                 {{ftNum.getWei(number) | number : '1.0-0'}} Wei<Br><Br>
+                <small>* Crypto is precise to 18 decimals. To make numbers readable we display decimals in sets of 3 digits. 
+                    We use Ethereum termonology for Finney, Szabo, Gwei, Mwei, Kwei, and Wei. For example: 250 Finney is equal to 25 cents.<br><Br></small>
             </div>
             <div class="modal-footer">
                 <ul class="nav nav-pills modal-nav text-center">
@@ -60,14 +61,14 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content roboto">
             <div class="modal-header">
-                <h5 class="modal-title">Pick amount: {{ftweb3.fromWei(number, 'ether')}} </h5>
+                <h5 class="modal-title">Pick amount: {{ftNum.getEther(number) | number : '1.0-0'}}{{ftweb3.fromWei(ftNum.getFraction(number),'ether').substring(1)}} </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()" href="javascript:void(0);">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body"  [ngStyle]="{'height':modalHeight}">
-                <div *ngIf="maxNumber != '0'">Maximum amount is {{ftweb3.fromWei(maxNumber, 'ether')}}</div>
-                <input min="0" max="999999999999" type="number" (change)="updateModalNumber();" value="{{ftNum.getEther(number)}}" id="modalNumberEther"> Ether<br>
+                <div *ngIf="maxNumber != '0'">Maximum is {{ftweb3.fromWei(maxNumber, 'ether')}}</div>
+                <input min="0" max="999999999999" type="number" (change)="updateModalNumber();" value="{{ftNum.getEther(number)}}" id="modalNumberEther"><br>
                 <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{ftNum.getFinney(number) | number : '1.0-0'}}" id="modalNumberFinney"> Finney<br>
                 <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{ftNum.getSzabo(number) | number : '1.0-0'}}" id="modalNumberSzabo"> Szabo<br>
                 <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{ftNum.getGwei(number) | number : '1.0-0'}}" id="modalNumberGwei"> Gwei<br>
@@ -92,7 +93,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content roboto">
             <div class="modal-header">
-                <h5 class="modal-title">Pick amount: {{ftweb3.fromWei(number, 'ether')}}</h5>
+                <h5 class="modal-title">Pick amount: {{ftNum.getEther(number) | number : '1.0-0'}}{{ftweb3.fromWei(ftNum.getFraction(number),'ether').substring(1)}}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()" href="javascript:void(0);">
                 <span aria-hidden="true">&times;</span>
                 </button>
