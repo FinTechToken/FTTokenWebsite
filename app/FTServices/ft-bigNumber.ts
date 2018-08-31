@@ -107,6 +107,15 @@ export class FTBigNumberService {
         return false;
     }
 
+    getFraction(number: string): string{
+        if(number.length > 18)
+            number = number.substr(number.length - 18);
+        if(number.length > 0)
+            return number.substr(0, number.length-0);
+        else
+            return "0";
+    }
+
     getEther(number:string): number{
         if(number.length > 18){
             return +number.substr(0,number.length-18);

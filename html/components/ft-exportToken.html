@@ -1,21 +1,21 @@
 
 <div class="modal-header">
-    <h5 class="modal-title">Export Crypto from your FTT account</h5>
+    <h5 class="modal-title">Export {{ftToken.TokenWatch[this.tokenIndex].name}} from your account</h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close();" href="javascript:void(0);">
     <span aria-hidden="true">&times;</span>
     </button>
 </div>
 <div class="modal-body" [ngStyle]="{'height':modalHeight}">
     <Br>
-    Amount to export: <a (click)="changeExportToken()" href="javascript:void(0);">{{ftweb3.fromWei(exportTokenAmount, 'ether')}}</a>
-    <br>Amount remaining: {{ftweb3.fromWei(ftNum.subtractBigNumber(ftTokenWatch.TokenWatch[tokenIndex].mine, exportTokenAmount), 'ether') }}
+    Amount: <a (click)="changeExportToken()" href="javascript:void(0);">{{ftweb3.fromWei(exportTokenAmount, 'ether')}}</a>
+    <br>Amount remaining: {{ftweb3.fromWei(ftNum.subtractBigNumber(ftToken.TokenWatch[tokenIndex].mine, exportTokenAmount), 'ether') }}
     <br><Br>
     <div class="form-group" [ngClass]="exportAddressStatus" id="exportAddressGroup">
-        <label for="exportAddress">Enter Address To Send Crypto To:</label>
+        <label for="exportAddress">Enter Address To Send {{ftToken.TokenWatch[this.tokenIndex].name}} To:</label>
         <input type="text" class="form-control" id="exportAddress" placeholder='0x...' (keyup)="exportAddressChange($event)" [(ngModel)]="exportAddress" [ngClass]="exportAddressStatus == 'has-danger' ? 'form-control-warning' : ''" >
         <div class="form-control-feedback" id="exportAddressBad"><br></div>
     </div>
-    We will export from your account within 7 days.<br>
+    We will export {{ftToken.TokenWatch[this.tokenIndex].name}} from your account to this address within 7 days.<br>
     <br><Br>
     <span *ngIf="ftWallet.bankTransExport.length"><strong>Past Exports<br></strong></span>
     <span *ngFor="let export of ftWallet.bankTransExport">
@@ -31,7 +31,7 @@
         </li>
         <li class="nav-item w-50 next">
             <a class="nav-link" (click)="exportTokenConfirm()" href="javascript:void(0);">
-                Export {{ftweb3.fromWei(exportTokenAmount, 'ether') | number}}
+                Export {{ftweb3.fromWei(exportTokenAmount, 'ether') | number}} {{ftToken.TokenWatch[this.tokenIndex].name}}
             </a>
         </li>
     </ul>

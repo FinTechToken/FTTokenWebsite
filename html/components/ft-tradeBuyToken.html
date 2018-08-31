@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h5 class="modal-title">Buy a {{ftTokenWatch.TokenWatch[tokenIndex].name}}</h5>
+    <h5 class="modal-title">Buy {{ftTokenWatch.TokenWatch[tokenIndex].name}}</h5>
     <small><a (click)="sell()" href="javascript:void(0);">Sell</a></small>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close();" href="javascript:void(0);">
     <span aria-hidden="true">&times;</span>
@@ -14,16 +14,15 @@
     <div class="tab-white tab-content text-left">
         <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': buyTabs == 1 }">
             <div *ngIf="ftWallet.getBalance() == '0'">
-                You need Ether to purchase a token. Try selling a token or adding Ether to your account.
+                You need $ to purchase {{ftTokenWatch.TokenWatch[tokenIndex].name}}. Try adding $ to your account.
             </div>
             <div *ngIf="ftWallet.getBalance() != '0'">
-                Number of Tokens: <a (click)="changeBuyToken()" href="javascript:void(0);">{{ftweb3.fromWei(buyToken, 'ether')}}</a><br>
-                Price in FTT per token: <a (click)="changeBuyPrice()" href="javascript:void(0);">{{ftweb3.fromWei(buyPrice, 'ether')}}</a><br>
-                Total FTT: {{ftweb3.fromWei(ftNum.divideBigNumber(ftNum.multiplyBigNumber(buyToken,ftNum.divideBigNumber(buyPrice,"1000000000000")),"1000000"),'ether') }}
-                <br><br>
-                Transactional fee: 0<br>
-                Add to book fee: 0.001<br>
-                <strong>Total FTT: {{ftweb3.fromWei(ftNum.addBigNumber(ftNum.divideBigNumber(ftNum.multiplyBigNumber(buyToken,ftNum.divideBigNumber(buyPrice,"1000000000000")),"1000000"),"1000000000000000"),'ether')}}</strong><br>
+                Amount: <a (click)="changeBuyToken()" href="javascript:void(0);">{{ftweb3.fromWei(buyToken, 'ether')}}</a><br>
+                Price Per {{ftTokenWatch.TokenWatch[tokenIndex].name}}: <a (click)="changeBuyPrice()" href="javascript:void(0);">${{ftweb3.fromWei(buyPrice, 'ether')}}</a><br>
+                <!--Total: ${{ftweb3.fromWei(ftNum.divideBigNumber(ftNum.multiplyBigNumber(buyToken,ftNum.divideBigNumber(buyPrice,"1000000000000")),"1000000"),'ether') }}
+                !-->
+                Fees: $0.001<br><br>
+                <strong>Total: ${{ftweb3.fromWei(ftNum.addBigNumber(ftNum.divideBigNumber(ftNum.multiplyBigNumber(buyToken,ftNum.divideBigNumber(buyPrice,"1000000000000")),"1000000"),"1000000000000000"),'ether')}}</strong><br>
             </div>
         </div>
         <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': buyTabs == 2 }">

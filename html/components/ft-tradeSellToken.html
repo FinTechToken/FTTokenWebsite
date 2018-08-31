@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h5 class="modal-title">Sell a {{ftTokenWatch.TokenWatch[tokenIndex].name}}</h5>
+    <h5 class="modal-title">Sell {{ftTokenWatch.TokenWatch[tokenIndex].name}}</h5>
     <small><a (click)="buy()" href="javascript:void(0);">Buy</a></small>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close();" href="javascript:void(0);">
     <span aria-hidden="true">&times;</span>
@@ -14,14 +14,14 @@
     <div class="tab-white tab-content text-left">
         <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': sellTabs == 1 }">
             <div *ngIf="ftTokenWatch.TokenWatch[tokenIndex].mine == '0'">
-                You need tokens to sell. Try buying a token or moving tokens to your trading account.
+                You need {{ftTokenWatch.TokenWatch[tokenIndex].name}} to sell. Try buying or importing {{ftTokenWatch.TokenWatch[tokenIndex].name}} to your account.
             </div>
             <div *ngIf="ftTokenWatch.TokenWatch[tokenIndex].mine != '0'">
-                Number of Tokens: <a (click)="changeSellToken()" href="javascript:void(0);">{{ftweb3.fromWei(sellToken, 'ether')}}</a><br>
-                Price in FTT per token: <a (click)="changeSellPrice()" href="javascript:void(0);">{{ftweb3.fromWei(sellPrice, 'ether')}}</a><br>
-                Total FTT: {{ftweb3.fromWei(ftNum.divideBigNumber(ftNum.multiplyBigNumber(sellToken,ftNum.divideBigNumber(sellPrice,"1000000000000")),"1000000"),'ether') }}
-                <br><br>
-                - Transactional fee: {{ftweb3.fromWei(
+                Amount: <a (click)="changeSellToken()" href="javascript:void(0);">{{ftweb3.fromWei(sellToken, 'ether')}}</a><br>
+                Minimum Price Per {{ftTokenWatch.TokenWatch[tokenIndex].name}}: <a (click)="changeSellPrice()" href="javascript:void(0);">${{ftweb3.fromWei(sellPrice, 'ether')}}</a><br>
+                <!--Total: ${{ftweb3.fromWei(ftNum.divideBigNumber(ftNum.multiplyBigNumber(sellToken,ftNum.divideBigNumber(sellPrice,"1000000000000")),"1000000"),'ether') }}
+                    !-->
+                Fees: $0.001 + ${{ftweb3.fromWei(
                     ftNum.divideBigNumber(
                         ftNum.multiplyBigNumber(
                             sellToken,
@@ -31,9 +31,8 @@
                             )
                         ),
                         "1000000000"
-                    ), 'ether') }}<br>
-                - Add to book fee: 0.001<br>
-                <strong>Total FTT You Get: {{ftweb3.fromWei(
+                    ), 'ether') }}<br><br>
+                <strong>Total: ${{ftweb3.fromWei(
                         amtToReceive(),'ether') }}
                 </strong>
             </div>

@@ -4,12 +4,12 @@
 </h4>
 <div>
   <table class="table table-sm table-bordered">
-      <tr><th>Block</th><th>Token</th><th>Price</th><th>Tokens</th></tr>
+      <tr><th></th><th>Block</th><th>Price</th><th>Count</th></tr>
       <ng-container *ngFor="let key of getTrades()">
         <tr>
-          <td>{{key}}</td>
           <td>{{ftTokenWatch.TokenWatch[ftTokenWatch.getTokenIndexByAddress(ftMarket.myTradesMap[key].token)].name}}</td>
-          <td>{{+ftMarket.myTradesMap[key].price/1000000}}</td>
+          <td>{{key}}</td>
+          <td>${{+ftMarket.myTradesMap[key].price/1000000}}</td>
           <td>{{ftweb3.fromWei(ftMarket.myTradesMap[key].count, 'ether') | number: '1.0-6'}}</td>
         </tr>
       </ng-container>

@@ -1,6 +1,5 @@
 <div class="modal-header">
-    <h5 class="modal-title">Send {{ftToken.TokenWatch[this.tokenIndex].name}} Token To Cell Number
-        <small><br>If person doesn't accept within 30 days funds will be returned to you.</small>
+    <h5 class="modal-title">Send {{ftToken.TokenWatch[this.tokenIndex].name}} To A Cell Number
     </h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close();" href="javascript:void(0);">
         <span aria-hidden="true">&times;</span>
@@ -19,14 +18,17 @@
                 <input class="form-control" style="display:inline-block; width:4.5em;" type="tel" value="" placeholder="" minlength="4" maxlength="4" size="3" id="tel3" [(ngModel)]="tel3">
                 <br>
                 <Br>
-                Tokens To Send: <a (click)="changeSendAmount()" href="javascript:void(0);">{{ftweb3.fromWei(sendAmount, 'ether')}}</a>
+                Amount of {{ftToken.TokenWatch[this.tokenIndex].name}}: <a (click)="changeSendAmount()" href="javascript:void(0);">{{ftweb3.fromWei(sendAmount, 'ether')}}</a>
                 <br>
-                Fees: $0.10 FTT &
-                {{ftweb3.fromWei(ftNum.divideBigNumber(sendAmount,"1000"), 'ether')}} Tokens
+                Fees: $0.10 +
+                {{ftweb3.fromWei(ftNum.divideBigNumber(sendAmount,"1000"), 'ether')}} {{ftToken.TokenWatch[this.tokenIndex].name}}
+                <!--<br>
+                Amount Person Gets: {{ftweb3.fromWei(ftNum.subtractBigNumber(sendAmount,ftNum.divideBigNumber(sendAmount,"1000")), 'ether')}}
+                !-->
+                <br><br>
+                <small>*Fee = $0.10 + 0.1% of {{ftToken.TokenWatch[this.tokenIndex].name}}</small>
                 <br>
-                Tokens Person Gets: {{ftweb3.fromWei(ftNum.subtractBigNumber(sendAmount,ftNum.divideBigNumber(sendAmount,"1000")), 'ether')}}
-                <br>
-                <small>Costs $0.10 FTT + 0.1% of tokens</small>
+                <small>*If person does not accept, {{ftToken.TokenWatch[this.tokenIndex].name}} will be returned to you after 30 days.</small>
             </div>
         </div>
         <div *ngIf="send_step==send_steps.success">
@@ -45,7 +47,7 @@
         </li>
         <li  *ngIf="send_step==send_steps.enterInfo" class="nav-item w-50 next">
             <a *ngIf="ftNum.compareBigNumber(ftwallet.getBalance(),etherFee)>=0 && ftNum.compareBigNumber(sendAmount,'0') ==1 && tel1.length==3 && tel2.length==3 && tel3.length==4" class="nav-link" aria-label="Close" (click)="sendToken();" href="javascript:void(0);">
-                <span>Send Tokens</span>
+                <span>Send {{ftweb3.fromWei(sendAmount, 'ether')}} {{ftToken.TokenWatch[this.tokenIndex].name}}</span>
             </a>
             <span *ngIf="ftNum.compareBigNumber(sendAmount,'0') <=0">Enter amount</span>
             <span *ngIf="tel1.length !=3 || tel2.length !=3 || tel3.length !=4">Enter Cell #</span>

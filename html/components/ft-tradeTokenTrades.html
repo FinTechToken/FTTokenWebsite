@@ -1,12 +1,9 @@
 
-<h4>
-    <strong>T</strong>rades<br>
-</h4>
 <div>
     <table class="table table-sm table-bordered">
-        <tr><th>Price</th><th>Tokens</th></tr>
+        <tr><th>Price</th><th>Count</th></tr>
         <ng-container *ngFor="let key of getSortedKeys(ftTokenWatch.TokenWatch[tokenIndex].tradeMap,false)">
-            <tr><td>{{+ftTokenWatch.TokenWatch[tokenIndex].tradeMap[key].price/1000000}}</td>
+            <tr><td>${{+ftTokenWatch.TokenWatch[tokenIndex].tradeMap[key].price/1000000}}</td>
             <td>{{ftweb3.fromWei(ftTokenWatch.TokenWatch[tokenIndex].tradeMap[key].count, 'ether') }}</td></tr>
         </ng-container>
     </table>

@@ -1,33 +1,30 @@
 
-<h4>
-    <strong>C</strong>urrent Offers<br>
-</h4>
 <div>
     
     <span *ngIf="ftTokenWatch.TokenWatch[tokenIndex].lastPrice">
-        <strong>Last Transaction:</strong>
-        <a (click)="setPrice(ftTokenWatch.TokenWatch[tokenIndex].lastPrice)" href="javascript:void(0);">{{+ftTokenWatch.TokenWatch[tokenIndex].lastPrice/1000000}}</a> FTT per token for {{ftweb3.fromWei(ftTokenWatch.TokenWatch[tokenIndex].lastCount, 'ether') }} tokens
+        <strong>Last Transaction:</strong><br>
+        Price: <a (click)="setPrice(ftTokenWatch.TokenWatch[tokenIndex].lastPrice)" href="javascript:void(0);">${{+ftTokenWatch.TokenWatch[tokenIndex].lastPrice/1000000}}</a> Count: {{ftweb3.fromWei(ftTokenWatch.TokenWatch[tokenIndex].lastCount, 'ether') }}
         <br>
     </span>
     <br>
     <table class="table table-sm">
-        <tr><th class="alert-success">Buy</th><th class="alert-danger">Sell</th></tr>
+        <tr><th class="alert-success">Offers to buy</th><th class="alert-danger">Offers to sell</th></tr>
         <tr valign="top"><td class="alert-success">
             <table *ngIf="ftTokenWatch.TokenWatch[tokenIndex].buyMap" class="tab-white table table-sm table-bordered">
-                <tr><th>Price</th><th>Tokens</th></tr>
+                <tr><th>Price</th><th>Count</th></tr>
                 <ng-container *ngFor="let key of ftNum.getSortedKeys(ftTokenWatch.TokenWatch[tokenIndex].buyMap, false)">
                     <tr *ngIf="ftTokenWatch.TokenWatch[tokenIndex].buyMap[key] != '0'"><td>
-                            <a (click)="setPrice(key)" href="javascript:void(0);">{{+key/1000000}}</a>
+                            <a (click)="setPrice(key)" href="javascript:void(0);">${{+key/1000000}}</a>
                     </td><td>{{ftweb3.fromWei(ftTokenWatch.TokenWatch[tokenIndex].buyMap[key], 'ether')}}</td></tr>
                 </ng-container>
             </table>
         </td>
         <td valign="top" class="alert-danger">
             <table *ngIf="ftTokenWatch.TokenWatch[tokenIndex].sellMap"  class="tab-white table table-sm table-bordered">
-                <tr><th>Price</th><th>Tokens</th></tr>
+                <tr><th>Price</th><th>Count</th></tr>
                 <ng-container *ngFor="let key of ftNum.getSortedKeys(ftTokenWatch.TokenWatch[tokenIndex].sellMap, true)">
                     <tr *ngIf="ftTokenWatch.TokenWatch[tokenIndex].sellMap[key] != '0'"><td>
-                        <a (click)="setPrice(key)" href="javascript:void(0);">{{+key/1000000}}</a>
+                        <a (click)="setPrice(key)" href="javascript:void(0);">${{+key/1000000}}</a>
                     </td><td>{{ftweb3.fromWei(ftTokenWatch.TokenWatch[tokenIndex].sellMap[key], 'ether')}}</td></tr>
                 </ng-container>
             </table>

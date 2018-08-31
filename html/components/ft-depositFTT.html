@@ -1,6 +1,6 @@
 
 <div class="modal-header">
-    <h5 class="modal-title">Deposit USD into your FTT account</h5>
+    <h5 class="modal-title">Deposit $ into your account</h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close();" href="javascript:void(0);">
     <span aria-hidden="true">&times;</span>
     </button>
@@ -15,16 +15,16 @@
         Leesburg VA, 20175
     </pre>
     <br>
-    We will add funds to your account within 14 days, after the check clears.<br>
+    We will add $ to your account within 14 days, after the check clears.<br>
     <br>
     <small>Note: Check must be from {{ftCrypto.name}} and include your address: {{ftCrypto.homeAddress}}.</small>
-    <small><Br>Note: Soon, we will add other options to send us money.</small>
+    <!--<small><Br>Note: Soon, we will add other options to send us money.</small>!-->
 
     <br><Br>
     <span *ngIf="ftWallet.bankTransDeposit.length"><strong>Past Deposits<br></strong></span>
     <span *ngFor="let deposit of ftWallet.bankTransDeposit">
         <span *ngIf="deposit.BlockNumber=='0'">We are waiting for check.<br></span>
-        <span *ngIf="deposit.BlockNumber!='0'">Trans: {{deposit.BlockNumber}} - Amount: {{ftweb3.fromWei(deposit.Amount,'ether')}} - Processed: {{deposit.Processed}}<br></span>
+        <span *ngIf="deposit.BlockNumber!='0'">Trans: {{deposit.BlockNumber}} - Amount: ${{ftweb3.fromWei(deposit.Amount,'ether')}} - Processed: {{deposit.Processed}}<br></span>
     </span>
 </div>
 <div class="modal-footer">

@@ -1,6 +1,5 @@
 <div class="modal-header">
     <h5 class="modal-title">Refer a friend so you both get $5
-        <small><br>Let them know a text from us is coming so they don't think it's spam.</small>
     </h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close();" href="javascript:void(0);">
         <span aria-hidden="true">&times;</span>
@@ -23,6 +22,8 @@
                 Amount you get: $5.00<br>
                 Amount they get: $5.00<br>
                 Total: $10.00
+                <br><Br>
+                <small>*Let them know a text from us is coming so they don't think it's spam.</small>
             </div>
         </div>
         <div *ngIf="send_step==send_steps.success">
