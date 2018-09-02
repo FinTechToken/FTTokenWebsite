@@ -100,7 +100,7 @@
             </div>
             <div class="modal-body" [ngStyle]="{'height':modalHeight}">
                 <div *ngIf="maxNumber != '0'">Maximum amount is {{ftweb3.fromWei(maxNumber, 'ether') | number : '1.0-6'}}</div>
-                <input min="0" max="999999999999" type="number" (change)="updateModalPrice();" value="{{ftNum.getEther(number)}}" id="modalPriceEther"> Ether<br>
+                <input min="0" max="999999999999" type="number" (change)="updateModalPrice();" value="{{ftNum.getEther(number)}}" id="modalPriceEther"><br>
                 <input min="0" max="999" type="number" (change)="updateModalPrice();" value="{{ftNum.getFinney(number) | number : '1.0-0'}}" id="modalPriceFinney"> Finney<br>
                 <input min="0" max="999" type="number" (change)="updateModalPrice();" value="{{ftNum.getSzabo(number) | number : '1.0-0'}}" id="modalPriceSzabo"> Szabo<br>
                 <!-- <input min="0" max="999" type="number" (change)="updateModalNumber();" value="{{getGwei(modalNumber.number) | number : '1.0-0'}}" id="modalNumberGwei"> Gwei<br>

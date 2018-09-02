@@ -115,24 +115,22 @@ export class FTAccountCreate {
     
     contract NameFreeToken {
         mapping ( address => uint256 ) public balanceOf; //ERC20 Required - Balance of Free Tokens
-        mapping ( address => bool ) public gotFree; //Has address gotten free token
         mapping ( address => mapping ( address => uint256 ) ) public allowance; //ERC20 Required - Balance of approvals for transferfrom
         
         uint256 public totalSupply; // ERC20 Required
         uint256 public totalOutstanding; // Total sold
         string public name = "NameFreeToken"; // ERC20 Optional
-        string public symbol = "Free"; // ERC20 Optional
         uint8 public decimals = 18; // ERC20 Optional - 18 is most common - No fractional tokens
         address public author; // Creator of smart contract
-        address public admin; // Controller of smart contract
         
         event Transfer( address indexed from, address indexed to, uint256 value ); // ERC20 Required
         event Approval( address indexed owner, address indexed spender, uint256 value ); // ERC20 Required
     
         function NameFreeToken() public { //Constructor
-            totalSupply = 10000000000000000000000000; //10M tokens + 18 digits
-            totalOutstanding = 0;
+            totalSupply = 1000000000000000000000000; //1M tokens + 18 digits
+            totalOutstanding = 1000000000000000000000000;
             author = msg.sender;
+            balanceOf[msg.sender] = totalSupply;
         }
     
         function() payable public { //Fallback function. Fail for everything. Only accept legit transactions
@@ -185,20 +183,12 @@ export class FTAccountCreate {
                 TokenERCOptional lTokenSpender = TokenERCOptional(_spender);
                 lTokenSpender.receiveApproval(msg.sender, _value, this, _extraData);
                 return true;
+            } else {
+                return false;
             }
-            return false;
         }
-    
-        function getFreeToken() public returns ( bool success_ ) {
-            require(totalSupply > totalOutstanding);
-            require(!gotFree[msg.sender]); 
-            totalOutstanding += 1000000000000000000;
-            balanceOf[msg.sender] += 1000000000000000000;
-            gotFree[msg.sender] = true;
-            Transfer(address(0), msg.sender, 1000000000000000000);
-            return true;
-        }
-    }`;
+    }
+    `;
   }
   
 }
