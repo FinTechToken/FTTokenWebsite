@@ -178,6 +178,10 @@ export class FTWeb3Service {
         .encodeABI();
     }
 
+    keccak256(hashMe:string): string {
+        return this.currentWeb3.utils.sha3(hashMe);
+    }
+
     private deploy(compiledCode, compiledABI): any{
         let myContract = new this.currentWeb3.eth.Contract(compiledABI);
         return myContract.deploy({data: compiledCode});

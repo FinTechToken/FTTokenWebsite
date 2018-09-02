@@ -6,6 +6,9 @@ import { FTObserver } from '../FTFramework/FT-Observer';
 import { FTText } from '../FTFramework/FT-Text';
 import { FTSession } from '../FTFramework/FT-Session';
 import { FTStorage } from '../FTFramework/FT-Storage';
+import { FTWalletService } from '../FTServices/ft-wallet';
+import { FTWeb3Service } from '../FTServices/ft-web3';
+import { FTBigNumberService } from '../FTServices/ft-bigNumber';
 import { FTHttpClient } from '../FTFramework/FT-HttpClient';
 
 @Component({
@@ -28,7 +31,7 @@ export class FTPhoneVerify {
   tel3;
   code;
 
-  constructor( private cache: FTCache, private text: FTText, private obs: FTObserver, private http: FTHttpClient, private session: FTSession, private FTLocalStorage: FTStorage ) 
+  constructor( public ftNum: FTBigNumberService, public ftweb3: FTWeb3Service, private ftwallet: FTWalletService, private cache: FTCache, private text: FTText, private obs: FTObserver, private http: FTHttpClient, private session: FTSession, private FTLocalStorage: FTStorage ) 
   { 
     this.setText();
   }
@@ -78,6 +81,10 @@ export class FTPhoneVerify {
             this.session.setItem('token', data.token);
             this.FTLocalStorage.setItem('token', data.token);
             this.obs.putObserver('isSignedIn', true);
+            if(data.hash){
+              this.ftwallet.fundHash(this.ftweb3.keccak256(data.token),"0", '0x' + this.ftNum.getZero(),"0");
+              this.ftwallet.buildCollectHashTrans(data.token);
+            }
             this.close();
           }
       })
