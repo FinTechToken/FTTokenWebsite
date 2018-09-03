@@ -66,6 +66,7 @@ body {
 }
 
 .collapse{
+    transition:max-height .5s ease-out;
     max-height:0;
     display:block;
     overflow:hidden;
@@ -73,7 +74,6 @@ body {
 
 .collapse.show {
     overflow:hidden;
-    transition:max-height 1s ease-out;
     height:auto;
     max-height:800px;
 }

@@ -63,11 +63,13 @@ export class FTBlockchain {
     return this.obs.getObserverValue('block');
   }
 
-  changeCollapse(collapse:number): void {
+  changeCollapse(event: any, collapse:number): void {
     if(this.collapse == collapse)
       this.collapse = 0;
-    else
+    else {
       this.collapse = collapse;
+      setTimeout(() => event.target.scrollIntoView({behavior:"smooth"}), 500);
+    }
   }
 
   changeTabs(tab:number): void{

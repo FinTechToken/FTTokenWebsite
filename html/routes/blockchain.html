@@ -24,20 +24,17 @@
 
 
 
-                            <div class="tab-white tab-content text-left setheighttab" style="overflow-y:auto;">
+                            <div class="tab-white tab-content text-left setheighttab" style="overflow-y:auto;" id="myAccordian">
                                 <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 1 }">
                                     <h4><img src="/img/svg/FinTechToken_Icon_Logo.svg" width="50px" alt="FTT">
                                         <span class="align-top">About FTT Network</span></h4>
                                     <div>
-                                        FTT is a Public Blockchain connecting all major crypto currencies<br>
-                                        <Br>
-                                        FTT is on block <strong>{{!getBlocknumber() ? 0 : getBlocknumber() | number}}</strong>.
-                                        We show the last 3 digits in the navigation bar.<br>
-                                        <br>
-
+                                        FTT is a Public Blockchain on block <strong>{{!getBlocknumber() ? 0 : getBlocknumber() | number}}</strong>
+                                        connecting all major crypto currencies. We show the last 3 digits of the current block in the navigation bar.
+                                        <Br><br>
                                         <div id="accordion" class="accordion">
                                             <div class="card">
-                                                <div class="card-header" (click)="changeCollapse(1);">
+                                                <div class="card-header" (click)="changeCollapse($event,1);">
                                                 <h5 class="mb-0">
                                                     <button class="btn btn-link blockchainBTN">
                                                     1) Base currency is $
@@ -46,12 +43,12 @@
                                                 </div>
                                                 <div class="collapse" [ngClass]="{'show':collapse==1}">
                                                 <div class="card-body">
-                                                    Easy to konw what things cost. This provides stability since value of $ does not change drastically.
+                                                    Easy to know what things cost. This provides stability since value of $ does not change drastically.
                                                 </div>
                                                 </div>
                                             </div>
                                             <div class="card">
-                                                <div class="card-header" (click)="changeCollapse(2);">
+                                                <div class="card-header" (click)="changeCollapse($event,2);">
                                                 <h5 class="mb-0">
                                                     <button class="btn btn-link blockchainBTN">
                                                        2) Major crypto currencies are tokenized
@@ -65,7 +62,7 @@
                                                 </div>
                                             </div>
                                             <div class="card">
-                                                <div class="card-header" (click)="changeCollapse(3);">
+                                                <div class="card-header" (click)="changeCollapse($event,3);">
                                                 <h5 class="mb-0">
                                                     <button class="btn btn-link blockchainBTN">
                                                         3) Accounting of tokenization is done via smart contract
@@ -79,7 +76,7 @@
                                                 </div>
                                             </div>
                                             <div class="card">
-                                                <div class="card-header"  (click)="changeCollapse(4);">
+                                                <div class="card-header"  (click)="changeCollapse($event,4);">
                                                 <h5 class="mb-0">
                                                     <button class="btn btn-link blockchainBTN">
                                                         4) Anyone can publish solidity smart contracts
@@ -94,7 +91,7 @@
                                             </div>
 
                                             <div class="card">
-                                                <div class="card-header" (click)="changeCollapse(5);">
+                                                <div class="card-header" (click)="changeCollapse($event,5);">
                                                 <h5 class="mb-0">
                                                     <button class="btn btn-link blockchainBTN">
                                                     5) No need for complex blockchain tools
@@ -108,7 +105,7 @@
                                                 </div>
                                             </div>
                                             <div class="card">
-                                                <div class="card-header" (click)="changeCollapse(6);">
+                                                <div class="card-header" (click)="changeCollapse($event,6);">
                                                 <h5 class="mb-0">
                                                     <button class="btn btn-link blockchainBTN">
                                                         6) Gas that runs smart contracts is totally free
@@ -122,7 +119,7 @@
                                                 </div>
                                             </div>
                                             <div class="card">
-                                                <div class="card-header" (click)="changeCollapse(7);">
+                                                <div class="card-header" (click)="changeCollapse($event,7);">
                                                 <h5 class="mb-0">
                                                     <button class="btn btn-link blockchainBTN">
                                                         7) Transaction happen approximately every second
@@ -136,7 +133,7 @@
                                                 </div>
                                             </div>
                                             <div class="card">
-                                                <div class="card-header"  (click)="changeCollapse(8);">
+                                                <div class="card-header"  (click)="changeCollapse($event,8);">
                                                 <h5 class="mb-0">
                                                     <button class="btn btn-link blockchainBTN">
                                                         8) Trigger off-chain actions based on smart contract
@@ -150,7 +147,7 @@
                                                 </div>
                                             </div>
                                             <div class="card">
-                                                <div class="card-header" (click)="changeCollapse(9);">
+                                                <div class="card-header" (click)="changeCollapse($event,9);">
                                                 <h5 class="mb-0">
                                                     <button class="btn btn-link blockchainBTN">
                                                         9) Execute smart contract based on real world events
@@ -164,7 +161,7 @@
                                                 </div>
                                             </div>
                                             <div class="card">
-                                                <div class="card-header"  (click)="changeCollapse(10);">
+                                                <div class="card-header"  (click)="changeCollapse($event,10);">
                                                 <h5 class="mb-0">
                                                     <button class="btn btn-link blockchainBTN">
                                                         10) FTT is a working product
@@ -185,12 +182,12 @@
                                     <h4><img src="{{texts['home.StickImageURL']}}" width="25px" alt="PrivateChain" />
                                         <span class="align-top">Our Private Chains</span></h4>
                                     <div>
-                                        Get Blockchain as a Service (BaaS) for your company.<br><Br>
-                                        White-label FTT Technology as your own Private Chain
+                                        We offer Blockchain as a Service (BaaS) for your company.
+                                        White-label FTT Technology as your own Private Chain.
                                         <br><br>
                                         <div id="accordion" class="accordion">
                                             <div class="card">
-                                                <div class="card-header" (click)="changeCollapse(1);">
+                                                <div class="card-header" (click)="changeCollapse($event,1);">
                                                 <h5 class="mb-0">
                                                     <button class="btn btn-link blockchainBTN">
                                                     1) Control how to deploy your blockchain                                                   
@@ -204,7 +201,7 @@
                                                 </div>
                                             </div>
                                             <div class="card">
-                                                <div class="card-header" (click)="changeCollapse(2);">
+                                                <div class="card-header" (click)="changeCollapse($event,2);">
                                                 <h5 class="mb-0">
                                                     <button class="btn btn-link blockchainBTN">
                                                         2) Make it easy for your engineers to play with DLT
@@ -218,7 +215,7 @@
                                                 </div>
                                             </div>
                                             <div class="card">
-                                                <div class="card-header" (click)="changeCollapse(3);">
+                                                <div class="card-header" (click)="changeCollapse($event,3);">
                                                 <h5 class="mb-0">
                                                     <button class="btn btn-link blockchainBTN">
                                                         3) Get our tech for free
@@ -232,7 +229,7 @@
                                                 </div>
                                             </div>
                                             <div class="card">
-                                                <div class="card-header"  (click)="changeCollapse(4);">
+                                                <div class="card-header"  (click)="changeCollapse($event,4);">
                                                 <h5 class="mb-0">
                                                     <button class="btn btn-link blockchainBTN">
                                                         4) Worry free infrastructure
@@ -247,7 +244,7 @@
                                             </div>
 
                                             <div class="card">
-                                                <div class="card-header" (click)="changeCollapse(5);">
+                                                <div class="card-header" (click)="changeCollapse($event,5);">
                                                 <h5 class="mb-0">
                                                     <button class="btn btn-link blockchainBTN">
                                                     5) FTT is built for engineers
@@ -261,7 +258,7 @@
                                                 </div>
                                             </div>
                                             <div class="card">
-                                                <div class="card-header" (click)="changeCollapse(6);">
+                                                <div class="card-header" (click)="changeCollapse($event,6);">
                                                 <h5 class="mb-0">
                                                     <button class="btn btn-link blockchainBTN">
                                                         6) Easy to integrate with your technology
@@ -275,7 +272,7 @@
                                                 </div>
                                             </div>
                                             <div class="card">
-                                                <div class="card-header" (click)="changeCollapse(7);">
+                                                <div class="card-header" (click)="changeCollapse($event,7);">
                                                 <h5 class="mb-0">
                                                     <button class="btn btn-link blockchainBTN">
                                                         7) Easy to integrate with your existing customer digital experiences
@@ -289,7 +286,7 @@
                                                 </div>
                                             </div>
                                             <div class="card">
-                                                <div class="card-header"  (click)="changeCollapse(8);">
+                                                <div class="card-header"  (click)="changeCollapse($event,8);">
                                                 <h5 class="mb-0">
                                                     <button class="btn btn-link blockchainBTN">
                                                         8) Securely keep in-house
@@ -303,7 +300,7 @@
                                                 </div>
                                             </div>
                                             <div class="card">
-                                                <div class="card-header" (click)="changeCollapse(9);">
+                                                <div class="card-header" (click)="changeCollapse($event,9);">
                                                 <h5 class="mb-0">
                                                     <button class="btn btn-link blockchainBTN">
                                                         9) Simple monthly pricing without long term contract
@@ -318,7 +315,7 @@
                                                 </div>
                                             </div>
                                             <div class="card">
-                                                <div class="card-header"  (click)="changeCollapse(10);">
+                                                <div class="card-header"  (click)="changeCollapse($event,10);">
                                                 <h5 class="mb-0">
                                                     <button class="btn btn-link blockchainBTN">
                                                         10) No surprises
@@ -342,7 +339,7 @@
 
                                     <div id="accordion" class="accordion">
                                         <div class="card">
-                                            <div class="card-header" (click)="changeCollapse(1);">
+                                            <div class="card-header" (click)="changeCollapse($event,1);">
                                             <h5 class="mb-0">
                                                 <button class="btn btn-link blockchainBTN">
                                                 What is CryptoPass?
@@ -356,7 +353,7 @@
                                             </div>
                                         </div>
                                         <div class="card">
-                                            <div class="card-header" (click)="changeCollapse(2);">
+                                            <div class="card-header" (click)="changeCollapse($event,2);">
                                             <h5 class="mb-0">
                                                 <button class="btn btn-link blockchainBTN">
                                                     How does CryptoPass work?
@@ -373,7 +370,7 @@
                                             </div>
                                         </div>
                                         <div class="card">
-                                            <div class="card-header" (click)="changeCollapse(3);">
+                                            <div class="card-header" (click)="changeCollapse($event,3);">
                                             <h5 class="mb-0">
                                                 <button class="btn btn-link blockchainBTN">
                                                     Is CryptoPass secure?
@@ -389,7 +386,7 @@
                                             </div>
                                         </div>
                                         <div class="card">
-                                            <div class="card-header"  (click)="changeCollapse(4);">
+                                            <div class="card-header"  (click)="changeCollapse($event,4);">
                                             <h5 class="mb-0">
                                                 <button class="btn btn-link blockchainBTN">
                                                     What is the FinTechToken network?
@@ -407,7 +404,7 @@
                                         </div>
 
                                         <div class="card">
-                                            <div class="card-header" (click)="changeCollapse(5);">
+                                            <div class="card-header" (click)="changeCollapse($event,5);">
                                             <h5 class="mb-0">
                                                 <button class="btn btn-link blockchainBTN">
                                                     Is FinTechToken verifiable?
@@ -423,7 +420,7 @@
                                             </div>
                                         </div>
                                         <div class="card">
-                                            <div class="card-header" (click)="changeCollapse(6);">
+                                            <div class="card-header" (click)="changeCollapse($event,6);">
                                             <h5 class="mb-0">
                                                 <button class="btn btn-link blockchainBTN">
                                                     Is the code verifiable?
@@ -437,7 +434,7 @@
                                             </div>
                                         </div>
                                         <div class="card">
-                                            <div class="card-header" (click)="changeCollapse(7);">
+                                            <div class="card-header" (click)="changeCollapse($event,7);">
                                             <h5 class="mb-0">
                                                 <button class="btn btn-link blockchainBTN">
                                                     What is a pass phrase?
@@ -454,7 +451,7 @@
                                             </div>
                                         </div>
                                         <div class="card">
-                                            <div class="card-header"  (click)="changeCollapse(8);">
+                                            <div class="card-header"  (click)="changeCollapse($event,8);">
                                             <h5 class="mb-0">
                                                 <button class="btn btn-link blockchainBTN">
                                                     What if I forget my passphrase?
@@ -473,7 +470,7 @@
                                             </div>
                                         </div>
                                         <div class="card">
-                                            <div class="card-header" (click)="changeCollapse(9);">
+                                            <div class="card-header" (click)="changeCollapse($event,9);">
                                             <h5 class="mb-0">
                                                 <button class="btn btn-link blockchainBTN">
                                                     Who created FTT?
@@ -495,7 +492,7 @@
                                             </div>
                                         </div>
                                         <div class="card">
-                                            <div class="card-header"  (click)="changeCollapse(10);">
+                                            <div class="card-header"  (click)="changeCollapse($event,10);">
                                             <h5 class="mb-0">
                                                 <button class="btn btn-link blockchainBTN">
                                                     How do we contact FTT?
@@ -520,7 +517,7 @@
 
                                     <div id="accordion" class="accordion">
                                         <div class="card">
-                                            <div class="card-header" (click)="changeCollapse(1);">
+                                            <div class="card-header" (click)="changeCollapse($event, 1);">
                                             <h5 class="mb-0">
                                                 <button class="btn btn-link blockchainBTN">
                                                     Our Goal
@@ -536,7 +533,7 @@
                                             </div>
                                         </div>
                                         <div class="card">
-                                            <div class="card-header" (click)="changeCollapse(2);">
+                                            <div class="card-header" (click)="changeCollapse($event,2);">
                                             <h5 class="mb-0">
                                                 <button class="btn btn-link blockchainBTN">
                                                     Token Sourced Code is Organization Innovation
@@ -555,7 +552,7 @@
                                             </div>
                                         </div>
                                         <div class="card">
-                                            <div class="card-header" (click)="changeCollapse(3);">
+                                            <div class="card-header" (click)="changeCollapse($event,3);">
                                             <h5 class="mb-0">
                                                 <button class="btn btn-link blockchainBTN">
                                                     Customers and capital contributors as product owners
@@ -575,7 +572,7 @@
                                             </div>
                                         </div>
                                         <div class="card">
-                                            <div class="card-header"  (click)="changeCollapse(4);">
+                                            <div class="card-header"  (click)="changeCollapse($event,4);">
                                             <h5 class="mb-0">
                                                 <button class="btn btn-link blockchainBTN">
                                                     An AppStore Framework
@@ -594,7 +591,7 @@
                                             </div>
                                         </div>
                                         <div class="card">
-                                            <div class="card-header" (click)="changeCollapse(5);">
+                                            <div class="card-header" (click)="changeCollapse($event,5);">
                                             <h5 class="mb-0">
                                                 <button class="btn btn-link blockchainBTN">
                                                     Blockchain as a Service (BaaS)
@@ -610,10 +607,10 @@
                                             </div>
                                         </div>
                                         <div class="card">
-                                            <div class="card-header" (click)="changeCollapse(6);">
+                                            <div class="card-header" (click)="changeCollapse($event,6);">
                                             <h5 class="mb-0">
                                                 <button class="btn btn-link blockchainBTN">
-                                                    MVP Tasks
+                                                    Completed MVP Tasks
                                                 </button>
                                             </h5>
                                             </div>
@@ -635,10 +632,10 @@
                                             </div>
                                         </div>
                                         <div class="card">
-                                            <div class="card-header" (click)="changeCollapse(7);">
+                                            <div class="card-header" (click)="changeCollapse($event,7);">
                                             <h5 class="mb-0">
                                                 <button class="btn btn-link blockchainBTN">
-                                                    Immediate task
+                                                    In Progress tasks
                                                 </button>
                                             </h5>
                                             </div>
@@ -648,48 +645,48 @@
                                                     <li><s>Combine "Trade" and "Wallet" as one tab to simplify usability (Move funds to trading smart contract in same action as placing trade).</s></li>
                                                     <li><s>Remove "gas" to not confuse users</s></li>
                                                     <li><s>Clean up text for actions to simplify</s></li>
-                                                    <li>Reset blockchain</li>
-                                                    <li>Security/privacy review (Transactions should be anonymous for FTT users)</li>
-                                                    <li>Add all major blockchains and tokens</li>
+                                                    <li><s>Reset and test blockchain</s></li>
+                                                    <li>Make sure 0 amounts can't see actions</li>
+                                                    <li>Have "action" button instead of dropdown that launches modal of actions. Or move actions to Token page.</li>
                                                     <li>Add filter function from contract ABIs</li>
                                                     <li>Improve token page based on ABI</li>
                                                     <li>Have different ABI for users and admin</li>
-                                                    <li>Have "action" button instead of dropdown that launches modal of actions. Or move actions to Token page.</li>
+                                                    <li>Add all major blockchains and tokens</li>
                                                 </ol>
                                             </div>
                                             </div>
                                         </div>
                                         <div class="card">
-                                            <div class="card-header"  (click)="changeCollapse(8);">
+                                            <div class="card-header"  (click)="changeCollapse($event,8);">
                                             <h5 class="mb-0">
                                                 <button class="btn btn-link blockchainBTN">
-                                                    High priority
+                                                    High priority Tasks
                                                 </button>
                                             </h5>
                                             </div>
                                             <div class="collapse" [ngClass]="{'show':collapse==8}">
                                             <div class="card-body">
                                                 <ol  style="margin-left:-15px;">
-                                                    <li>Stream events from major blockchains and allow subscribing to those events</li>
                                                     <li>Automate import/export (currently has manually step)</li>
-                                                    <li>East/West deployement of blockchain</li>
-                                                    <li>Have FTT blockchain explorer</li>
-                                                    <li>Allow token page when user isn't signed in</li>
                                                     <li>Enhance filter function to allow admin developer to trigger javascript</li>
+                                                    <li>Also have API to trigger smart contract as admin</li>
+                                                    <li>East/West deployement of blockchains</li>
+                                                    <li>Stream events from major blockchains and allow subscribing to those events</li>
+                                                    <li>Allow token page when user isn't signed in</li>
                                                     <li>Add email</li>
                                                     <li>For security only send password via physical address letter</li>
                                                     <li>Add text for other countries</li>
-                                                    <li>Also have API to trigger smart contract as admin</li>
+                                                    <li>Have FTT blockchain explorer</li>
                                                 </ol>
                                             </div>
                                             </div>
                                         </div>
 
                                         <div class="card">
-                                            <div class="card-header" (click)="changeCollapse(9);">
+                                            <div class="card-header" (click)="changeCollapse($event,9);">
                                             <h5 class="mb-0">
                                                 <button class="btn btn-link blockchainBTN">
-                                                    Priority
+                                                    Priority Tasks
                                                 </button>
                                             </h5>
                                             </div>
@@ -711,7 +708,7 @@
                                             </div>
                                         </div>
                                         <div class="card">
-                                            <div class="card-header"  (click)="changeCollapse(10);">
+                                            <div class="card-header"  (click)="changeCollapse($event,10);">
                                             <h5 class="mb-0">
                                                 <button class="btn btn-link blockchainBTN">
                                                     Future
