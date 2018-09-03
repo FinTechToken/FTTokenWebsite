@@ -68,7 +68,6 @@ export class FTBlockchain {
       this.collapse = 0;
     else {
       this.collapse = collapse;
-      setTimeout(() => event.target.scrollIntoView({behavior:"smooth"}), 500);
     }
   }
 
