@@ -46,13 +46,19 @@ body {
 
 }
 
+.card-header .btn-link {
+    color: #fff !important;
+}
+
 .accordion {
 }
 .card-header {
-    background-color:#fafafa;
+    background-color: #7A9Da2;
 }
 .card-body {
     padding:15px;
+    color: #333;
+    background-color: #FEFEFE;
 }
 .accordion .card-header {
     cursor: pointer; 
@@ -79,7 +85,9 @@ body {
 }
 
 .backteal {
-    background-color: #AACDD2;
+    /*background-color: #AACDD2;*/
+    background-color: #7A9Da2;
+    color:#fff;
 }
 
 .footer{
@@ -180,7 +188,6 @@ body {
     left: 0%;
     margin-top: 6px;
     margin-left: 5px;
-    color:#222;
 }
 .badge-small{
     font-size:25%;
