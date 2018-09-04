@@ -6,7 +6,10 @@
     </button>
 </div>
 <div class="modal-body" [ngStyle]="{'height':modalHeight}">    
-    <div class="form-group row">
+    <div *ngIf="ftToken.TokenWatch[tokenIndex].mine == '0'">
+        You need {{ftToken.TokenWatch[tokenIndex].name}} to send. Try buying or importing {{ftToken.TokenWatch[tokenIndex].name}} to your account.
+    </div>
+    <div *ngIf="ftToken.TokenWatch[tokenIndex].mine != '0'" class="form-group row">
         <div  *ngIf="send_step==send_steps.enterInfo">
             <label for="example-tel-input" class="col-12 col-form-label">
                 Mobile Number To Send To
@@ -39,7 +42,7 @@
     </div>
 </div>
 <div class="modal-footer">
-    <ul class="nav nav-pills modal-nav text-center">
+    <ul class="nav nav-pills modal-nav text-center"  *ngIf="ftToken.TokenWatch[tokenIndex].mine != '0'">
         <li  *ngIf="send_step==send_steps.enterInfo" class="nav-item w-50 prev">
             <a class="nav-link" aria-label="Close" (click)="close();" href="javascript:void(0);">
                 <span>Cancel</span>
@@ -56,6 +59,13 @@
         <li  *ngIf="send_step==send_steps.success" class="nav-item w-100 next">
             <a class="nav-link" aria-label="Close" (click)="close();" href="javascript:void(0);">
                 <span  *ngIf="send_step==send_steps.success">Close</span>
+            </a>
+        </li>
+    </ul>
+    <ul class="nav nav-pills modal-nav text-center"  *ngIf="ftToken.TokenWatch[tokenIndex].mine == '0'">
+        <li  *ngIf="send_step==send_steps.enterInfo" class="nav-item w-100 prev">
+            <a class="nav-link" aria-label="Close" (click)="close();" href="javascript:void(0);">
+                <span>Cancel</span>
             </a>
         </li>
     </ul>
