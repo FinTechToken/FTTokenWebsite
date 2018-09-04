@@ -6,23 +6,28 @@
     </button>
 </div>
 <div class="modal-body" [ngStyle]="{'height':modalHeight}">
-    <Br>
-    Amount: <a (click)="changeEtherWithdraw()" href="javascript:void(0);">${{ftweb3.fromWei(withdrawEtherAmount, 'ether')}}</a>
-    <br>Amount remaining: ${{ftweb3.fromWei(ftNum.subtractBigNumber(ftWallet.getBalance(), withdrawEtherAmount), 'ether') }}
-    <br><Br>
-    A check will be sent to your address within 14 days<br>
-    <br>
-    <small>*Check will be made out to {{ftCrypto.name}} and mailed to {{ftCrypto.homeAddress}}.</small>
-    <br>
-    <small>*Amount will be round down to nearest penny.</small>
-    <br><Br>
-    <span *ngIf="ftWallet.bankTransWithdraw.length"><strong>Past Withdrawals<br></strong></span>
-    <span *ngFor="let withdraw of ftWallet.bankTransWithdraw">
-        <span *ngIf="withdraw.BlockNumber!='0'">Block: {{withdraw.BlockNumber}} - Amount: ${{ftweb3.fromWei(withdraw.Amount,'ether')}} - Processed: {{withdraw.Processed}}<br></span>
-    </span>
+    <div *ngIf="ftWallet.getBalance() == '0'">
+        You need $ to withdraw. Try depositing $ to your account.
+    </div>
+    <div *ngIf="ftWallet.getBalance() != '0'">
+        <Br>
+        Amount: <a (click)="changeEtherWithdraw()" href="javascript:void(0);">${{ftweb3.fromWei(withdrawEtherAmount, 'ether')}}</a>
+        <br>Amount remaining: ${{ftweb3.fromWei(ftNum.subtractBigNumber(ftWallet.getBalance(), withdrawEtherAmount), 'ether') }}
+        <br><Br>
+        A check will be sent to your address within 14 days<br>
+        <br>
+        <small>*Check will be made out to {{ftCrypto.name}} and mailed to {{ftCrypto.homeAddress}}.</small>
+        <br>
+        <small>*Amount will be round down to nearest penny.</small>
+        <br><Br>
+        <span *ngIf="ftWallet.bankTransWithdraw.length"><strong>Past Withdrawals<br></strong></span>
+        <span *ngFor="let withdraw of ftWallet.bankTransWithdraw">
+            <span *ngIf="withdraw.BlockNumber!='0'">Block: {{withdraw.BlockNumber}} - Amount: ${{ftweb3.fromWei(withdraw.Amount,'ether')}} - Processed: {{withdraw.Processed}}<br></span>
+        </span>
+    </div>
 </div>
 <div class="modal-footer">
-    <ul class="nav nav-pills modal-nav text-center">
+    <ul *ngIf="ftWallet.getBalance() != '0'" class="nav nav-pills modal-nav text-center">
         <li class="nav-item w-50 prev">
             <a class="nav-link" (click)="close()" href="javascript:void(0);">
                 Cancel<br>
@@ -31,6 +36,13 @@
         <li class="nav-item w-50 next">
             <a class="nav-link" (click)="withdrawEtherConfirm()" href="javascript:void(0);">
                 Withdraw ${{ftweb3.fromWei(withdrawEtherAmount, 'ether') | number}}
+            </a>
+        </li>
+    </ul>
+    <ul *ngIf="ftWallet.getBalance() == '0'" class="nav nav-pills modal-nav text-center">
+        <li class="nav-item w-100 prev">
+            <a class="nav-link" (click)="close()" href="javascript:void(0);">
+                Cancel<br>
             </a>
         </li>
     </ul>

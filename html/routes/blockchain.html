@@ -189,7 +189,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <br><br>
                                 </div>
                                 <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 2 }">
                                     <h4><img src="{{texts['home.StickImageURL']}}" width="25px" alt="PrivateChain" />
@@ -345,7 +344,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <br><Br>
                                 </div>
                                 <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 3 }">
                                     <h4><span style="font-size:1.5rem; color:#d08d2e;"><i class="icon-question" id="create1"></i></span>
@@ -521,7 +519,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <br><br>
                                 </div>
                                 <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 4 }">
                                     <h4>
@@ -658,7 +655,7 @@
                                                     <li><s>Remove "gas" to not confuse users</s></li>
                                                     <li><s>Clean up text for actions to simplify</s></li>
                                                     <li><s>Reset and test blockchain</s></li>
-                                                    <li>Make sure 0 amounts can't see actions</li>
+                                                    <li><s>Make sure 0 amounts can't see actions</s></li>
                                                     <li>Have "action" button instead of dropdown that launches modal of actions. Or move actions to Token page.</li>
                                                     <li>Add filter function from contract ABIs</li>
                                                     <li>Improve token page based on ABI</li>
@@ -734,8 +731,23 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <br><Br>
                                 </div>  
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-sm-12 text-center">
+                                            <div class="padsmalltop">
+                                                <a class="btn btn-ft btn-lg margin-half" routerLink="/crypto_pass" routerLinkActive="active">
+                                                    <img src="/img/svg/FTT-Character.svg" width="25px"/>
+                                                    <span *ngIf="!isPreviousUser()">Get Started</span>
+                                                    <span *ngIf="isPreviousUser() && !isSignedIn()">Sign In</span>
+                                                    <span *ngIf="isPreviousUser() && isSignedIn()">My CryptoPass</span>
+                                                </a>
+                                                <Br><br>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                         <div class="col-md-4 hidden-md-down">

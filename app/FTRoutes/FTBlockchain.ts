@@ -80,4 +80,12 @@ export class FTBlockchain {
   private setText() {
     this.texts['home.StickImageURL'] = this.text.getText('home.StickImageURL');
   }
+
+  isSignedIn() {
+    return this.obs.getObserverValue('isSignedIn');
+  }
+
+  isPreviousUser() {
+    return this.obs.getObserverValue('isPreviousUser');
+  }
 }

@@ -62,12 +62,14 @@ export class FTExportToken {
 
   private exportAddressSetError(msg:string) {
     this.exportAddressStatus='has-danger';
-    document.getElementById('exportAddressBad').innerHTML = msg;
+    if(document.getElementById('exportAddressBad'))
+      document.getElementById('exportAddressBad').innerHTML = msg;
   }
 
   private exportAddressClearError() {
     this.exportAddressStatus='';
-    document.getElementById('exportAddressBad').innerHTML = '';
+    if(document.getElementById('exportAddressBad'))
+      document.getElementById('exportAddressBad').innerHTML = '';
   }
 
   private checkExportGas() {

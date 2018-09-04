@@ -9,14 +9,15 @@
         <div *ngIf="phone_step==phone_steps.enter">
             <div class="col-12">
                 <div>
-                    To make withdrawals or deposits we ask for your Name and Address. This allows us to avoid bad actors.<br>
-                    For withdrawals: Checks will be made out to this name, and sent to this address.<br>
-                    For deposits: We will only accept checks from this name that include this address.<br>
+                    To make withdrawals or deposits we ask for your Name and Address. <br><br>
+                    <small><strong>Withdrawals:</strong> Checks will be made out to this name, and sent to this address.<br>
+                    <strong>Deposits:</strong> We will only accept checks from this name that include this address.<br><br>
+                    </small>
                 </div>
                 <label for="example-name" class="col-12 col-form-label">
                     My Full Name
                 </label><br>
-                <input class="form-control" style="display:inline-block; width:auto;" type="text" value="" placeholder="" minlength="5" maxlength="50" size="10" id="myName" [(ngModel)]="myName">
+                <input class="form-control" style="display:inline-block; width:100%;" type="text" value="" placeholder="" minlength="5" maxlength="50" size="10" id="myName" [(ngModel)]="myName">
                 <br><Br>
                 <label for="example-address" class="col-12 col-form-label">
                     My Address

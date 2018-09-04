@@ -5,25 +5,30 @@
     <span aria-hidden="true">&times;</span>
     </button>
 </div>
-<div class="modal-body" [ngStyle]="{'height':modalHeight}">
-    <Br>
-    Amount: <a (click)="changeExportToken()" href="javascript:void(0);">{{ftweb3.fromWei(exportTokenAmount, 'ether')}}</a>
-    <br>Amount remaining: {{ftweb3.fromWei(ftNum.subtractBigNumber(ftToken.TokenWatch[tokenIndex].mine, exportTokenAmount), 'ether') }}
-    <br><Br>
-    <div class="form-group" [ngClass]="exportAddressStatus" id="exportAddressGroup">
-        <label for="exportAddress">Enter Address To Send {{ftToken.TokenWatch[this.tokenIndex].name}} To:</label>
-        <input type="text" class="form-control" id="exportAddress" placeholder='0x...' (keyup)="exportAddressChange($event)" [(ngModel)]="exportAddress" [ngClass]="exportAddressStatus == 'has-danger' ? 'form-control-warning' : ''" >
-        <div class="form-control-feedback" id="exportAddressBad"><br></div>
+<div class="modal-body" [ngStyle]="{'height':modalHeight}" >
+    <div *ngIf="ftToken.TokenWatch[tokenIndex].mine == '0'">
+        You need {{ftToken.TokenWatch[tokenIndex].name}} to export. Try buying or importing {{ftToken.TokenWatch[tokenIndex].name}} to your account.
     </div>
-    We will export {{ftToken.TokenWatch[this.tokenIndex].name}} from your account to this address within 7 days.<br>
-    <br><Br>
-    <span *ngIf="ftWallet.bankTransExport.length"><strong>Past Exports<br></strong></span>
-    <span *ngFor="let export of ftWallet.bankTransExport">
-        <span *ngIf="export.Crypto==tokenIndex+1">Block: {{export.BlockNumber}} - Amount: {{ftweb3.fromWei(export.Amount,'ether')}} - Processed: {{export.Processed}}<br></span>
-    </span>
+    <div *ngIf="ftToken.TokenWatch[tokenIndex].mine != '0'">
+        <Br>
+        Amount: <a (click)="changeExportToken()" href="javascript:void(0);">{{ftweb3.fromWei(exportTokenAmount, 'ether')}}</a>
+        <br>Amount remaining: {{ftweb3.fromWei(ftNum.subtractBigNumber(ftToken.TokenWatch[tokenIndex].mine, exportTokenAmount), 'ether') }}
+        <br><Br>
+        <div class="form-group" [ngClass]="exportAddressStatus" id="exportAddressGroup">
+            <label for="exportAddress">Enter Address To Send {{ftToken.TokenWatch[this.tokenIndex].name}} To:</label>
+            <input type="text" class="form-control" id="exportAddress" placeholder='0x...' (keyup)="exportAddressChange($event)" [(ngModel)]="exportAddress" [ngClass]="exportAddressStatus == 'has-danger' ? 'form-control-warning' : ''" >
+            <div class="form-control-feedback" id="exportAddressBad"><br></div>
+        </div>
+        We will export {{ftToken.TokenWatch[this.tokenIndex].name}} from your account to this address within 7 days.<br>
+        <br><Br>
+        <span *ngIf="ftWallet.bankTransExport.length"><strong>Past Exports<br></strong></span>
+        <span *ngFor="let export of ftWallet.bankTransExport">
+            <span *ngIf="export.Crypto==tokenIndex+1">Block: {{export.BlockNumber}} - Amount: {{ftweb3.fromWei(export.Amount,'ether')}} - Processed: {{export.Processed}}<br></span>
+        </span>
+    </div>
 </div>
 <div class="modal-footer">
-    <ul *ngIf="gasPrice != '0'" class="nav nav-pills modal-nav text-center">
+    <ul *ngIf="gasPrice != '0' && ftToken.TokenWatch[tokenIndex].mine != '0'" class="nav nav-pills modal-nav text-center">
         <li class="nav-item w-50 prev">
             <a class="nav-link" (click)="close()" href="javascript:void(0);">
                 Cancel<br>
@@ -35,7 +40,7 @@
             </a>
         </li>
     </ul>
-    <ul *ngIf="gasPrice == '0'" class="nav nav-pills modal-nav text-center">
+    <ul *ngIf="gasPrice == '0' || ftToken.TokenWatch[tokenIndex].mine == '0'" class="nav nav-pills modal-nav text-center">
         <li class="nav-item w-100 prev">
             <a class="nav-link" (click)="close()" href="javascript:void(0);">
                 Cancel<br>
