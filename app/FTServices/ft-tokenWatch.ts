@@ -25,7 +25,7 @@ export class FTTokenWatchService {
     //ToDo: Be better to look up name/ABI from AWS
     //ToDo: Should have token type (Main, Created, Watch)
     this.addTokenToWatch('0xDaC15B2fc7a0fE5833072073C727A8Cc3FC289b5', 'Ethereum', this.EtherABI);
-    this.addTokenToWatch('0x0457375dd88352eb54de851db7d0ce775c9758ad', 'Bitcoin', this.BitCoinABI);
+    this.addTokenToWatch('0x0457375DD88352EB54De851Db7D0Ce775c9758Ad', 'Bitcoin', this.BitCoinABI);
     if(this.cache.getCache('encrypted_id').address == '4153547d9fe208d97adc122d156b7605bfb68497'){
       this.addTokenToWatch('0x5dA0448e07bD2fC17115b006dbA3A26D130e139b', 'EscrowSend', this.EscrowABI);
       this.addTokenToWatch('0x91a917d6761B8c634CfE575B8285085834752CF9', 'MarketPlace', this.MarketPlaceABI);
@@ -73,7 +73,7 @@ export class FTTokenWatchService {
   }
 
   getTokenIndexByAddress(address) {
-    return this.TokenWatch.findIndex(x => x.address === address);
+    return this.TokenWatch.findIndex(x => x.address == address);
   }
 
 }
