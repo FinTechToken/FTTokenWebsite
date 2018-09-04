@@ -61,11 +61,11 @@
                 <td>
                   <select (change)="takeAction(i+1)" [(ngModel)]="action[i+1]">
                     <option value=""></option>
-                    <option value="send_token">Send</option>
+                    <option *ngIf="i+1 < 3" value="send_token">Send</option>
                     <option *ngIf="i+1 < 3" value="import_token">Import</option>
                     <option *ngIf="i+1 < 3" value="export_token">Export</option>
-                    <option value="trade_buy_token">Buy</option>
-                    <option value="trade_sell_token">Sell</option>
+                    <option *ngIf="i+1 < 3" value="trade_buy_token">Buy</option>
+                    <option *ngIf="i+1 < 3" value="trade_sell_token">Sell</option>
                     <option value="view_token">Advanced</option>
                   </select>
                 </td>
