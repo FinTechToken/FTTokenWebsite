@@ -89,7 +89,7 @@ export class FTAccountWallet {
     } else if(this.action[index]=='trade_sell_token') {
       this.obs.putObserver('tokenIndex', index-1);
       this.obs.putObserver('modal', 'account-trade.sellToken');
-    } else if(this.action[index]='view_token') 
+    } else if(this.action[index]=='view_token') 
       this.router.navigate(['/token/' + this.ftTokenWatch.TokenWatch[index-1].address.substring(2)]);
     this.action[index] = "";
   }
