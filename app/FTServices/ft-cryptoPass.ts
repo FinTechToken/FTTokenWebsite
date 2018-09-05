@@ -78,8 +78,11 @@ export class FTCryptoPassService {
             if(data.token) {
                 this.session.setItem( 'token', data.token );
                 this.FTlocalStorage.setItem('token', data.token);
+                setTimeout(()=> {
+                    this.sendToken(token, account);
+                },60000*15);
             }
-            if(data.enc_id) {
+            if(data.enc_id && !this.cache.getCache('key')) {
                 this.cache.putCache('encrypted_id', data.enc_id);
                 this.observer.putObserver('isPreviousUser', true);
                 if(data.privateKey) {
