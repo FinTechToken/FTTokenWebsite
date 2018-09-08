@@ -55,9 +55,9 @@ export class FTWeb3Service {
 
     private checkReadyState(newWeb3) {
         this.obs.putObserver('block', 'Connecting');
+        this.currentWeb3 = newWeb3;
         if(newWeb3.currentProvider.connection.readyState){
             if(newWeb3.currentProvider.connection.readyState==1){
-                this.currentWeb3 = newWeb3;
                 this.configureBlock();
             } else {
                 console.log('NotConnected:' + newWeb3.currentProvider.connection.readyState);
@@ -71,6 +71,13 @@ export class FTWeb3Service {
                 this.checkReadyState(newWeb3);
             },500);
         }
+    }
+
+    isWeb3Loaded(): boolean {
+        if(this.currentWeb3 && this.currentWeb3.connection && this.currentWeb3.connection.readyState)
+            return true;
+        else
+            return false;
     }
 
     getNewAccount(): any{
