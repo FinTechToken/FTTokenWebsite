@@ -8,7 +8,7 @@
                 <img  [hidden]="!(router.url == '/blockchain')" src="/img/svg/FinTechToken_Block.svg" width="25px" alt="FinTechToken" />
                 <img  [hidden]="!(router.url != '/blockchain' && over)" src="/img/svg/FinTechToken_Blockd.svg" width="25px" alt="FinTechToken" />
                 <img  [hidden]="!(router.url != '/blockchain' && !over)" src="/img/svg/FinTechToken_Blockg.svg" width="25px" alt="FinTechToken" />
-                <span class="badge badge-pill badge-success badge-under2">
+                <span class="badge badge-pill badge-success badge-under2" style="z-index:1">
                     {{ blocknumber > 999 ? blocknumber.toString().substr(blocknumber.toString().length-3) : blocknumber }}
                 </span>
                 <span class="hidden-xs-down">

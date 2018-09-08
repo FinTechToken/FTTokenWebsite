@@ -50,12 +50,27 @@ export class FTWeb3Service {
     setWeb3( netName ): void {
         let newWeb3 = this.setProvider( netName );
         this.currentNetName = netName;
-        /* Currently we put wb3 instance in cache so any component can use it.
-        Better to create functions in this service. 
-        That way we have one place to update things like send transaction when we add BitCoin, LiteCoin, Monero, etc etc */
-         this.cache.putCache('wb3', newWeb3); //Remove this once not used anywhere in code
-        this.currentWeb3 = newWeb3;
-        this.configureBlock();
+        this.checkReadyState(newWeb3);
+    }
+
+    private checkReadyState(newWeb3) {
+        this.obs.putObserver('block', 'Connecting');
+        if(newWeb3.currentProvider.connection.readyState){
+            if(newWeb3.currentProvider.connection.readyState==1){
+                this.currentWeb3 = newWeb3;
+                this.configureBlock();
+            } else {
+                console.log('NotConnected:' + newWeb3.currentProvider.connection.readyState);
+                this.obs.putObserver('block', 'Not Connected');
+                setTimeout(()=> {
+                    this.initializeWeb3();
+                },5000);    
+            }
+        } else {
+            setTimeout(()=> {
+                this.checkReadyState(newWeb3);
+            },500);
+        }
     }
 
     getNewAccount(): any{
@@ -187,7 +202,7 @@ export class FTWeb3Service {
         return myContract.deploy({data: compiledCode});
     }
 
-    private setProvider( netName ): void {
+    private setProvider( netName ): any {
         let FTweb3 = new Web3();
         FTweb3.setProvider(new FTweb3.providers.WebsocketProvider(this.nets[netName]));
         //FTweb3.setProvider(new FTweb3.providers.HttpProvider(this.nets[netName]));
@@ -202,6 +217,10 @@ export class FTWeb3Service {
         this.currentWeb3.eth.subscribe('newBlockHeaders', (error, result) => {})
         .on("data", (blockHeader) => { 
             this.obs.putObserver('block', blockHeader.number);
+        })
+        .on( "error", err => {
+            console.log(err);
+            this.initializeWeb3();
         });
     }
 
