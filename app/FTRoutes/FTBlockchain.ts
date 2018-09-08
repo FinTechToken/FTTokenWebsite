@@ -60,7 +60,9 @@ export class FTBlockchain {
   }
 
   getBlocknumber() {
-    return this.obs.getObserverValue('block');
+    if(this.obs.getObserverValue('block') != "Connecting" && this.obs.getObserverValue('block') != "Not Connected")
+      return this.obs.getObserverValue('block');
+    else return 0;
   }
 
   changeCollapse(event: any, collapse:number): void {

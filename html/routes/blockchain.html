@@ -29,7 +29,7 @@
                                     <h4><img src="/img/svg/FinTechToken_Icon_Logo.svg" width="50px" alt="FTT">
                                         <span class="align-top">About FTT Network</span></h4>
                                     <div>
-                                        FTT is a Public Blockchain on block <strong>{{!getBlocknumber() ? 0 : getBlocknumber() | number}}</strong>
+                                        FTT is a Public Blockchain on block <strong>{{!getBlocknumber() ? "'Not Connected'" : getBlocknumber() | number}}</strong>
                                         connecting all major crypto currencies. We show the last 3 digits of the current block in the navigation bar.
                                         <Br><br>
                                         <div id="accordion" class="accordion">
@@ -656,6 +656,9 @@
                                                     <li><s>Clean up text for actions to simplify</s></li>
                                                     <li><s>Reset and test blockchain</s></li>
                                                     <li><s>Make sure 0 amounts can't see actions</s></li>
+                                                    <!-- Feedback
+                                                    Words "Import/Export" are confusing. Have Transfer - and then the page has Transfer To FTT, or Transfer From FTT.
+                                                    -->
                                                     <li>Have "action" button instead of dropdown that launches modal of actions. Or move actions to Token page.</li>
                                                     <li>Add filter function from contract ABIs</li>
                                                     <li>Improve token page based on ABI</li>
