@@ -48,85 +48,16 @@
                                                 </div>
                                             </div>
                                             <div class="card">
-                                                <div class="card-header" (click)="changeCollapse($event,2);">
-                                                <h5 class="mb-0">
-                                                    <button class="btn btn-link blockchainBTN">
-                                                       2) Major crypto currencies are tokenized
-                                                    </button>
-                                                </h5>
-                                                </div>
-                                                <div class="collapse" [ngClass]="{'show':collapse==2}">
-                                                <div class="card-body">
-                                                        Add Bitcoin, Ether and other crytocurrencies to your FTT account. 
-                                                        Use multiple cryptocurrencies on one network.
-                                                        <Br><br>
-                                                        Think of FTT as your crypto checking account. It is to be used. 
-                                                        Think of Bitcoin, Ethereum and other blockchains as savings accounts. They are for long term storage.
-                                                </div>
-                                                </div>
-                                            </div>
-                                            <div class="card">
-                                                <div class="card-header" (click)="changeCollapse($event,3);">
-                                                <h5 class="mb-0">
-                                                    <button class="btn btn-link blockchainBTN">
-                                                        3) Accounting of tokenization is done via smart contract
-                                                    </button>
-                                                </h5>
-                                                </div>
-                                                <div class="collapse" [ngClass]="{'show':collapse==3}">
-                                                <div class="card-body">
-                                                    Our smart-contract based accounting system prevents fraud by allowing community to audit in real-time.<br><Br>
-                                                    Transfered cryto external addresses and amounts are tracked on a smart-contract.
-                                                    The smart contract also tracks the usage of crypto tokens on the FTT network.
-                                                </div>
-                                                </div>
-                                            </div>
-                                            <div class="card">
-                                                <div class="card-header"  (click)="changeCollapse($event,4);">
-                                                <h5 class="mb-0">
-                                                    <button class="btn btn-link blockchainBTN">
-                                                        4) FTT has a smart contract App-Store
-                                                    </button>
-                                                </h5>
-                                                </div>
-                                                <div class="collapse" [ngClass]="{'show':collapse==4}">
-                                                <div class="card-body">
-                                                        We provide smart-contract tooling for engineers. 
-                                                        These tools speed up development process with CI/CD integration and let developers focus on code instead of platform infrastructure.
-                                                        <br><Br>
-                                                        Developers can immediately publish to our network with a hidden address to test or share with their users. 
-                                                        If desired, once a smart contract passes a quality review we integrate it into our site for mass-adoption.
-                                                        <br><Br>
-                                                        We also provide templates for standard smart-contracts so non-developers can quickly solve their business needs. 
-                                                </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="card">
                                                 <div class="card-header" (click)="changeCollapse($event,5);">
                                                 <h5 class="mb-0">
                                                     <button class="btn btn-link blockchainBTN">
-                                                    5) No need for complex blockchain tools
+                                                    2) No complex blockchain tools to download
                                                     </button>
                                                 </h5>
                                                 </div>
                                                 <div class="collapse" [ngClass]="{'show':collapse==5}">
                                                 <div class="card-body">
-                                                    Users interact with FTT using a simple and easy to use browser interface. Connect quickly with phone or browser.
-                                                </div>
-                                                </div>
-                                            </div>
-                                            <div class="card">
-                                                <div class="card-header" (click)="changeCollapse($event,6);">
-                                                <h5 class="mb-0">
-                                                    <button class="btn btn-link blockchainBTN">
-                                                        6) Gas that runs smart contracts is totally free
-                                                    </button>
-                                                </h5>
-                                                </div>
-                                                <div class="collapse" [ngClass]="{'show':collapse==6}">
-                                                <div class="card-body">
-                                                        This makes it economically practical to develop micro services and services for 3rd world. Fees are set by smart contracts. This way pricing can be based on industry and use case.
+                                                    Use this easy to use website on your phone, tablet, or laptop. 
                                                 </div>
                                                 </div>
                                             </div>
@@ -134,13 +65,59 @@
                                                 <div class="card-header" (click)="changeCollapse($event,7);">
                                                 <h5 class="mb-0">
                                                     <button class="btn btn-link blockchainBTN">
-                                                        7) Transaction happen approximately every second
+                                                        3) Transaction happen every second
                                                     </button>
                                                 </h5>
                                                 </div>
                                                 <div class="collapse" [ngClass]="{'show':collapse==7}">
                                                 <div class="card-body">
-                                                        Users demand fast response time. Theoretical support of 1,000 transactions per second (TPS). Can scale much higher as demand grows.
+                                                        Get fast responses. 
+                                                        Theoretical support of 1,000 transactions per second (TPS)
+                                                        means engineers can build useful apps for the world. 
+                                                </div>
+                                                </div>
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-header" (click)="changeCollapse($event,6);">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link blockchainBTN">
+                                                        4) Network "gas" is totally free
+                                                    </button>
+                                                </h5>
+                                                </div>
+                                                <div class="collapse" [ngClass]="{'show':collapse==6}">
+                                                <div class="card-body">
+                                                    Free is good for everyone. Free makes it practical to develop micro services and applications for 3rd world. 
+                                                </div>
+                                                </div>
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-header" (click)="changeCollapse($event,2);">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link blockchainBTN">
+                                                       5) Use any major crypto currency
+                                                    </button>
+                                                </h5>
+                                                </div>
+                                                <div class="collapse" [ngClass]="{'show':collapse==2}">
+                                                <div class="card-body">
+                                                    Transfer any major cryptocurrency in or out of a FTT account. 
+                                                    Transfers are tokenized so you can use them on the FTT network.
+                                                </div>
+                                                </div>
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-header" (click)="changeCollapse($event,3);">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link blockchainBTN">
+                                                        6) Smart contract based accounting
+                                                    </button>
+                                                </h5>
+                                                </div>
+                                                <div class="collapse" [ngClass]="{'show':collapse==3}">
+                                                <div class="card-body">
+                                                    Our smart-contract based accounting system prevents fraud by allowing community to audit 
+                                                    tokenization in real-time.
                                                 </div>
                                                 </div>
                                             </div>
@@ -148,14 +125,14 @@
                                                 <div class="card-header"  (click)="changeCollapse($event,8);">
                                                 <h5 class="mb-0">
                                                     <button class="btn btn-link blockchainBTN">
-                                                        8) Trigger off-chain actions based on smart contract
+                                                        7) Do useful things when events happen on FTT
                                                     </button>
                                                 </h5>
                                                 </div>
                                                 <div class="collapse" [ngClass]="{'show':collapse==8}">
                                                 <div class="card-body">
-                                                        Smart contracts can execute external APIs. Send text, email, update database, trigger lambda, etc etc.
-                                                        We provide tools for smart contract events to call external APIs.
+                                                    A Smart Contract Event can be configured to execute external APIs.
+                                                    This lets you send texts, emails, update databases, trigger lambdas, etc etc.
                                                 </div>
                                                 </div>
                                             </div>
@@ -163,13 +140,32 @@
                                                 <div class="card-header" (click)="changeCollapse($event,9);">
                                                 <h5 class="mb-0">
                                                     <button class="btn btn-link blockchainBTN">
-                                                        9) Execute smart contract based on real world events
+                                                        8) Real world events can trigger smart contract functions
                                                     </button>
                                                 </h5>
                                                 </div>
                                                 <div class="collapse" [ngClass]="{'show':collapse==9}">
                                                 <div class="card-body">
-                                                        Smart contracts can be triggered by external APIs. We provide tools for engineers to call smart contract functions from external APIs.
+                                                    Use our developer APIs to execute smart contact functions.
+                                                    This lets you build really cool apps, or integrate blockchain into exesting systems.
+                                                </div>
+                                                </div>
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-header"  (click)="changeCollapse($event,4);">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link blockchainBTN">
+                                                        9) Smart contract App-Store
+                                                    </button>
+                                                </h5>
+                                                </div>
+                                                <div class="collapse" [ngClass]="{'show':collapse==4}">
+                                                <div class="card-body">
+                                                        We provide smart-contract tooling for engineers. 
+                                                        These tools speed up development process by letting developers focus on code instead of platform infrastructure.
+                                                        <br><Br>
+                                                        Developers can immediately publish to our network with a secret address. 
+                                                        Once a smart contract passes a quality review we can make it public for mass-adoption.
                                                 </div>
                                                 </div>
                                             </div>
@@ -656,11 +652,11 @@
                                                     <li><s>Clean up text for actions to simplify</s></li>
                                                     <li><s>Reset and test blockchain</s></li>
                                                     <li><s>Make sure 0 amounts can't see actions</s></li>
-                                                    <li>Have "action" button instead of dropdown that launches modal of actions. Or move actions to Token page.</li>
+                                                    <li><s>Have "action" button instead of dropdown that launches modal of actions. Or move actions to Token page.</s></li>
                                                     <li>Add filter function from contract ABIs</li>
                                                     <li>Improve token page based on ABI</li>
+                                                    <li>Allow token page when user isn't signed in</li>
                                                     <li>Have different ABI for users and admin</li>
-                                                    <li>Add all major blockchains and tokens</li>
                                                 </ol>
                                             </div>
                                             </div>
@@ -677,11 +673,11 @@
                                             <div class="card-body">
                                                 <ol  style="margin-left:-15px;">
                                                     <li>Automate transfer in/out (currently has manually step)</li>
+                                                    <li>Add all major blockchains and tokens</li>
                                                     <li>Enhance filter function to allow admin developer to trigger javascript</li>
                                                     <li>Also have API to trigger smart contract as admin</li>
                                                     <li>East/West deployement of blockchains</li>
                                                     <li>Stream events from major blockchains and allow subscribing to those events</li>
-                                                    <li>Allow token page when user isn't signed in</li>
                                                     <li>Add email</li>
                                                     <li>For security only send password via physical address letter</li>
                                                     <li>Add text for other countries</li>
