@@ -1,6 +1,6 @@
 
 <div class="modal-header">
-    <h5 class="modal-title">Import {{ftToken.TokenWatch[this.tokenIndex].name}} into your account</h5>
+    <h5 class="modal-title">Transfer {{ftToken.TokenWatch[this.tokenIndex].name}} into your account</h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close();" href="javascript:void(0);">
     <span aria-hidden="true">&times;</span>
     </button>
@@ -12,7 +12,7 @@
     <!--<small>Once crypto is imported. You can use it on the FTT network with 0 gas costs and 1 second blocks.</small>
 
     <br><Br>!-->
-    <span *ngIf="ftWallet.bankTransImport.length"><strong>Past Imports<br></strong></span>
+    <span *ngIf="ftWallet.bankTransImport.length"><strong>Past Transfer In<br></strong></span>
     <span *ngFor="let import of ftWallet.bankTransImport">
         <span *ngIf="import.BlockNumber==0">We are waiting for check.<br></span>
         <span *ngIf="import.BlockNumber==tokenIndex+1 && import.Crypto==import.BlockNumber">We are waiting for {{ftToken.TokenWatch[this.tokenIndex].name}}.<br></span>

@@ -1,13 +1,13 @@
 
 <div class="modal-header">
-    <h5 class="modal-title">Export {{ftToken.TokenWatch[this.tokenIndex].name}} from your account</h5>
+    <h5 class="modal-title">Transfer {{ftToken.TokenWatch[this.tokenIndex].name}} out of your account</h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close();" href="javascript:void(0);">
     <span aria-hidden="true">&times;</span>
     </button>
 </div>
 <div class="modal-body" [ngStyle]="{'height':modalHeight}" >
     <div *ngIf="ftToken.TokenWatch[tokenIndex].mine == '0'">
-        You need {{ftToken.TokenWatch[tokenIndex].name}} to export. Try buying or importing {{ftToken.TokenWatch[tokenIndex].name}} to your account.
+        You need {{ftToken.TokenWatch[tokenIndex].name}} to transfer out. Try buying or transfering {{ftToken.TokenWatch[tokenIndex].name}} into your account.
     </div>
     <div *ngIf="ftToken.TokenWatch[tokenIndex].mine != '0'">
         <Br>
@@ -19,7 +19,7 @@
             <input type="text" class="form-control" id="exportAddress" placeholder='0x...' (keyup)="exportAddressChange($event)" [(ngModel)]="exportAddress" [ngClass]="exportAddressStatus == 'has-danger' ? 'form-control-warning' : ''" >
             <div class="form-control-feedback" id="exportAddressBad"><br></div>
         </div>
-        We will export {{ftToken.TokenWatch[this.tokenIndex].name}} from your account to this address within 7 days.<br>
+        We will transfer {{ftToken.TokenWatch[this.tokenIndex].name}} from your account to this address within 7 days.<br>
         <br><Br>
         <span *ngIf="ftWallet.bankTransExport.length"><strong>Past Exports<br></strong></span>
         <span *ngFor="let export of ftWallet.bankTransExport">
@@ -36,7 +36,7 @@
         </li>
         <li class="nav-item w-50 next">
             <a class="nav-link" (click)="exportTokenConfirm()" href="javascript:void(0);">
-                Export {{ftweb3.fromWei(exportTokenAmount, 'ether') | number}} {{ftToken.TokenWatch[this.tokenIndex].name}}
+                Transfer out {{ftweb3.fromWei(exportTokenAmount, 'ether') | number}} {{ftToken.TokenWatch[this.tokenIndex].name}}
             </a>
         </li>
     </ul>
