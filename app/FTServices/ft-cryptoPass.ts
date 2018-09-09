@@ -38,12 +38,15 @@ export class FTCryptoPassService {
                 }
             })
 
-        if(this.FTlocalStorage.hasItem('token') && this.FTlocalStorage.hasItem('account')) {
-            this.session.setItem( 'account', this.FTlocalStorage.getItem('account') );
-            this.session.setItem( 'token', this.FTlocalStorage.getItem('token') );
-            
-            this.sendToken(this.session.getItem('token'), this.session.getItem('account'));
-        }
+        this.observer.getObserver('refreshToken')
+            .forEach(test => {
+                if(test)
+                    if(this.FTlocalStorage.hasItem('token') && this.FTlocalStorage.hasItem('account')) {
+                        this.session.setItem( 'account', this.FTlocalStorage.getItem('account') );
+                        this.session.setItem( 'token', this.FTlocalStorage.getItem('token') );
+                        this.sendToken(this.session.getItem('token'), this.session.getItem('account'));
+                    }
+            });
     }
 
     destroyCryptoPass(): void {
@@ -81,6 +84,9 @@ export class FTCryptoPassService {
                 setTimeout(()=> {
                     this.sendToken(token, account);
                 },60000*15);
+            }
+            if(!data.privateKey && this.observer.getObserverValue('isSignedIn')) {
+                this.observer.putObserver('IsSignedIn', false);    
             }
             if(data.enc_id && !this.cache.getCache('key')) {
                 this.cache.putCache('encrypted_id', data.enc_id);

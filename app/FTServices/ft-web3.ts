@@ -19,6 +19,7 @@ export class FTWeb3Service {
     private nets:string[]=[];
     private currentNetName: string;
     private currentWeb3;
+    private reset=false;
 
     private zeroAddress="0000000000000000000000000000000000000000";
     private gasPrice=0;
@@ -48,19 +49,18 @@ export class FTWeb3Service {
     }
 
     setWeb3( netName ): void {
-        let newWeb3 = this.setProvider( netName );
+        this.setProvider( netName );
         this.currentNetName = netName;
-        this.checkReadyState(newWeb3);
+        this.checkReadyState();
     }
 
-    private checkReadyState(newWeb3) {
+    private checkReadyState() {
         this.obs.putObserver('block', 'Connecting');
-        this.currentWeb3 = newWeb3;
-        if(newWeb3.currentProvider.connection.readyState){
-            if(newWeb3.currentProvider.connection.readyState==1){
+        if(this.currentWeb3.currentProvider.connection.readyState){
+            if(this.currentWeb3.currentProvider.connection.readyState==1){
                 this.configureBlock();
             } else {
-                console.log('NotConnected:' + newWeb3.currentProvider.connection.readyState);
+                console.log('NotConnected:' + this.currentWeb3.currentProvider.connection.readyState);
                 this.obs.putObserver('block', 'Not Connected');
                 setTimeout(()=> {
                     this.initializeWeb3();
@@ -68,7 +68,7 @@ export class FTWeb3Service {
             }
         } else {
             setTimeout(()=> {
-                this.checkReadyState(newWeb3);
+                this.checkReadyState();
             },500);
         }
     }
@@ -207,16 +207,24 @@ export class FTWeb3Service {
     private deploy(compiledCode, compiledABI): any{
         let myContract = new this.currentWeb3.eth.Contract(compiledABI);
         return myContract.deploy({data: compiledCode});
-    }
+    }f
 
     private setProvider( netName ): any {
+        if(typeof this.currentWeb3 === undefined || this.currentWeb3==null){
+        }
+        else{
+            this.reset = true;
+        }
         let FTweb3 = new Web3();
-        FTweb3.setProvider(new FTweb3.providers.WebsocketProvider(this.nets[netName]));
-        //FTweb3.setProvider(new FTweb3.providers.HttpProvider(this.nets[netName]));
-        return FTweb3;
+        let provider = new FTweb3.providers.WebsocketProvider(this.nets[netName]);
+        FTweb3.setProvider(provider);
+        this.currentWeb3 = FTweb3;
     }
 
     private configureBlock(): void {
+        if(this.reset)
+            window.location.reload();
+        this.obs.putObserver('refreshToken', true);
         this.currentWeb3.eth.getBlockNumber()
         .then( (bn) => {
             this.obs.putObserver('block', bn);
