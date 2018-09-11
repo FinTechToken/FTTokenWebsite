@@ -35,6 +35,7 @@ import { FTSetAddress } from './FTComponents/ft-setAddress';
 import { FTAccountExit } from './FTComponents/ft-account-exit';
 import { FTAccountCreate } from './FTComponents/ft-account-create';
 import { FTAccountWallet } from './FTComponents/ft-account-wallet';
+import { FTAccountWalletActions } from './FTComponents/ft-account-wallet-actions';
 import { FTAccountHistory } from './FTComponents/ft-account-history';
 import { FTEnterImport } from './FTComponents/ft-enterImport';
 import { FTVerifyDelete } from './FTComponents/ft-verifyDelete';
@@ -81,6 +82,7 @@ import { FTMessagesOld } from './FTRoutes/FTMessagesOld';
     FTAccountExit,
     FTAccountCreate,
     FTAccountWallet,
+    FTAccountWalletActions,
     FTAccountHistory,
     FTEnterImport,
     FTVerifyDelete,
