@@ -13,12 +13,11 @@
               <th></th>
               <th>Amount</th>
               <th>Offers</th>
-              <th>Action</th>
           </tr>
         </thead>
         <tbody>
             <tr>
-              <th>$</th>
+              <th (click)="takeAction(-1)" style="cursor: pointer;"><a href="javascript:void(0);">$</a></th>
               <td>
                 <a *ngIf="ftWallet.getBalance() != '0'" href="javascript:void(0);" (click)="viewNumber(ftWallet.getBalance());">
                   ${{ftNum.getEther(ftWallet.getBalance()) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(ftWallet.getBalance())">.#</span>
@@ -31,21 +30,11 @@
                 </a>
                 <span *ngIf="ftMarket.bookEther == '0'">$0</span>
               </td>
-              <td>
-                <select (change)="takeAction(0)" [(ngModel)]="action[0]">
-                  <option value=""></option>
-                  <option value="send_ether">Send</option>
-                  <option value="deposit_ftt">Deposit</option>
-                  <option value="withdraw_ftt">Withdraw</option>
-                  <option value="refer_friend">Free $</option>
-                  <!--<option value="buy_ether">Buy Crypto</option>!-->
-                </select>
-              </td>
             </tr>
             <ng-container *ngFor="let token of getftTokenWatch(); let i = index;">
               <tr *ngIf="i+1">
-                <th>
-                  {{token.name}}
+                <th (click)="takeAction(i)"  style="cursor: pointer;">
+                  <a href="javascript:void(0);">{{token.name}}</a>
                 </th>
                 <td> <a *ngIf="token.mine != '0'" href="javascript:void(0);" (click)="viewNumber(token.mine);">
                     {{ftNum.getEther(token.mine) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(token.mine)">.#</span>
@@ -57,17 +46,6 @@
                         {{ftNum.getEther(ftMarket.getBookTokenEther(token.address)) | number : '1.0-0'}}<span *ngIf="ftNum.hasFraction(ftMarket.getBookTokenEther(token.address))">.#</span>
                     </a>
                     <span *ngIf="ftMarket.getBookTokenEther(token.address) == '0'">0</span>
-                </td>
-                <td>
-                  <select (change)="takeAction(i+1)" [(ngModel)]="action[i+1]">
-                    <option value=""></option>
-                    <option *ngIf="i+1 < 3" value="send_token">Send</option>
-                    <option *ngIf="i+1 < 3" value="import_token">Transfer In</option>
-                    <option *ngIf="i+1 < 3" value="export_token">Transfer Out</option>
-                    <option *ngIf="i+1 < 3" value="trade_buy_token">Buy</option>
-                    <option *ngIf="i+1 < 3" value="trade_sell_token">Sell</option>
-                    <option value="view_token">Advanced</option>
-                  </select>
                 </td>
               </tr>
             </ng-container>

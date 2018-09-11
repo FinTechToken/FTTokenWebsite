@@ -60,38 +60,8 @@ export class FTAccountWallet {
   }
 
   takeAction(index){
-    if(this.action[index]=='send_ether'){
-      this.obs.putObserver('modal', 'account-trade.sendEther');
-    } else if(this.action[index]=='refer_friend') {
-      this.obs.putObserver('modal', 'account-trade.referFriend');
-    } else if(this.action[index]=='deposit_ftt') {
-      if(this.ftCrypto.homeAddress == "" || this.ftCrypto.name == "" )
-        this.obs.putObserver('modal', 'account-trade.setAddress');
-      else
-        this.obs.putObserver('modal', 'account-trade.depositFTT');
-    } else if(this.action[index]=='withdraw_ftt') {
-      if(this.ftCrypto.homeAddress == "" || this.ftCrypto.name == "" )
-        this.obs.putObserver('modal', 'account-trade.setAddress');
-      else
-        this.obs.putObserver('modal', 'account-trade.withdrawFTT');
-    } else if(this.action[index]=='send_token'){
-      this.obs.putObserver('tokenIndex', index-1);
-      this.obs.putObserver('modal', 'account-trade.sendToken');
-    } else if(this.action[index]=='export_token'){
-      this.obs.putObserver('tokenIndex', index-1);
-      this.obs.putObserver('modal', 'account-trade.exportToken');
-    } else if(this.action[index]=='import_token'){
-      this.obs.putObserver('tokenIndex', index-1);
-      this.obs.putObserver('modal', 'account-trade.importToken');
-    } else if(this.action[index]=='trade_buy_token') {
-      this.obs.putObserver('tokenIndex', index-1);
-      this.obs.putObserver('modal', 'account-trade.buyToken');
-    } else if(this.action[index]=='trade_sell_token') {
-      this.obs.putObserver('tokenIndex', index-1);
-      this.obs.putObserver('modal', 'account-trade.sellToken');
-    } else if(this.action[index]=='view_token') 
-      this.router.navigate(['/token/' + this.ftTokenWatch.TokenWatch[index-1].address.substring(2)]);
-    this.action[index] = "";
+    this.obs.putObserver('tokenIndex', index);
+    this.obs.putObserver('modal', 'account-wallet.actions');
   }
   
 }
