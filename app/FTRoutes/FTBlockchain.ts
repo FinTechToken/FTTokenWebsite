@@ -25,7 +25,7 @@ export class FTBlockchain {
   visibility="hiddenss";
   subscribeParam;
   tabs=1;
-  collapse=0;
+  collapse=1;
   texts = [];
   constructor( private obs: FTObserver, private router: Router, private route: ActivatedRoute, private session: FTSession, private cache: FTCache, private http:Http, private text: FTText )
   {  
@@ -74,7 +74,7 @@ export class FTBlockchain {
   }
 
   changeTabs(tab:number): void{
-    this.collapse = 0;
+    this.collapse = 1;
     this.tabs = tab;
     document.getElementsByClassName('setheighttab')[0].scrollTop = 0;
   }

@@ -16,7 +16,7 @@
                                     <ul class="nav nav-tabs">
                                         <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 1 }" (click)="changeTabs(1)" href="javascript:void(0);">FTT</a></li>
                                         <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 2 }" (click)="changeTabs(2)" href="javascript:void(0);">Private</a></li>
-                                        <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 3 }" (click)="changeTabs(3)" href="javascript:void(0);">FAQ</a></li>
+                                        <!--<li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 3 }" (click)="changeTabs(3)" href="javascript:void(0);">FAQ</a></li>!-->
                                         <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 4 }" (click)="changeTabs(4)" href="javascript:void(0);">Roadmap</a></li>
                                     </ul>
                                 </div>
@@ -35,7 +35,7 @@
                                         <div id="accordion" class="accordion">
                                             <div class="card">
                                                 <div class="card-header" (click)="changeCollapse($event,1);">
-                                                <h5 class="mb-0">
+                                                <h5 class="mb-0"  [ngClass]="{'down':collapse==1}">
                                                     <button class="btn btn-link blockchainBTN">
                                                     1) Base currency is $
                                                     </button>
@@ -49,7 +49,7 @@
                                             </div>
                                             <div class="card">
                                                 <div class="card-header" (click)="changeCollapse($event,5);">
-                                                <h5 class="mb-0">
+                                                <h5 class="mb-0" [ngClass]="{'down':collapse==5}">
                                                     <button class="btn btn-link blockchainBTN">
                                                     2) No complex blockchain tools to download
                                                     </button>
@@ -63,7 +63,7 @@
                                             </div>
                                             <div class="card">
                                                 <div class="card-header" (click)="changeCollapse($event,7);">
-                                                <h5 class="mb-0">
+                                                <h5 class="mb-0" [ngClass]="{'down':collapse==7}">
                                                     <button class="btn btn-link blockchainBTN">
                                                         3) Transactions happen every second
                                                     </button>
@@ -79,7 +79,7 @@
                                             </div>
                                             <div class="card">
                                                 <div class="card-header" (click)="changeCollapse($event,6);">
-                                                <h5 class="mb-0">
+                                                <h5 class="mb-0" [ngClass]="{'down':collapse==6}">
                                                     <button class="btn btn-link blockchainBTN">
                                                         4) Network "gas" is totally free
                                                     </button>
@@ -93,7 +93,7 @@
                                             </div>
                                             <div class="card">
                                                 <div class="card-header" (click)="changeCollapse($event,2);">
-                                                <h5 class="mb-0">
+                                                <h5 class="mb-0" [ngClass]="{'down':collapse==2}">
                                                     <button class="btn btn-link blockchainBTN">
                                                        5) Use any major crypto currency
                                                     </button>
@@ -108,7 +108,7 @@
                                             </div>
                                             <div class="card">
                                                 <div class="card-header" (click)="changeCollapse($event,3);">
-                                                <h5 class="mb-0">
+                                                <h5 class="mb-0" [ngClass]="{'down':collapse==3}">
                                                     <button class="btn btn-link blockchainBTN">
                                                         6) Smart contract based accounting
                                                     </button>
@@ -123,7 +123,7 @@
                                             </div>
                                             <div class="card">
                                                 <div class="card-header"  (click)="changeCollapse($event,8);">
-                                                <h5 class="mb-0">
+                                                <h5 class="mb-0" [ngClass]="{'down':collapse==8}">
                                                     <button class="btn btn-link blockchainBTN">
                                                         7) Do things based on blockchain events
                                                     </button>
@@ -138,7 +138,7 @@
                                             </div>
                                             <div class="card">
                                                 <div class="card-header" (click)="changeCollapse($event,9);">
-                                                <h5 class="mb-0">
+                                                <h5 class="mb-0" [ngClass]="{'down':collapse==9}">
                                                     <button class="btn btn-link blockchainBTN">
                                                         8) Run smart contract functions based on real world events
                                                     </button>
@@ -153,7 +153,7 @@
                                             </div>
                                             <div class="card">
                                                 <div class="card-header"  (click)="changeCollapse($event,4);">
-                                                <h5 class="mb-0">
+                                                <h5 class="mb-0" [ngClass]="{'down':collapse==4}">
                                                     <button class="btn btn-link blockchainBTN">
                                                         9) Smart contract App-Store
                                                     </button>
@@ -161,9 +161,7 @@
                                                 </div>
                                                 <div class="collapse" [ngClass]="{'show':collapse==4}">
                                                 <div class="card-body">
-                                                        We provide tooling for engineers. 
-                                                        These tools speed up development process by letting developers focus on code instead of platform infrastructure.
-                                                        <br><Br>
+                                                        
                                                         Developers publish to our network with a secret address. 
                                                         After a quality review we can publicly share addresses for mass-adoption.
                                                 </div>
@@ -171,7 +169,7 @@
                                             </div>
                                             <div class="card">
                                                 <div class="card-header"  (click)="changeCollapse($event,10);">
-                                                <h5 class="mb-0">
+                                                <h5 class="mb-0" [ngClass]="{'down':collapse==10}">
                                                     <button class="btn btn-link blockchainBTN">
                                                         10) FTT is a working product
                                                     </button>
@@ -196,7 +194,7 @@
                                         <div id="accordion" class="accordion">
                                             <div class="card">
                                                 <div class="card-header" (click)="changeCollapse($event,1);">
-                                                <h5 class="mb-0">
+                                                <h5 class="mb-0" [ngClass]="{'down':collapse==1}">
                                                     <button class="btn btn-link blockchainBTN">
                                                     1) Control access                                                   
                                                     </button>
@@ -210,7 +208,7 @@
                                             </div>
                                             <div class="card">
                                                 <div class="card-header" (click)="changeCollapse($event,2);">
-                                                <h5 class="mb-0">
+                                                <h5 class="mb-0" [ngClass]="{'down':collapse==2}">
                                                     <button class="btn btn-link blockchainBTN">
                                                         2) Easy for engineers to develop on
                                                     </button>
@@ -224,7 +222,7 @@
                                             </div>
                                             <div class="card">
                                                 <div class="card-header" (click)="changeCollapse($event,3);">
-                                                <h5 class="mb-0">
+                                                <h5 class="mb-0" [ngClass]="{'down':collapse==3}">
                                                     <button class="btn btn-link blockchainBTN">
                                                         3) Get upgrades for free
                                                     </button>
@@ -238,7 +236,7 @@
                                             </div>
                                             <div class="card">
                                                 <div class="card-header"  (click)="changeCollapse($event,4);">
-                                                <h5 class="mb-0">
+                                                <h5 class="mb-0" [ngClass]="{'down':collapse==4}">
                                                     <button class="btn btn-link blockchainBTN">
                                                         4) No worry infrastructure
                                                     </button>
@@ -253,7 +251,7 @@
 
                                             <div class="card">
                                                 <div class="card-header" (click)="changeCollapse($event,5);">
-                                                <h5 class="mb-0">
+                                                <h5 class="mb-0" [ngClass]="{'down':collapse==5}">
                                                     <button class="btn btn-link blockchainBTN">
                                                     5) FTT is built for engineers
                                                     </button>
@@ -267,7 +265,7 @@
                                             </div>
                                             <div class="card">
                                                 <div class="card-header" (click)="changeCollapse($event,6);">
-                                                <h5 class="mb-0">
+                                                <h5 class="mb-0" [ngClass]="{'down':collapse==6}">
                                                     <button class="btn btn-link blockchainBTN">
                                                         6) Easy to integrate with your technology
                                                     </button>
@@ -281,7 +279,7 @@
                                             </div>
                                             <div class="card">
                                                 <div class="card-header" (click)="changeCollapse($event,7);">
-                                                <h5 class="mb-0">
+                                                <h5 class="mb-0" [ngClass]="{'down':collapse==7}">
                                                     <button class="btn btn-link blockchainBTN">
                                                         7) Easy to integrate with your existing customer digital experiences
                                                     </button>
@@ -295,7 +293,7 @@
                                             </div>
                                             <div class="card">
                                                 <div class="card-header"  (click)="changeCollapse($event,8);">
-                                                <h5 class="mb-0">
+                                                <h5 class="mb-0" [ngClass]="{'down':collapse==8}">
                                                     <button class="btn btn-link blockchainBTN">
                                                         8) Secure
                                                     </button>
@@ -309,7 +307,7 @@
                                             </div>
                                             <div class="card">
                                                 <div class="card-header" (click)="changeCollapse($event,9);">
-                                                <h5 class="mb-0">
+                                                <h5 class="mb-0" [ngClass]="{'down':collapse==9}">
                                                     <button class="btn btn-link blockchainBTN">
                                                         9) Simple monthly pricing
                                                     </button>
@@ -326,7 +324,7 @@
                                             </div>
                                             <div class="card">
                                                 <div class="card-header"  (click)="changeCollapse($event,10);">
-                                                <h5 class="mb-0">
+                                                <h5 class="mb-0" [ngClass]="{'down':collapse==10}">
                                                     <button class="btn btn-link blockchainBTN">
                                                         10) No surprises
                                                     </button>
@@ -341,6 +339,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!--
                                 <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 3 }">
                                     <h4><span style="font-size:1.5rem; color:#d08d2e;"><i class="icon-question" id="create1"></i></span>
                                         <span class="align-top">Frequent Questions</span>
@@ -349,7 +348,7 @@
                                     <div id="accordion" class="accordion">
                                         <div class="card">
                                             <div class="card-header" (click)="changeCollapse($event,1);">
-                                            <h5 class="mb-0">
+                                            <h5 class="mb-0" [ngClass]="{'down':collapse==1}">
                                                 <button class="btn btn-link blockchainBTN">
                                                 What is CryptoPass?
                                                 </button>
@@ -363,7 +362,7 @@
                                         </div>
                                         <div class="card">
                                             <div class="card-header" (click)="changeCollapse($event,2);">
-                                            <h5 class="mb-0">
+                                            <h5 class="mb-0" [ngClass]="{'down':collapse==2}">
                                                 <button class="btn btn-link blockchainBTN">
                                                     How does FTT and CryptoPass work?
                                                 </button>
@@ -380,7 +379,7 @@
                                         </div>
                                         <div class="card">
                                             <div class="card-header" (click)="changeCollapse($event,3);">
-                                            <h5 class="mb-0">
+                                            <h5 class="mb-0" [ngClass]="{'down':collapse==3}">
                                                 <button class="btn btn-link blockchainBTN">
                                                     Is FTT and CryptoPass secure?
                                                 </button>
@@ -396,7 +395,7 @@
                                         </div>
                                         <div class="card">
                                             <div class="card-header" (click)="changeCollapse($event,5);">
-                                            <h5 class="mb-0">
+                                            <h5 class="mb-0" [ngClass]="{'down':collapse==5}">
                                                 <button class="btn btn-link blockchainBTN">
                                                     Is FTT verifiable?
                                                 </button>
@@ -412,7 +411,7 @@
                                         </div>
                                         <div class="card">
                                             <div class="card-header" (click)="changeCollapse($event,6);">
-                                            <h5 class="mb-0">
+                                            <h5 class="mb-0" [ngClass]="{'down':collapse==6}">
                                                 <button class="btn btn-link blockchainBTN">
                                                     Can I see the FTT code?
                                                 </button>
@@ -426,7 +425,7 @@
                                         </div>
                                         <div class="card">
                                             <div class="card-header" (click)="changeCollapse($event,9);">
-                                            <h5 class="mb-0">
+                                            <h5 class="mb-0" [ngClass]="{'down':collapse==9}">
                                                 <button class="btn btn-link blockchainBTN">
                                                     Who created FTT?
                                                 </button>
@@ -436,11 +435,11 @@
                                             <div class="card-body">
                                                    The founder has done the following.<br>
                                                    <ul>
-                                                       <li>He launched a roommate matching service that was sold after growing to 60,000 customers in 2005</li>
-                                                        <li>He is a Registered Investment Advisor and founded a registered advisory firm in 2010 that utilized an algorithmic trading platform he built</li>
-                                                        <li>He launched TuitionCoin in 2015 which refinanced student loans, and has a consumer finance license. This startup  failed in 2017 due to lack of capital.</li>
+                                                        <li>He believes code disintermediates industries. He is launching FTT as Token Sourced Code to globally democratize finance.</li>   
                                                         <li>He currently manages multiple tech teams supporting a half billion dollar product at Capital One.</li>
-                                                        <li>He believes code disintermediates industries. He is launching FTT as Token Sourced Code to globally democratize finance.</li>
+                                                        <li>He launched TuitionCoin in 2015 which refinanced student loans, and has a consumer finance license. This startup  failed in 2017 due to lack of capital.</li>
+                                                        <li>He is a Registered Investment Advisor and founded a registered advisory firm in 2010 that utilized an algorithmic trading platform he built</li>
+                                                        <li>He launched a roommate matching service that was sold after growing to 60,000 customers in 2005</li>
                                                    </ul>
                                                     
                                             </div>
@@ -448,7 +447,7 @@
                                         </div>
                                         <div class="card">
                                             <div class="card-header"  (click)="changeCollapse($event,10);">
-                                            <h5 class="mb-0">
+                                            <h5 class="mb-0" [ngClass]="{'down':collapse==10}">
                                                 <button class="btn btn-link blockchainBTN">
                                                     How do we contact FTT?
                                                 </button>
@@ -462,6 +461,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                -->
                                 <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 4 }">
                                     <h4>
                                         <span style="font-size:2.5rem; color:#d08d2e;"><i class="icon-direction" id="create1"></i></span>
@@ -470,7 +470,7 @@
                                     <div id="accordion" class="accordion">
                                         <div class="card">
                                             <div class="card-header" (click)="changeCollapse($event, 1);">
-                                            <h5 class="mb-0">
+                                            <h5 class="mb-0" [ngClass]="{'down':collapse==1}">
                                                 <button class="btn btn-link blockchainBTN">
                                                     Our Goal
                                                 </button>
@@ -485,7 +485,7 @@
                                         </div>
                                         <div class="card">
                                             <div class="card-header" (click)="changeCollapse($event,2);">
-                                            <h5 class="mb-0">
+                                            <h5 class="mb-0" [ngClass]="{'down':collapse==2}">
                                                 <button class="btn btn-link blockchainBTN">
                                                     Token Sourced Code
                                                 </button>
@@ -506,7 +506,7 @@
                                         </div>
                                         <div class="card">
                                             <div class="card-header" (click)="changeCollapse($event,3);">
-                                            <h5 class="mb-0">
+                                            <h5 class="mb-0" [ngClass]="{'down':collapse==3}">
                                                 <button class="btn btn-link blockchainBTN">
                                                     Community is the product owners
                                                 </button>
@@ -522,7 +522,7 @@
                                         </div>
                                         <div class="card">
                                             <div class="card-header"  (click)="changeCollapse($event,4);">
-                                            <h5 class="mb-0">
+                                            <h5 class="mb-0" [ngClass]="{'down':collapse==4}">
                                                 <button class="btn btn-link blockchainBTN">
                                                     An AppStore Framework
                                                 </button>
@@ -537,7 +537,7 @@
                                         </div>
                                         <div class="card">
                                             <div class="card-header" (click)="changeCollapse($event,5);">
-                                            <h5 class="mb-0">
+                                            <h5 class="mb-0" [ngClass]="{'down':collapse==5}">
                                                 <button class="btn btn-link blockchainBTN">
                                                     Blockchain as a Service (BaaS)
                                                 </button>
@@ -552,7 +552,7 @@
                                         </div>
                                         <div class="card">
                                             <div class="card-header" (click)="changeCollapse($event,6);">
-                                            <h5 class="mb-0">
+                                            <h5 class="mb-0" [ngClass]="{'down':collapse==6}">
                                                 <button class="btn btn-link blockchainBTN">
                                                     Completed MVP Tasks
                                                 </button>
@@ -577,7 +577,7 @@
                                         </div>
                                         <div class="card">
                                             <div class="card-header" (click)="changeCollapse($event,7);">
-                                            <h5 class="mb-0">
+                                            <h5 class="mb-0" [ngClass]="{'down':collapse==7}">
                                                 <button class="btn btn-link blockchainBTN">
                                                     In Progress tasks
                                                 </button>
@@ -602,7 +602,7 @@
                                         </div>
                                         <div class="card">
                                             <div class="card-header"  (click)="changeCollapse($event,8);">
-                                            <h5 class="mb-0">
+                                            <h5 class="mb-0" [ngClass]="{'down':collapse==8}">
                                                 <button class="btn btn-link blockchainBTN">
                                                     High priority Tasks
                                                 </button>
@@ -628,7 +628,7 @@
 
                                         <div class="card">
                                             <div class="card-header" (click)="changeCollapse($event,9);">
-                                            <h5 class="mb-0">
+                                            <h5 class="mb-0" [ngClass]="{'down':collapse==9}">
                                                 <button class="btn btn-link blockchainBTN">
                                                     Priority Tasks
                                                 </button>
@@ -653,7 +653,7 @@
                                         </div>
                                         <div class="card">
                                             <div class="card-header"  (click)="changeCollapse($event,10);">
-                                            <h5 class="mb-0">
+                                            <h5 class="mb-0" [ngClass]="{'down':collapse==10}">
                                                 <button class="btn btn-link blockchainBTN">
                                                     Future
                                                 </button>
