@@ -60,6 +60,36 @@ body {
     color: #333;
     background-color: #FEFEFE;
 }
+
+.accordion .card {
+    margin-left:-15px;
+    border-left: none;
+}
+.accordion .card .card-header {
+    padding-right: 5px;
+}
+.accordion .card .card-header .mb-0 .btn {
+    width:100%;
+}
+.accordion .card .card-header .mb-0:after{
+    
+        color: #FEC45F;
+        content: '▸';
+        float:right;
+    
+}
+
+.accordion .card .card-header .mb-0.down:after{
+    
+    content: '▾';
+
+}
+
+.collapse .card-body {
+    margin-left:15px;
+    border-left: solid 1px #7a9da2;
+}
+
 .accordion .card-header {
     cursor: pointer; 
 }
