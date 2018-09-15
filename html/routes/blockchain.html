@@ -27,7 +27,7 @@
                             <div class="tab-white tab-content text-left setheighttab" style="overflow-y:auto; padding-right:0px;" id="myAccordian">
                                 <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 1 }">
                                     <h4><img src="/img/svg/FinTechToken_Icon_Logo.svg" width="50px" alt="FTT">
-                                        <span class="align-top">About FTT Network</span></h4>
+                                        <span class="align-top">FTT Network</span></h4>
                                     <div>
                                         FTT is on block <strong>{{!getBlocknumber() ? "'Not Connected'" : getBlocknumber() | number}}</strong>
                                         The last 3 digits of the current block is shown in the navigation bar.
@@ -43,7 +43,7 @@
                                                 </div>
                                                 <div class="collapse" [ngClass]="{'show':collapse==1}">
                                                 <div class="card-body">
-                                                    FTT is based on the $, a stable and globally known store of value. This makes it easy to know what things cost.
+                                                    The $ is a stable and globally known store of value. This makes it easy to know what things cost.
                                                 </div>
                                                 </div>
                                             </div>
@@ -51,13 +51,13 @@
                                                 <div class="card-header" (click)="changeCollapse($event,5);">
                                                 <h5 class="mb-0" [ngClass]="{'down':collapse==5}">
                                                     <button class="btn btn-link blockchainBTN">
-                                                    2) No complex blockchain tools to download
+                                                    2) Use on your phone, tablet, or laptop
                                                     </button>
                                                 </h5>
                                                 </div>
                                                 <div class="collapse" [ngClass]="{'show':collapse==5}">
                                                 <div class="card-body">
-                                                    Use FTT on your phone, tablet, or laptop. 
+                                                    No complex blockchain tools to download
                                                 </div>
                                                 </div>
                                             </div>
@@ -71,9 +71,9 @@
                                                 </div>
                                                 <div class="collapse" [ngClass]="{'show':collapse==7}">
                                                 <div class="card-body">
-                                                        FTT runs at a usable speed.
-                                                        Support of 1,000 transactions per second (TPS)
-                                                        means engineers can build useful apps for the world. 
+                                                        A usable speed
+                                                        supporting 1,000 transactions per second (TPS).
+                                                        Can support apps built for the world. 
                                                 </div>
                                                 </div>
                                             </div>
@@ -81,13 +81,13 @@
                                                 <div class="card-header" (click)="changeCollapse($event,6);">
                                                 <h5 class="mb-0" [ngClass]="{'down':collapse==6}">
                                                     <button class="btn btn-link blockchainBTN">
-                                                        4) Network "gas" is totally free
+                                                        4) Network "gas" is free
                                                     </button>
                                                 </h5>
                                                 </div>
                                                 <div class="collapse" [ngClass]="{'show':collapse==6}">
                                                 <div class="card-body">
-                                                    Free is good for everyone. A free network makes it practical to develop micro services and applications for 3rd world. 
+                                                    Free makes it practical to develop micro services and applications for 3rd world. 
                                                 </div>
                                                 </div>
                                             </div>
@@ -101,8 +101,7 @@
                                                 </div>
                                                 <div class="collapse" [ngClass]="{'show':collapse==2}">
                                                 <div class="card-body">
-                                                    Transfer any major cryptocurrency in or out of a FTT account. 
-                                                    Bitcoin, Ethereum and other crypto is tokenized on the FTT network.
+                                                    Bitcoin, Ethereum and other crypto is tokenized and can be used on the FTT network.
                                                 </div>
                                                 </div>
                                             </div>
@@ -116,8 +115,10 @@
                                                 </div>
                                                 <div class="collapse" [ngClass]="{'show':collapse==3}">
                                                 <div class="card-body">
-                                                    Our smart-contract based accounting system prevents fraud by allowing community to audit 
+                                                    Allows community to audit 
                                                     tokenization in real-time.
+                                                    Blockchain is publicly <a href="https://s3.amazonaws.com/fintechtoken.chain/" rel="nofollow" target="_blank">published</a> 
+                                                    every 10 minutes.
                                                 </div>
                                                 </div>
                                             </div>
@@ -131,7 +132,7 @@
                                                 </div>
                                                 <div class="collapse" [ngClass]="{'show':collapse==8}">
                                                 <div class="card-body">
-                                                    A Smart Contract Event can be configured to execute external APIs.
+                                                    A Smart Contract Event can execute external APIs.
                                                     This lets developers send texts, emails, update databases, trigger lambdas, etc etc.
                                                 </div>
                                                 </div>
@@ -146,7 +147,7 @@
                                                 </div>
                                                 <div class="collapse" [ngClass]="{'show':collapse==9}">
                                                 <div class="card-body">
-                                                    We provide APIs to execute smart contract functions.
+                                                    Developer APIs can execute smart contract functions.
                                                     Integrate blockchain into your existing systems, or build solutions with blockchain components.
                                                 </div>
                                                 </div>
@@ -161,9 +162,8 @@
                                                 </div>
                                                 <div class="collapse" [ngClass]="{'show':collapse==4}">
                                                 <div class="card-body">
-                                                        
-                                                        Developers publish to our network with a secret address. 
-                                                        After a quality review we can publicly share addresses for mass-adoption.
+                                                    Developers can add "Smart Contract" applications to our network.
+                                                    These can be deployed as hidden addresses, or officially deployed after quality review.
                                                 </div>
                                                 </div>
                                             </div>
@@ -186,9 +186,9 @@
                                 </div>
                                 <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 2 }">
                                     <h4><img src="{{texts['home.StickImageURL']}}" width="25px" alt="PrivateChain" />
-                                        <span class="align-top">Our Private Chains</span></h4>
+                                        <span class="align-top">Private Chains</span></h4>
                                     <div>
-                                        We offer Blockchain as a Service (BaaS) for companies
+                                        Blockchain as a Service (BaaS) is for companies
                                         to white-label FTT Technology as their own Private Chain.
                                         <br><br>
                                         <div id="accordion" class="accordion">
@@ -216,7 +216,8 @@
                                                 </div>
                                                 <div class="collapse" [ngClass]="{'show':collapse==2}">
                                                 <div class="card-body">
-                                                        An internal blockchain within your company speeds up development of blockchain tech
+                                                        An internal blockchain within your company will speed up development of blockchain tech,
+                                                        and increase innovation.
                                                 </div>
                                                 </div>
                                             </div>
@@ -230,7 +231,7 @@
                                                 </div>
                                                 <div class="collapse" [ngClass]="{'show':collapse==3}">
                                                 <div class="card-body">
-                                                    As we develop features for the FTT public net, we will deploy those on your private network for free.
+                                                    We deploy improvements to your private network for free.
                                                 </div>
                                                 </div>
                                             </div>
@@ -244,7 +245,7 @@
                                                 </div>
                                                 <div class="collapse" [ngClass]="{'show':collapse==4}">
                                                 <div class="card-body">
-                                                    We deploy and manage the network for your company. No need to maintain or manage infrastructure.
+                                                    The network is managed by FTT. No need to maintain or manage infrastructure.
                                                 </div>
                                                 </div>
                                             </div>
@@ -259,7 +260,7 @@
                                                 </div>
                                                 <div class="collapse" [ngClass]="{'show':collapse==5}">
                                                 <div class="card-body">
-                                                    Our tools speed up development and enable quick modern agile practices.
+                                                    Our tools enable quick modern agile practices that integrate into your CI/CD pipeline.
                                                 </div>
                                                 </div>
                                             </div>
@@ -493,13 +494,12 @@
                                             </div>
                                             <div class="collapse" [ngClass]="{'show':collapse==2}">
                                             <div class="card-body">
-                                                We Token Sourced our code so FTT contributors can work on this project without bueracratic hiearchy. 
-                                                Tokens go to both GitHub project contributors and capital contributors. 
+                                                Code is <a href="https://github.com/fintechtoken/" rel="nofollow" target="_blank">Token Sourced</a> so that contributors can work on this project without bueracratic hiearchy. 
                                                 <br><Br>
                                                 Token Source is similar to open sourced projects with two main differences.
                                                 <ol>
                                                     <li>Users of the code need a license (Revenue is collected via smart contract)</li>
-                                                    <li>Project contributors get tokens (Revenue is distributed to token holders via smart contract)</li>
+                                                    <li>GitHub Project Contributors get tokens (Revenue is distributed to token holders via smart contract)</li>
                                                 </ol>
                                             </div>
                                             </div>
@@ -508,7 +508,7 @@
                                             <div class="card-header" (click)="changeCollapse($event,3);">
                                             <h5 class="mb-0" [ngClass]="{'down':collapse==3}">
                                                 <button class="btn btn-link blockchainBTN">
-                                                    Community is the product owners
+                                                    The community is the product owner
                                                 </button>
                                             </h5>
                                             </div>
@@ -517,36 +517,6 @@
                                                 Long term the FTT roadmap will be prioritized by the community. 
                                                 The community can vote on product enhancements with tokens.
                                                 Those tokens go to engineers that implement the feature.
-                                            </div>
-                                            </div>
-                                        </div>
-                                        <div class="card">
-                                            <div class="card-header"  (click)="changeCollapse($event,4);">
-                                            <h5 class="mb-0" [ngClass]="{'down':collapse==4}">
-                                                <button class="btn btn-link blockchainBTN">
-                                                    An AppStore Framework
-                                                </button>
-                                            </h5>
-                                            </div>
-                                            <div class="collapse" [ngClass]="{'show':collapse==4}">
-                                            <div class="card-body">
-                                                Similar to App-Stores, developers can add "Smart Contract" applications to our network.
-                                                These can be deployed as hidden addresses, or officially deployed after quality review.
-                                            </div>
-                                            </div>
-                                        </div>
-                                        <div class="card">
-                                            <div class="card-header" (click)="changeCollapse($event,5);">
-                                            <h5 class="mb-0" [ngClass]="{'down':collapse==5}">
-                                                <button class="btn btn-link blockchainBTN">
-                                                    Blockchain as a Service (BaaS)
-                                                </button>
-                                            </h5>
-                                            </div>
-                                            <div class="collapse" [ngClass]="{'show':collapse==5}">
-                                            <div class="card-body">
-                                                Companies that want Private Blockchains can white label FTT tech.
-                                                FTT is a hub, with many private chain spokes extending the tech into private chains. 
                                             </div>
                                             </div>
                                         </div>
@@ -561,15 +531,15 @@
                                             <div class="collapse" [ngClass]="{'show':collapse==6}">
                                             <div class="card-body">
                                                 <ol  style="margin-left:-15px;">
-                                                    <li><s>Private Blockchain Up</s></li>
-                                                    <li><s>Web3.js connection to private blockchain through website</s></li>
-                                                    <li><s>Serverless Angular front-end with lambda backend</s></li>
+                                                    <li><s>FTT Private Blockchain</s></li>
+                                                    <li><s>Website front-end with lambda backend</s></li>
+                                                    <li><s>Website connected to FTT node</s></li>
+                                                    <li><s>Store non-blockchain information in DynamoDB</s></li>
                                                     <li><s>1 second blocks</s></li>
-                                                    <li><s>Compile and publish smart contract through website</s></li>
-                                                    <li><s>DynamoDB integration to manage non-blockchain information</s></li>
+                                                    <li><s>Compile and publish smart contracts through website</s></li>
                                                     <li><s>Trigger lambda based on smart contract event</s></li>
                                                     <li><s>TransferIn/Out/Deposit/Withdraw $ or Major Crypto</s></li>
-                                                    <li><s>Smart Contract enabled decentralized trading platform</s></li>
+                                                    <li><s>Trading platform</s></li>
                                                     <li><s>Send money via phone (and connect phone to a new account)</s></li>
                                                 </ol>
                                             </div>
@@ -586,15 +556,15 @@
                                             <div class="collapse" [ngClass]="{'show':collapse==7}">
                                             <div class="card-body">
                                                 <ol  style="margin-left:-15px;">
-                                                    <li><s>Combine "Trade" and "Wallet" as one tab to simplify usability (Move funds to trading smart contract in same action as placing trade).</s></li>
+                                                    <li><s>Simplify wallet usability</s></li>
                                                     <li><s>Remove "gas" to not confuse users</s></li>
-                                                    <li><s>Clean up text for actions to simplify</s></li>
-                                                    <li><s>Reset and test blockchain</s></li>
-                                                    <li><s>Make sure 0 amounts can't see actions</s></li>
-                                                    <li><s>Have "action" button instead of dropdown that launches modal of actions. Or move actions to Token page.</s></li>
-                                                    <li>Add filter function from contract ABIs</li>
-                                                    <li>Improve token page based on ABI</li>
-                                                    <li>Allow token page when user isn't signed in</li>
+                                                    <li><s>Clean up text</s></li>
+                                                    <li><s>Reset blockchain so real $ can be used</s></li>
+                                                    <li><s>0 amount can't attempt an action</s></li>
+                                                    <li><s>"Action" buttons instead of dropdown</s></li>
+                                                    <li>View event filter results based on Token ABI</li>
+                                                    <li>UX for token page</li>
+                                                    <li>Token page should work when user isn't signed in</li>
                                                     <li>Have different ABI for users and admin</li>
                                                 </ol>
                                             </div>
@@ -612,15 +582,15 @@
                                             <div class="card-body">
                                                 <ol  style="margin-left:-15px;">
                                                     <li>Automate transfer in/out (currently has manually step)</li>
-                                                    <li>Add all major blockchains and tokens</li>
+                                                    <li>Add all major blockchains and tokens (Currently only Bitcoin and Ethereum)</li>
                                                     <li>Enhance filter function to allow admin developer to trigger javascript</li>
                                                     <li>Also have API to trigger smart contract as admin</li>
-                                                    <li>East/West deployement of blockchains</li>
-                                                    <li>Stream events from major blockchains and allow subscribing to those events</li>
+                                                    <li>Increase Reseliency</li>
+                                                    <li>Stream events from all major blockchains and allow subscribing to those events</li>
                                                     <li>Add email</li>
-                                                    <li>For security only send password via physical address letter</li>
-                                                    <li>Add text for other countries</li>
-                                                    <li>Have FTT blockchain explorer</li>
+                                                    <li>Only send password via physical address letter</li>
+                                                    <li>Add support for other countries</li>
+                                                    <li>FTT blockchain explorer</li>
                                                 </ol>
                                             </div>
                                             </div>
@@ -637,16 +607,16 @@
                                             <div class="collapse" [ngClass]="{'show':collapse==9}">
                                             <div class="card-body">
                                                 <ol  style="margin-left:-15px;">
-                                                    <li>Provide liquidity to trading. Base price from other exchanges</li>
-                                                    <li>Other options for withdraw/deposit</li>
+                                                    <li>Provide liquidity to trading based on price from other exchanges</li>
+                                                    <li>Add other options for withdraw/deposit</li>
                                                     <li>Basic Income Token</li>
-                                                    <li>Improve KYC to upload documents</li>
-                                                    <li>Offer smart contract that holds multiple crypto</li>
+                                                    <li>Improved KYC</li>
+                                                    <li>Smart contract fund that holds multiple crypto</li>
                                                     <li>Offer short crypto to create synthetic $</li>
-                                                    <li>Add secure messaging</li>
-                                                    <li>Upgrade smart contract (Transfer variables from v1 to v2)</li>
+                                                    <li>Secure messaging</li>
                                                     <li>Add smart contract for donations</li>
                                                     <li>Add smart contract for auctions and buy now</li>
+                                                    <li>Upgrade smart contract (Transfer variables from v1 to v2)</li>
                                                 </ol>
                                             </div>
                                             </div>
@@ -661,7 +631,7 @@
                                             </div>
                                             <div class="collapse" [ngClass]="{'show':collapse==10}">
                                             <div class="card-body">
-                                                The unknowns the community and private enterprises will build using FTT Tech
+                                                All the unimaginable things the community and private enterprises will build using FTT Tech
                                             </div>
                                             </div>
                                         </div>
