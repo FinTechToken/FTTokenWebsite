@@ -11,7 +11,7 @@
                                 <div class="media-body">
                                     <h2 class="padleft">
                                         <img class="hidden-xl-up" src="/img/svg/FinTechToken_Block.svg" width="25px" alt="FinTechToken">   
-                                        Learn About FTT
+                                        Learn More
                                     </h2>    
                                     <ul class="nav nav-tabs">
                                         <li class="nav-item"><a class="nav-link text-uppercase" [ngClass]="{ 'active': tabs == 1 }" (click)="changeTabs(1)" href="javascript:void(0);">FTT</a></li>
@@ -27,9 +27,9 @@
                             <div class="tab-white tab-content text-left setheighttab" style="overflow-y:auto; padding-right:0px;" id="myAccordian">
                                 <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == 1 }">
                                     <h4><img src="/img/svg/FinTechToken_Icon_Logo.svg" width="50px" alt="FTT">
-                                        <span class="align-top">FTT Network</span></h4>
+                                        <span class="align-top">FinTechToken (FTT)</span></h4>
                                     <div>
-                                        FTT is on block <strong>{{!getBlocknumber() ? "'Not Connected'" : getBlocknumber() | number}}</strong>
+                                        The FTT blockchain is on block <strong>{{!getBlocknumber() ? "'Not Connected'" : getBlocknumber() | number}}</strong>
                                         The last 3 digits of the current block is shown in the navigation bar.
                                         <Br><br>
                                         <div id="accordion" class="accordion">
@@ -645,7 +645,7 @@
                                                     <img src="/img/svg/FTT-Character.svg" width="25px"/>
                                                     <span *ngIf="!isPreviousUser()">Get Started</span>
                                                     <span *ngIf="isPreviousUser() && !isSignedIn()">Sign In</span>
-                                                    <span *ngIf="isPreviousUser() && isSignedIn()">My CryptoPass</span>
+                                                    <span *ngIf="isPreviousUser() && isSignedIn()">My Account</span>
                                                 </a>
                                                 <Br><br>
                                             </div>

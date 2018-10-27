@@ -56,7 +56,7 @@
                                                     <div class="form-control-feedback" id="createbad"></div>
                                                     <input type="password" [ngClass]="pwGroupStatus == 'has-danger' ? 'form-control-warning' : pwGroupStatus == 'has-success' ? 'form-control-success' : ''" class="form-control" id="PWc" placeholder="Reenter your password">
                                                 </div>
-                                                <input type="submit" value="Create CryptoPass" class="btn btn-lg btn-ft" id="launch">
+                                                <input type="submit" value="Create Account" class="btn btn-lg btn-ft" id="launch">
                                             </form>
                                         </div>
                                     </div>
@@ -64,7 +64,7 @@
 
                                 <div *ngIf="isPreviousUser()" class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == AuthenticateTabs.signIn }">
                                     <h4>
-                                        CryptoPass:<br>
+                                        My Account:<br>
                                         <span class="p-small return" id="unlockaccount">{{getRememberedAddress()}}</span>
                                     </h4>
                                     <hr>
@@ -87,7 +87,7 @@
                                         <hr>
                                         <a href="javascript:void(0);" (click)="SMSPhone();">Recover by text</a>
                                         <hr>
-                                        <a href="javascript:void(0);" (click)="importCryptoList=ImportList.import">Advanced - Import CryptoPass</a>
+                                        <a href="javascript:void(0);" (click)="importCryptoList=ImportList.import">Advanced - Import Encrypted Account</a>
                                         <hr>
                                         <!--<a href="javascript:alert('coming soon');">Verify by email</a>
                                         <hr>!-->
@@ -98,11 +98,11 @@
                                         <hr>
                                         <span style="color:red;" id="importwarning2"></span>
                                         <div class="form-group">
-                                            <label for="importENC">Enter CryptoPass:</label>
+                                            <label for="importENC">Enter Encrypted Account:</label>
                                             <input type="text" class="form-control" id="importENC" placeholder='Code that starts with: { "address" :'>
                                         </div>
                                         <a class="btn btn-lg btn-ft" (click)="import();" href="javascript:void(0);">
-                                            Import CryptoPass
+                                            Import Account
                                         </a>
                                     </div>
                                 </div>
@@ -110,10 +110,10 @@
 
                                 <div class="tab-pane fade show roboto padtabs" [ngClass]="{ 'active': tabs == AuthenticateTabs.clear }">
                                     <div>
-                                        Remove CryptoPass from this device.
+                                        Remove Account from this device.
                                         <hr>
                                         <a class="btn btn-lg btn-ft" (click)="showVerifyDelete();" href="javascript:void(0);">
-                                            Clear CryptoPass
+                                            Clear Account
                                         </a>
                                     </div>
                                 </div>
