@@ -31,7 +31,7 @@ export class FTText {
         this.putText('en_us', 'header.accountOut', 'Sign In');
         this.putText('en_us', 'header.accountNewUser', 'Start');
         this.putText('en_us', 'header.accountIn', 'In');
-        this.putText('en_us', 'header.accountName', 'CryptoPass');
+        this.putText('en_us', 'header.accountName', 'My Account');
         this.putText('en_us', 'header.accountNameNew', 'Get Started');
         this.putText('en_us', 'header.accountNameOut', 'Sign In');
         this.putText('en_us', 'header.messagesName', 'Messages');
@@ -46,9 +46,9 @@ export class FTText {
         // Home Hero
         this.putText('en_us', 'home.Hero1', 'One Blockchain Hub<br>Connecting All Crypto');
         this.putText('en_us', 'home.Hero2', `
-        Get easy access to all blockchains.<br>
-        So you can stay in control.<br>
-        On our 100% blockchain platform.`); //Be in control on our 100% blockchain platform
+        Get easy access to all blockchains<br>
+        So you can stay in control<br>
+        On our 100% blockchain platform`); //Be in control on our 100% blockchain platform
         // Home main text
         this.putText('en_us', 'home.Hero3Head','Blockchain is the most disruptive technology since the Internet');
         this.putText('en_us', 'home.Hero3', `
@@ -57,15 +57,15 @@ export class FTText {
         We made it easy so you can get on blockchain to transact, trade, or create something exciting all in one place.`);
         this.putText('en_us', 'home.startButton', 'Get Started');
         this.putText('en_us', 'home.startButtonUser', 'Sign In');
-        this.putText('en_us', 'home.startButtonAccount', 'My CryptoPass');
+        this.putText('en_us', 'home.startButtonAccount', 'My Account');
         this.putText('en_us', 'home.learnMoreButton', 'Learn More');
         // Home main text image
         this.putText('en_us', 'home.StickImageURL', '/img/svg/FTT-Character.svg');
         this.putText('en_us', 'home.blockImageURL', '/img/svg/FinTechToken_Block.svg');
         // Home Explanations
-        this.putText('en_us', 'home.explainationImageHeader1', 'Secured with CryptoPass');
+        this.putText('en_us', 'home.explainationImageHeader1', 'Secure');
         this.putText('en_us', 'home.explainationWhatWeDo1', `
-        Use any major crypto currency with CryptoPass. Get fast cheap transactions on our community built platform.`);
+        Use $ or any major crypto currency. Transactions are fast, cheap and secure.`);
         this.putText('en_us', 'home.explainationImageHeader2', 'BlockChain DNA');
         this.putText('en_us', 'home.explainationWhatWeDo2', `
         The FinTechToken (FTT) platform gives engineers building blocks so they can quickly deploy blockchain technologies for mass user adoption.`);
@@ -74,11 +74,11 @@ export class FTText {
         this.putText('en_us', 'home.explainationImageHeader1URL', '/img/svg/Icon_Key.svg');
         this.putText('en_us', 'home.explainationImageHeader2URL', '/img/svg/Icon_DNA.svg');
         // Home Problem Solution Statements
-        this.putText('en_us', 'home.valueProblem1', 'Annoyed by slow and congested blockchains');
+        this.putText('en_us', 'home.valueProblem1', 'Annoyed by slow and congested blockchains?');
         this.putText('en_us', 'home.valueSolution1', 'FTT has 1 second transactions with ultra low costs');
-        this.putText('en_us', 'home.valueProblem2', 'Frustrated by crypto wallets and keys that are hard to manage');
+        this.putText('en_us', 'home.valueProblem2', 'Frustrated by crypto wallets and keys that are hard to manage?');
         this.putText('en_us', 'home.valueSolution2', 'Use CryptoPass to access all major blockchains with one safe key');
-        this.putText('en_us', 'home.valueProblem3', 'Scared of 3rd party scams and hacks');
+        this.putText('en_us', 'home.valueProblem3', 'Scared of 3rd party scams and hacks?');
         this.putText('en_us', 'home.valueSolution3', 'Stay secure and in control with our community reviewed tech');
         // Home Problem Solution Statement Images
         this.putText('en_us', 'home.ScenarioImageURL1a', '/img/svg/Scenario-Traffic-Lane.png?v=1');
