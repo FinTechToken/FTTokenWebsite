@@ -18,6 +18,8 @@ import { FTWeb3Service } from '../FTServices/ft-web3';
 })
 
 export class FTToken {
+  subscribeEvent = [];
+  subscribeEventResult= [];
   subscribeParam;
   subscribeAmount;
   tokenAddress = '0x00';
@@ -126,6 +128,10 @@ export class FTToken {
 
   ngOnInit(): void{ 
     this.fromAddress = this.cache.getCache('encrypted_id') ? this.cache.getCache('encrypted_id').address : this.fromAddress;
+    this.getABI().forEach(functions => {
+      if(functions.type == 'event')
+        this.subscribeToEvent(functions.name);
+    });
     onResize();
   }    
 
@@ -136,6 +142,10 @@ export class FTToken {
     this.subscribeParam.unsubscribe();
     if(this.subscribeAmount)
       this.subscribeAmount.unsubscribe();
+    this.getABI().forEach(functions => {
+      if(functions.type == 'event')
+          this.unsubscribeFromEvent(functions.name);
+      });
   }
 
   changeTabs(tab:number): void{
@@ -240,6 +250,36 @@ try {
           });
         })
         .catch(err => {this.errMessage[index]=err.message;});
+  }
+
+  subscribeToEvent(eventName) {
+    if(this.subscribeEvent[eventName])
+      return;
+    else {
+      this.subscribeEventResult[eventName] = [];
+      this.subscribeEvent[eventName]= this.ftTokenWatch.TokenWatch[this.tokenIndex].contract.events[eventName]({
+    filter: {}, // Using an array means OR: e.g. 20 or 23
+    fromBlock: 0
+})
+.on('data', event => {
+  event.returnValues['BlockNumber'] =event.blockNumber;
+  this.subscribeEventResult[eventName].push(event.returnValues);
+})
+.on('changed', function(event){
+    console.log(event);
+    // remove event from local database
+})
+.on('error', function(error) {console.error; this.unsubscribeFromEvent(eventName);});
+  } 
+}
+
+  unsubscribeFromEvent(eventName) {
+    if(this.subscribeEvent[eventName]) {
+      this.subscribeEvent[eventName].unsubscribe();
+      this.subscribeEvent[eventName] = null;
+      return true;
+    } else
+      return false;
   }
 
 /*
