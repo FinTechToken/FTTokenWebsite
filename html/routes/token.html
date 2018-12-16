@@ -72,7 +72,19 @@
                                         </span>
                                         <span *ngFor="let function of getABI(); let myindex=index">
                                             <span *ngIf="function.type == 'constructor'"></span>
-                                            <div *ngIf="function.type == 'event'"><br>Subscribe to Event: {{function.name}}</div>
+                                            <div *ngIf="function.type == 'event'"><br>Event: {{function.name}}
+                                                <br>
+                                                <table class="table table-sm">
+                                                    <tr>
+                                                        <th>Block</th>
+                                                        <th *ngFor="let input of function.inputs">{{input.name}}</th>
+                                                    </tr>
+                                                    <tr *ngFor="let result of subscribeEventResult[function.name]">
+                                                        <td>{{result['BlockNumber']}}</td>
+                                                        <td *ngFor="let input of function.inputs">{{result[input.name]}}</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
                                             <div *ngIf="function.type == 'fallback' || function.type =='function'">
                                                 <br>
                                                 <a class="btn btn-lg btn-ft" (click)="callFunction(myindex);" href="javascript:void(0);">
